@@ -1,9 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Logging" />
-    <PackageReference Include="Newtonsoft.Json" />
-    <ProjectReference Include="..\..\common\DevilDaggersInfo.Common\DevilDaggersInfo.Common.csproj" />
-    <ProjectReference Include="..\DevilDaggersInfo.Core.Encryption\DevilDaggersInfo.Core.Encryption.csproj" />
-    <ProjectReference Include="..\DevilDaggersInfo.Core.NativeInterface\DevilDaggersInfo.Core.NativeInterface.csproj" />
-  </ItemGroup>
-</Project>
