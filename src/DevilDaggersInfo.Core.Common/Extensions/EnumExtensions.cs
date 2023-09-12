@@ -1,4 +1,4 @@
-namespace DevilDaggersInfo.Common.Extensions;
+namespace DevilDaggersInfo.Core.Common.Extensions;
 
 // TODO: Move to web-core.
 public static class EnumExtensions

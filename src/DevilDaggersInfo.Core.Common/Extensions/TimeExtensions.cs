@@ -1,4 +1,4 @@
-namespace DevilDaggersInfo.Common.Extensions;
+namespace DevilDaggersInfo.Core.Common.Extensions;
 
 // TODO: Refactor to fixed-time struct.
 public static class TimeExtensions

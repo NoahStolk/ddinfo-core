@@ -1,4 +1,4 @@
-namespace DevilDaggersInfo.Common;
+namespace DevilDaggersInfo.Core.Common;
 
 public static class StringFormats
 {
