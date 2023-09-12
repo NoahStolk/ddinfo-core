@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\core\DevilDaggersInfo.Core.Mod\DevilDaggersInfo.Core.Mod.csproj" />
+    <ProjectReference Include="..\..\DevilDaggersInfo.Core.Mod\DevilDaggersInfo.Core.Mod.csproj" />
   </ItemGroup>
 
   <ItemGroup>

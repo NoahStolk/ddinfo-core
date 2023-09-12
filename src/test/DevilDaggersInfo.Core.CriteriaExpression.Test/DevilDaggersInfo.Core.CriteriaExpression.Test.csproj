@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\core\DevilDaggersInfo.Core.CriteriaExpression\DevilDaggersInfo.Core.CriteriaExpression.csproj" />
+    <ProjectReference Include="..\..\DevilDaggersInfo.Core.CriteriaExpression\DevilDaggersInfo.Core.CriteriaExpression.csproj" />
   </ItemGroup>
 
 </Project>

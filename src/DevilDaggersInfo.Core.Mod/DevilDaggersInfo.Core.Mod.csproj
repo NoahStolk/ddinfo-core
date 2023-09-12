@@ -5,7 +5,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\core\DevilDaggersInfo.Core.Asset\DevilDaggersInfo.Core.Asset.csproj" />
+    <ProjectReference Include="..\DevilDaggersInfo.Core.Asset\DevilDaggersInfo.Core.Asset.csproj" />
   </ItemGroup>
 
 </Project>

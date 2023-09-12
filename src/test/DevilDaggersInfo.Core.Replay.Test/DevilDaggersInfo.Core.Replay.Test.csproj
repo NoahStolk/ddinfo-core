@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\core\DevilDaggersInfo.Core.Replay\DevilDaggersInfo.Core.Replay.csproj" />
+    <ProjectReference Include="..\..\DevilDaggersInfo.Core.Replay\DevilDaggersInfo.Core.Replay.csproj" />
   </ItemGroup>
 
   <ItemGroup>

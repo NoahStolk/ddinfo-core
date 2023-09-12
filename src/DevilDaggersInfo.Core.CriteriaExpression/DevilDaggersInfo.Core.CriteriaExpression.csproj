@@ -1,0 +1,8 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\DevilDaggersInfo.Common\DevilDaggersInfo.Common.csproj" />
+    <ProjectReference Include="..\DevilDaggersInfo.Core.Wiki\DevilDaggersInfo.Core.Wiki.csproj" />
+  </ItemGroup>
+
+</Project>
