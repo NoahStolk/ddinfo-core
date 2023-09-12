@@ -4,7 +4,7 @@
 		<TargetFramework>net7.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<EnableNETAnalyzers>true</EnableNETAnalyzers>
-		<RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
+		<RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
 		<NoWarn>SA1633</NoWarn>
 		<ImplicitUsings>true</ImplicitUsings>
 		<InvariantGlobalization>true</InvariantGlobalization>
@@ -15,17 +15,9 @@
 		<RuntimeIdentifiers>win-x64;linux-x64</RuntimeIdentifiers>
 	</PropertyGroup>
 
-	<PropertyGroup Label="Custom properties">
-		<TailwindBuild>true</TailwindBuild>
-	</PropertyGroup>
-
 	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
 		<DebugType>None</DebugType>
 		<DebugSymbols>False</DebugSymbols>
-	</PropertyGroup>
-
-	<PropertyGroup Condition="'$(CI)' == 'true'">
-		<TailwindBuild>false</TailwindBuild>
 	</PropertyGroup>
 
 	<ItemGroup>

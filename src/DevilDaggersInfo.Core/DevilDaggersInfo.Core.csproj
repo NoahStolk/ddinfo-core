@@ -1,0 +1,57 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup Label="Package information">
+    <PackageId>DevilDaggersInfo.Core</PackageId>
+    <Authors>Noah Stolk</Authors>
+    <Copyright>Copyright © Noah Stolk</Copyright>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/NoahStolk/ddinfo-core</RepositoryUrl>
+    <Version>0.1.0</Version>
+  </PropertyGroup>
+
+  <PropertyGroup Label="Build properties">
+    <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
+  </PropertyGroup>
+
+  <Target DependsOnTargets="ResolveReferences" Name="CopyProjectReferencesToPackage">
+    <ItemGroup>
+      <BuildOutputInPackage Include="@(ReferenceCopyLocalPaths-&gt;WithMetadataValue('ReferenceSourceTarget', 'ProjectReference'))"/>
+    </ItemGroup>
+  </Target>
+
+  <ItemGroup Label="Internal dependencies to pack">
+    <ProjectReference Include="..\DevilDaggersInfo.Core.Asset\DevilDaggersInfo.Core.Asset.csproj">
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <IncludeAssets>DevilDaggersInfo.Core.Asset.dll</IncludeAssets>
+    </ProjectReference>
+    <ProjectReference Include="..\DevilDaggersInfo.Core.Common\DevilDaggersInfo.Core.Common.csproj">
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <IncludeAssets>DevilDaggersInfo.Core.Common.dll</IncludeAssets>
+    </ProjectReference>
+    <ProjectReference Include="..\DevilDaggersInfo.Core.CriteriaExpression\DevilDaggersInfo.Core.CriteriaExpression.csproj">
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <IncludeAssets>DevilDaggersInfo.Core.CriteriaExpression.dll</IncludeAssets>
+    </ProjectReference>
+    <ProjectReference Include="..\DevilDaggersInfo.Core.Encryption\DevilDaggersInfo.Core.Encryption.csproj">
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <IncludeAssets>DevilDaggersInfo.Core.Encryption.dll</IncludeAssets>
+    </ProjectReference>
+    <ProjectReference Include="..\DevilDaggersInfo.Core.Mod\DevilDaggersInfo.Core.Mod.csproj">
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <IncludeAssets>DevilDaggersInfo.Core.Mod.dll</IncludeAssets>
+    </ProjectReference>
+    <ProjectReference Include="..\DevilDaggersInfo.Core.Replay\DevilDaggersInfo.Core.Replay.csproj">
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <IncludeAssets>DevilDaggersInfo.Core.Replay.dll</IncludeAssets>
+    </ProjectReference>
+    <ProjectReference Include="..\DevilDaggersInfo.Core.Spawnset\DevilDaggersInfo.Core.Spawnset.csproj">
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <IncludeAssets>DevilDaggersInfo.Core.Spawnset.dll</IncludeAssets>
+    </ProjectReference>
+    <ProjectReference Include="..\DevilDaggersInfo.Core.Wiki\DevilDaggersInfo.Core.Wiki.csproj">
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <IncludeAssets>DevilDaggersInfo.Core.Wiki.dll</IncludeAssets>
+    </ProjectReference>
+  </ItemGroup>
+
+</Project>
