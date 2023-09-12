@@ -8,7 +8,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevilDaggersInfo.Core.Asset
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevilDaggersInfo.Core.Common", "DevilDaggersInfo.Core.Common\DevilDaggersInfo.Core.Common.csproj", "{A45271DA-D8D2-4BAA-83BA-31115C4FD702}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevilDaggersInfo.Common.Test", "test\DevilDaggersInfo.Common.Test\DevilDaggersInfo.Common.Test.csproj", "{79C2EF91-46DF-4E4D-A083-57C34D15A890}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevilDaggersInfo.Core.Common.Test", "test\DevilDaggersInfo.Core.Common.Test\DevilDaggersInfo.Core.Common.Test.csproj", "{79C2EF91-46DF-4E4D-A083-57C34D15A890}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevilDaggersInfo.Core.CriteriaExpression", "DevilDaggersInfo.Core.CriteriaExpression\DevilDaggersInfo.Core.CriteriaExpression.csproj", "{E80EC34D-4FC7-44D1-BD96-857DD3700AED}"
 EndProject

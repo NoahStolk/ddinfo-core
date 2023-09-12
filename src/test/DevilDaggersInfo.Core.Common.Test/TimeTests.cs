@@ -1,6 +1,6 @@
 using DevilDaggersInfo.Core.Common.Extensions;
 
-namespace DevilDaggersInfo.Common.Test;
+namespace DevilDaggersInfo.Core.Common.Test;
 
 [TestClass]
 public class TimeTests
