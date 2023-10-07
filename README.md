@@ -4,7 +4,7 @@
 
 The DevilDaggersInfo project offers a couple libraries for parsing and creating Devil Daggers files. This is what the website, the web server, and the tools depend on internally.
 
-(Note: This code was originally part of the [DevilDaggersInfo](https://github.com/NoahStolk/DevilDaggersInfo) repository. It was moved to a separate repository on September 12th, 2023.)
+(Note: This code was originally part of the [DevilDaggersInfo](https://github.com/NoahStolk/DevilDaggersInfo) repository (now ddinfo-web). It was moved to a separate repository on September 12th, 2023.)
 
 ## Spawnset files
 
