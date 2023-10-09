@@ -6,7 +6,7 @@
     <Copyright>Copyright © Noah Stolk</Copyright>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/NoahStolk/ddinfo-core</RepositoryUrl>
-    <Version>0.1.0</Version>
+    <Version>0.1.1-alpha.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Label="Build properties">
@@ -18,6 +18,11 @@
       <BuildOutputInPackage Include="@(ReferenceCopyLocalPaths-&gt;WithMetadataValue('ReferenceSourceTarget', 'ProjectReference'))"/>
     </ItemGroup>
   </Target>
+
+  <!-- TODO: This should be installed transitively from DevilDaggersInfo.Core.Mod. -->
+  <ItemGroup>
+    <PackageReference Include="SixLabors.ImageSharp" />
+  </ItemGroup>
 
   <ItemGroup Label="Internal dependencies to pack">
     <ProjectReference Include="..\DevilDaggersInfo.Core.Asset\DevilDaggersInfo.Core.Asset.csproj">

@@ -2,9 +2,9 @@
 
 [![NuGet Version](https://img.shields.io/nuget/v/DevilDaggersInfo.Core.svg)](https://www.nuget.org/packages/DevilDaggersInfo.Core/)
 
-The DevilDaggersInfo project offers a couple libraries for parsing and creating Devil Daggers files. This is what the website, the web server, and the tools depend on internally.
+Parsers and libraries to work with Devil Daggers files and process memory
 
-(Note: This code was originally part of the [DevilDaggersInfo](https://github.com/NoahStolk/DevilDaggersInfo) repository (now ddinfo-web). It was moved to a separate repository on September 12th, 2023.)
+(Note: This code was originally part of the [DevilDaggersInfo](https://github.com/NoahStolk/ddinfo-web) repository (now ddinfo-web). It was moved to a separate repository on September 12th, 2023.)
 
 ## Spawnset files
 
