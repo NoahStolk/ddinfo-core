@@ -1,5 +1,6 @@
 namespace DevilDaggersInfo.Core.Asset;
 
+// ReSharper disable StringLiteralTypo
 public static class DdTextures
 {
 	public static readonly IReadOnlyList<TextureAssetInfo> All = new List<TextureAssetInfo>

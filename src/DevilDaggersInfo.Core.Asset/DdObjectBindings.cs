@@ -1,5 +1,6 @@
 namespace DevilDaggersInfo.Core.Asset;
 
+// ReSharper disable StringLiteralTypo
 public static class DdObjectBindings
 {
 	public static readonly IReadOnlyList<ObjectBindingAssetInfo> All = new List<ObjectBindingAssetInfo>

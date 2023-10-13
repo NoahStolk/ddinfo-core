@@ -1,5 +1,6 @@
 namespace DevilDaggersInfo.Core.Asset;
 
+// ReSharper disable StringLiteralTypo
 public static class AudioAudio
 {
 	public static readonly IReadOnlyList<AudioAssetInfo> All = new List<AudioAssetInfo>

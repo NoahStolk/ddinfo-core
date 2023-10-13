@@ -2,6 +2,16 @@
 
 This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.3.0
+
+### Changed
+
+- Renamed `AssetContainer.GetIsProhibited` to `AssetContainer.IsProhibited`.
+
+### Fixed
+
+- Fixed allocating memory when calling `AssetContainer.IsProhibited`.
+
 ## 0.2.0
 
 ### Added

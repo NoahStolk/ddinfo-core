@@ -1,5 +1,4 @@
 using DevilDaggersInfo.Core.Asset;
-using System.Security.Cryptography;
 
 namespace DevilDaggersInfo.Core.Mod;
 
@@ -98,7 +97,7 @@ public sealed class ModBinaryToc
 		List<ModBinaryChunk> chunks = new();
 		foreach (ModBinaryChunk chunk in original.Chunks)
 		{
-			if (AssetContainer.GetIsProhibited(chunk.AssetType, chunk.Name))
+			if (AssetContainer.IsProhibited(chunk.AssetType, chunk.Name))
 				chunks.Add(chunk with { Name = chunk.Name.ToUpper() });
 			else
 				chunks.Add(chunk);

@@ -30,6 +30,7 @@ public class ModBinaryBuilder
 
 	public void AddAsset(string assetName, AssetType assetType, byte[] fileContents)
 	{
+		// TODO: Check if asset name and type combination already exists?
 		if (!Type.IsAssetTypeValid(assetType))
 			throw new InvalidModBinaryException($"Asset type '{assetType}' is not compatible with binary type '{Type}'.");
 

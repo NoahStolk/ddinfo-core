@@ -1,5 +1,6 @@
 namespace DevilDaggersInfo.Core.Asset;
 
+// ReSharper disable StringLiteralTypo
 public static class DdMeshes
 {
 	public static readonly IReadOnlyList<MeshAssetInfo> All = new List<MeshAssetInfo>

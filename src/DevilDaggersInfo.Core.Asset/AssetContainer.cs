@@ -4,6 +4,7 @@ namespace DevilDaggersInfo.Core.Asset;
 
 public static class AssetContainer
 {
+	// TODO: Check if there is still a valid reason to use this. Make obsolete if not.
 	public static List<AssetInfo> GetAll(AssetType assetType) => assetType switch
 	{
 		AssetType.Audio => AudioAudio.All.Cast<AssetInfo>().ToList(),
@@ -14,13 +15,26 @@ public static class AssetContainer
 		_ => throw new UnreachableException(),
 	};
 
-	public static bool GetIsProhibited(AssetType assetType, string assetName) => assetType switch
+	public static bool IsProhibited(AssetType assetType, string assetName) => assetType switch
 	{
-		AssetType.Audio => AudioAudio.All.FirstOrDefault(a => a.AssetName == assetName)?.IsProhibited ?? false,
-		AssetType.ObjectBinding => DdObjectBindings.All.FirstOrDefault(a => a.AssetName == assetName)?.IsProhibited ?? false,
-		AssetType.Mesh => DdMeshes.All.FirstOrDefault(a => a.AssetName == assetName)?.IsProhibited ?? false,
-		AssetType.Shader => DdShaders.All.FirstOrDefault(a => a.AssetName == assetName)?.IsProhibited ?? false,
-		AssetType.Texture => DdTextures.All.FirstOrDefault(a => a.AssetName == assetName)?.IsProhibited ?? false,
+		AssetType.Audio => IsProhibited(AudioAudio.All, assetName),
+		AssetType.ObjectBinding => IsProhibited(DdObjectBindings.All, assetName),
+		AssetType.Mesh => IsProhibited(DdMeshes.All, assetName),
+		AssetType.Shader => IsProhibited(DdShaders.All, assetName),
+		AssetType.Texture => IsProhibited(DdTextures.All, assetName),
 		_ => throw new UnreachableException(),
 	};
+
+	private static bool IsProhibited(IReadOnlyList<AssetInfo> assets, string assetName)
+	{
+		// Do not use LINQ here for memory allocation reasons.
+		for (int i = 0; i < assets.Count; i++)
+		{
+			AssetInfo assetInfo = assets[i];
+			if (assetInfo.AssetName == assetName)
+				return assetInfo.IsProhibited;
+		}
+
+		return false;
+	}
 }
