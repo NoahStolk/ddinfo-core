@@ -2,6 +2,12 @@
 
 This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.2.0
+
+### Added
+
+- Added `ModBinaryToc.EnableAllAssets` and `ModBinaryToc.DisableProhibitedAssets` methods.
+
 ## 0.1.1
 
 ### Fixed

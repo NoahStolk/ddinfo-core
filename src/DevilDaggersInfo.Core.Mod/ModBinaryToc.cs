@@ -1,4 +1,5 @@
 using DevilDaggersInfo.Core.Asset;
+using System.Security.Cryptography;
 
 namespace DevilDaggersInfo.Core.Mod;
 
@@ -75,6 +76,35 @@ public sealed class ModBinaryToc
 		}
 
 		throw new InvalidModBinaryException("Mod binary type could not be determined, probably because there are no assets.");
+	}
+
+	/// <summary>
+	/// Enables all assets in the TOC by converting their names to lowercase. All the original assets use lowercase names, so this is the default state.
+	/// </summary>
+	public static ModBinaryToc EnableAllAssets(ModBinaryToc original)
+	{
+		List<ModBinaryChunk> chunks = new();
+		foreach (ModBinaryChunk chunk in original.Chunks)
+			chunks.Add(chunk with { Name = chunk.Name.ToLower() });
+
+		return new(original.Type, chunks);
+	}
+
+	/// <summary>
+	/// Disables all prohibited assets in the TOC by converting their names to uppercase. These assets will not be loaded by the game, resulting in the mod not being prohibited.
+	/// </summary>
+	public static ModBinaryToc DisableProhibitedAssets(ModBinaryToc original)
+	{
+		List<ModBinaryChunk> chunks = new();
+		foreach (ModBinaryChunk chunk in original.Chunks)
+		{
+			if (AssetContainer.GetIsProhibited(chunk.AssetType, chunk.Name))
+				chunks.Add(chunk with { Name = chunk.Name.ToUpper() });
+			else
+				chunks.Add(chunk);
+		}
+
+		return new(original.Type, chunks);
 	}
 
 	private static uint GetSize(long totalStreamLength, BinaryReader br)
