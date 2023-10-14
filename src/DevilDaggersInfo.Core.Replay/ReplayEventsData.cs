@@ -93,6 +93,21 @@ public class ReplayEventsData
 			throw new ArgumentOutOfRangeException(nameof(index));
 
 		_events.Insert(index, e);
+		if (e is IEntitySpawnEvent spawnEvent)
+		{
+			// TODO: EntityId should be automatically calculated and not taken from the event.
+			_entityTypes.Insert(spawnEvent.EntityId, spawnEvent.EntityType);
+
+			// Increment all entity IDs that are higher than the added entity ID.
+			for (int i = 0; i < _events.Count; i++)
+			{
+				if (i == index)
+					continue;
+
+				if (_events[i] is IEntitySpawnEvent otherSpawnEvent && otherSpawnEvent.EntityId >= spawnEvent.EntityId)
+					otherSpawnEvent.EntityId++;
+			}
+		}
 
 		int? containingTick = null;
 		for (int i = 0; i < _eventOffsetsPerTick.Count; i++)
