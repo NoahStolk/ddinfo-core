@@ -78,7 +78,12 @@ public class ReplayEventsData
 			}
 
 			// For every tick that is after the event, decrement the offset by 1.
-			_eventOffsetsPerTick[i]--;
+			if (_eventOffsetsPerTick.Count > i && _eventOffsetsPerTick[i] > 0)
+				_eventOffsetsPerTick[i]--;
+
+			// If the tick offset is the same as the previous one, remove it.
+			if (i > 0 && _eventOffsetsPerTick.Count > i && _eventOffsetsPerTick[i] == _eventOffsetsPerTick[i - 1])
+				_eventOffsetsPerTick.RemoveAt(i);
 		}
 	}
 

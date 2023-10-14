@@ -262,4 +262,42 @@ public class ReplayEventsEditingTests
 				expectedOffset++; // Skull spawn event.
 		}
 	}
+
+	[TestMethod]
+	public void RemoveAllEvents()
+	{
+		for (int i = 0; i < _eventCount - 2; i++)
+			_replay.EventsData.RemoveEvent(2); // Do not remove initial hits and initial inputs event.
+
+		Assert.AreEqual(2, _replay.EventsData.Events.Count);
+		Assert.AreEqual(2, _replay.EventsData.EventOffsetsPerTick.Count);
+		Assert.AreEqual(1, _replay.EventsData.EntityTypes.Count);
+
+		Assert.IsInstanceOfType<HitEvent>(_replay.EventsData.Events[0]);
+		Assert.IsInstanceOfType<InitialInputsEvent>(_replay.EventsData.Events[1]);
+
+		Assert.AreEqual(0, _replay.EventsData.EventOffsetsPerTick[0]);
+		Assert.AreEqual(2, _replay.EventsData.EventOffsetsPerTick[1]);
+
+		Assert.AreEqual(EntityType.Zero, _replay.EventsData.EntityTypes[0]);
+	}
+
+	[TestMethod]
+	public void RemoveAllEventsReverse()
+	{
+		for (int i = _eventCount - 1; i >= 2; i--)
+			_replay.EventsData.RemoveEvent(i); // Do not remove initial hits and initial inputs event.
+
+		Assert.AreEqual(2, _replay.EventsData.Events.Count);
+		Assert.AreEqual(2, _replay.EventsData.EventOffsetsPerTick.Count);
+		Assert.AreEqual(1, _replay.EventsData.EntityTypes.Count);
+
+		Assert.IsInstanceOfType<HitEvent>(_replay.EventsData.Events[0]);
+		Assert.IsInstanceOfType<InitialInputsEvent>(_replay.EventsData.Events[1]);
+
+		Assert.AreEqual(0, _replay.EventsData.EventOffsetsPerTick[0]);
+		Assert.AreEqual(2, _replay.EventsData.EventOffsetsPerTick[1]);
+
+		Assert.AreEqual(EntityType.Zero, _replay.EventsData.EntityTypes[0]);
+	}
 }
