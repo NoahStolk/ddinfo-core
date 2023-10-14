@@ -9,6 +9,8 @@ public record ThornSpawnEvent(int EntityId, int A, Vector3 Position, float Rotat
 	public Vector3 Position = Position;
 	public float RotationInRadians = RotationInRadians;
 
+	public int EntityId { get; set; } = EntityId;
+
 	public EntityType EntityType => EntityType.Thorn;
 
 	public void Write(BinaryWriter bw)

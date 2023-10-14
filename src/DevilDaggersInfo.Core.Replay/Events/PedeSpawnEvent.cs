@@ -12,6 +12,8 @@ public record PedeSpawnEvent(int EntityId, PedeType PedeType, int A, Vector3 Pos
 	public Vector3 B = B;
 	public Matrix3x3 Orientation = Orientation;
 
+	public int EntityId { get; set; } = EntityId;
+
 	public EntityType EntityType => PedeType switch
 	{
 		PedeType.Centipede => EntityType.Centipede,

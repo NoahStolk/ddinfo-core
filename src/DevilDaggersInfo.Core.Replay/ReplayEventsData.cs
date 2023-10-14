@@ -47,7 +47,19 @@ public class ReplayEventsData
 
 		IEvent e = _events[index];
 		if (e is IEntitySpawnEvent spawnEvent)
+		{
 			_entityTypes.RemoveAt(spawnEvent.EntityId);
+
+			// Decrement all entity IDs that are higher than the removed entity ID.
+			for (int i = 0; i < _events.Count; i++)
+			{
+				if (i == index)
+					continue;
+
+				if (_events[i] is IEntitySpawnEvent otherSpawnEvent && otherSpawnEvent.EntityId > spawnEvent.EntityId)
+					otherSpawnEvent.EntityId--;
+			}
+		}
 
 		_events.Remove(e);
 

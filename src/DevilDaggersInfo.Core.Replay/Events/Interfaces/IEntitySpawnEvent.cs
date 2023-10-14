@@ -4,7 +4,7 @@ namespace DevilDaggersInfo.Core.Replay.Events.Interfaces;
 
 public interface IEntitySpawnEvent : IEvent
 {
-	int EntityId { get; }
+	int EntityId { get; internal set; }
 
 	EntityType EntityType { get; }
 }

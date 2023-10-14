@@ -1,4 +1,5 @@
 using DevilDaggersInfo.Core.Replay.Events.Enums;
+using DevilDaggersInfo.Core.Replay.Events.Interfaces;
 using System.Diagnostics.CodeAnalysis;
 
 namespace DevilDaggersInfo.Core.Replay.Test;
@@ -29,6 +30,16 @@ public class ReplayEventsEditingTests
 		// Check initial event offsets per tick.
 		Assert.AreEqual(_tickCount, _replay.EventsData.EventOffsetsPerTick.Count);
 		ValidateOriginalTicks(_tickCount);
+
+		// Check initial entity IDs.
+		ValidateOriginalEntityIds();
+	}
+
+	private static void AssertEntityId<TEvent>(IEvent e, int expectedEntityId)
+		where TEvent : IEntitySpawnEvent
+	{
+		Assert.IsInstanceOfType<TEvent>(e);
+		Assert.AreEqual(expectedEntityId, ((TEvent)e).EntityId);
 	}
 
 	private void ValidateOriginalEntityTypes()
@@ -58,6 +69,15 @@ public class ReplayEventsEditingTests
 		}
 	}
 
+	private void ValidateOriginalEntityIds()
+	{
+		AssertEntityId<SquidSpawnEvent>(_replay.EventsData.Events[2], 1);
+		AssertEntityId<BoidSpawnEvent>(_replay.EventsData.Events[3], 2);
+		AssertEntityId<BoidSpawnEvent>(_replay.EventsData.Events[24], 3);
+		AssertEntityId<BoidSpawnEvent>(_replay.EventsData.Events[45], 4);
+		AssertEntityId<BoidSpawnEvent>(_replay.EventsData.Events[66], 5);
+	}
+
 	[TestMethod]
 	public void AddGemEvent()
 	{
@@ -72,6 +92,7 @@ public class ReplayEventsEditingTests
 
 		// Original data should be unchanged.
 		ValidateOriginalEntityTypes();
+		ValidateOriginalEntityIds();
 		ValidateOriginalTicks(_tickCount - 1); // Except for the last tick, which now has an extra event.
 		Assert.AreEqual(_eventCount + 1, _replay.EventsData.EventOffsetsPerTick[^1]);
 	}
@@ -95,6 +116,7 @@ public class ReplayEventsEditingTests
 
 		// Original data should be unchanged.
 		ValidateOriginalEntityTypes();
+		ValidateOriginalEntityIds();
 		ValidateOriginalTicks(_tickCount - 1); // Except for the last tick, which now has an extra event.
 		Assert.AreEqual(_eventCount + 1, _replay.EventsData.EventOffsetsPerTick[^1]);
 	}
@@ -113,6 +135,7 @@ public class ReplayEventsEditingTests
 
 		// Original data should be unchanged.
 		ValidateOriginalEntityTypes();
+		ValidateOriginalEntityIds();
 		ValidateOriginalTicks(_tickCount - 1); // Except for the last tick, which now has an extra event.
 		Assert.AreEqual(_eventCount + 1, _replay.EventsData.EventOffsetsPerTick[^1]);
 	}
@@ -131,6 +154,13 @@ public class ReplayEventsEditingTests
 
 		// Original data should be unchanged.
 		ValidateOriginalEntityTypes();
+
+		// Entity IDs should be unchanged, but their indexes should be decremented.
+		AssertEntityId<SquidSpawnEvent>(_replay.EventsData.Events[1], 1);
+		AssertEntityId<BoidSpawnEvent>(_replay.EventsData.Events[2], 2);
+		AssertEntityId<BoidSpawnEvent>(_replay.EventsData.Events[23], 3);
+		AssertEntityId<BoidSpawnEvent>(_replay.EventsData.Events[44], 4);
+		AssertEntityId<BoidSpawnEvent>(_replay.EventsData.Events[65], 5);
 
 		// Offsets should be changed.
 		int expectedOffset = 0;
@@ -165,6 +195,12 @@ public class ReplayEventsEditingTests
 		Assert.AreEqual(EntityType.Squid1, _replay.EventsData.EntityTypes[1]);
 		for (int i = 2; i < _entityCount - 1; i++)
 			Assert.AreEqual(EntityType.Skull1, _replay.EventsData.EntityTypes[i]);
+
+		// Entity IDs should be changed.
+		AssertEntityId<SquidSpawnEvent>(_replay.EventsData.Events[2], 1);
+		AssertEntityId<BoidSpawnEvent>(_replay.EventsData.Events[23], 2);
+		AssertEntityId<BoidSpawnEvent>(_replay.EventsData.Events[44], 3);
+		AssertEntityId<BoidSpawnEvent>(_replay.EventsData.Events[65], 4);
 
 		// Offsets should be changed.
 		int expectedOffset = 0;
@@ -201,6 +237,13 @@ public class ReplayEventsEditingTests
 
 		// Original data should be unchanged.
 		ValidateOriginalEntityTypes();
+
+		// Entity IDs should be unchanged, but their indexes should be decremented.
+		AssertEntityId<SquidSpawnEvent>(_replay.EventsData.Events[2], 1);
+		AssertEntityId<BoidSpawnEvent>(_replay.EventsData.Events[3], 2);
+		AssertEntityId<BoidSpawnEvent>(_replay.EventsData.Events[23], 3);
+		AssertEntityId<BoidSpawnEvent>(_replay.EventsData.Events[44], 4);
+		AssertEntityId<BoidSpawnEvent>(_replay.EventsData.Events[65], 5);
 
 		// Offsets should be changed.
 		int expectedOffset = 0;

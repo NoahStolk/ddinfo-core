@@ -13,6 +13,8 @@ public record BoidSpawnEvent(int EntityId, int SpawnerEntityId, BoidType BoidTyp
 	public Vector3 Velocity = Velocity;
 	public float Speed = Speed;
 
+	public int EntityId { get; set; } = EntityId;
+
 	public EntityType EntityType => BoidType switch
 	{
 		BoidType.Skull1 => EntityType.Skull1,
