@@ -1,10 +1,8 @@
 using DevilDaggersInfo.Core.Replay.Events.Interfaces;
-using System.Runtime.InteropServices;
 
 namespace DevilDaggersInfo.Core.Replay.Events;
 
-[StructLayout(LayoutKind.Sequential)]
-public record struct HitEvent(int EntityIdA, int EntityIdB, int UserData) : IEvent
+public record HitEvent(int EntityIdA, int EntityIdB, int UserData) : IEvent
 {
 	public int EntityIdA = EntityIdA;
 	public int EntityIdB = EntityIdB;

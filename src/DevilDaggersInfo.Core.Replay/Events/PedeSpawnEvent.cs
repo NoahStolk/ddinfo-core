@@ -1,12 +1,10 @@
 using DevilDaggersInfo.Core.Replay.Events.Enums;
 using DevilDaggersInfo.Core.Replay.Events.Interfaces;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 
 namespace DevilDaggersInfo.Core.Replay.Events;
 
-[StructLayout(LayoutKind.Sequential)]
-public record struct PedeSpawnEvent(int EntityId, PedeType PedeType, int A, Vector3 Position, Vector3 B, Matrix3x3 Orientation) : IEntitySpawnEvent
+public record PedeSpawnEvent(int EntityId, PedeType PedeType, int A, Vector3 Position, Vector3 B, Matrix3x3 Orientation) : IEntitySpawnEvent
 {
 	public PedeType PedeType = PedeType;
 	public int A = A;

@@ -1,12 +1,10 @@
 using DevilDaggersInfo.Core.Replay.Events.Enums;
 using DevilDaggersInfo.Core.Replay.Events.Interfaces;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 
 namespace DevilDaggersInfo.Core.Replay.Events;
 
-[StructLayout(LayoutKind.Sequential)]
-public record struct SpiderSpawnEvent(int EntityId, SpiderType SpiderType, int A, Vector3 Position) : IEntitySpawnEvent
+public record SpiderSpawnEvent(int EntityId, SpiderType SpiderType, int A, Vector3 Position) : IEntitySpawnEvent
 {
 	public SpiderType SpiderType = SpiderType;
 	public int A = A;

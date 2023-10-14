@@ -1,10 +1,8 @@
 using DevilDaggersInfo.Core.Replay.Events.Interfaces;
-using System.Runtime.InteropServices;
 
 namespace DevilDaggersInfo.Core.Replay.Events;
 
-[StructLayout(LayoutKind.Sequential)]
-public record struct EntityPositionEvent(int EntityId, Int16Vec3 Position) : IEvent
+public record EntityPositionEvent(int EntityId, Int16Vec3 Position) : IEvent
 {
 	public int EntityId = EntityId;
 	public Int16Vec3 Position = Position;

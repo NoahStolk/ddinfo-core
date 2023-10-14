@@ -1,5 +1,7 @@
 using DevilDaggersInfo.Core.Replay.Events.Enums;
+using DevilDaggersInfo.Core.Replay.Events.Interfaces;
 using DevilDaggersInfo.Core.Replay.Numerics;
+using System.Numerics;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -36,7 +38,7 @@ public class ReplayBinaryTests
 			replayBinary.EventsData.AddEvent(new InputsEvent(true, false, false, false, JumpType.None, ShootType.None, ShootType.None, 10, 0));
 		}
 
-		replayBinary.EventsData.AddEvent(default(EndEvent));
+		replayBinary.EventsData.AddEvent(new EndEvent());
 
 		byte[] replayBuffer = replayBinary.Compile();
 
@@ -45,6 +47,57 @@ public class ReplayBinaryTests
 		Assert.AreEqual(replayBinary.EventsData.Events.Count, replayBinaryFromBuffer.EventsData.Events.Count);
 		for (int i = 0; i < replayBinary.EventsData.Events.Count; i++)
 			Assert.AreEqual(replayBinary.EventsData.Events[i], replayBinaryFromBuffer.EventsData.Events[i]);
+	}
+
+	[TestMethod]
+	public void ParseAndEditAndCompileEvents()
+	{
+		string replayFilePath = Path.Combine("Resources", "SkullTest.ddreplay");
+		byte[] replayBuffer = File.ReadAllBytes(replayFilePath);
+		ReplayBinary<LocalReplayBinaryHeader> replayBinary = new(replayBuffer);
+
+		int skullsAccessed = 0;
+		foreach (IEvent e in replayBinary.EventsData.Events)
+		{
+			if (e is not BoidSpawnEvent boid)
+				continue;
+
+			Assert.AreEqual(new(20, 20, 20), boid.Position);
+			boid.Position = new(10, 10, 10);
+			skullsAccessed++;
+		}
+
+		Assert.AreEqual(4, skullsAccessed);
+
+		foreach (IEvent e in replayBinary.EventsData.Events)
+		{
+			if (e is not BoidSpawnEvent boid)
+				continue;
+
+			Assert.AreEqual(new(10, 10, 10), boid.Position);
+			skullsAccessed++;
+		}
+
+		Assert.AreEqual(8, skullsAccessed);
+
+		byte[] compiledReplayBuffer = replayBinary.Compile();
+
+		ReplayBinary<LocalReplayBinaryHeader> replayBinaryFromBuffer = new(compiledReplayBuffer);
+
+		Assert.AreEqual(replayBinary.EventsData.Events.Count, replayBinaryFromBuffer.EventsData.Events.Count);
+		for (int i = 0; i < replayBinary.EventsData.Events.Count; i++)
+			Assert.AreEqual(replayBinary.EventsData.Events[i], replayBinaryFromBuffer.EventsData.Events[i]);
+
+		foreach (IEvent e in replayBinary.EventsData.Events)
+		{
+			if (e is not BoidSpawnEvent boid)
+				continue;
+
+			Assert.AreEqual(new(10, 10, 10), boid.Position);
+			skullsAccessed++;
+		}
+
+		Assert.AreEqual(12, skullsAccessed);
 	}
 
 	[DataTestMethod]

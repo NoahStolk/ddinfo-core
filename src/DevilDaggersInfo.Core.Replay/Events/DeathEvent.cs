@@ -1,10 +1,8 @@
 using DevilDaggersInfo.Core.Replay.Events.Interfaces;
-using System.Runtime.InteropServices;
 
 namespace DevilDaggersInfo.Core.Replay.Events;
 
-[StructLayout(LayoutKind.Sequential)]
-public record struct DeathEvent(int DeathType) : IEvent
+public record DeathEvent(int DeathType) : IEvent
 {
 	public int DeathType = DeathType;
 

@@ -1,11 +1,9 @@
 using DevilDaggersInfo.Core.Replay.Events.Interfaces;
-using System.Runtime.InteropServices;
 
 namespace DevilDaggersInfo.Core.Replay.Events;
 
 // TODO: One of these vectors is likely the skull position when it is transmuted.
-[StructLayout(LayoutKind.Sequential)]
-public record struct TransmuteEvent(int EntityId, Int16Vec3 A, Int16Vec3 B, Int16Vec3 C, Int16Vec3 D) : IEvent
+public record TransmuteEvent(int EntityId, Int16Vec3 A, Int16Vec3 B, Int16Vec3 C, Int16Vec3 D) : IEvent
 {
 	public int EntityId = EntityId;
 	public Int16Vec3 A = A;

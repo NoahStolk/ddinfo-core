@@ -27,10 +27,10 @@ public static class ReplayEventsParser
 				0x02 => ParseEntityOrientationEvent(br),
 				0x04 => ParseEntityTargetEvent(br),
 				0x05 => ParseHitEvent(br),
-				0x06 => default(GemEvent),
+				0x06 => new GemEvent(),
 				0x07 => ParseTransmuteEvent(br),
 				0x09 => parsedInitialInput ? ParseInputsEvent(br) : ParseInitialInputsEvent(br),
-				0x0b => default(EndEvent),
+				0x0b => new EndEvent(),
 				_ => throw new InvalidReplayBinaryException($"Invalid event type '{eventType}'."),
 			};
 			eventsData.AddEvent(e);

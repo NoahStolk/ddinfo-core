@@ -2,6 +2,12 @@
 
 This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.5.0
+
+### Changed
+
+- Replay events are now reference types instead of value types. They were already being boxed, so this change should not affect performance. This fixes some issues where the values would be copied and couldn't be edited directly.
+
 ## 0.4.0
 
 ### Changed
