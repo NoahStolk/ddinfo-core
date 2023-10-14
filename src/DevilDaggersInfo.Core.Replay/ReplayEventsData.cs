@@ -52,22 +52,21 @@ public class ReplayEventsData
 		_events.Remove(e);
 
 		int? containingTick = null;
+		bool isInputsEvent = e is InputsEvent;
 		for (int i = 0; i < _eventOffsetsPerTick.Count; i++)
 		{
 			if (index >= _eventOffsetsPerTick[i])
 				continue; // Skip ticks that are before the event.
 
-			// The first tick that does not lie before the event is the tick that contains the event.
-			containingTick ??= i;
+			// Remove the tick offset when removing an inputs event.
+			if (!containingTick.HasValue && isInputsEvent)
+			{
+				_eventOffsetsPerTick.RemoveAt(i);
+				containingTick = i;
+			}
 
 			// For every tick that is after the event, decrement the offset by 1.
 			_eventOffsetsPerTick[i]--;
-		}
-
-		// Remove empty tick if needed. This always means an input event was removed.
-		if (containingTick.HasValue && _eventOffsetsPerTick[containingTick.Value] == 0)
-		{
-			_eventOffsetsPerTick.RemoveAt(containingTick.Value);
 		}
 	}
 
