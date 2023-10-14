@@ -147,4 +147,40 @@ public class ReplayEventsEditingTests
 				expectedOffset++; // Skull spawn event.
 		}
 	}
+
+	[TestMethod]
+	public void RemoveSpawnEvent()
+	{
+		_replay.EventsData.RemoveEvent(3); // Remove the first Skull spawn.
+
+		// There should be one less event and one less entity.
+		Assert.AreEqual(_eventCount - 1, _replay.EventsData.Events.Count);
+		Assert.AreEqual(_entityCount - 1, _replay.EventsData.EntityTypes.Count);
+
+		// There shouldn't be any new ticks.
+		Assert.AreEqual(_tickCount, _replay.EventsData.EventOffsetsPerTick.Count);
+
+		// There should be one less entity.
+		Assert.AreEqual(EntityType.Zero, _replay.EventsData.EntityTypes[0]);
+		Assert.AreEqual(EntityType.Squid1, _replay.EventsData.EntityTypes[1]);
+		for (int i = 2; i < _entityCount - 1; i++)
+			Assert.AreEqual(EntityType.Skull1, _replay.EventsData.EntityTypes[i]);
+
+		// Offsets should be changed.
+		int expectedOffset = 0;
+		for (int i = 0; i < _tickCount; i++)
+		{
+			int offset = _replay.EventsData.EventOffsetsPerTick[i];
+			Assert.AreEqual(expectedOffset, offset);
+
+			expectedOffset++; // Inputs event.
+
+			if (i == 0)
+				expectedOffset++; // Hit event 53333...
+			else if (i == 1)
+				expectedOffset++; // Squid spawn event.
+			else if (i is 21 or 41 or 61)
+				expectedOffset++; // Skull spawn event.
+		}
+	}
 }

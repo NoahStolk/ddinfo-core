@@ -45,7 +45,11 @@ public class ReplayEventsData
 		if (index < 0 || index >= _events.Count)
 			throw new ArgumentOutOfRangeException(nameof(index));
 
-		_events.RemoveAt(index);
+		IEvent e = _events[index];
+		if (e is IEntitySpawnEvent spawnEvent)
+			_entityTypes.RemoveAt(spawnEvent.EntityId);
+
+		_events.Remove(e);
 
 		int? containingTick = null;
 		for (int i = 0; i < _eventOffsetsPerTick.Count; i++)
