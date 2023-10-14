@@ -73,6 +73,7 @@ public class ReplayEventsEditingTests
 		// Original data should be unchanged.
 		ValidateOriginalEntityTypes();
 		ValidateOriginalTicks(_tickCount - 1); // Except for the last tick, which now has an extra event.
+		Assert.AreEqual(_eventCount + 1, _replay.EventsData.EventOffsetsPerTick[^1]);
 	}
 
 	[TestMethod]
@@ -95,6 +96,7 @@ public class ReplayEventsEditingTests
 		// Original data should be unchanged.
 		ValidateOriginalEntityTypes();
 		ValidateOriginalTicks(_tickCount - 1); // Except for the last tick, which now has an extra event.
+		Assert.AreEqual(_eventCount + 1, _replay.EventsData.EventOffsetsPerTick[^1]);
 	}
 
 	[TestMethod]
@@ -112,5 +114,37 @@ public class ReplayEventsEditingTests
 		// Original data should be unchanged.
 		ValidateOriginalEntityTypes();
 		ValidateOriginalTicks(_tickCount - 1); // Except for the last tick, which now has an extra event.
+		Assert.AreEqual(_eventCount + 1, _replay.EventsData.EventOffsetsPerTick[^1]);
+	}
+
+	[TestMethod]
+	public void RemoveHitEvent()
+	{
+		_replay.EventsData.RemoveEvent(0);
+
+		// There should be one less event.
+		Assert.AreEqual(_eventCount - 1, _replay.EventsData.Events.Count);
+
+		// There shouldn't be any new ticks or entities.
+		Assert.AreEqual(_tickCount, _replay.EventsData.EventOffsetsPerTick.Count);
+		Assert.AreEqual(_entityCount, _replay.EventsData.EntityTypes.Count);
+
+		// Original data should be unchanged.
+		ValidateOriginalEntityTypes();
+
+		// Offsets should be changed.
+		int expectedOffset = 0;
+		for (int i = 0; i < _tickCount; i++)
+		{
+			int offset = _replay.EventsData.EventOffsetsPerTick[i];
+			Assert.AreEqual(expectedOffset, offset);
+
+			expectedOffset++; // Inputs event.
+
+			if (i == 1)
+				expectedOffset += 2; // Squid and Skull spawn events.
+			else if (i is 21 or 41 or 61)
+				expectedOffset++; // Skull spawn event.
+		}
 	}
 }

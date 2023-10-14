@@ -50,7 +50,7 @@ public class ReplayEventsData
 		int? containingTick = null;
 		for (int i = 0; i < _eventOffsetsPerTick.Count; i++)
 		{
-			if (index > _eventOffsetsPerTick[i])
+			if (index >= _eventOffsetsPerTick[i])
 				continue; // Skip ticks that are before the event.
 
 			// The first tick that does not lie before the event is the tick that contains the event.
@@ -77,7 +77,7 @@ public class ReplayEventsData
 		int? containingTick = null;
 		for (int i = 0; i < _eventOffsetsPerTick.Count; i++)
 		{
-			if (index > _eventOffsetsPerTick[i])
+			if (index >= _eventOffsetsPerTick[i])
 				continue; // Skip ticks that are before the event.
 
 			// The first tick that does not lie before the event is the tick that contains the event.
