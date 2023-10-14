@@ -1,11 +1,20 @@
 using DevilDaggersInfo.Core.Replay.Events.Enums;
 using DevilDaggersInfo.Core.Replay.Events.Interfaces;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace DevilDaggersInfo.Core.Replay.Events;
 
-public readonly record struct BoidSpawnEvent(int EntityId, int SpawnerEntityId, BoidType BoidType, Int16Vec3 Position, Int16Mat3x3 Orientation, Vector3 Velocity, float Speed) : IEntitySpawnEvent
+[StructLayout(LayoutKind.Sequential)]
+public record struct BoidSpawnEvent(int EntityId, int SpawnerEntityId, BoidType BoidType, Int16Vec3 Position, Int16Mat3x3 Orientation, Vector3 Velocity, float Speed) : IEntitySpawnEvent
 {
+	public int SpawnerEntityId = SpawnerEntityId;
+	public BoidType BoidType = BoidType;
+	public Int16Vec3 Position = Position;
+	public Int16Mat3x3 Orientation = Orientation;
+	public Vector3 Velocity = Velocity;
+	public float Speed = Speed;
+
 	public EntityType EntityType => BoidType switch
 	{
 		BoidType.Skull1 => EntityType.Skull1,

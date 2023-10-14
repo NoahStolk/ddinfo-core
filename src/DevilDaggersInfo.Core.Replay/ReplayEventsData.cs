@@ -34,7 +34,7 @@ public class ReplayEventsData
 		_events.Add(e);
 		_eventOffsetsPerTick[^1]++;
 
-		if (e is IInputsEvent)
+		if (e is InputsEvent or InitialInputsEvent)
 			_eventOffsetsPerTick.Add(_events.Count);
 		else if (e is IEntitySpawnEvent ese)
 			_entityTypes.Add(ese.EntityType);

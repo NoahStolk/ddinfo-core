@@ -2,6 +2,17 @@
 
 This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.4.0
+
+### Changed
+
+- Replay events are no longer immutable.
+- Most replay event fields are now fields instead of properties. Values that are not supposed to be edited (in other words, are not written to the replay events buffer) are still properties.
+
+### Removed
+
+- Removed `IInputsEvent` interface.
+
 ## 0.3.0
 
 ### Changed

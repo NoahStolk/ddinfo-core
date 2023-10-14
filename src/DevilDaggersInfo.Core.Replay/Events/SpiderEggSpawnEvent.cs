@@ -1,10 +1,16 @@
 using DevilDaggersInfo.Core.Replay.Events.Enums;
 using DevilDaggersInfo.Core.Replay.Events.Interfaces;
+using System.Runtime.InteropServices;
 
 namespace DevilDaggersInfo.Core.Replay.Events;
 
-public readonly record struct SpiderEggSpawnEvent(int EntityId, int SpawnerEntityId, Vector3 Position, Vector3 TargetPosition) : IEntitySpawnEvent
+[StructLayout(LayoutKind.Sequential)]
+public record struct SpiderEggSpawnEvent(int EntityId, int SpawnerEntityId, Vector3 Position, Vector3 TargetPosition) : IEntitySpawnEvent
 {
+	public int SpawnerEntityId = SpawnerEntityId;
+	public Vector3 Position = Position;
+	public Vector3 TargetPosition = TargetPosition;
+
 	public EntityType EntityType => EntityType.SpiderEgg;
 
 	public void Write(BinaryWriter bw)

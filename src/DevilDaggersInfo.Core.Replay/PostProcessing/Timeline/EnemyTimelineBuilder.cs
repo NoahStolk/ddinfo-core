@@ -53,7 +53,7 @@ public class EnemyTimelineBuilder
 
 				enemy.Transmute();
 			}
-			else if (e is IInputsEvent)
+			else if (e is InputsEvent or InitialInputsEvent)
 			{
 				currentTick++;
 			}

@@ -1,10 +1,16 @@
 using DevilDaggersInfo.Core.Replay.Events.Enums;
 using DevilDaggersInfo.Core.Replay.Events.Interfaces;
+using System.Runtime.InteropServices;
 
 namespace DevilDaggersInfo.Core.Replay.Events;
 
-public readonly record struct ThornSpawnEvent(int EntityId, int A, Vector3 Position, float RotationInRadians) : IEntitySpawnEvent
+[StructLayout(LayoutKind.Sequential)]
+public record struct ThornSpawnEvent(int EntityId, int A, Vector3 Position, float RotationInRadians) : IEntitySpawnEvent
 {
+	public int A = A;
+	public Vector3 Position = Position;
+	public float RotationInRadians = RotationInRadians;
+
 	public EntityType EntityType => EntityType.Thorn;
 
 	public void Write(BinaryWriter bw)

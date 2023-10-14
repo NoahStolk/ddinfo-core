@@ -1,6 +1,7 @@
 using DevilDaggersInfo.Core.Replay.Events.Enums;
 using DevilDaggersInfo.Core.Replay.Events.Interfaces;
 using DevilDaggersInfo.Core.Spawnset;
+using System.Diagnostics;
 
 namespace DevilDaggersInfo.Core.Replay.PostProcessing.ReplaySimulation;
 
@@ -35,10 +36,16 @@ public static class ReplaySimulationBuilder
 					break;
 				}
 
-				case IInputsEvent inputs:
+				case InputsEvent or InitialInputsEvent:
 				{
-					ProcessInputs(spawnset, lookSpeed, inputs, playerContext, ticks);
-					playerInputSnapshots.Add(new(inputs.Left, inputs.Right, inputs.Forward, inputs.Backward, inputs.Jump, inputs.Shoot, inputs.ShootHoming, inputs.MouseX, inputs.MouseY));
+					PlayerInputSnapshot inputSnapshot = e switch
+					{
+						InputsEvent ie => new(ie.Left, ie.Right, ie.Forward, ie.Backward, ie.Jump, ie.Shoot, ie.ShootHoming, ie.MouseX, ie.MouseY),
+						InitialInputsEvent iie => new(iie.Left, iie.Right, iie.Forward, iie.Backward, iie.Jump, iie.Shoot, iie.ShootHoming, iie.MouseX, iie.MouseY),
+						_ => throw new UnreachableException(),
+					};
+					ProcessInputs(spawnset, lookSpeed, inputSnapshot, playerContext, ticks);
+					playerInputSnapshots.Add(inputSnapshot);
 					ticks++;
 					break;
 				}
@@ -52,7 +59,7 @@ public static class ReplaySimulationBuilder
 		return new(playerMovementSnapshots, playerInputSnapshots, soundSnapshots);
 	}
 
-	private static void ProcessInputs(SpawnsetBinary spawnset, float lookSpeed, IInputsEvent inputs, PlayerContext playerContext, int ticks)
+	private static void ProcessInputs(SpawnsetBinary spawnset, float lookSpeed, PlayerInputSnapshot inputSnapshot, PlayerContext playerContext, int ticks)
 	{
 		// Player movement constants
 		const float velocityEpsilon = 0.01f;
@@ -60,8 +67,8 @@ public static class ReplaySimulationBuilder
 		const float gravityForce = 0.016f / 60f;
 
 		// Orientation
-		float yaw = lookSpeed * -inputs.MouseX;
-		float pitch = lookSpeed * inputs.MouseY;
+		float yaw = lookSpeed * -inputSnapshot.MouseX;
+		float pitch = lookSpeed * inputSnapshot.MouseY;
 		pitch = Math.Clamp(pitch, ToRadians(-89.999f), ToRadians(89.999f));
 
 		playerContext.Rotation *= Quaternion.CreateFromYawPitchRoll(yaw, -pitch, 0);
@@ -97,7 +104,7 @@ public static class ReplaySimulationBuilder
 			playerContext.VelocityY = 0;
 			playerContext.Velocity *= 57 * (1 / 60f);
 
-			if (playerContext.JumpCooldown <= 0 && inputs.Jump is JumpType.StartedPress or JumpType.Hold)
+			if (playerContext.JumpCooldown <= 0 && inputSnapshot.Jump is JumpType.StartedPress or JumpType.Hold)
 			{
 				playerContext.JumpCooldown = 10; // Guess
 				playerContext.VelocityY = 0.1f; // Guess
@@ -120,7 +127,7 @@ public static class ReplaySimulationBuilder
 		// WASD movement
 		Vector2 GetWishDirection()
 		{
-			Vector3 axisAlignedWishDirection = new(Convert.ToInt32(inputs.Left) - Convert.ToInt32(inputs.Right), 0, Convert.ToInt32(inputs.Forward) - Convert.ToInt32(inputs.Backward));
+			Vector3 axisAlignedWishDirection = new(Convert.ToInt32(inputSnapshot.Left) - Convert.ToInt32(inputSnapshot.Right), 0, Convert.ToInt32(inputSnapshot.Forward) - Convert.ToInt32(inputSnapshot.Backward));
 			Vector3 wishDirection3d = Vector3.Transform(axisAlignedWishDirection, Matrix4x4.CreateFromQuaternion(playerContext.Rotation));
 			Vector2 wishDirection = new(wishDirection3d.X, wishDirection3d.Z);
 
@@ -132,10 +139,10 @@ public static class ReplaySimulationBuilder
 		float horizontalSpeed = playerContext.Velocity.Length();
 
 		// TODO: When switching directions quickly, decrease accelerationAir by a lot. Air control should be controllable but this control should be lost when changing direction quickly.
-		bool onlyLeft = inputs is { Left: true, Right: false };
-		bool onlyRight = inputs is { Right: true, Left: false };
-		bool onlyForward = inputs is { Forward: true, Backward: false };
-		bool onlyBackward = inputs is { Backward: true, Forward: false };
+		bool onlyLeft = inputSnapshot is { Left: true, Right: false };
+		bool onlyRight = inputSnapshot is { Right: true, Left: false };
+		bool onlyForward = inputSnapshot is { Forward: true, Backward: false };
+		bool onlyBackward = inputSnapshot is { Backward: true, Forward: false };
 		bool isStrafing = onlyLeft && onlyForward || onlyLeft && onlyBackward || onlyRight && onlyForward || onlyRight && onlyBackward;
 		float actualMoveSpeed = isStrafing ? moveSpeed * 1.41f : moveSpeed;
 		float addSpeed = Math.Clamp(actualMoveSpeed - horizontalSpeed, 0, 1 / 60f);

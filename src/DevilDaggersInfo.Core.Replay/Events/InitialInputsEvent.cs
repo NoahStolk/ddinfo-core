@@ -1,10 +1,23 @@
 using DevilDaggersInfo.Core.Replay.Events.Enums;
 using DevilDaggersInfo.Core.Replay.Events.Interfaces;
+using System.Runtime.InteropServices;
 
 namespace DevilDaggersInfo.Core.Replay.Events;
 
-public readonly record struct InitialInputsEvent(bool Left, bool Right, bool Forward, bool Backward, JumpType Jump, ShootType Shoot, ShootType ShootHoming, short MouseX, short MouseY, float LookSpeed) : IInputsEvent
+[StructLayout(LayoutKind.Sequential)]
+public record struct InitialInputsEvent(bool Left, bool Right, bool Forward, bool Backward, JumpType Jump, ShootType Shoot, ShootType ShootHoming, short MouseX, short MouseY, float LookSpeed) : IEvent
 {
+	public bool Left = Left;
+	public bool Right = Right;
+	public bool Forward = Forward;
+	public bool Backward = Backward;
+	public JumpType Jump = Jump;
+	public ShootType Shoot = Shoot;
+	public ShootType ShootHoming = ShootHoming;
+	public short MouseX = MouseX;
+	public short MouseY = MouseY;
+	public float LookSpeed = LookSpeed;
+
 	public void Write(BinaryWriter bw)
 	{
 		bw.Write((byte)0x09);

@@ -1,9 +1,15 @@
 using DevilDaggersInfo.Core.Replay.Events.Interfaces;
+using System.Runtime.InteropServices;
 
 namespace DevilDaggersInfo.Core.Replay.Events;
 
-public readonly record struct HitEvent(int EntityIdA, int EntityIdB, int UserData) : IEvent
+[StructLayout(LayoutKind.Sequential)]
+public record struct HitEvent(int EntityIdA, int EntityIdB, int UserData) : IEvent
 {
+	public int EntityIdA = EntityIdA;
+	public int EntityIdB = EntityIdB;
+	public int UserData = UserData;
+
 	public void Write(BinaryWriter bw)
 	{
 		bw.Write((byte)0x05);

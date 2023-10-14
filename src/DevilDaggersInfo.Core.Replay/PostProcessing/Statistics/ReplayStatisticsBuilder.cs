@@ -130,7 +130,7 @@ public class ReplayStatisticsBuilder
 					_enemiesAlive++;
 					_thornAliveCount++;
 					break;
-				case IInputsEvent:
+				case InputsEvent or InitialInputsEvent:
 					currentTick++;
 					if (currentTick % 60 == 0)
 						entries.Add(FlushCurrentState());

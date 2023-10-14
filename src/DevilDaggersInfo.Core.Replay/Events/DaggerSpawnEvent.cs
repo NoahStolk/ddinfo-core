@@ -1,11 +1,19 @@
 using DevilDaggersInfo.Core.Replay.Events.Enums;
 using DevilDaggersInfo.Core.Replay.Events.Interfaces;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace DevilDaggersInfo.Core.Replay.Events;
 
-public readonly record struct DaggerSpawnEvent(int EntityId, int A, Int16Vec3 Position, Int16Mat3x3 Orientation, bool IsShot, DaggerType DaggerType) : IEntitySpawnEvent
+[StructLayout(LayoutKind.Sequential)]
+public record struct DaggerSpawnEvent(int EntityId, int A, Int16Vec3 Position, Int16Mat3x3 Orientation, bool IsShot, DaggerType DaggerType) : IEntitySpawnEvent
 {
+	public int A = A;
+	public Int16Vec3 Position = Position;
+	public Int16Mat3x3 Orientation = Orientation;
+	public bool IsShot = IsShot;
+	public DaggerType DaggerType = DaggerType;
+
 	public EntityType EntityType => DaggerType switch
 	{
 		DaggerType.Level1 => EntityType.Level1Dagger,

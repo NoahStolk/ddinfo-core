@@ -1,9 +1,15 @@
 using DevilDaggersInfo.Core.Replay.Utils;
+using System.Runtime.InteropServices;
 
 namespace DevilDaggersInfo.Core.Replay.Numerics;
 
-public readonly record struct Int16Vec3(short X, short Y, short Z) : ISpanFormattable
+[StructLayout(LayoutKind.Sequential)]
+public record struct Int16Vec3(short X, short Y, short Z) : ISpanFormattable
 {
+	public short X = X;
+	public short Y = Y;
+	public short Z = Z;
+
 	public static Int16Vec3 Zero { get; } = new(0, 0, 0);
 
 	public static Int16Vec3 operator +(Int16Vec3 a, Int16Vec3 b)

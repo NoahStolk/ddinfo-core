@@ -1,9 +1,13 @@
 using DevilDaggersInfo.Core.Replay.Events.Interfaces;
+using System.Runtime.InteropServices;
 
 namespace DevilDaggersInfo.Core.Replay.Events;
 
-public readonly record struct DeathEvent(int DeathType) : IEvent
+[StructLayout(LayoutKind.Sequential)]
+public record struct DeathEvent(int DeathType) : IEvent
 {
+	public int DeathType = DeathType;
+
 	public void Write(BinaryWriter bw)
 	{
 		bw.Write((byte)0x05);

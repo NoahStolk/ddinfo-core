@@ -49,7 +49,7 @@ public static class EnemyHitLogBuilder
 
 				buildContext.Transmute();
 			}
-			else if (e is IInputsEvent)
+			else if (e is InputsEvent or InitialInputsEvent)
 			{
 				currentTick++;
 			}

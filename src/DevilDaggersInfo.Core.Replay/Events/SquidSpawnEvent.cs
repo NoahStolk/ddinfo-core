@@ -1,11 +1,19 @@
 using DevilDaggersInfo.Core.Replay.Events.Enums;
 using DevilDaggersInfo.Core.Replay.Events.Interfaces;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace DevilDaggersInfo.Core.Replay.Events;
 
-public readonly record struct SquidSpawnEvent(int EntityId, SquidType SquidType, int A, Vector3 Position, Vector3 Direction, float RotationInRadians) : IEntitySpawnEvent
+[StructLayout(LayoutKind.Sequential)]
+public record struct SquidSpawnEvent(int EntityId, SquidType SquidType, int A, Vector3 Position, Vector3 Direction, float RotationInRadians) : IEntitySpawnEvent
 {
+	public SquidType SquidType = SquidType;
+	public int A = A;
+	public Vector3 Position = Position;
+	public Vector3 Direction = Direction;
+	public float RotationInRadians = RotationInRadians;
+
 	public EntityType EntityType => SquidType switch
 	{
 		SquidType.Squid1 => EntityType.Squid1,

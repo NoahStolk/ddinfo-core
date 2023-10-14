@@ -1,10 +1,14 @@
 using DevilDaggersInfo.Core.Replay.Events.Enums;
 using DevilDaggersInfo.Core.Replay.Events.Interfaces;
+using System.Runtime.InteropServices;
 
 namespace DevilDaggersInfo.Core.Replay.Events;
 
-public readonly record struct LeviathanSpawnEvent(int EntityId, int A) : IEntitySpawnEvent
+[StructLayout(LayoutKind.Sequential)]
+public record struct LeviathanSpawnEvent(int EntityId, int A) : IEntitySpawnEvent
 {
+	public int A = A;
+
 	public EntityType EntityType => EntityType.Leviathan;
 
 	public void Write(BinaryWriter bw)

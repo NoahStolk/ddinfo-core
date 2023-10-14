@@ -1,10 +1,22 @@
 using DevilDaggersInfo.Core.Replay.Utils;
+using System.Runtime.InteropServices;
 
 namespace DevilDaggersInfo.Core.Replay.Numerics;
 
 // ReSharper disable once InconsistentNaming
-public readonly record struct Matrix3x3(float M11, float M12, float M13, float M21, float M22, float M23, float M31, float M32, float M33) : ISpanFormattable
+[StructLayout(LayoutKind.Sequential)]
+public record struct Matrix3x3(float M11, float M12, float M13, float M21, float M22, float M23, float M31, float M32, float M33) : ISpanFormattable
 {
+	public float M11 = M11;
+	public float M12 = M12;
+	public float M13 = M13;
+	public float M21 = M21;
+	public float M22 = M22;
+	public float M23 = M23;
+	public float M31 = M31;
+	public float M32 = M32;
+	public float M33 = M33;
+
 	public static Matrix3x3 Identity { get; } = new(1, 0, 0, 0, 1, 0, 0, 0, 1);
 
 	public override string ToString()
