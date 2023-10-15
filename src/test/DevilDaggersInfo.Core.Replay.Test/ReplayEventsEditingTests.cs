@@ -97,12 +97,18 @@ public class ReplayEventsEditingTests
 		Assert.AreEqual(_eventCount + 1, _replay.EventsData.EventOffsetsPerTick[^1]);
 	}
 
-	[TestMethod]
-	public void AddSpawnEvent()
+	[DataTestMethod]
+	[DataRow(0)]
+	[DataRow(1)]
+	[DataRow(2)]
+	[DataRow(3)]
+	[DataRow(4)]
+	[DataRow(5)]
+	[DataRow(6)]
+	public void AddSpawnEvent(int ignoredEntityId)
 	{
-		// TODO: The entity ID should be calculated automatically.
-		const int entityId = 6;
-		_replay.EventsData.AddEvent(new ThornSpawnEvent(entityId, -1, default, 0));
+		// The entity ID should be changed to 6 regardless of the value of ignoredEntityId.
+		_replay.EventsData.AddEvent(new ThornSpawnEvent(ignoredEntityId, -1, default, 0));
 
 		// There should be one new event and one new entity.
 		Assert.AreEqual(_eventCount + 1, _replay.EventsData.Events.Count);
@@ -112,7 +118,7 @@ public class ReplayEventsEditingTests
 		Assert.AreEqual(_tickCount, _replay.EventsData.EventOffsetsPerTick.Count);
 
 		// The new entity should be a Thorn.
-		Assert.AreEqual(EntityType.Thorn, _replay.EventsData.EntityTypes[entityId]);
+		Assert.AreEqual(EntityType.Thorn, _replay.EventsData.EntityTypes[6]);
 
 		// Original data should be unchanged.
 		ValidateOriginalEntityTypes();
@@ -381,10 +387,16 @@ public class ReplayEventsEditingTests
 		}
 	}
 
-	[TestMethod]
-	public void InsertSpawnEventAtStart()
+	[DataTestMethod]
+	[DataRow(0)]
+	[DataRow(1)]
+	[DataRow(2)]
+	[DataRow(3)]
+	[DataRow(4)]
+	public void InsertSpawnEventAtStart(int ignoredEntityId)
 	{
-		_replay.EventsData.InsertEvent(0, new ThornSpawnEvent(1, -1, default, 0));
+		// The entity ID should be changed to 1 regardless of the value of ignoredEntityId.
+		_replay.EventsData.InsertEvent(0, new ThornSpawnEvent(ignoredEntityId, -1, default, 0));
 
 		// There should be one new event and one new entity.
 		Assert.AreEqual(_eventCount + 1, _replay.EventsData.Events.Count);
@@ -426,10 +438,16 @@ public class ReplayEventsEditingTests
 		}
 	}
 
-	[TestMethod]
-	public void InsertSpawnEvent()
+	[DataTestMethod]
+	[DataRow(0)]
+	[DataRow(1)]
+	[DataRow(2)]
+	[DataRow(3)]
+	[DataRow(4)]
+	public void InsertSpawnEvent(int ignoredEntityId)
 	{
-		_replay.EventsData.InsertEvent(10, new ThornSpawnEvent(3, -1, default, 0));
+		// The entity ID should be changed to 3 regardless of the value of ignoredEntityId.
+		_replay.EventsData.InsertEvent(10, new ThornSpawnEvent(ignoredEntityId, -1, default, 0));
 
 		// There should be one new event and one new entity.
 		Assert.AreEqual(_eventCount + 1, _replay.EventsData.Events.Count);

@@ -3,6 +3,16 @@ using DevilDaggersInfo.Core.Replay.Events.Interfaces;
 
 namespace DevilDaggersInfo.Core.Replay;
 
+/// <summary>
+/// Represents all the events in a replay.
+/// <remarks>
+/// IMPORTANT: This class generally lets you corrupt its state for the sake of performance and ease of use.
+/// <list type="bullet">
+/// <item><description>When changing the internal type of a spawn event, be sure to also update the list of entity types using <see cref="ChangeEntityType(int, EntityType)"/>.</description></item>
+/// <item><description>When adding or inserting a spawn event, the entity ID is re-calculated and overwritten. TODO: We should probably rewrite the event classes to be mutable structs and exclude EntityId and EntityType from them, then add a new wrapper class containing EntityId, EntityType, and TEventStruct as properties instead.</description></item>
+/// </list>
+/// </remarks>
+/// </summary>
 public class ReplayEventsData
 {
 	private readonly List<IEvent> _events = new();
@@ -31,6 +41,9 @@ public class ReplayEventsData
 
 	public void AddEvent(IEvent e)
 	{
+		if (e is IEntitySpawnEvent spawnEvent)
+			spawnEvent.EntityId = _entityTypes.Count;
+
 		_events.Add(e);
 		_eventOffsetsPerTick[^1]++;
 
@@ -92,21 +105,30 @@ public class ReplayEventsData
 		if (index < 0 || index > _events.Count)
 			throw new ArgumentOutOfRangeException(nameof(index));
 
-		_events.Insert(index, e);
 		if (e is IEntitySpawnEvent spawnEvent)
 		{
-			// TODO: EntityId should be automatically calculated and not taken from the event.
-			_entityTypes.Insert(spawnEvent.EntityId, spawnEvent.EntityType);
-
 			// Increment all entity IDs that are higher than the added entity ID.
+			int entityId = 1; // Skip 0 as it is always reserved.
 			for (int i = 0; i < _events.Count; i++)
 			{
 				if (i == index)
-					continue;
-
-				if (_events[i] is IEntitySpawnEvent otherSpawnEvent && otherSpawnEvent.EntityId >= spawnEvent.EntityId)
-					otherSpawnEvent.EntityId++;
+				{
+					spawnEvent.EntityId = entityId;
+					_events.Insert(index, e);
+					_entityTypes.Insert(entityId, spawnEvent.EntityType);
+				}
+				else if (_events[i] is IEntitySpawnEvent otherSpawnEvent)
+				{
+					if (i >= index)
+						otherSpawnEvent.EntityId++;
+					else
+						entityId++;
+				}
 			}
+		}
+		else
+		{
+			_events.Insert(index, e);
 		}
 
 		int? containingTick = null;
