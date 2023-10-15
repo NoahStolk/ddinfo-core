@@ -12,6 +12,8 @@ public record SquidSpawnEvent(int EntityId, SquidType SquidType, int A, Vector3 
 	public Vector3 Direction = Direction;
 	public float RotationInRadians = RotationInRadians;
 
+	public int EntityId { get; set; } = EntityId;
+
 	public EntityType EntityType => SquidType switch
 	{
 		SquidType.Squid1 => EntityType.Squid1,

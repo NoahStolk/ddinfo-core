@@ -7,6 +7,8 @@ public record LeviathanSpawnEvent(int EntityId, int A) : IEntitySpawnEvent
 {
 	public int A = A;
 
+	public int EntityId { get; set; } = EntityId;
+
 	public EntityType EntityType => EntityType.Leviathan;
 
 	public void Write(BinaryWriter bw)

@@ -10,6 +10,8 @@ public record SpiderSpawnEvent(int EntityId, SpiderType SpiderType, int A, Vecto
 	public int A = A;
 	public Vector3 Position = Position;
 
+	public int EntityId { get; set; } = EntityId;
+
 	public EntityType EntityType => SpiderType switch
 	{
 		SpiderType.Spider1 => EntityType.Spider1,

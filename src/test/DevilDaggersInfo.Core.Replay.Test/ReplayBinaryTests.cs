@@ -50,7 +50,7 @@ public class ReplayBinaryTests
 	}
 
 	[TestMethod]
-	public void ParseAndEditAndCompileEvents()
+	public void EditEventData()
 	{
 		string replayFilePath = Path.Combine("Resources", "SkullTest.ddreplay");
 		byte[] replayBuffer = File.ReadAllBytes(replayFilePath);

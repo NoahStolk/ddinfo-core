@@ -2,6 +2,20 @@
 
 This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.6.0
+
+Replays can now be edited. This API is still a work in progress and currently has a couple problems which will be fixed later. See the remarks in the `ReplayEventsData` class for more information.
+
+### Added
+
+- Added `ReplayEventsData.InsertEvent` and `ReplayEventsData.RemoveEvent` methods.
+- Added `ReplayEventsData.ChangeEntityType` method. This is a temporary method that will be removed in the future.
+
+### Changed
+
+- Spawn events now have a public setter for `EntityId`. This should never be used and will be removed in the future.
+- `ReplayEventsData.AddEvent` now overwrites the `EntityId` to be correct. This will change in the future in a way that doesn't let you pass an `EntityId` to this method at all.
+
 ## 0.5.0
 
 ### Changed

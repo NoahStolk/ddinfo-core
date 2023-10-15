@@ -12,6 +12,8 @@ public record DaggerSpawnEvent(int EntityId, int A, Int16Vec3 Position, Int16Mat
 	public bool IsShot = IsShot;
 	public DaggerType DaggerType = DaggerType;
 
+	public int EntityId { get; set; } = EntityId;
+
 	public EntityType EntityType => DaggerType switch
 	{
 		DaggerType.Level1 => EntityType.Level1Dagger,
