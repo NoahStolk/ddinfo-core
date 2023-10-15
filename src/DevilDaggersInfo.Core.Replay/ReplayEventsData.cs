@@ -6,13 +6,18 @@ namespace DevilDaggersInfo.Core.Replay;
 /// <summary>
 /// Represents all the events in a replay.
 /// <remarks>
-/// IMPORTANT: This class generally lets you corrupt its state for the sake of performance and ease of use.
+/// IMPORTANT: This API is unfinished and will change in the future. Right now, the class generally lets you corrupt its state for the sake of performance and ease of use. This will be solved in the future.
 /// <list type="bullet">
 /// <item><description>When changing the internal type of a spawn event, be sure to also update the list of entity types using <see cref="ChangeEntityType(int, EntityType)"/>.</description></item>
-/// <item><description>When adding or inserting a spawn event, the entity ID is re-calculated and overwritten. TODO: We should probably rewrite the event classes to be mutable structs and exclude EntityId and EntityType from them, then add a new wrapper class containing EntityId, EntityType, and TEventStruct as properties instead.</description></item>
+/// <item><description>When adding or inserting a spawn event, the entity ID is re-calculated and overwritten. This will be changed in the future.</description></item>
+/// <item><description>The event types currently let you change their ID, but this should only ever be done by the <see cref="ReplayEventsData"/> class itself. This will be removed in the future.</description></item>
 /// </list>
 /// </remarks>
 /// </summary>
+// TODO: Rewrite:
+// We should rewrite the event classes to be mutable structs and exclude EntityId and EntityType from them, then add a new wrapper class containing EntityId, EntityType, and TEventStruct as properties instead. This fixes point 2 above.
+// The wrapper class should have an internal set for EntityId. This fixes point 3 above.
+// Point 1 above could be solved by referencing to all Spawn events (instances of the wrapper class) from the _events list, instead of keeping a list of EntityType enums.
 public class ReplayEventsData
 {
 	private readonly List<IEvent> _events = new();
