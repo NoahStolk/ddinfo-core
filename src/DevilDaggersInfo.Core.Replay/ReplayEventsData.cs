@@ -119,7 +119,8 @@ public class ReplayEventsData
 			// Add new tick if needed. This always means an input event was added.
 			if (!containingTick.HasValue && e is InputsEvent)
 			{
-				_eventOffsetsPerTick.Insert(index, 0);
+				int previousOffset = i > 0 ? _eventOffsetsPerTick[i - 1] : 0;
+				_eventOffsetsPerTick.Insert(i, previousOffset);
 				containingTick = i;
 			}
 

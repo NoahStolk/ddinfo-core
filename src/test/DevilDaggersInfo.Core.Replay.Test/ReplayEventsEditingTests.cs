@@ -381,7 +381,50 @@ public class ReplayEventsEditingTests
 		}
 	}
 
-	// TODO: Add tests: InsertSpawnEventAtStart, InsertInputsEventAtStart, InsertInputsEvent.
+	[TestMethod]
+	public void InsertSpawnEventAtStart()
+	{
+		_replay.EventsData.InsertEvent(0, new ThornSpawnEvent(1, -1, default, 0));
+
+		// There should be one new event and one new entity.
+		Assert.AreEqual(_eventCount + 1, _replay.EventsData.Events.Count);
+		Assert.AreEqual(_entityCount + 1, _replay.EventsData.EntityTypes.Count);
+
+		// There shouldn't be any new ticks.
+		Assert.AreEqual(_tickCount, _replay.EventsData.EventOffsetsPerTick.Count);
+
+		// The new entity should be a Thorn.
+		Assert.AreEqual(EntityType.Zero, _replay.EventsData.EntityTypes[0]);
+		Assert.AreEqual(EntityType.Thorn, _replay.EventsData.EntityTypes[1]);
+		Assert.AreEqual(EntityType.Squid1, _replay.EventsData.EntityTypes[2]);
+		Assert.AreEqual(EntityType.Skull1, _replay.EventsData.EntityTypes[3]);
+		Assert.AreEqual(EntityType.Skull1, _replay.EventsData.EntityTypes[4]);
+		Assert.AreEqual(EntityType.Skull1, _replay.EventsData.EntityTypes[5]);
+		Assert.AreEqual(EntityType.Skull1, _replay.EventsData.EntityTypes[6]);
+
+		AssertEntityId<ThornSpawnEvent>(_replay.EventsData.Events[0], 1);
+		AssertEntityId<SquidSpawnEvent>(_replay.EventsData.Events[3], 2);
+		AssertEntityId<BoidSpawnEvent>(_replay.EventsData.Events[4], 3);
+		AssertEntityId<BoidSpawnEvent>(_replay.EventsData.Events[25], 4);
+		AssertEntityId<BoidSpawnEvent>(_replay.EventsData.Events[46], 5);
+		AssertEntityId<BoidSpawnEvent>(_replay.EventsData.Events[67], 6);
+
+		int expectedOffset = 0;
+		for (int i = 0; i < _tickCount; i++)
+		{
+			int offset = _replay.EventsData.EventOffsetsPerTick[i];
+			Assert.AreEqual(expectedOffset, offset);
+
+			expectedOffset++; // Inputs event.
+
+			if (i == 0)
+				expectedOffset += 2; // Hit event 53333... and Thorn spawn event.
+			else if (i == 1)
+				expectedOffset += 2; // Squid and Skull spawn events.
+			else if (i is 21 or 41 or 61)
+				expectedOffset++; // Skull spawn event.
+		}
+	}
 
 	[TestMethod]
 	public void InsertSpawnEvent()
@@ -429,4 +472,80 @@ public class ReplayEventsEditingTests
 				expectedOffset++; // Skull spawn event.
 		}
 	}
+
+	[TestMethod]
+	public void InsertInputsEventAtStart()
+	{
+		_replay.EventsData.InsertEvent(0, new InputsEvent(true, false, false, false, JumpType.None, ShootType.None, ShootType.None, 0, 0));
+
+		// There should be one new event and one new tick.
+		Assert.AreEqual(_eventCount + 1, _replay.EventsData.Events.Count);
+		Assert.AreEqual(_tickCount + 1, _replay.EventsData.EventOffsetsPerTick.Count);
+
+		// There shouldn't be any new entities.
+		Assert.AreEqual(_entityCount, _replay.EventsData.EntityTypes.Count);
+		ValidateOriginalEntityTypes();
+
+		// Entity IDs should be unchanged, but their indexes should be incremented.
+		AssertEntityId<SquidSpawnEvent>(_replay.EventsData.Events[3], 1);
+		AssertEntityId<BoidSpawnEvent>(_replay.EventsData.Events[4], 2);
+		AssertEntityId<BoidSpawnEvent>(_replay.EventsData.Events[25], 3);
+		AssertEntityId<BoidSpawnEvent>(_replay.EventsData.Events[46], 4);
+		AssertEntityId<BoidSpawnEvent>(_replay.EventsData.Events[67], 5);
+
+		int expectedOffset = 0;
+		for (int i = 0; i < _tickCount + 1; i++)
+		{
+			int offset = _replay.EventsData.EventOffsetsPerTick[i];
+			Assert.AreEqual(expectedOffset, offset);
+
+			expectedOffset++; // Inputs event.
+
+			if (i == 1)
+				expectedOffset++; // Hit event 53333...
+			else if (i == 2)
+				expectedOffset += 2; // Squid and Skull spawn events.
+			else if (i is 22 or 42 or 62)
+				expectedOffset++; // Skull spawn event.
+		}
+	}
+
+	[TestMethod]
+	public void InsertInputsEvent()
+	{
+		_replay.EventsData.InsertEvent(10, new InputsEvent(true, false, false, false, JumpType.None, ShootType.None, ShootType.None, 0, 0));
+
+		// There should be one new event and one new tick.
+		Assert.AreEqual(_eventCount + 1, _replay.EventsData.Events.Count);
+		Assert.AreEqual(_tickCount + 1, _replay.EventsData.EventOffsetsPerTick.Count);
+
+		// There shouldn't be any new entities.
+		Assert.AreEqual(_entityCount, _replay.EventsData.EntityTypes.Count);
+		ValidateOriginalEntityTypes();
+
+		// Entity IDs should be unchanged, but their indexes should be incremented.
+		AssertEntityId<SquidSpawnEvent>(_replay.EventsData.Events[2], 1);
+		AssertEntityId<BoidSpawnEvent>(_replay.EventsData.Events[3], 2);
+		AssertEntityId<BoidSpawnEvent>(_replay.EventsData.Events[25], 3);
+		AssertEntityId<BoidSpawnEvent>(_replay.EventsData.Events[46], 4);
+		AssertEntityId<BoidSpawnEvent>(_replay.EventsData.Events[67], 5);
+
+		int expectedOffset = 0;
+		for (int i = 0; i < _tickCount + 1; i++)
+		{
+			int offset = _replay.EventsData.EventOffsetsPerTick[i];
+			Assert.AreEqual(expectedOffset, offset);
+
+			expectedOffset++; // Inputs event.
+
+			if (i == 0)
+				expectedOffset++; // Hit event 53333...
+			else if (i == 1)
+				expectedOffset += 2; // Squid and Skull spawn events.
+			else if (i is 22 or 42 or 62)
+				expectedOffset++; // Skull spawn event.
+		}
+	}
+
+	// TODO: Add tests: ChangeEntityType.
 }
