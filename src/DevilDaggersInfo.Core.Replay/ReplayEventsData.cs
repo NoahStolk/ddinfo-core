@@ -129,11 +129,11 @@ public class ReplayEventsData
 		}
 	}
 
-	public void ChangeEntityType(int index, EntityType entityType)
+	public void ChangeEntityType(int entityId, EntityType entityType)
 	{
-		if (index < 0 || index >= _entityTypes.Count)
-			throw new ArgumentOutOfRangeException(nameof(index));
+		if (entityId < 0 || entityId >= _entityTypes.Count)
+			throw new ArgumentOutOfRangeException(nameof(entityId));
 
-		_entityTypes[index] = entityType;
+		_entityTypes[entityId] = entityType;
 	}
 }

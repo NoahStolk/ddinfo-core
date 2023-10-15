@@ -547,5 +547,20 @@ public class ReplayEventsEditingTests
 		}
 	}
 
-	// TODO: Add tests: ChangeEntityType.
+	[TestMethod]
+	public void ChangeEntityType()
+	{
+		Assert.IsInstanceOfType<BoidSpawnEvent>(_replay.EventsData.Events[3]);
+		BoidSpawnEvent boidSpawnEvent = (BoidSpawnEvent)_replay.EventsData.Events[3];
+		boidSpawnEvent.BoidType = BoidType.Skull2;
+
+		_replay.EventsData.ChangeEntityType(2, EntityType.Skull2);
+
+		Assert.AreEqual(EntityType.Zero, _replay.EventsData.EntityTypes[0]);
+		Assert.AreEqual(EntityType.Squid1, _replay.EventsData.EntityTypes[1]);
+		Assert.AreEqual(EntityType.Skull2, _replay.EventsData.EntityTypes[2]);
+		Assert.AreEqual(EntityType.Skull1, _replay.EventsData.EntityTypes[3]);
+		Assert.AreEqual(EntityType.Skull1, _replay.EventsData.EntityTypes[4]);
+		Assert.AreEqual(EntityType.Skull1, _replay.EventsData.EntityTypes[5]);
+	}
 }
