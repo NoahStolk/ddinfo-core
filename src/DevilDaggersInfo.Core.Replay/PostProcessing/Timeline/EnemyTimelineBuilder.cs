@@ -30,11 +30,10 @@ public class EnemyTimelineBuilder
 				if (enemy == null)
 					continue;
 
-				EntityType? daggerType = _daggers.ContainsKey(hit.EntityIdB) ? _daggers[hit.EntityIdB] : null;
-				if (daggerType == null)
+				if (!_daggers.TryGetValue(hit.EntityIdB, out EntityType daggerType))
 					continue;
 
-				int damage = enemy.EntityType.GetDamage(daggerType.Value, hit.UserData);
+				int damage = enemy.EntityType.GetDamage(daggerType, hit.UserData);
 				if (damage == 0)
 					continue;
 
