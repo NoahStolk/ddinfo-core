@@ -1,16 +1,13 @@
 using DevilDaggersInfo.Core.Replay.Events.Enums;
-using DevilDaggersInfo.Core.Replay.Events.Interfaces;
 using System.Diagnostics;
 
-namespace DevilDaggersInfo.Core.Replay.Events;
+namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
-public record SpiderSpawnEvent(int EntityId, SpiderType SpiderType, int A, Vector3 Position) : IEntitySpawnEvent
+public record SpiderSpawnEventData(SpiderType SpiderType, int A, Vector3 Position) : ISpawnEventData
 {
 	public SpiderType SpiderType = SpiderType;
 	public int A = A;
 	public Vector3 Position = Position;
-
-	public int EntityId { get; set; } = EntityId;
 
 	public EntityType EntityType => SpiderType switch
 	{

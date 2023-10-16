@@ -1,9 +1,8 @@
 using DevilDaggersInfo.Core.Replay.Events.Enums;
-using DevilDaggersInfo.Core.Replay.Events.Interfaces;
 
-namespace DevilDaggersInfo.Core.Replay.Events;
+namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
-public record InitialInputsEvent(bool Left, bool Right, bool Forward, bool Backward, JumpType Jump, ShootType Shoot, ShootType ShootHoming, short MouseX, short MouseY, float LookSpeed) : IEvent
+public record InitialInputsEventData(bool Left, bool Right, bool Forward, bool Backward, JumpType Jump, ShootType Shoot, ShootType ShootHoming, short MouseX, short MouseY, float LookSpeed) : IEventData
 {
 	public bool Left = Left;
 	public bool Right = Right;

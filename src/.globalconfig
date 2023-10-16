@@ -78,16 +78,20 @@ dotnet_naming_symbols.static_fields.applicable_accessibilities           = publi
 dotnet_naming_symbols.static_fields.applicable_kinds                     = field
 dotnet_naming_symbols.static_fields.required_modifiers                   = static
 
-# Use camelCase with _ prefix for instance fields
+# Use camelCase with _ prefix for instance fields with an accessibility of protected or lower
 dotnet_naming_rule.instance_fields_should_be_camel_case.severity         = warning
 dotnet_naming_rule.instance_fields_should_be_camel_case.style            = instance_field_style
 dotnet_naming_rule.instance_fields_should_be_camel_case.symbols          = instance_fields
 dotnet_naming_symbols.instance_fields.applicable_kinds                   = field
-dotnet_naming_style.first_word_upper_case_style.capitalization           = first_word_upper
+dotnet_naming_symbols.instance_fields.applicable_accessibilities         = protected,private_protected,private
 dotnet_naming_style.instance_field_style.required_prefix                 = _
-dotnet_naming_symbols.public_symbols.applicable_accessibilities          = public
-dotnet_naming_symbols.public_symbols.applicable_kinds                    = property,method,field,event,delegate
-dotnet_naming_symbols.public_symbols.required_modifiers                  = readonly
+
+# Use PamelCase for instance fields with an accessibility of internal or higher
+dotnet_naming_rule.public_instance_fields_should_be_pascal_case.severity = warning
+dotnet_naming_rule.public_instance_fields_should_be_pascal_case.style    = pascal_case_style
+dotnet_naming_rule.public_instance_fields_should_be_pascal_case.symbols  = instance_fields
+dotnet_naming_symbols.public_instance_fields.applicable_kinds            = field
+dotnet_naming_symbols.public_instance_fields.applicable_accessibilities  = public,protected_internal,internal
 
 # Namespace preferences
 csharp_style_namespace_declarations                                      = file_scoped : warning
@@ -244,6 +248,9 @@ dotnet_diagnostic.SA1310.severity                                        = none
 # Static readonly fields should begin with upper-case letter.
 dotnet_diagnostic.SA1311.severity                                        = none
 
+# Field should be private.
+dotnet_diagnostic.SA1401.severity                                        = none
+
 # Arithmetic expressions should declare precedence.
 dotnet_diagnostic.SA1407.severity                                        = none
 
@@ -285,6 +292,9 @@ dotnet_diagnostic.S101.severity                                          = none
 
 # 'System.Exception' should not be thrown by user code.
 dotnet_diagnostic.S112.severity                                          = none
+
+# Make this field 'private' and encapsulate it in a 'public' property.
+dotnet_diagnostic.S1104.severity                                         = none
 
 # Extract the assignment from this expression. (C# 9)
 dotnet_diagnostic.S1121.severity                                         = none

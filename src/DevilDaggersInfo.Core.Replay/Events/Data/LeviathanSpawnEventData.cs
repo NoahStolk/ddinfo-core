@@ -1,13 +1,10 @@
 using DevilDaggersInfo.Core.Replay.Events.Enums;
-using DevilDaggersInfo.Core.Replay.Events.Interfaces;
 
-namespace DevilDaggersInfo.Core.Replay.Events;
+namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
-public record LeviathanSpawnEvent(int EntityId, int A) : IEntitySpawnEvent
+public record LeviathanSpawnEventData(int A) : ISpawnEventData
 {
 	public int A = A;
-
-	public int EntityId { get; set; } = EntityId;
 
 	public EntityType EntityType => EntityType.Leviathan;
 

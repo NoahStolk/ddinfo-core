@@ -1,18 +1,15 @@
 using DevilDaggersInfo.Core.Replay.Events.Enums;
-using DevilDaggersInfo.Core.Replay.Events.Interfaces;
 using System.Diagnostics;
 
-namespace DevilDaggersInfo.Core.Replay.Events;
+namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
-public record DaggerSpawnEvent(int EntityId, int A, Int16Vec3 Position, Int16Mat3x3 Orientation, bool IsShot, DaggerType DaggerType) : IEntitySpawnEvent
+public record DaggerSpawnEventData(int A, Int16Vec3 Position, Int16Mat3x3 Orientation, bool IsShot, DaggerType DaggerType) : ISpawnEventData
 {
 	public int A = A;
 	public Int16Vec3 Position = Position;
 	public Int16Mat3x3 Orientation = Orientation;
 	public bool IsShot = IsShot;
 	public DaggerType DaggerType = DaggerType;
-
-	public int EntityId { get; set; } = EntityId;
 
 	public EntityType EntityType => DaggerType switch
 	{

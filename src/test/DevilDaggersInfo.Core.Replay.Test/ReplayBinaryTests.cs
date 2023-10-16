@@ -1,5 +1,5 @@
+using DevilDaggersInfo.Core.Replay.Events.Data;
 using DevilDaggersInfo.Core.Replay.Events.Enums;
-using DevilDaggersInfo.Core.Replay.Events.Interfaces;
 using DevilDaggersInfo.Core.Replay.Numerics;
 using System.Numerics;
 using System.Security.Cryptography;
@@ -30,15 +30,16 @@ public class ReplayBinaryTests
 	{
 		ReplayBinary<LocalReplayBinaryHeader> replayBinary = ReplayBinary<LocalReplayBinaryHeader>.CreateDefault();
 		replayBinary.EventsData.Clear();
-		replayBinary.EventsData.AddEvent(new InitialInputsEvent(true, false, false, false, JumpType.None, ShootType.Hold, ShootType.None, 0, 0, 0.2f));
+		replayBinary.EventsData.AddEvent(new InitialInputsEventData(true, false, false, false, JumpType.None, ShootType.Hold, ShootType.None, 0, 0, 0.2f));
 
+		replayBinary.EventsData.AddEvent(new SquidSpawnEventData(SquidType.Squid3, -1, Vector3.Zero, Vector3.Zero, 0));
 		for (int i = 0; i < 30; i++)
 		{
-			replayBinary.EventsData.AddEvent(new BoidSpawnEvent(i + 1, 0, BoidType.Skull4, default, Int16Mat3x3.Identity, default, 10));
-			replayBinary.EventsData.AddEvent(new InputsEvent(true, false, false, false, JumpType.None, ShootType.None, ShootType.None, 10, 0));
+			replayBinary.EventsData.AddEvent(new BoidSpawnEventData(1, BoidType.Skull4, default, Int16Mat3x3.Identity, default, 10));
+			replayBinary.EventsData.AddEvent(new InputsEventData(true, false, false, false, JumpType.None, ShootType.None, ShootType.None, 10, 0));
 		}
 
-		replayBinary.EventsData.AddEvent(new EndEvent());
+		replayBinary.EventsData.AddEvent(new EndEventData());
 
 		byte[] replayBuffer = replayBinary.Compile();
 
@@ -57,9 +58,9 @@ public class ReplayBinaryTests
 		ReplayBinary<LocalReplayBinaryHeader> replayBinary = new(replayBuffer);
 
 		int skullsAccessed = 0;
-		foreach (IEvent e in replayBinary.EventsData.Events)
+		foreach (ReplayEvent e in replayBinary.EventsData.Events)
 		{
-			if (e is not BoidSpawnEvent boid)
+			if (e.Data is not BoidSpawnEventData boid)
 				continue;
 
 			Assert.AreEqual(new(20, 20, 20), boid.Position);
@@ -69,9 +70,9 @@ public class ReplayBinaryTests
 
 		Assert.AreEqual(4, skullsAccessed);
 
-		foreach (IEvent e in replayBinary.EventsData.Events)
+		foreach (ReplayEvent e in replayBinary.EventsData.Events)
 		{
-			if (e is not BoidSpawnEvent boid)
+			if (e.Data is not BoidSpawnEventData boid)
 				continue;
 
 			Assert.AreEqual(new(10, 10, 10), boid.Position);
@@ -88,9 +89,9 @@ public class ReplayBinaryTests
 		for (int i = 0; i < replayBinary.EventsData.Events.Count; i++)
 			Assert.AreEqual(replayBinary.EventsData.Events[i], replayBinaryFromBuffer.EventsData.Events[i]);
 
-		foreach (IEvent e in replayBinary.EventsData.Events)
+		foreach (ReplayEvent e in replayBinary.EventsData.Events)
 		{
-			if (e is not BoidSpawnEvent boid)
+			if (e.Data is not BoidSpawnEventData boid)
 				continue;
 
 			Assert.AreEqual(new(10, 10, 10), boid.Position);

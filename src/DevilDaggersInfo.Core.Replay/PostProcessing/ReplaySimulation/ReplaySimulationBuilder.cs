@@ -1,5 +1,5 @@
+using DevilDaggersInfo.Core.Replay.Events.Data;
 using DevilDaggersInfo.Core.Replay.Events.Enums;
-using DevilDaggersInfo.Core.Replay.Events.Interfaces;
 using DevilDaggersInfo.Core.Spawnset;
 using System.Diagnostics;
 
@@ -9,8 +9,8 @@ public static class ReplaySimulationBuilder
 {
 	public static ReplaySimulation Build(ReplayBinary<LocalReplayBinaryHeader> replay)
 	{
-		InitialInputsEvent initialInputsEvent = (InitialInputsEvent?)replay.EventsData.Events.FirstOrDefault(e => e is InitialInputsEvent) ?? throw new InvalidOperationException("Replay does not contain an initial inputs event.");
-		float lookSpeed = initialInputsEvent.LookSpeed;
+		ReplayEvent initialInputsEvent = replay.EventsData.Events.FirstOrDefault(e => e.Data is InitialInputsEventData) ?? throw new InvalidOperationException("Replay does not contain an initial inputs event.");
+		float lookSpeed = ((InitialInputsEventData)initialInputsEvent.Data).LookSpeed;
 
 		int ticks = 0;
 		SpawnsetBinary spawnset = replay.Header.Spawnset;
@@ -20,11 +20,11 @@ public static class ReplaySimulationBuilder
 		List<PlayerInputSnapshot> playerInputSnapshots = new();
 		List<SoundSnapshot> soundSnapshots = new();
 
-		foreach (IEvent e in replay.EventsData.Events)
+		foreach (ReplayEvent e in replay.EventsData.Events)
 		{
-			switch (e)
+			switch (e.Data)
 			{
-				case EntityPositionEvent { EntityId: 0 } entityPositionEvent:
+				case EntityPositionEventData { EntityId: 0 } entityPositionEvent:
 				{
 					const float divisor = 16f;
 					playerContext.Position = new()
@@ -36,12 +36,12 @@ public static class ReplaySimulationBuilder
 					break;
 				}
 
-				case InputsEvent or InitialInputsEvent:
+				case InputsEventData or InitialInputsEventData:
 				{
-					PlayerInputSnapshot inputSnapshot = e switch
+					PlayerInputSnapshot inputSnapshot = e.Data switch
 					{
-						InputsEvent ie => new(ie.Left, ie.Right, ie.Forward, ie.Backward, ie.Jump, ie.Shoot, ie.ShootHoming, ie.MouseX, ie.MouseY),
-						InitialInputsEvent iie => new(iie.Left, iie.Right, iie.Forward, iie.Backward, iie.Jump, iie.Shoot, iie.ShootHoming, iie.MouseX, iie.MouseY),
+						InputsEventData ie => new(ie.Left, ie.Right, ie.Forward, ie.Backward, ie.Jump, ie.Shoot, ie.ShootHoming, ie.MouseX, ie.MouseY),
+						InitialInputsEventData iie => new(iie.Left, iie.Right, iie.Forward, iie.Backward, iie.Jump, iie.Shoot, iie.ShootHoming, iie.MouseX, iie.MouseY),
 						_ => throw new UnreachableException(),
 					};
 					ProcessInputs(spawnset, lookSpeed, inputSnapshot, playerContext, ticks);

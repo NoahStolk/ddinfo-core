@@ -1,5 +1,5 @@
+using DevilDaggersInfo.Core.Replay.Events.Data;
 using DevilDaggersInfo.Core.Replay.Events.Enums;
-using DevilDaggersInfo.Core.Replay.Events.Interfaces;
 
 namespace DevilDaggersInfo.Core.Replay.PostProcessing.Statistics;
 
@@ -58,17 +58,17 @@ public class ReplayStatisticsBuilder
 	/// Builds statistics in the same manner as the "stats" memory block in game memory, but based purely on replay events.
 	/// There is an entry for every second, as well as an additional entry at the end of the run.
 	/// </summary>
-	public List<ReplayStatisticsEntry> Build(List<IEvent> events)
+	public List<ReplayStatisticsEntry> Build(List<IEventData> events)
 	{
 		Clear();
 		int currentTick = 0;
 
 		List<ReplayStatisticsEntry> entries = new() { FlushCurrentState() };
-		foreach (IEvent e in events)
+		foreach (IEventData e in events)
 		{
 			switch (e)
 			{
-				case BoidSpawnEvent boid:
+				case BoidSpawnEventData boid:
 					_enemiesAlive++;
 					switch (boid.BoidType)
 					{
@@ -80,20 +80,20 @@ public class ReplayStatisticsBuilder
 					}
 
 					break;
-				case DaggerSpawnEvent:
+				case DaggerSpawnEventData:
 					_daggersFired++;
 					break;
-				case GemEvent:
+				case GemEventData:
 					_gemsCollected++;
 					break;
-				case HitEvent:
+				case HitEventData:
 					// TODO: Look up entity ID.
 					break;
-				case LeviathanSpawnEvent:
+				case LeviathanSpawnEventData:
 					_enemiesAlive++;
 					_leviathanAliveCount++;
 					break;
-				case PedeSpawnEvent pede:
+				case PedeSpawnEventData pede:
 					_enemiesAlive++;
 					switch (pede.PedeType)
 					{
@@ -103,11 +103,11 @@ public class ReplayStatisticsBuilder
 					}
 
 					break;
-				case SpiderEggSpawnEvent:
+				case SpiderEggSpawnEventData:
 					_enemiesAlive++;
 					_spiderEggAliveCount++;
 					break;
-				case SpiderSpawnEvent spider:
+				case SpiderSpawnEventData spider:
 					_enemiesAlive++;
 					switch (spider.SpiderType)
 					{
@@ -116,7 +116,7 @@ public class ReplayStatisticsBuilder
 					}
 
 					break;
-				case SquidSpawnEvent squid:
+				case SquidSpawnEventData squid:
 					_enemiesAlive++;
 					switch (squid.SquidType)
 					{
@@ -126,16 +126,16 @@ public class ReplayStatisticsBuilder
 					}
 
 					break;
-				case ThornSpawnEvent:
+				case ThornSpawnEventData:
 					_enemiesAlive++;
 					_thornAliveCount++;
 					break;
-				case InputsEvent or InitialInputsEvent:
+				case InputsEventData or InitialInputsEventData:
 					currentTick++;
 					if (currentTick % 60 == 0)
 						entries.Add(FlushCurrentState());
 					break;
-				case EndEvent:
+				case EndEventData:
 					entries.Add(FlushCurrentState());
 					break;
 			}
