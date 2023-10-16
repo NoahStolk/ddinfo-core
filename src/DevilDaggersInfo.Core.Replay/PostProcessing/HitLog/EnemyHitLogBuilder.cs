@@ -1,30 +1,33 @@
+using DevilDaggersInfo.Core.Replay.Events.Data;
 using DevilDaggersInfo.Core.Replay.Events.Enums;
-using DevilDaggersInfo.Core.Replay.Events.Interfaces;
 
 namespace DevilDaggersInfo.Core.Replay.PostProcessing.HitLog;
 
 public static class EnemyHitLogBuilder
 {
-	public static EnemyHitLog? Build(IReadOnlyList<IEvent> events, int enemyEntityId)
+	public static EnemyHitLog? Build(IReadOnlyList<ReplayEvent> events, int enemyEntityId)
 	{
 		int currentTick = 0;
 		EnemyHitLogBuildContext? buildContext = null;
 		Dictionary<int, EntityType> daggers = new();
 
-		foreach (IEvent e in events)
+		foreach (ReplayEvent e in events)
 		{
-			if (e is DaggerSpawnEvent dagger)
+			if (e is EntitySpawnReplayEvent spawnEvent)
 			{
-				daggers.Add(dagger.EntityId, dagger.EntityType);
-			}
-			else if (e is IEntitySpawnEvent spawn)
-			{
-				if (spawn.EntityId != enemyEntityId)
-					continue;
+				if (e.Data is DaggerSpawnEvent dagger)
+				{
+					daggers.Add(spawnEvent.EntityId, dagger.EntityType);
+				}
+				else if (e.Data is ISpawnEventData spawn)
+				{
+					if (spawnEvent.EntityId != enemyEntityId)
+						continue;
 
-				buildContext = new(spawn.EntityType, currentTick);
+					buildContext = new(spawn.EntityType, currentTick);
+				}
 			}
-			else if (e is HitEvent hit && hit.EntityIdA == enemyEntityId)
+			else if (e.Data is HitEvent hit && hit.EntityIdA == enemyEntityId)
 			{
 				if (buildContext == null)
 					continue;
@@ -42,14 +45,14 @@ public static class EnemyHitLogBuilder
 				buildContext.CurrentHp -= damage;
 				buildContext.Events.Add(new(currentTick, buildContext.CurrentHp, damage, daggerEntityType.Value.GetDaggerType(), hit.UserData));
 			}
-			else if (e is TransmuteEvent transmute && transmute.EntityId == enemyEntityId)
+			else if (e.Data is TransmuteEvent transmute && transmute.EntityId == enemyEntityId)
 			{
 				if (buildContext == null)
 					continue;
 
 				buildContext.Transmute();
 			}
-			else if (e is InputsEvent or InitialInputsEvent)
+			else if (e.Data is InputsEvent or InitialInputsEvent)
 			{
 				currentTick++;
 			}

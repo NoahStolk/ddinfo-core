@@ -1,15 +1,12 @@
 using DevilDaggersInfo.Core.Replay.Events.Enums;
-using DevilDaggersInfo.Core.Replay.Events.Interfaces;
 
-namespace DevilDaggersInfo.Core.Replay.Events;
+namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
-public record SpiderEggSpawnEvent(int EntityId, int SpawnerEntityId, Vector3 Position, Vector3 TargetPosition) : IEntitySpawnEvent
+public record SpiderEggSpawnEvent(int SpawnerEntityId, Vector3 Position, Vector3 TargetPosition) : ISpawnEventData
 {
 	public int SpawnerEntityId = SpawnerEntityId;
 	public Vector3 Position = Position;
 	public Vector3 TargetPosition = TargetPosition;
-
-	public int EntityId { get; set; } = EntityId;
 
 	public EntityType EntityType => EntityType.SpiderEgg;
 

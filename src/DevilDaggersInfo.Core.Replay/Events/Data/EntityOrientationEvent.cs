@@ -1,8 +1,6 @@
-using DevilDaggersInfo.Core.Replay.Events.Interfaces;
+namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
-namespace DevilDaggersInfo.Core.Replay.Events;
-
-public record EntityOrientationEvent(int EntityId, Int16Mat3x3 Orientation) : IEvent
+public record EntityOrientationEvent(int EntityId, Int16Mat3x3 Orientation) : IEventData
 {
 	public int EntityId = EntityId;
 	public Int16Mat3x3 Orientation = Orientation;

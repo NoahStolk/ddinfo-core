@@ -1,5 +1,5 @@
+using DevilDaggersInfo.Core.Replay.Events.Data;
 using DevilDaggersInfo.Core.Replay.Events.Enums;
-using DevilDaggersInfo.Core.Replay.Events.Interfaces;
 
 namespace DevilDaggersInfo.Core.Replay.PostProcessing.Statistics;
 
@@ -58,13 +58,13 @@ public class ReplayStatisticsBuilder
 	/// Builds statistics in the same manner as the "stats" memory block in game memory, but based purely on replay events.
 	/// There is an entry for every second, as well as an additional entry at the end of the run.
 	/// </summary>
-	public List<ReplayStatisticsEntry> Build(List<IEvent> events)
+	public List<ReplayStatisticsEntry> Build(List<IEventData> events)
 	{
 		Clear();
 		int currentTick = 0;
 
 		List<ReplayStatisticsEntry> entries = new() { FlushCurrentState() };
-		foreach (IEvent e in events)
+		foreach (IEventData e in events)
 		{
 			switch (e)
 			{

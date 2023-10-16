@@ -1,15 +1,12 @@
 using DevilDaggersInfo.Core.Replay.Events.Enums;
-using DevilDaggersInfo.Core.Replay.Events.Interfaces;
 
-namespace DevilDaggersInfo.Core.Replay.Events;
+namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
-public record ThornSpawnEvent(int EntityId, int A, Vector3 Position, float RotationInRadians) : IEntitySpawnEvent
+public record ThornSpawnEvent(int A, Vector3 Position, float RotationInRadians) : ISpawnEventData
 {
 	public int A = A;
 	public Vector3 Position = Position;
 	public float RotationInRadians = RotationInRadians;
-
-	public int EntityId { get; set; } = EntityId;
 
 	public EntityType EntityType => EntityType.Thorn;
 

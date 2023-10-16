@@ -1,5 +1,5 @@
+using DevilDaggersInfo.Core.Replay.Events.Data;
 using DevilDaggersInfo.Core.Replay.Events.Enums;
-using DevilDaggersInfo.Core.Replay.Events.Interfaces;
 
 namespace DevilDaggersInfo.Core.Replay;
 
@@ -20,11 +20,11 @@ namespace DevilDaggersInfo.Core.Replay;
 // Point 1 above could be solved by referencing to all Spawn events (instances of the wrapper class) from the _events list, instead of keeping a list of EntityType enums.
 public class ReplayEventsData
 {
-	private readonly List<IEvent> _events = new();
+	private readonly List<ReplayEvent> _events = new();
 	private readonly List<int> _eventOffsetsPerTick = new() { 0, 0 };
 	private readonly List<EntityType> _entityTypes = new() { EntityType.Zero };
 
-	public IReadOnlyList<IEvent> Events => _events;
+	public IReadOnlyList<ReplayEvent> Events => _events;
 
 	public IReadOnlyList<int> EventOffsetsPerTick => _eventOffsetsPerTick;
 
@@ -44,17 +44,18 @@ public class ReplayEventsData
 		_entityTypes.Add(EntityType.Zero);
 	}
 
-	public void AddEvent(IEvent e)
+	public void AddEvent(IEventData e)
 	{
-		if (e is IEntitySpawnEvent spawnEvent)
-			spawnEvent.EntityId = _entityTypes.Count;
+		if (e is ISpawnEventData spawnEvent)
+			_events.Add(new EntitySpawnReplayEvent(_entityTypes.Count, spawnEvent.EntityType, e));
+		else
+			_events.Add(new(e));
 
-		_events.Add(e);
 		_eventOffsetsPerTick[^1]++;
 
 		if (e is InputsEvent or InitialInputsEvent)
 			_eventOffsetsPerTick.Add(_events.Count);
-		else if (e is IEntitySpawnEvent ese)
+		else if (e is ISpawnEventData ese)
 			_entityTypes.Add(ese.EntityType);
 	}
 
@@ -63,8 +64,8 @@ public class ReplayEventsData
 		if (index < 0 || index >= _events.Count)
 			throw new ArgumentOutOfRangeException(nameof(index));
 
-		IEvent e = _events[index];
-		if (e is IEntitySpawnEvent spawnEvent)
+		ReplayEvent e = _events[index];
+		if (e is EntitySpawnReplayEvent spawnEvent)
 		{
 			_entityTypes.RemoveAt(spawnEvent.EntityId);
 
@@ -74,7 +75,7 @@ public class ReplayEventsData
 				if (i == index)
 					continue;
 
-				if (_events[i] is IEntitySpawnEvent otherSpawnEvent && otherSpawnEvent.EntityId > spawnEvent.EntityId)
+				if (_events[i] is EntitySpawnReplayEvent otherSpawnEvent && otherSpawnEvent.EntityId > spawnEvent.EntityId)
 					otherSpawnEvent.EntityId--;
 			}
 		}
@@ -82,7 +83,7 @@ public class ReplayEventsData
 		_events.Remove(e);
 
 		int? containingTick = null;
-		bool isInputsEvent = e is InputsEvent;
+		bool isInputsEvent = e.Data is InputsEvent;
 		for (int i = 0; i < _eventOffsetsPerTick.Count; i++)
 		{
 			if (index >= _eventOffsetsPerTick[i])
@@ -105,12 +106,12 @@ public class ReplayEventsData
 		}
 	}
 
-	public void InsertEvent(int index, IEvent e)
+	public void InsertEvent(int index, IEventData e)
 	{
 		if (index < 0 || index > _events.Count)
 			throw new ArgumentOutOfRangeException(nameof(index));
 
-		if (e is IEntitySpawnEvent spawnEvent)
+		if (e is ISpawnEventData spawnEvent)
 		{
 			// Increment all entity IDs that are higher than the added entity ID.
 			int entityId = 1; // Skip 0 as it is always reserved.
@@ -118,11 +119,10 @@ public class ReplayEventsData
 			{
 				if (i == index)
 				{
-					spawnEvent.EntityId = entityId;
-					_events.Insert(index, e);
+					_events.Insert(index, new EntitySpawnReplayEvent(entityId, spawnEvent.EntityType, e));
 					_entityTypes.Insert(entityId, spawnEvent.EntityType);
 				}
-				else if (_events[i] is IEntitySpawnEvent otherSpawnEvent)
+				else if (_events[i] is EntitySpawnReplayEvent otherSpawnEvent)
 				{
 					if (i >= index)
 						otherSpawnEvent.EntityId++;
@@ -133,7 +133,7 @@ public class ReplayEventsData
 		}
 		else
 		{
-			_events.Insert(index, e);
+			_events.Insert(index, new(e));
 		}
 
 		int? containingTick = null;

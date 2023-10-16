@@ -1,5 +1,5 @@
+using DevilDaggersInfo.Core.Replay.Events.Data;
 using DevilDaggersInfo.Core.Replay.Events.Enums;
-using DevilDaggersInfo.Core.Replay.Events.Interfaces;
 using DevilDaggersInfo.Core.Spawnset;
 using System.Diagnostics;
 
@@ -9,8 +9,8 @@ public static class ReplaySimulationBuilder
 {
 	public static ReplaySimulation Build(ReplayBinary<LocalReplayBinaryHeader> replay)
 	{
-		InitialInputsEvent initialInputsEvent = (InitialInputsEvent?)replay.EventsData.Events.FirstOrDefault(e => e is InitialInputsEvent) ?? throw new InvalidOperationException("Replay does not contain an initial inputs event.");
-		float lookSpeed = initialInputsEvent.LookSpeed;
+		ReplayEvent initialInputsEvent = replay.EventsData.Events.FirstOrDefault(e => e.Data is InitialInputsEvent) ?? throw new InvalidOperationException("Replay does not contain an initial inputs event.");
+		float lookSpeed = ((InitialInputsEvent)initialInputsEvent.Data).LookSpeed;
 
 		int ticks = 0;
 		SpawnsetBinary spawnset = replay.Header.Spawnset;
@@ -20,7 +20,7 @@ public static class ReplaySimulationBuilder
 		List<PlayerInputSnapshot> playerInputSnapshots = new();
 		List<SoundSnapshot> soundSnapshots = new();
 
-		foreach (IEvent e in replay.EventsData.Events)
+		foreach (IEventData e in replay.EventsData.Events)
 		{
 			switch (e)
 			{

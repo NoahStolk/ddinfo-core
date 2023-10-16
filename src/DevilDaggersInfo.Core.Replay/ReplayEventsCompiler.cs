@@ -1,17 +1,16 @@
-using DevilDaggersInfo.Core.Replay.Events.Interfaces;
 using System.IO.Compression;
 
 namespace DevilDaggersInfo.Core.Replay;
 
 public static class ReplayEventsCompiler
 {
-	public static byte[] CompileEvents(List<IEvent> events)
+	public static byte[] CompileEvents(List<ReplayEvent> events)
 	{
 		using MemoryStream ms = new();
 		using BinaryWriter bw = new(ms);
 
-		foreach (IEvent e in events)
-			e.Write(bw);
+		foreach (ReplayEvent e in events)
+			e.Data.Write(bw);
 
 		return Compress(ms.ToArray());
 	}

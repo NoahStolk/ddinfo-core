@@ -1,5 +1,5 @@
+using DevilDaggersInfo.Core.Replay.Events.Data;
 using DevilDaggersInfo.Core.Replay.Events.Enums;
-using DevilDaggersInfo.Core.Replay.Events.Interfaces;
 using System.Diagnostics.CodeAnalysis;
 
 namespace DevilDaggersInfo.Core.Replay.Test;
@@ -35,11 +35,12 @@ public class ReplayEventsEditingTests
 		ValidateOriginalEntityIds();
 	}
 
-	private static void AssertEntityId<TEvent>(IEvent e, int expectedEntityId)
-		where TEvent : IEntitySpawnEvent
+	private static void AssertEntityId<TEvent>(ReplayEvent e, int expectedEntityId)
+		where TEvent : ISpawnEventData
 	{
-		Assert.IsInstanceOfType<TEvent>(e);
-		Assert.AreEqual(expectedEntityId, ((TEvent)e).EntityId);
+		Assert.IsInstanceOfType<EntitySpawnReplayEvent>(e);
+		Assert.IsInstanceOfType<TEvent>(e.Data);
+		Assert.AreEqual(expectedEntityId, ((EntitySpawnReplayEvent)e).EntityId);
 	}
 
 	private void ValidateOriginalEntityTypes()
@@ -97,18 +98,10 @@ public class ReplayEventsEditingTests
 		Assert.AreEqual(_eventCount + 1, _replay.EventsData.EventOffsetsPerTick[^1]);
 	}
 
-	[DataTestMethod]
-	[DataRow(0)]
-	[DataRow(1)]
-	[DataRow(2)]
-	[DataRow(3)]
-	[DataRow(4)]
-	[DataRow(5)]
-	[DataRow(6)]
-	public void AddSpawnEvent(int ignoredEntityId)
+	[TestMethod]
+	public void AddSpawnEvent()
 	{
-		// The entity ID should be changed to 6 regardless of the value of ignoredEntityId.
-		_replay.EventsData.AddEvent(new ThornSpawnEvent(ignoredEntityId, -1, default, 0));
+		_replay.EventsData.AddEvent(new ThornSpawnEvent(-1, default, 0));
 
 		// There should be one new event and one new entity.
 		Assert.AreEqual(_eventCount + 1, _replay.EventsData.Events.Count);
@@ -279,8 +272,8 @@ public class ReplayEventsEditingTests
 		Assert.AreEqual(2, _replay.EventsData.EventOffsetsPerTick.Count);
 		Assert.AreEqual(1, _replay.EventsData.EntityTypes.Count);
 
-		Assert.IsInstanceOfType<HitEvent>(_replay.EventsData.Events[0]);
-		Assert.IsInstanceOfType<InitialInputsEvent>(_replay.EventsData.Events[1]);
+		Assert.IsInstanceOfType<HitEvent>(_replay.EventsData.Events[0].Data);
+		Assert.IsInstanceOfType<InitialInputsEvent>(_replay.EventsData.Events[1].Data);
 
 		Assert.AreEqual(0, _replay.EventsData.EventOffsetsPerTick[0]);
 		Assert.AreEqual(2, _replay.EventsData.EventOffsetsPerTick[1]);
@@ -298,8 +291,8 @@ public class ReplayEventsEditingTests
 		Assert.AreEqual(2, _replay.EventsData.EventOffsetsPerTick.Count);
 		Assert.AreEqual(1, _replay.EventsData.EntityTypes.Count);
 
-		Assert.IsInstanceOfType<HitEvent>(_replay.EventsData.Events[0]);
-		Assert.IsInstanceOfType<InitialInputsEvent>(_replay.EventsData.Events[1]);
+		Assert.IsInstanceOfType<HitEvent>(_replay.EventsData.Events[0].Data);
+		Assert.IsInstanceOfType<InitialInputsEvent>(_replay.EventsData.Events[1].Data);
 
 		Assert.AreEqual(0, _replay.EventsData.EventOffsetsPerTick[0]);
 		Assert.AreEqual(2, _replay.EventsData.EventOffsetsPerTick[1]);
@@ -387,16 +380,10 @@ public class ReplayEventsEditingTests
 		}
 	}
 
-	[DataTestMethod]
-	[DataRow(0)]
-	[DataRow(1)]
-	[DataRow(2)]
-	[DataRow(3)]
-	[DataRow(4)]
-	public void InsertSpawnEventAtStart(int ignoredEntityId)
+	[TestMethod]
+	public void InsertSpawnEventAtStart()
 	{
-		// The entity ID should be changed to 1 regardless of the value of ignoredEntityId.
-		_replay.EventsData.InsertEvent(0, new ThornSpawnEvent(ignoredEntityId, -1, default, 0));
+		_replay.EventsData.InsertEvent(0, new ThornSpawnEvent(-1, default, 0));
 
 		// There should be one new event and one new entity.
 		Assert.AreEqual(_eventCount + 1, _replay.EventsData.Events.Count);
@@ -438,16 +425,10 @@ public class ReplayEventsEditingTests
 		}
 	}
 
-	[DataTestMethod]
-	[DataRow(0)]
-	[DataRow(1)]
-	[DataRow(2)]
-	[DataRow(3)]
-	[DataRow(4)]
-	public void InsertSpawnEvent(int ignoredEntityId)
+	[TestMethod]
+	public void InsertSpawnEvent()
 	{
-		// The entity ID should be changed to 3 regardless of the value of ignoredEntityId.
-		_replay.EventsData.InsertEvent(10, new ThornSpawnEvent(ignoredEntityId, -1, default, 0));
+		_replay.EventsData.InsertEvent(10, new ThornSpawnEvent(-1, default, 0));
 
 		// There should be one new event and one new entity.
 		Assert.AreEqual(_eventCount + 1, _replay.EventsData.Events.Count);
@@ -565,11 +546,12 @@ public class ReplayEventsEditingTests
 		}
 	}
 
+	[Obsolete]
 	[TestMethod]
 	public void ChangeEntityType()
 	{
-		Assert.IsInstanceOfType<BoidSpawnEvent>(_replay.EventsData.Events[3]);
-		BoidSpawnEvent boidSpawnEvent = (BoidSpawnEvent)_replay.EventsData.Events[3];
+		Assert.IsInstanceOfType<BoidSpawnEvent>(_replay.EventsData.Events[3].Data);
+		BoidSpawnEvent boidSpawnEvent = (BoidSpawnEvent)_replay.EventsData.Events[3].Data;
 		boidSpawnEvent.BoidType = BoidType.Skull2;
 
 		_replay.EventsData.ChangeEntityType(2, EntityType.Skull2);

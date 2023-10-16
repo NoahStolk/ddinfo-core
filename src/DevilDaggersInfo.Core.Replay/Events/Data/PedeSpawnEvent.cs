@@ -1,18 +1,15 @@
 using DevilDaggersInfo.Core.Replay.Events.Enums;
-using DevilDaggersInfo.Core.Replay.Events.Interfaces;
 using System.Diagnostics;
 
-namespace DevilDaggersInfo.Core.Replay.Events;
+namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
-public record PedeSpawnEvent(int EntityId, PedeType PedeType, int A, Vector3 Position, Vector3 B, Matrix3x3 Orientation) : IEntitySpawnEvent
+public record PedeSpawnEvent(PedeType PedeType, int A, Vector3 Position, Vector3 B, Matrix3x3 Orientation) : ISpawnEventData
 {
 	public PedeType PedeType = PedeType;
 	public int A = A;
 	public Vector3 Position = Position;
 	public Vector3 B = B;
 	public Matrix3x3 Orientation = Orientation;
-
-	public int EntityId { get; set; } = EntityId;
 
 	public EntityType EntityType => PedeType switch
 	{

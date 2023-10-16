@@ -1,18 +1,15 @@
 using DevilDaggersInfo.Core.Replay.Events.Enums;
-using DevilDaggersInfo.Core.Replay.Events.Interfaces;
 using System.Diagnostics;
 
-namespace DevilDaggersInfo.Core.Replay.Events;
+namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
-public record SquidSpawnEvent(int EntityId, SquidType SquidType, int A, Vector3 Position, Vector3 Direction, float RotationInRadians) : IEntitySpawnEvent
+public record SquidSpawnEvent(SquidType SquidType, int A, Vector3 Position, Vector3 Direction, float RotationInRadians) : ISpawnEventData
 {
 	public SquidType SquidType = SquidType;
 	public int A = A;
 	public Vector3 Position = Position;
 	public Vector3 Direction = Direction;
 	public float RotationInRadians = RotationInRadians;
-
-	public int EntityId { get; set; } = EntityId;
 
 	public EntityType EntityType => SquidType switch
 	{

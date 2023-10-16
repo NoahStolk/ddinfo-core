@@ -1,5 +1,5 @@
+using DevilDaggersInfo.Core.Replay.Events.Data;
 using DevilDaggersInfo.Core.Replay.Events.Enums;
-using DevilDaggersInfo.Core.Replay.Events.Interfaces;
 
 namespace DevilDaggersInfo.Core.Replay.PostProcessing.Timeline;
 
@@ -8,23 +8,26 @@ public class EnemyTimelineBuilder
 	private readonly List<EnemyTimelineBuildContext> _builds = new();
 	private readonly Dictionary<int, EntityType> _daggers = new();
 
-	public List<EnemyTimeline> Build(IReadOnlyList<IEvent> events)
+	public List<EnemyTimeline> Build(IReadOnlyList<ReplayEvent> events)
 	{
 		_builds.Clear();
 		_daggers.Clear();
 		int currentTick = 0;
 
-		foreach (IEvent e in events)
+		foreach (ReplayEvent e in events)
 		{
-			if (e is DaggerSpawnEvent dagger)
+			if (e is EntitySpawnReplayEvent spawnEvent)
 			{
-				_daggers.Add(dagger.EntityId, dagger.EntityType);
+				if (e.Data is DaggerSpawnEvent dagger)
+				{
+					_daggers.Add(spawnEvent.EntityId, dagger.EntityType);
+				}
+				else if (e.Data is ISpawnEventData spawn)
+				{
+					_builds.Add(new(spawnEvent.EntityId, spawn.EntityType, currentTick));
+				}
 			}
-			else if (e is IEntitySpawnEvent spawn)
-			{
-				_builds.Add(new(spawn.EntityId, spawn.EntityType, currentTick));
-			}
-			else if (e is HitEvent hit)
+			else if (e.Data is HitEvent hit)
 			{
 				EnemyTimelineBuildContext? enemy = _builds.Find(c => c.EntityId == hit.EntityIdA);
 				if (enemy == null)
@@ -44,7 +47,7 @@ public class EnemyTimelineBuilder
 
 				enemy.CurrentHp -= damage;
 			}
-			else if (e is TransmuteEvent transmute)
+			else if (e.Data is TransmuteEvent transmute)
 			{
 				EnemyTimelineBuildContext? enemy = _builds.Find(c => c.EntityId == transmute.EntityId);
 				if (enemy == null)
@@ -52,7 +55,7 @@ public class EnemyTimelineBuilder
 
 				enemy.Transmute();
 			}
-			else if (e is InputsEvent or InitialInputsEvent)
+			else if (e.Data is InputsEvent or InitialInputsEvent)
 			{
 				currentTick++;
 			}

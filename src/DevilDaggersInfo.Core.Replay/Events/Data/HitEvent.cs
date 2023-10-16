@@ -1,8 +1,6 @@
-using DevilDaggersInfo.Core.Replay.Events.Interfaces;
+namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
-namespace DevilDaggersInfo.Core.Replay.Events;
-
-public record HitEvent(int EntityIdA, int EntityIdB, int UserData) : IEvent
+public record HitEvent(int EntityIdA, int EntityIdB, int UserData) : IEventData
 {
 	public int EntityIdA = EntityIdA;
 	public int EntityIdB = EntityIdB;

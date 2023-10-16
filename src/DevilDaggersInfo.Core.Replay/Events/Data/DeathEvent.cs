@@ -1,8 +1,6 @@
-using DevilDaggersInfo.Core.Replay.Events.Interfaces;
+namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
-namespace DevilDaggersInfo.Core.Replay.Events;
-
-public record DeathEvent(int DeathType) : IEvent
+public record DeathEvent(int DeathType) : IEventData
 {
 	public int DeathType = DeathType;
 

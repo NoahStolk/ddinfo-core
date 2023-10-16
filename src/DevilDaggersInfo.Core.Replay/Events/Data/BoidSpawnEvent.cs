@@ -1,10 +1,9 @@
 using DevilDaggersInfo.Core.Replay.Events.Enums;
-using DevilDaggersInfo.Core.Replay.Events.Interfaces;
 using System.Diagnostics;
 
-namespace DevilDaggersInfo.Core.Replay.Events;
+namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
-public record BoidSpawnEvent(int EntityId, int SpawnerEntityId, BoidType BoidType, Int16Vec3 Position, Int16Mat3x3 Orientation, Vector3 Velocity, float Speed) : IEntitySpawnEvent
+public record BoidSpawnEvent(int SpawnerEntityId, BoidType BoidType, Int16Vec3 Position, Int16Mat3x3 Orientation, Vector3 Velocity, float Speed) : ISpawnEventData
 {
 	public int SpawnerEntityId = SpawnerEntityId;
 	public BoidType BoidType = BoidType;
@@ -12,8 +11,6 @@ public record BoidSpawnEvent(int EntityId, int SpawnerEntityId, BoidType BoidTyp
 	public Int16Mat3x3 Orientation = Orientation;
 	public Vector3 Velocity = Velocity;
 	public float Speed = Speed;
-
-	public int EntityId { get; set; } = EntityId;
 
 	public EntityType EntityType => BoidType switch
 	{
