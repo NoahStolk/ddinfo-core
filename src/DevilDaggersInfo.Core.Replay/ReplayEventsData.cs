@@ -46,8 +46,8 @@ public class ReplayEventsData
 
 	public void AddEvent(IEventData e)
 	{
-		if (e is ISpawnEventData spawnEvent)
-			_events.Add(new EntitySpawnReplayEvent(_entityTypes.Count, spawnEvent.EntityType, e));
+		if (e is ISpawnEventData)
+			_events.Add(new EntitySpawnReplayEvent(_entityTypes.Count, e));
 		else
 			_events.Add(new(e));
 
@@ -119,7 +119,7 @@ public class ReplayEventsData
 			{
 				if (i == index)
 				{
-					_events.Insert(index, new EntitySpawnReplayEvent(entityId, spawnEvent.EntityType, e));
+					_events.Insert(index, new EntitySpawnReplayEvent(entityId, e));
 					_entityTypes.Insert(entityId, spawnEvent.EntityType);
 				}
 				else if (_events[i] is EntitySpawnReplayEvent otherSpawnEvent)
