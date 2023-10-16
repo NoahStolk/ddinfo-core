@@ -20,9 +20,9 @@ public static class ReplaySimulationBuilder
 		List<PlayerInputSnapshot> playerInputSnapshots = new();
 		List<SoundSnapshot> soundSnapshots = new();
 
-		foreach (IEventData e in replay.EventsData.Events)
+		foreach (ReplayEvent e in replay.EventsData.Events)
 		{
-			switch (e)
+			switch (e.Data)
 			{
 				case EntityPositionEventData { EntityId: 0 } entityPositionEvent:
 				{
@@ -38,7 +38,7 @@ public static class ReplaySimulationBuilder
 
 				case InputsEventData or InitialInputsEventData:
 				{
-					PlayerInputSnapshot inputSnapshot = e switch
+					PlayerInputSnapshot inputSnapshot = e.Data switch
 					{
 						InputsEventData ie => new(ie.Left, ie.Right, ie.Forward, ie.Backward, ie.Jump, ie.Shoot, ie.ShootHoming, ie.MouseX, ie.MouseY),
 						InitialInputsEventData iie => new(iie.Left, iie.Right, iie.Forward, iie.Backward, iie.Jump, iie.Shoot, iie.ShootHoming, iie.MouseX, iie.MouseY),
