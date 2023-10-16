@@ -84,7 +84,6 @@ dotnet_naming_rule.instance_fields_should_be_camel_case.style            = insta
 dotnet_naming_rule.instance_fields_should_be_camel_case.symbols          = instance_fields
 dotnet_naming_symbols.instance_fields.applicable_kinds                   = field
 dotnet_naming_symbols.instance_fields.applicable_accessibilities         = protected,private_protected,private
-dotnet_naming_style.first_word_upper_case_style.capitalization           = first_word_upper
 dotnet_naming_style.instance_field_style.required_prefix                 = _
 
 # Use PamelCase for instance fields with an accessibility of internal or higher
