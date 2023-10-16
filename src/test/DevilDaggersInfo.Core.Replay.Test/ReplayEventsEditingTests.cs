@@ -1,6 +1,8 @@
 using DevilDaggersInfo.Core.Replay.Events.Data;
 using DevilDaggersInfo.Core.Replay.Events.Enums;
+using DevilDaggersInfo.Core.Replay.Numerics;
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 
 namespace DevilDaggersInfo.Core.Replay.Test;
 
@@ -43,6 +45,12 @@ public class ReplayEventsEditingTests
 		Assert.AreEqual(expectedEntityId, ((EntitySpawnReplayEvent)e).EntityId);
 	}
 
+	private static void AssertSpawnerEntityId(ReplayEvent e, int expectedSpawnerEntityId)
+	{
+		Assert.IsInstanceOfType<BoidSpawnEventData>(e.Data);
+		Assert.AreEqual(expectedSpawnerEntityId, ((BoidSpawnEventData)e.Data).SpawnerEntityId);
+	}
+
 	private void ValidateOriginalEntityTypes()
 	{
 		Assert.AreEqual(EntityType.Zero, _replay.EventsData.GetEntityType(0));
@@ -77,6 +85,12 @@ public class ReplayEventsEditingTests
 		AssertEntityId<BoidSpawnEventData>(_replay.EventsData.Events[24], 3);
 		AssertEntityId<BoidSpawnEventData>(_replay.EventsData.Events[45], 4);
 		AssertEntityId<BoidSpawnEventData>(_replay.EventsData.Events[66], 5);
+
+		// All Skulls should be spawned by the Squid.
+		AssertSpawnerEntityId(_replay.EventsData.Events[3], 1);
+		AssertSpawnerEntityId(_replay.EventsData.Events[24], 1);
+		AssertSpawnerEntityId(_replay.EventsData.Events[45], 1);
+		AssertSpawnerEntityId(_replay.EventsData.Events[66], 1);
 	}
 
 	[TestMethod]
@@ -199,6 +213,12 @@ public class ReplayEventsEditingTests
 		AssertEntityId<BoidSpawnEventData>(_replay.EventsData.Events[23], 2);
 		AssertEntityId<BoidSpawnEventData>(_replay.EventsData.Events[44], 3);
 		AssertEntityId<BoidSpawnEventData>(_replay.EventsData.Events[65], 4);
+
+		// All Skulls should be now refer to -1 because the Squid is gone.
+		AssertSpawnerEntityId(_replay.EventsData.Events[2], -1);
+		AssertSpawnerEntityId(_replay.EventsData.Events[23], -1);
+		AssertSpawnerEntityId(_replay.EventsData.Events[44], -1);
+		AssertSpawnerEntityId(_replay.EventsData.Events[65], -1);
 
 		// Offsets should be changed.
 		int expectedOffset = 0;
@@ -447,6 +467,12 @@ public class ReplayEventsEditingTests
 		AssertEntityId<BoidSpawnEventData>(_replay.EventsData.Events[46], 5);
 		AssertEntityId<BoidSpawnEventData>(_replay.EventsData.Events[67], 6);
 
+		// All Skulls should still be spawned by the Squid, so the SpawnerEntityId should be updated to 2.
+		AssertSpawnerEntityId(_replay.EventsData.Events[4], 2);
+		AssertSpawnerEntityId(_replay.EventsData.Events[25], 2);
+		AssertSpawnerEntityId(_replay.EventsData.Events[46], 2);
+		AssertSpawnerEntityId(_replay.EventsData.Events[67], 2);
+
 		int expectedOffset = 0;
 		for (int i = 0; i < _tickCount; i++)
 		{
@@ -491,6 +517,12 @@ public class ReplayEventsEditingTests
 		AssertEntityId<BoidSpawnEventData>(_replay.EventsData.Events[25], 4);
 		AssertEntityId<BoidSpawnEventData>(_replay.EventsData.Events[46], 5);
 		AssertEntityId<BoidSpawnEventData>(_replay.EventsData.Events[67], 6);
+
+		// All Skulls should still be spawned by the Squid.
+		AssertSpawnerEntityId(_replay.EventsData.Events[3], 1);
+		AssertSpawnerEntityId(_replay.EventsData.Events[25], 1);
+		AssertSpawnerEntityId(_replay.EventsData.Events[46], 1);
+		AssertSpawnerEntityId(_replay.EventsData.Events[67], 1);
 
 		int expectedOffset = 0;
 		for (int i = 0; i < _tickCount; i++)
@@ -598,5 +630,135 @@ public class ReplayEventsEditingTests
 		Assert.AreEqual(EntityType.Skull1, _replay.EventsData.GetEntityType(3));
 		Assert.AreEqual(EntityType.Skull1, _replay.EventsData.GetEntityType(4));
 		Assert.AreEqual(EntityType.Skull1, _replay.EventsData.GetEntityType(5));
+	}
+
+	[TestMethod]
+	public void TestReferringEntityIds_InsertThornBeforeSquidAndSkulls()
+	{
+		ReplayBinary<LocalReplayBinaryHeader> replay = ReplayBinary<LocalReplayBinaryHeader>.CreateDefault();
+
+		// Remove initial inputs and end events for ease of testing.
+		replay.EventsData.RemoveEvent(0);
+		replay.EventsData.RemoveEvent(0);
+
+		int squid2EntityId = 1;
+
+		// Add a Squid2 that spawns 3 skulls.
+		replay.EventsData.AddEvent(new SquidSpawnEventData(SquidType.Squid2, -1, Vector3.Zero, Vector3.Zero, 0f));
+		Assert.AreEqual(EntityType.Squid2, replay.EventsData.GetEntityType(squid2EntityId));
+		List<BoidSpawnEventData> boids = new();
+		for (int i = 0; i < 3; i++)
+		{
+			BoidSpawnEventData boid = new(squid2EntityId, BoidType.Skull1, Int16Vec3.Zero, Int16Mat3x3.Identity, Vector3.Zero, 0f);
+			boids.Add(boid);
+			replay.EventsData.AddEvent(boid);
+			Assert.AreEqual(EntityType.Skull1, replay.EventsData.GetEntityType(squid2EntityId + i + 1));
+		}
+
+		// Add a Thorn in front of everything.
+		replay.EventsData.InsertEvent(0, new ThornSpawnEventData(-1, Vector3.Zero, 0f));
+		Assert.AreEqual(EntityType.Thorn, replay.EventsData.GetEntityType(1));
+
+		// Test if all skulls are still referring to the Squid2.
+		squid2EntityId = 2;
+		Assert.AreEqual(EntityType.Squid2, replay.EventsData.GetEntityType(squid2EntityId));
+		for (int i = 0; i < boids.Count; i++)
+		{
+			BoidSpawnEventData boid = boids[i];
+			Assert.AreEqual(EntityType.Skull1, replay.EventsData.GetEntityType(squid2EntityId + i + 1));
+			Assert.AreEqual(squid2EntityId, boid.SpawnerEntityId);
+		}
+
+		// Remove the Thorn.
+		replay.EventsData.RemoveEvent(0);
+
+		// Test if all skulls are still referring to the Squid2.
+		squid2EntityId = 1;
+		Assert.AreEqual(EntityType.Squid2, replay.EventsData.GetEntityType(squid2EntityId));
+		for (int i = 0; i < boids.Count; i++)
+		{
+			BoidSpawnEventData boid = boids[i];
+			Assert.AreEqual(EntityType.Skull1, replay.EventsData.GetEntityType(squid2EntityId + i + 1));
+			Assert.AreEqual(squid2EntityId, boid.SpawnerEntityId);
+		}
+
+		// Remove the Squid2.
+		replay.EventsData.RemoveEvent(0);
+
+		// Test if all skulls are now referring to -1.
+		for (int i = 0; i < boids.Count; i++)
+		{
+			BoidSpawnEventData boid = boids[i];
+			Assert.AreEqual(EntityType.Skull1, replay.EventsData.GetEntityType(i + 1));
+			Assert.AreEqual(-1, boid.SpawnerEntityId);
+		}
+	}
+
+	// TODO: Also test EntityOrientationEventData and EntityTargetEventData.
+	// TODO: Also test EntityPositionEventData with multiple entities.
+	// TODO: Also test HitEventData, SpiderEggSpawnEventData, and TransmuteEventData.
+	[TestMethod]
+	public void TestReferringEntityIds_InsertThornBetweenEntityPositionEvents()
+	{
+		ReplayBinary<LocalReplayBinaryHeader> replay = ReplayBinary<LocalReplayBinaryHeader>.CreateDefault();
+
+		// Remove initial inputs and end events for ease of testing.
+		replay.EventsData.RemoveEvent(0);
+		replay.EventsData.RemoveEvent(0);
+
+		int squid2EntityId = 1;
+
+		// Add a Squid2.
+		replay.EventsData.AddEvent(new SquidSpawnEventData(SquidType.Squid2, -1, Vector3.Zero, Vector3.Zero, 0f));
+		Assert.AreEqual(EntityType.Squid2, replay.EventsData.GetEntityType(squid2EntityId));
+
+		// Add two entity position events.
+		EntityPositionEventData firstUpdate = new(squid2EntityId, Int16Vec3.Zero);
+		EntityPositionEventData secondUpdate = new(squid2EntityId, Int16Vec3.Zero);
+		replay.EventsData.AddEvent(firstUpdate);
+		replay.EventsData.AddEvent(secondUpdate);
+
+		// Add a Thorn in front of everything.
+		replay.EventsData.InsertEvent(0, new ThornSpawnEventData(-1, Vector3.Zero, 0f));
+		Assert.AreEqual(EntityType.Thorn, replay.EventsData.GetEntityType(1));
+
+		// Test if all entity position events are still referring to the Squid2.
+		squid2EntityId = 2;
+		Assert.AreEqual(EntityType.Squid2, replay.EventsData.GetEntityType(squid2EntityId));
+		Assert.AreEqual(squid2EntityId, firstUpdate.EntityId);
+		Assert.AreEqual(squid2EntityId, secondUpdate.EntityId);
+
+		// Remove the Thorn.
+		replay.EventsData.RemoveEvent(0);
+
+		// Test if all entity position events are still referring to the Squid2.
+		squid2EntityId = 1;
+		Assert.AreEqual(EntityType.Squid2, replay.EventsData.GetEntityType(squid2EntityId));
+		Assert.AreEqual(squid2EntityId, firstUpdate.EntityId);
+		Assert.AreEqual(squid2EntityId, secondUpdate.EntityId);
+
+		// Add another Thorn in between 2 entity position events.
+		replay.EventsData.InsertEvent(2, new ThornSpawnEventData(-1, Vector3.Zero, 0f));
+
+		// Test if all entity position events are still referring to the Squid2.
+		Assert.AreEqual(EntityType.Squid2, replay.EventsData.GetEntityType(squid2EntityId));
+		Assert.AreEqual(squid2EntityId, firstUpdate.EntityId);
+		Assert.AreEqual(squid2EntityId, secondUpdate.EntityId);
+
+		// Remove the Thorn.
+		replay.EventsData.RemoveEvent(2);
+
+		// Test if all entity position events are still referring to the Squid2.
+		Assert.AreEqual(EntityType.Squid2, replay.EventsData.GetEntityType(squid2EntityId));
+		Assert.AreEqual(squid2EntityId, firstUpdate.EntityId);
+		Assert.AreEqual(squid2EntityId, secondUpdate.EntityId);
+
+		// Remove the Squid2.
+		replay.EventsData.RemoveEvent(0);
+
+		// Test if all entity position events are now referring to -1.
+		Assert.ThrowsException<ArgumentOutOfRangeException>(() => replay.EventsData.GetEntityType(1));
+		Assert.AreEqual(-1, firstUpdate.EntityId);
+		Assert.AreEqual(-1, secondUpdate.EntityId);
 	}
 }

@@ -19,6 +19,17 @@ public static class ReplayEventsParser
 		while (true)
 		{
 			byte eventType = br.ReadByte();
+
+			// Probably a good idea to check for any corrupt EntityIds here:
+			// - BoidSpawnEventData.SpawnerEntityId
+			// - EntityOrientationEventData.EntityId
+			// - EntityPositionEventData.EntityId
+			// - EntityTargetEventData.EntityId
+			// - HitEventData.EntityIdA
+			// - HitEventData.EntityIdB
+			// - SpiderEggSpawnEventData.SpawnerEntityId
+			// - TransmuteEventData.EntityId
+			// These should never be higher than or equal to the current SpawnEventCount.
 			IEventData e = eventType switch
 			{
 				0x00 => ParseEntitySpawnEvent(br),

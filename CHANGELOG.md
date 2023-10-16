@@ -2,6 +2,20 @@
 
 This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.7.1
+
+### Fixed
+
+- Fixed not updating referring entity IDs when inserting or removing spawn events. Entity IDs that no longer refer to an existing entity are set to -1. This applies to:
+  - `BoidSpawnEventData.SpawnerEntityId`
+  - `EntityOrientationEventData.EntityId`
+  - `EntityPositionEventData.EntityId`
+  - `EntityTargetEventData.EntityId`
+  - `HitEventData.EntityIdA`
+  - `HitEventData.EntityIdB`
+  - `SpiderEggSpawnEventData.SpawnerEntityId`
+  - `TransmuteEventData.EntityId`
+
 ## 0.7.0
 
 Working with replay events has been rewritten. All problems have been fixed and the API is now mostly stable.

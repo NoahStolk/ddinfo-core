@@ -65,6 +65,12 @@ public class ReplayEventsData
 
 				if (_events[i] is EntitySpawnReplayEvent otherSpawnEvent && otherSpawnEvent.EntityId > spawnEvent.EntityId)
 					otherSpawnEvent.EntityId--;
+
+				if (i >= index)
+				{
+					IEventData data = _events[i].Data;
+					UpdateReferringEntityIdsOnRemove(data, spawnEvent.EntityId);
+				}
 			}
 		}
 
@@ -118,6 +124,12 @@ public class ReplayEventsData
 					else
 						entityId++;
 				}
+
+				if (i >= index)
+				{
+					IEventData data = _events[i].Data;
+					UpdateReferringEntityIdsOnInsert(data, entityId);
+				}
 			}
 		}
 		else
@@ -145,6 +157,10 @@ public class ReplayEventsData
 		}
 	}
 
+	/// <summary>
+	/// Returns the entity type of the entity with the specified entity ID.
+	/// </summary>
+	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="entityId"/> is negative or higher than or equal to <see cref="SpawnEventCount"/>.</exception>
 	public EntityType GetEntityType(int entityId)
 	{
 		if (entityId == 0)
@@ -154,5 +170,87 @@ public class ReplayEventsData
 			throw new ArgumentOutOfRangeException(nameof(entityId));
 
 		return _entitySpawnReplayEvents[entityId - 1].Data.EntityType;
+	}
+
+	/// <summary>
+	/// When any event after the removed event is referring to an entity that also comes after the current removed entity id, decrement that entity id as well.
+	/// In case any event refers to the removed event, set the entity id to -1.
+	/// </summary>
+	private static void UpdateReferringEntityIdsOnRemove(IEventData data, int removedEntityId)
+	{
+		if (data is BoidSpawnEventData boidSpawnEventData && boidSpawnEventData.SpawnerEntityId >= removedEntityId)
+		{
+			DecrementOrRemove(ref boidSpawnEventData.SpawnerEntityId, removedEntityId);
+		}
+		else if (data is EntityOrientationEventData entityOrientationEventData && entityOrientationEventData.EntityId >= removedEntityId)
+		{
+			DecrementOrRemove(ref entityOrientationEventData.EntityId, removedEntityId);
+		}
+		else if (data is EntityPositionEventData entityPositionEventData && entityPositionEventData.EntityId >= removedEntityId)
+		{
+			DecrementOrRemove(ref entityPositionEventData.EntityId, removedEntityId);
+		}
+		else if (data is EntityTargetEventData entityTargetEventData && entityTargetEventData.EntityId >= removedEntityId)
+		{
+			DecrementOrRemove(ref entityTargetEventData.EntityId, removedEntityId);
+		}
+		else if (data is HitEventData hitEventData)
+		{
+			if (hitEventData.EntityIdA >= removedEntityId)
+				DecrementOrRemove(ref hitEventData.EntityIdA, removedEntityId);
+			if (hitEventData.EntityIdB >= removedEntityId)
+				DecrementOrRemove(ref hitEventData.EntityIdB, removedEntityId);
+		}
+		else if (data is SpiderEggSpawnEventData spiderEggSpawnEventData && spiderEggSpawnEventData.SpawnerEntityId >= removedEntityId)
+		{
+			DecrementOrRemove(ref spiderEggSpawnEventData.SpawnerEntityId, removedEntityId);
+		}
+		else if (data is TransmuteEventData transmuteEventData && transmuteEventData.EntityId >= removedEntityId)
+		{
+			DecrementOrRemove(ref transmuteEventData.EntityId, removedEntityId);
+		}
+
+		static void DecrementOrRemove(ref int entityId, int removedEntityId)
+		{
+			entityId = entityId == removedEntityId ? -1 : entityId - 1;
+		}
+	}
+
+	/// <summary>
+	/// When any event after the new event is referring to an entity that also comes after the current new entity id, increment that entity id as well.
+	/// </summary>
+	private static void UpdateReferringEntityIdsOnInsert(IEventData data, int insertedEntityId)
+	{
+		if (data is BoidSpawnEventData boidSpawnEventData && boidSpawnEventData.SpawnerEntityId >= insertedEntityId)
+		{
+			boidSpawnEventData.SpawnerEntityId++;
+		}
+		else if (data is EntityOrientationEventData entityOrientationEventData && entityOrientationEventData.EntityId >= insertedEntityId)
+		{
+			entityOrientationEventData.EntityId++;
+		}
+		else if (data is EntityPositionEventData entityPositionEventData && entityPositionEventData.EntityId >= insertedEntityId)
+		{
+			entityPositionEventData.EntityId++;
+		}
+		else if (data is EntityTargetEventData entityTargetEventData && entityTargetEventData.EntityId >= insertedEntityId)
+		{
+			entityTargetEventData.EntityId++;
+		}
+		else if (data is HitEventData hitEventData)
+		{
+			if (hitEventData.EntityIdA >= insertedEntityId)
+				hitEventData.EntityIdA++;
+			if (hitEventData.EntityIdB >= insertedEntityId)
+				hitEventData.EntityIdB++;
+		}
+		else if (data is SpiderEggSpawnEventData spiderEggSpawnEventData && spiderEggSpawnEventData.SpawnerEntityId >= insertedEntityId)
+		{
+			spiderEggSpawnEventData.SpawnerEntityId++;
+		}
+		else if (data is TransmuteEventData transmuteEventData && transmuteEventData.EntityId >= insertedEntityId)
+		{
+			transmuteEventData.EntityId++;
+		}
 	}
 }
