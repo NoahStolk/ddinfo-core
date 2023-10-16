@@ -1,9 +1,16 @@
-﻿using DevilDaggersInfo.Core.Replay.Events.Data;
-using DevilDaggersInfo.Core.Replay.Events.Enums;
+using DevilDaggersInfo.Core.Replay.Events.Data;
 
 namespace DevilDaggersInfo.Core.Replay.Events;
 
-public record EntitySpawnReplayEvent(int EntityId, IEventData Data) : ReplayEvent(Data)
+public record EntitySpawnReplayEvent : ReplayEvent
 {
-	public int EntityId { get; internal set; } = EntityId;
+	internal EntitySpawnReplayEvent(int entityId, ISpawnEventData data)
+		: base(data)
+	{
+		EntityId = entityId;
+		Data = data;
+	}
+
+	public int EntityId { get; internal set; }
+	public new ISpawnEventData Data { get; }
 }
