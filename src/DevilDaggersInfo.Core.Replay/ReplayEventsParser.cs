@@ -26,18 +26,18 @@ public static class ReplayEventsParser
 				0x02 => ParseEntityOrientationEvent(br),
 				0x04 => ParseEntityTargetEvent(br),
 				0x05 => ParseHitEvent(br),
-				0x06 => new GemEvent(),
+				0x06 => new GemEventData(),
 				0x07 => ParseTransmuteEvent(br),
 				0x09 => parsedInitialInput ? ParseInputsEvent(br) : ParseInitialInputsEvent(br),
-				0x0b => new EndEvent(),
+				0x0b => new EndEventData(),
 				_ => throw new InvalidReplayBinaryException($"Invalid event type '{eventType}'."),
 			};
 			eventsData.AddEvent(e);
 
-			if (e is InitialInputsEvent)
+			if (e is InitialInputsEventData)
 				parsedInitialInput = true;
 
-			if (e is EndEvent)
+			if (e is EndEventData)
 				break;
 		}
 
@@ -66,21 +66,21 @@ public static class ReplayEventsParser
 		};
 	}
 
-	private static EntityPositionEvent ParseEntityPositionEvent(BinaryReader br)
+	private static EntityPositionEventData ParseEntityPositionEvent(BinaryReader br)
 	{
 		int entityId = br.ReadInt32();
 		Int16Vec3 position = br.ReadInt16Vec3();
 		return new(entityId, position);
 	}
 
-	private static EntityOrientationEvent ParseEntityOrientationEvent(BinaryReader br)
+	private static EntityOrientationEventData ParseEntityOrientationEvent(BinaryReader br)
 	{
 		int entityId = br.ReadInt32();
 		Int16Mat3x3 orientation = br.ReadInt16Mat3x3();
 		return new(entityId, orientation);
 	}
 
-	private static EntityTargetEvent ParseEntityTargetEvent(BinaryReader br)
+	private static EntityTargetEventData ParseEntityTargetEvent(BinaryReader br)
 	{
 		int entityId = br.ReadInt32();
 		Int16Vec3 targetPosition = br.ReadInt16Vec3();
@@ -95,23 +95,23 @@ public static class ReplayEventsParser
 
 		int entityIdB = br.ReadInt32();
 		int userData = br.ReadInt32();
-		return new HitEvent(entityIdA, entityIdB, userData);
+		return new HitEventData(entityIdA, entityIdB, userData);
 	}
 
-	private static DeathEvent ParseDeathEvent(BinaryReader br)
+	private static DeathEventData ParseDeathEvent(BinaryReader br)
 	{
 		int deathType = br.ReadInt32();
 		_ = br.ReadInt32();
 		return new(deathType);
 	}
 
-	private static TransmuteEvent ParseTransmuteEvent(BinaryReader br)
+	private static TransmuteEventData ParseTransmuteEvent(BinaryReader br)
 	{
 		int entityId = br.ReadInt32();
 		return new(entityId, br.ReadInt16Vec3(), br.ReadInt16Vec3(), br.ReadInt16Vec3(), br.ReadInt16Vec3());
 	}
 
-	private static InputsEvent ParseInputsEvent(BinaryReader br)
+	private static InputsEventData ParseInputsEvent(BinaryReader br)
 	{
 		bool left = br.ReadBoolean();
 		bool right = br.ReadBoolean();
@@ -138,7 +138,7 @@ public static class ReplayEventsParser
 		return new(left, right, forward, backward, jumpType, shootType, shootTypeHoming, mouseX, mouseY);
 	}
 
-	private static InitialInputsEvent ParseInitialInputsEvent(BinaryReader br)
+	private static InitialInputsEventData ParseInitialInputsEvent(BinaryReader br)
 	{
 		bool left = br.ReadBoolean();
 		bool right = br.ReadBoolean();
@@ -166,7 +166,7 @@ public static class ReplayEventsParser
 		return new(left, right, forward, backward, jumpType, shootType, shootTypeHoming, mouseX, mouseY, lookSpeed);
 	}
 
-	private static DaggerSpawnEvent ParseDaggerSpawnEvent(BinaryReader br)
+	private static DaggerSpawnEventData ParseDaggerSpawnEvent(BinaryReader br)
 	{
 		int a = br.ReadInt32(); // Always 0
 		Int16Vec3 position = br.ReadInt16Vec3();
@@ -178,7 +178,7 @@ public static class ReplayEventsParser
 		return new(a, position, orientation, isShot, daggerType);
 	}
 
-	private static SquidSpawnEvent ParseSquidSpawnEvent(BinaryReader br, SquidType squidType)
+	private static SquidSpawnEventData ParseSquidSpawnEvent(BinaryReader br, SquidType squidType)
 	{
 		int a = br.ReadInt32();
 		Vector3 position = br.ReadVector3();
@@ -188,7 +188,7 @@ public static class ReplayEventsParser
 		return new(squidType, a, position, direction, rotationInRadians);
 	}
 
-	private static BoidSpawnEvent ParseBoidSpawnEvent(BinaryReader br)
+	private static BoidSpawnEventData ParseBoidSpawnEvent(BinaryReader br)
 	{
 		int spawner = br.ReadInt32();
 		byte boidTypeByte = br.ReadByte();
@@ -201,7 +201,7 @@ public static class ReplayEventsParser
 		return new(spawner, boidType, position, orientation, velocity, speed);
 	}
 
-	private static PedeSpawnEvent ParsePedeSpawnEvent(BinaryReader br, PedeType pedeType)
+	private static PedeSpawnEventData ParsePedeSpawnEvent(BinaryReader br, PedeType pedeType)
 	{
 		int a = br.ReadInt32();
 		Vector3 position = br.ReadVector3();
@@ -211,7 +211,7 @@ public static class ReplayEventsParser
 		return new(pedeType, a, position, b, orientation);
 	}
 
-	private static SpiderSpawnEvent ParseSpiderSpawnEvent(BinaryReader br, SpiderType spiderType)
+	private static SpiderSpawnEventData ParseSpiderSpawnEvent(BinaryReader br, SpiderType spiderType)
 	{
 		int a = br.ReadInt32();
 		Vector3 position = br.ReadVector3();
@@ -219,7 +219,7 @@ public static class ReplayEventsParser
 		return new(spiderType, a, position);
 	}
 
-	private static SpiderEggSpawnEvent ParseSpiderEggSpawnEvent(BinaryReader br)
+	private static SpiderEggSpawnEventData ParseSpiderEggSpawnEvent(BinaryReader br)
 	{
 		int spawnerEntityId = br.ReadInt32();
 		Vector3 position = br.ReadVector3(); // Not sure
@@ -228,13 +228,13 @@ public static class ReplayEventsParser
 		return new(spawnerEntityId, position, targetPosition);
 	}
 
-	private static LeviathanSpawnEvent ParseLeviathanSpawnEvent(BinaryReader br)
+	private static LeviathanSpawnEventData ParseLeviathanSpawnEvent(BinaryReader br)
 	{
 		int a = br.ReadInt32();
 		return new(a);
 	}
 
-	private static ThornSpawnEvent ParseThornSpawnEvent(BinaryReader br)
+	private static ThornSpawnEventData ParseThornSpawnEvent(BinaryReader br)
 	{
 		int a = br.ReadInt32();
 		Vector3 position = br.ReadVector3(); // Not sure

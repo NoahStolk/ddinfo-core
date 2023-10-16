@@ -15,7 +15,7 @@ public static class EnemyHitLogBuilder
 		{
 			if (e is EntitySpawnReplayEvent spawnEvent)
 			{
-				if (e.Data is DaggerSpawnEvent dagger)
+				if (e.Data is DaggerSpawnEventData dagger)
 				{
 					daggers.Add(spawnEvent.EntityId, dagger.EntityType);
 				}
@@ -27,7 +27,7 @@ public static class EnemyHitLogBuilder
 					buildContext = new(spawn.EntityType, currentTick);
 				}
 			}
-			else if (e.Data is HitEvent hit && hit.EntityIdA == enemyEntityId)
+			else if (e.Data is HitEventData hit && hit.EntityIdA == enemyEntityId)
 			{
 				if (buildContext == null)
 					continue;
@@ -45,14 +45,14 @@ public static class EnemyHitLogBuilder
 				buildContext.CurrentHp -= damage;
 				buildContext.Events.Add(new(currentTick, buildContext.CurrentHp, damage, daggerEntityType.Value.GetDaggerType(), hit.UserData));
 			}
-			else if (e.Data is TransmuteEvent transmute && transmute.EntityId == enemyEntityId)
+			else if (e.Data is TransmuteEventData transmute && transmute.EntityId == enemyEntityId)
 			{
 				if (buildContext == null)
 					continue;
 
 				buildContext.Transmute();
 			}
-			else if (e.Data is InputsEvent or InitialInputsEvent)
+			else if (e.Data is InputsEventData or InitialInputsEventData)
 			{
 				currentTick++;
 			}

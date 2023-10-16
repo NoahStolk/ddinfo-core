@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
-public record SpiderSpawnEvent(SpiderType SpiderType, int A, Vector3 Position) : ISpawnEventData
+public record SpiderSpawnEventData(SpiderType SpiderType, int A, Vector3 Position) : ISpawnEventData
 {
 	public SpiderType SpiderType = SpiderType;
 	public int A = A;

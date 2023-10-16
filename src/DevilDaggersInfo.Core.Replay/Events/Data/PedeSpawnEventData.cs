@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
-public record PedeSpawnEvent(PedeType PedeType, int A, Vector3 Position, Vector3 B, Matrix3x3 Orientation) : ISpawnEventData
+public record PedeSpawnEventData(PedeType PedeType, int A, Vector3 Position, Vector3 B, Matrix3x3 Orientation) : ISpawnEventData
 {
 	public PedeType PedeType = PedeType;
 	public int A = A;

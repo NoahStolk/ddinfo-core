@@ -2,7 +2,7 @@ using DevilDaggersInfo.Core.Replay.Events.Enums;
 
 namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
-public record ThornSpawnEvent(int A, Vector3 Position, float RotationInRadians) : ISpawnEventData
+public record ThornSpawnEventData(int A, Vector3 Position, float RotationInRadians) : ISpawnEventData
 {
 	public int A = A;
 	public Vector3 Position = Position;

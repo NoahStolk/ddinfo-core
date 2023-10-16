@@ -2,7 +2,7 @@ using DevilDaggersInfo.Core.Replay.Events.Enums;
 
 namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
-public record LeviathanSpawnEvent(int A) : ISpawnEventData
+public record LeviathanSpawnEventData(int A) : ISpawnEventData
 {
 	public int A = A;
 

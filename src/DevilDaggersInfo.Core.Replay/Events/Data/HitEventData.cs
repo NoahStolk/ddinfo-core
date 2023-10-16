@@ -1,6 +1,6 @@
 namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
-public record HitEvent(int EntityIdA, int EntityIdB, int UserData) : IEventData
+public record HitEventData(int EntityIdA, int EntityIdB, int UserData) : IEventData
 {
 	public int EntityIdA = EntityIdA;
 	public int EntityIdB = EntityIdB;

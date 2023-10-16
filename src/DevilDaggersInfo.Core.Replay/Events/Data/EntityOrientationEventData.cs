@@ -1,6 +1,6 @@
 namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
-public record EntityOrientationEvent(int EntityId, Int16Mat3x3 Orientation) : IEventData
+public record EntityOrientationEventData(int EntityId, Int16Mat3x3 Orientation) : IEventData
 {
 	public int EntityId = EntityId;
 	public Int16Mat3x3 Orientation = Orientation;

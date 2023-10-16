@@ -1,6 +1,6 @@
 namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
-public record EntityPositionEvent(int EntityId, Int16Vec3 Position) : IEventData
+public record EntityPositionEventData(int EntityId, Int16Vec3 Position) : IEventData
 {
 	public int EntityId = EntityId;
 	public Int16Vec3 Position = Position;

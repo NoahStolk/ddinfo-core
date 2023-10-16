@@ -18,7 +18,7 @@ public class EnemyTimelineBuilder
 		{
 			if (e is EntitySpawnReplayEvent spawnEvent)
 			{
-				if (e.Data is DaggerSpawnEvent dagger)
+				if (e.Data is DaggerSpawnEventData dagger)
 				{
 					_daggers.Add(spawnEvent.EntityId, dagger.EntityType);
 				}
@@ -27,7 +27,7 @@ public class EnemyTimelineBuilder
 					_builds.Add(new(spawnEvent.EntityId, spawn.EntityType, currentTick));
 				}
 			}
-			else if (e.Data is HitEvent hit)
+			else if (e.Data is HitEventData hit)
 			{
 				EnemyTimelineBuildContext? enemy = _builds.Find(c => c.EntityId == hit.EntityIdA);
 				if (enemy == null)
@@ -47,7 +47,7 @@ public class EnemyTimelineBuilder
 
 				enemy.CurrentHp -= damage;
 			}
-			else if (e.Data is TransmuteEvent transmute)
+			else if (e.Data is TransmuteEventData transmute)
 			{
 				EnemyTimelineBuildContext? enemy = _builds.Find(c => c.EntityId == transmute.EntityId);
 				if (enemy == null)
@@ -55,7 +55,7 @@ public class EnemyTimelineBuilder
 
 				enemy.Transmute();
 			}
-			else if (e.Data is InputsEvent or InitialInputsEvent)
+			else if (e.Data is InputsEventData or InitialInputsEventData)
 			{
 				currentTick++;
 			}

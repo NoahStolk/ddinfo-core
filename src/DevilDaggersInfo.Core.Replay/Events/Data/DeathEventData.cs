@@ -1,6 +1,6 @@
 namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
-public record DeathEvent(int DeathType) : IEventData
+public record DeathEventData(int DeathType) : IEventData
 {
 	public int DeathType = DeathType;
 

@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
-public record BoidSpawnEvent(int SpawnerEntityId, BoidType BoidType, Int16Vec3 Position, Int16Mat3x3 Orientation, Vector3 Velocity, float Speed) : ISpawnEventData
+public record BoidSpawnEventData(int SpawnerEntityId, BoidType BoidType, Int16Vec3 Position, Int16Mat3x3 Orientation, Vector3 Velocity, float Speed) : ISpawnEventData
 {
 	public int SpawnerEntityId = SpawnerEntityId;
 	public BoidType BoidType = BoidType;

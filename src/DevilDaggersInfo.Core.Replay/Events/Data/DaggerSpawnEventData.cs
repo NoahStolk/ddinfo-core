@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
-public record DaggerSpawnEvent(int A, Int16Vec3 Position, Int16Mat3x3 Orientation, bool IsShot, DaggerType DaggerType) : ISpawnEventData
+public record DaggerSpawnEventData(int A, Int16Vec3 Position, Int16Mat3x3 Orientation, bool IsShot, DaggerType DaggerType) : ISpawnEventData
 {
 	public int A = A;
 	public Int16Vec3 Position = Position;

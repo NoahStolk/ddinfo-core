@@ -9,8 +9,8 @@ public static class ReplaySimulationBuilder
 {
 	public static ReplaySimulation Build(ReplayBinary<LocalReplayBinaryHeader> replay)
 	{
-		ReplayEvent initialInputsEvent = replay.EventsData.Events.FirstOrDefault(e => e.Data is InitialInputsEvent) ?? throw new InvalidOperationException("Replay does not contain an initial inputs event.");
-		float lookSpeed = ((InitialInputsEvent)initialInputsEvent.Data).LookSpeed;
+		ReplayEvent initialInputsEvent = replay.EventsData.Events.FirstOrDefault(e => e.Data is InitialInputsEventData) ?? throw new InvalidOperationException("Replay does not contain an initial inputs event.");
+		float lookSpeed = ((InitialInputsEventData)initialInputsEvent.Data).LookSpeed;
 
 		int ticks = 0;
 		SpawnsetBinary spawnset = replay.Header.Spawnset;
@@ -24,7 +24,7 @@ public static class ReplaySimulationBuilder
 		{
 			switch (e)
 			{
-				case EntityPositionEvent { EntityId: 0 } entityPositionEvent:
+				case EntityPositionEventData { EntityId: 0 } entityPositionEvent:
 				{
 					const float divisor = 16f;
 					playerContext.Position = new()
@@ -36,12 +36,12 @@ public static class ReplaySimulationBuilder
 					break;
 				}
 
-				case InputsEvent or InitialInputsEvent:
+				case InputsEventData or InitialInputsEventData:
 				{
 					PlayerInputSnapshot inputSnapshot = e switch
 					{
-						InputsEvent ie => new(ie.Left, ie.Right, ie.Forward, ie.Backward, ie.Jump, ie.Shoot, ie.ShootHoming, ie.MouseX, ie.MouseY),
-						InitialInputsEvent iie => new(iie.Left, iie.Right, iie.Forward, iie.Backward, iie.Jump, iie.Shoot, iie.ShootHoming, iie.MouseX, iie.MouseY),
+						InputsEventData ie => new(ie.Left, ie.Right, ie.Forward, ie.Backward, ie.Jump, ie.Shoot, ie.ShootHoming, ie.MouseX, ie.MouseY),
+						InitialInputsEventData iie => new(iie.Left, iie.Right, iie.Forward, iie.Backward, iie.Jump, iie.Shoot, iie.ShootHoming, iie.MouseX, iie.MouseY),
 						_ => throw new UnreachableException(),
 					};
 					ProcessInputs(spawnset, lookSpeed, inputSnapshot, playerContext, ticks);

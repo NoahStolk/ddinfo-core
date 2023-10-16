@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
-public record SquidSpawnEvent(SquidType SquidType, int A, Vector3 Position, Vector3 Direction, float RotationInRadians) : ISpawnEventData
+public record SquidSpawnEventData(SquidType SquidType, int A, Vector3 Position, Vector3 Direction, float RotationInRadians) : ISpawnEventData
 {
 	public SquidType SquidType = SquidType;
 	public int A = A;

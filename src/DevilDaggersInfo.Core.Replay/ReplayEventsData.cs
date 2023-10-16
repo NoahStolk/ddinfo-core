@@ -53,7 +53,7 @@ public class ReplayEventsData
 
 		_eventOffsetsPerTick[^1]++;
 
-		if (e is InputsEvent or InitialInputsEvent)
+		if (e is InputsEventData or InitialInputsEventData)
 			_eventOffsetsPerTick.Add(_events.Count);
 		else if (e is ISpawnEventData ese)
 			_entityTypes.Add(ese.EntityType);
@@ -83,7 +83,7 @@ public class ReplayEventsData
 		_events.Remove(e);
 
 		int? containingTick = null;
-		bool isInputsEvent = e.Data is InputsEvent;
+		bool isInputsEvent = e.Data is InputsEventData or InitialInputsEventData;
 		for (int i = 0; i < _eventOffsetsPerTick.Count; i++)
 		{
 			if (index >= _eventOffsetsPerTick[i])
@@ -144,7 +144,7 @@ public class ReplayEventsData
 
 			// The first tick that does not lie before the event is the tick that contains the event.
 			// Add new tick if needed. This always means an input event was added.
-			if (!containingTick.HasValue && e is InputsEvent)
+			if (!containingTick.HasValue && e is InputsEventData or InitialInputsEventData)
 			{
 				int previousOffset = i > 0 ? _eventOffsetsPerTick[i - 1] : 0;
 				_eventOffsetsPerTick.Insert(i, previousOffset);
