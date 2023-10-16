@@ -9,7 +9,7 @@ namespace DevilDaggersInfo.Core.Replay.Test;
 public class ReplayEventsEditingTests
 {
 	private const int _eventCount = 72;
-	private const int _entityCount = 6;
+	private const int _entityCount = 5;
 	private const int _tickCount = 67;
 
 	private readonly ReplayBinary<LocalReplayBinaryHeader> _replay;
@@ -24,7 +24,7 @@ public class ReplayEventsEditingTests
 		Assert.AreEqual(_eventCount, _replay.EventsData.Events.Count);
 
 		// Check initial entity types.
-		Assert.AreEqual(_entityCount, _replay.EventsData.EntityTypes.Count);
+		Assert.AreEqual(_entityCount, _replay.EventsData.SpawnEventCount);
 		ValidateOriginalEntityTypes();
 
 		// Check initial event offsets per tick.
@@ -45,10 +45,10 @@ public class ReplayEventsEditingTests
 
 	private void ValidateOriginalEntityTypes()
 	{
-		Assert.AreEqual(EntityType.Zero, _replay.EventsData.EntityTypes[0]);
-		Assert.AreEqual(EntityType.Squid1, _replay.EventsData.EntityTypes[1]);
+		Assert.AreEqual(EntityType.Zero, _replay.EventsData.GetEntityType(0));
+		Assert.AreEqual(EntityType.Squid1, _replay.EventsData.GetEntityType(1));
 		for (int i = 2; i < _entityCount; i++)
-			Assert.AreEqual(EntityType.Skull1, _replay.EventsData.EntityTypes[i]);
+			Assert.AreEqual(EntityType.Skull1, _replay.EventsData.GetEntityType(i));
 	}
 
 	private void ValidateOriginalTicks(int count)
@@ -89,7 +89,7 @@ public class ReplayEventsEditingTests
 
 		// There shouldn't be any new ticks or entities.
 		Assert.AreEqual(_tickCount, _replay.EventsData.EventOffsetsPerTick.Count);
-		Assert.AreEqual(_entityCount, _replay.EventsData.EntityTypes.Count);
+		Assert.AreEqual(_entityCount, _replay.EventsData.SpawnEventCount);
 
 		// Original data should be unchanged.
 		ValidateOriginalEntityTypes();
@@ -105,13 +105,13 @@ public class ReplayEventsEditingTests
 
 		// There should be one new event and one new entity.
 		Assert.AreEqual(_eventCount + 1, _replay.EventsData.Events.Count);
-		Assert.AreEqual(_entityCount + 1, _replay.EventsData.EntityTypes.Count);
+		Assert.AreEqual(_entityCount + 1, _replay.EventsData.SpawnEventCount);
 
 		// There shouldn't be any new ticks.
 		Assert.AreEqual(_tickCount, _replay.EventsData.EventOffsetsPerTick.Count);
 
 		// The new entity should be a Thorn.
-		Assert.AreEqual(EntityType.Thorn, _replay.EventsData.EntityTypes[6]);
+		Assert.AreEqual(EntityType.Thorn, _replay.EventsData.GetEntityType(6));
 
 		// Original data should be unchanged.
 		ValidateOriginalEntityTypes();
@@ -130,7 +130,7 @@ public class ReplayEventsEditingTests
 		Assert.AreEqual(_tickCount + 1, _replay.EventsData.EventOffsetsPerTick.Count);
 
 		// There shouldn't be any new entities.
-		Assert.AreEqual(_entityCount, _replay.EventsData.EntityTypes.Count);
+		Assert.AreEqual(_entityCount, _replay.EventsData.SpawnEventCount);
 
 		// Original data should be unchanged.
 		ValidateOriginalEntityTypes();
@@ -149,7 +149,7 @@ public class ReplayEventsEditingTests
 
 		// There shouldn't be any new ticks or entities.
 		Assert.AreEqual(_tickCount, _replay.EventsData.EventOffsetsPerTick.Count);
-		Assert.AreEqual(_entityCount, _replay.EventsData.EntityTypes.Count);
+		Assert.AreEqual(_entityCount, _replay.EventsData.SpawnEventCount);
 
 		// Original data should be unchanged.
 		ValidateOriginalEntityTypes();
@@ -178,22 +178,61 @@ public class ReplayEventsEditingTests
 	}
 
 	[TestMethod]
-	public void RemoveSpawnEvent()
+	public void RemoveSquidSpawnEvent()
 	{
-		_replay.EventsData.RemoveEvent(3); // Remove the first Skull spawn.
+		_replay.EventsData.RemoveEvent(2); // Remove the Squid spawn.
 
 		// There should be one less event and one less entity.
 		Assert.AreEqual(_eventCount - 1, _replay.EventsData.Events.Count);
-		Assert.AreEqual(_entityCount - 1, _replay.EventsData.EntityTypes.Count);
+		Assert.AreEqual(_entityCount - 1, _replay.EventsData.SpawnEventCount);
 
 		// There shouldn't be any new ticks.
 		Assert.AreEqual(_tickCount, _replay.EventsData.EventOffsetsPerTick.Count);
 
 		// There should be one less entity.
-		Assert.AreEqual(EntityType.Zero, _replay.EventsData.EntityTypes[0]);
-		Assert.AreEqual(EntityType.Squid1, _replay.EventsData.EntityTypes[1]);
+		Assert.AreEqual(EntityType.Zero, _replay.EventsData.GetEntityType(0));
+		for (int i = 1; i < _entityCount - 1; i++)
+			Assert.AreEqual(EntityType.Skull1, _replay.EventsData.GetEntityType(i));
+
+		// Entity IDs should be changed.
+		AssertEntityId<BoidSpawnEventData>(_replay.EventsData.Events[2], 1);
+		AssertEntityId<BoidSpawnEventData>(_replay.EventsData.Events[23], 2);
+		AssertEntityId<BoidSpawnEventData>(_replay.EventsData.Events[44], 3);
+		AssertEntityId<BoidSpawnEventData>(_replay.EventsData.Events[65], 4);
+
+		// Offsets should be changed.
+		int expectedOffset = 0;
+		for (int i = 0; i < _tickCount; i++)
+		{
+			int offset = _replay.EventsData.EventOffsetsPerTick[i];
+			Assert.AreEqual(expectedOffset, offset);
+
+			expectedOffset++; // Inputs event.
+
+			if (i == 0)
+				expectedOffset++; // Hit event 53333...
+			else if (i is 1 or 21 or 41 or 61)
+				expectedOffset++; // Skull spawn event.
+		}
+	}
+
+	[TestMethod]
+	public void RemoveSkullSpawnEvent()
+	{
+		_replay.EventsData.RemoveEvent(3); // Remove the first Skull spawn.
+
+		// There should be one less event and one less entity.
+		Assert.AreEqual(_eventCount - 1, _replay.EventsData.Events.Count);
+		Assert.AreEqual(_entityCount - 1, _replay.EventsData.SpawnEventCount);
+
+		// There shouldn't be any new ticks.
+		Assert.AreEqual(_tickCount, _replay.EventsData.EventOffsetsPerTick.Count);
+
+		// There should be one less entity.
+		Assert.AreEqual(EntityType.Zero, _replay.EventsData.GetEntityType(0));
+		Assert.AreEqual(EntityType.Squid1, _replay.EventsData.GetEntityType(1));
 		for (int i = 2; i < _entityCount - 1; i++)
-			Assert.AreEqual(EntityType.Skull1, _replay.EventsData.EntityTypes[i]);
+			Assert.AreEqual(EntityType.Skull1, _replay.EventsData.GetEntityType(i));
 
 		// Entity IDs should be changed.
 		AssertEntityId<SquidSpawnEventData>(_replay.EventsData.Events[2], 1);
@@ -232,7 +271,7 @@ public class ReplayEventsEditingTests
 		Assert.AreEqual(_tickCount - 1, _replay.EventsData.EventOffsetsPerTick.Count);
 
 		// There shouldn't be any new entities.
-		Assert.AreEqual(_entityCount, _replay.EventsData.EntityTypes.Count);
+		Assert.AreEqual(_entityCount, _replay.EventsData.SpawnEventCount);
 
 		// Original data should be unchanged.
 		ValidateOriginalEntityTypes();
@@ -270,7 +309,7 @@ public class ReplayEventsEditingTests
 
 		Assert.AreEqual(2, _replay.EventsData.Events.Count);
 		Assert.AreEqual(2, _replay.EventsData.EventOffsetsPerTick.Count);
-		Assert.AreEqual(1, _replay.EventsData.EntityTypes.Count);
+		Assert.AreEqual(0, _replay.EventsData.SpawnEventCount);
 
 		Assert.IsInstanceOfType<HitEventData>(_replay.EventsData.Events[0].Data);
 		Assert.IsInstanceOfType<InitialInputsEventData>(_replay.EventsData.Events[1].Data);
@@ -278,7 +317,7 @@ public class ReplayEventsEditingTests
 		Assert.AreEqual(0, _replay.EventsData.EventOffsetsPerTick[0]);
 		Assert.AreEqual(2, _replay.EventsData.EventOffsetsPerTick[1]);
 
-		Assert.AreEqual(EntityType.Zero, _replay.EventsData.EntityTypes[0]);
+		Assert.AreEqual(EntityType.Zero, _replay.EventsData.GetEntityType(0));
 	}
 
 	[TestMethod]
@@ -289,7 +328,7 @@ public class ReplayEventsEditingTests
 
 		Assert.AreEqual(2, _replay.EventsData.Events.Count);
 		Assert.AreEqual(2, _replay.EventsData.EventOffsetsPerTick.Count);
-		Assert.AreEqual(1, _replay.EventsData.EntityTypes.Count);
+		Assert.AreEqual(0, _replay.EventsData.SpawnEventCount);
 
 		Assert.IsInstanceOfType<HitEventData>(_replay.EventsData.Events[0].Data);
 		Assert.IsInstanceOfType<InitialInputsEventData>(_replay.EventsData.Events[1].Data);
@@ -297,7 +336,7 @@ public class ReplayEventsEditingTests
 		Assert.AreEqual(0, _replay.EventsData.EventOffsetsPerTick[0]);
 		Assert.AreEqual(2, _replay.EventsData.EventOffsetsPerTick[1]);
 
-		Assert.AreEqual(EntityType.Zero, _replay.EventsData.EntityTypes[0]);
+		Assert.AreEqual(EntityType.Zero, _replay.EventsData.GetEntityType(0));
 	}
 
 	[TestMethod]
@@ -310,7 +349,7 @@ public class ReplayEventsEditingTests
 
 		// There shouldn't be any new ticks or entities.
 		Assert.AreEqual(_tickCount, _replay.EventsData.EventOffsetsPerTick.Count);
-		Assert.AreEqual(_entityCount, _replay.EventsData.EntityTypes.Count);
+		Assert.AreEqual(_entityCount, _replay.EventsData.SpawnEventCount);
 
 		// Original data should be unchanged.
 		ValidateOriginalEntityTypes();
@@ -349,7 +388,7 @@ public class ReplayEventsEditingTests
 
 		// There shouldn't be any new ticks or entities.
 		Assert.AreEqual(_tickCount, _replay.EventsData.EventOffsetsPerTick.Count);
-		Assert.AreEqual(_entityCount, _replay.EventsData.EntityTypes.Count);
+		Assert.AreEqual(_entityCount, _replay.EventsData.SpawnEventCount);
 
 		// Original data should be unchanged.
 		ValidateOriginalEntityTypes();
@@ -387,19 +426,19 @@ public class ReplayEventsEditingTests
 
 		// There should be one new event and one new entity.
 		Assert.AreEqual(_eventCount + 1, _replay.EventsData.Events.Count);
-		Assert.AreEqual(_entityCount + 1, _replay.EventsData.EntityTypes.Count);
+		Assert.AreEqual(_entityCount + 1, _replay.EventsData.SpawnEventCount);
 
 		// There shouldn't be any new ticks.
 		Assert.AreEqual(_tickCount, _replay.EventsData.EventOffsetsPerTick.Count);
 
 		// The new entity should be a Thorn.
-		Assert.AreEqual(EntityType.Zero, _replay.EventsData.EntityTypes[0]);
-		Assert.AreEqual(EntityType.Thorn, _replay.EventsData.EntityTypes[1]);
-		Assert.AreEqual(EntityType.Squid1, _replay.EventsData.EntityTypes[2]);
-		Assert.AreEqual(EntityType.Skull1, _replay.EventsData.EntityTypes[3]);
-		Assert.AreEqual(EntityType.Skull1, _replay.EventsData.EntityTypes[4]);
-		Assert.AreEqual(EntityType.Skull1, _replay.EventsData.EntityTypes[5]);
-		Assert.AreEqual(EntityType.Skull1, _replay.EventsData.EntityTypes[6]);
+		Assert.AreEqual(EntityType.Zero, _replay.EventsData.GetEntityType(0));
+		Assert.AreEqual(EntityType.Thorn, _replay.EventsData.GetEntityType(1));
+		Assert.AreEqual(EntityType.Squid1, _replay.EventsData.GetEntityType(2));
+		Assert.AreEqual(EntityType.Skull1, _replay.EventsData.GetEntityType(3));
+		Assert.AreEqual(EntityType.Skull1, _replay.EventsData.GetEntityType(4));
+		Assert.AreEqual(EntityType.Skull1, _replay.EventsData.GetEntityType(5));
+		Assert.AreEqual(EntityType.Skull1, _replay.EventsData.GetEntityType(6));
 
 		AssertEntityId<ThornSpawnEventData>(_replay.EventsData.Events[0], 1);
 		AssertEntityId<SquidSpawnEventData>(_replay.EventsData.Events[3], 2);
@@ -432,19 +471,19 @@ public class ReplayEventsEditingTests
 
 		// There should be one new event and one new entity.
 		Assert.AreEqual(_eventCount + 1, _replay.EventsData.Events.Count);
-		Assert.AreEqual(_entityCount + 1, _replay.EventsData.EntityTypes.Count);
+		Assert.AreEqual(_entityCount + 1, _replay.EventsData.SpawnEventCount);
 
 		// There shouldn't be any new ticks.
 		Assert.AreEqual(_tickCount, _replay.EventsData.EventOffsetsPerTick.Count);
 
 		// The new entity should be a Thorn.
-		Assert.AreEqual(EntityType.Zero, _replay.EventsData.EntityTypes[0]);
-		Assert.AreEqual(EntityType.Squid1, _replay.EventsData.EntityTypes[1]);
-		Assert.AreEqual(EntityType.Skull1, _replay.EventsData.EntityTypes[2]);
-		Assert.AreEqual(EntityType.Thorn, _replay.EventsData.EntityTypes[3]);
-		Assert.AreEqual(EntityType.Skull1, _replay.EventsData.EntityTypes[4]);
-		Assert.AreEqual(EntityType.Skull1, _replay.EventsData.EntityTypes[5]);
-		Assert.AreEqual(EntityType.Skull1, _replay.EventsData.EntityTypes[6]);
+		Assert.AreEqual(EntityType.Zero, _replay.EventsData.GetEntityType(0));
+		Assert.AreEqual(EntityType.Squid1, _replay.EventsData.GetEntityType(1));
+		Assert.AreEqual(EntityType.Skull1, _replay.EventsData.GetEntityType(2));
+		Assert.AreEqual(EntityType.Thorn, _replay.EventsData.GetEntityType(3));
+		Assert.AreEqual(EntityType.Skull1, _replay.EventsData.GetEntityType(4));
+		Assert.AreEqual(EntityType.Skull1, _replay.EventsData.GetEntityType(5));
+		Assert.AreEqual(EntityType.Skull1, _replay.EventsData.GetEntityType(6));
 
 		AssertEntityId<SquidSpawnEventData>(_replay.EventsData.Events[2], 1);
 		AssertEntityId<BoidSpawnEventData>(_replay.EventsData.Events[3], 2);
@@ -482,7 +521,7 @@ public class ReplayEventsEditingTests
 		Assert.AreEqual(_tickCount + 1, _replay.EventsData.EventOffsetsPerTick.Count);
 
 		// There shouldn't be any new entities.
-		Assert.AreEqual(_entityCount, _replay.EventsData.EntityTypes.Count);
+		Assert.AreEqual(_entityCount, _replay.EventsData.SpawnEventCount);
 		ValidateOriginalEntityTypes();
 
 		// Entity IDs should be unchanged, but their indexes should be incremented.
@@ -519,7 +558,7 @@ public class ReplayEventsEditingTests
 		Assert.AreEqual(_tickCount + 1, _replay.EventsData.EventOffsetsPerTick.Count);
 
 		// There shouldn't be any new entities.
-		Assert.AreEqual(_entityCount, _replay.EventsData.EntityTypes.Count);
+		Assert.AreEqual(_entityCount, _replay.EventsData.SpawnEventCount);
 		ValidateOriginalEntityTypes();
 
 		// Entity IDs should be unchanged, but their indexes should be incremented.
@@ -546,7 +585,6 @@ public class ReplayEventsEditingTests
 		}
 	}
 
-	[Obsolete]
 	[TestMethod]
 	public void ChangeEntityType()
 	{
@@ -554,13 +592,11 @@ public class ReplayEventsEditingTests
 		BoidSpawnEventData boidSpawnEventData = (BoidSpawnEventData)_replay.EventsData.Events[3].Data;
 		boidSpawnEventData.BoidType = BoidType.Skull2;
 
-		_replay.EventsData.ChangeEntityType(2, EntityType.Skull2);
-
-		Assert.AreEqual(EntityType.Zero, _replay.EventsData.EntityTypes[0]);
-		Assert.AreEqual(EntityType.Squid1, _replay.EventsData.EntityTypes[1]);
-		Assert.AreEqual(EntityType.Skull2, _replay.EventsData.EntityTypes[2]);
-		Assert.AreEqual(EntityType.Skull1, _replay.EventsData.EntityTypes[3]);
-		Assert.AreEqual(EntityType.Skull1, _replay.EventsData.EntityTypes[4]);
-		Assert.AreEqual(EntityType.Skull1, _replay.EventsData.EntityTypes[5]);
+		Assert.AreEqual(EntityType.Zero, _replay.EventsData.GetEntityType(0));
+		Assert.AreEqual(EntityType.Squid1, _replay.EventsData.GetEntityType(1));
+		Assert.AreEqual(EntityType.Skull2, _replay.EventsData.GetEntityType(2));
+		Assert.AreEqual(EntityType.Skull1, _replay.EventsData.GetEntityType(3));
+		Assert.AreEqual(EntityType.Skull1, _replay.EventsData.GetEntityType(4));
+		Assert.AreEqual(EntityType.Skull1, _replay.EventsData.GetEntityType(5));
 	}
 }

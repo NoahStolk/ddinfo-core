@@ -5,32 +5,18 @@ namespace DevilDaggersInfo.Core.Replay;
 
 /// <summary>
 /// Represents all the events in a replay.
-/// <remarks>
-/// IMPORTANT: This API is unfinished and will change in the future. Right now, the class generally lets you corrupt its state for the sake of performance and ease of use. This will be solved in the future.
-/// <list type="bullet">
-/// <item><description>When changing the internal type of a spawn event, be sure to also update the list of entity types using <see cref="ChangeEntityType(int, EntityType)"/>.</description></item>
-/// <item><description>When adding or inserting a spawn event, the entity ID is re-calculated and overwritten. This will be changed in the future.</description></item>
-/// <item><description>The event types currently let you change their ID, but this should only ever be done by the <see cref="ReplayEventsData"/> class itself. This will be removed in the future.</description></item>
-/// </list>
-/// </remarks>
 /// </summary>
-// TODO: Rewrite:
-// We should rewrite the event classes to be mutable structs and exclude EntityId and EntityType from them, then add a new wrapper class containing EntityId, EntityType, and TEventStruct as properties instead. This fixes point 2 above.
-// The wrapper class should have an internal set for EntityId. This fixes point 3 above.
-// Point 1 above could be solved by referencing to all Spawn events (instances of the wrapper class) from the _events list, instead of keeping a list of EntityType enums.
 public class ReplayEventsData
 {
 	private readonly List<ReplayEvent> _events = new();
 	private readonly List<int> _eventOffsetsPerTick = new() { 0, 0 };
-	private readonly List<EntityType> _entityTypes = new() { EntityType.Zero };
+	private readonly List<EntitySpawnReplayEvent> _entitySpawnReplayEvents = new();
 
 	public IReadOnlyList<ReplayEvent> Events => _events;
-
 	public IReadOnlyList<int> EventOffsetsPerTick => _eventOffsetsPerTick;
 
-	public IReadOnlyList<EntityType> EntityTypes => _entityTypes;
-
 	public int TickCount => EventOffsetsPerTick.Count - 1;
+	public int SpawnEventCount => _entitySpawnReplayEvents.Count;
 
 	public void Clear()
 	{
@@ -40,23 +26,25 @@ public class ReplayEventsData
 		_eventOffsetsPerTick.Add(0);
 		_eventOffsetsPerTick.Add(0);
 
-		_entityTypes.Clear();
-		_entityTypes.Add(EntityType.Zero);
+		_entitySpawnReplayEvents.Clear();
 	}
 
 	public void AddEvent(IEventData e)
 	{
-		if (e is ISpawnEventData)
-			_events.Add(new EntitySpawnReplayEvent(_entityTypes.Count, e));
+		if (e is ISpawnEventData spawnEventData)
+		{
+			EntitySpawnReplayEvent spawnEvent = new(_entitySpawnReplayEvents.Count + 1, spawnEventData);
+			_events.Add(spawnEvent);
+			_entitySpawnReplayEvents.Add(spawnEvent);
+		}
 		else
+		{
 			_events.Add(new(e));
+		}
 
 		_eventOffsetsPerTick[^1]++;
-
 		if (e is InputsEventData or InitialInputsEventData)
 			_eventOffsetsPerTick.Add(_events.Count);
-		else if (e is ISpawnEventData ese)
-			_entityTypes.Add(ese.EntityType);
 	}
 
 	public void RemoveEvent(int index)
@@ -67,7 +55,7 @@ public class ReplayEventsData
 		ReplayEvent e = _events[index];
 		if (e is EntitySpawnReplayEvent spawnEvent)
 		{
-			_entityTypes.RemoveAt(spawnEvent.EntityId);
+			_entitySpawnReplayEvents.RemoveAt(spawnEvent.EntityId - 1);
 
 			// Decrement all entity IDs that are higher than the removed entity ID.
 			for (int i = 0; i < _events.Count; i++)
@@ -111,7 +99,7 @@ public class ReplayEventsData
 		if (index < 0 || index > _events.Count)
 			throw new ArgumentOutOfRangeException(nameof(index));
 
-		if (e is ISpawnEventData spawnEvent)
+		if (e is ISpawnEventData spawnEventData)
 		{
 			// Increment all entity IDs that are higher than the added entity ID.
 			int entityId = 1; // Skip 0 as it is always reserved.
@@ -119,8 +107,9 @@ public class ReplayEventsData
 			{
 				if (i == index)
 				{
-					_events.Insert(index, new EntitySpawnReplayEvent(entityId, e));
-					_entityTypes.Insert(entityId, spawnEvent.EntityType);
+					EntitySpawnReplayEvent spawnEvent = new(entityId, spawnEventData);
+					_events.Insert(index, spawnEvent);
+					_entitySpawnReplayEvents.Insert(entityId - 1, spawnEvent);
 				}
 				else if (_events[i] is EntitySpawnReplayEvent otherSpawnEvent)
 				{
@@ -156,11 +145,14 @@ public class ReplayEventsData
 		}
 	}
 
-	public void ChangeEntityType(int entityId, EntityType entityType)
+	public EntityType GetEntityType(int entityId)
 	{
-		if (entityId < 0 || entityId >= _entityTypes.Count)
+		if (entityId == 0)
+			return EntityType.Zero;
+
+		if (entityId < 0 || entityId >= _entitySpawnReplayEvents.Count + 1)
 			throw new ArgumentOutOfRangeException(nameof(entityId));
 
-		_entityTypes[entityId] = entityType;
+		return _entitySpawnReplayEvents[entityId - 1].Data.EntityType;
 	}
 }
