@@ -10,6 +10,7 @@ Working with replay events has been rewritten. All problems have been fixed and 
 
 - Added `ReplayEventsData.SpawnEventCount` property.
 - Added `ReplayEventsData.GetEntityType` method.
+- Added `ReplayEvent` and `EntitySpawnReplayEvent` records. These types have `internal` constructors and can only be created internally.
 
 ### Changed
 
@@ -18,13 +19,13 @@ Working with replay events has been rewritten. All problems have been fixed and 
 - Event structures no longer contain data that is not written to the replay events buffer. This means that the `EntityId` property has been removed from all event structures.
 - `IEvent` interface has been replaced with `IEventData` interface.
 - `IEntitySpawnEvent` interface has been replaced with `ISpawnEventData` interface.
-- Event structures are now wrapped in `ReplayEvent` or `EntitySpawnReplayEvent` instances. The `EntityId` property is now stored in `EntitySpawnReplayEvent`. These types have `internal` constructors and can only be created internally.
+- Event structures are now wrapped in `ReplayEvent` or `EntitySpawnReplayEvent` records. The `EntityId` property is now stored in `EntitySpawnReplayEvent`.
 - `ReplayEventsData.AddEvent` and `ReplayEventsData.InsertEvent` now take an `IEventData` instead of what was previously an `IEvent`.
 - `ReplayEventsData.Events` is now of type `IReadOnlyList<ReplayEvent>`. This type is now used in various other places as well.
 
 ### Removed
 
-- Removed `ReplayEventsData.ChangeEntityType` method. This was a temporary method that was only used internally.
+- Removed `ReplayEventsData.ChangeEntityType` method. This was a temporary method that is no longer needed.
 - Removed `ReplayEventsData.EntityTypes` property. You can now use the `ReplayEventsData.GetEntityType` method instead.
 
 ## 0.6.0
