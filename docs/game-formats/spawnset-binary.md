@@ -12,13 +12,13 @@ There are 3 files in Devil Daggers which use this format. These are "survival", 
 
 The internal structure of spawnset binaries consists of 5 parts:
 
-| Name                 | Size in bytes                   |
-|----------------------|---------------------------------|
-| Header buffer        | 36                              |
-| Arena buffer         | 10404                           |
-| Spawns header buffer | 36 or 40 depending on version   |
-| Spawns buffer        | 28 x the amount of spawns       |
-| Settings buffer      | 0, 5, or 9 depending on version |
+| Name                     | Size in bytes                   |
+|--------------------------|---------------------------------|
+| Header buffer            | 36                              |
+| Arena buffer             | 10404                           |
+| Spawns header buffer     | 36 or 40 depending on version   |
+| Spawns buffer            | 28 x the amount of spawns       |
+| Practice settings buffer | 0, 5, or 9 depending on version |
 
 ### Overview of known values
 
@@ -38,7 +38,7 @@ The internal structure of spawnset binaries consists of 5 parts:
 	- For every spawn:
 		- Spawn enemy type
 		- Spawn delay
-- Settings buffer
+- Practice settings buffer
 	- Initial hand
 	- Additional gems
 	- Timer start
@@ -49,23 +49,27 @@ Fixed-length buffer of 36 bytes. Contains shrinking control and brightness value
 
 The header buffer for the default spawnset looks like this:
 
-| Binary (hex) | Data type | Meaning                         | Value |
-|--------------|-----------|---------------------------------|-------|
-| 04000000     | int32     | Spawn version                   | 4     |
-| 09000000     | int32     | World version                   | 9     |
-| 0000A041     | float32   | Shrink end radius               | 20    |
-| 01004842     | float32   | Shrink start radius             | 50    |
-| CDCCCC3C     | float32   | Shrink rate                     | 0.025 |
-| 00007042     | float32   | Brightness                      | 60    |
-| 00000000     | int32     | Game mode                       | 0     |
-| 33000000     | int32     | Arena dimension*                | 51    |
-| 01000000     | ?         | ?                               | ?     |
+| Binary (hex) | Data type | Meaning                     | Value |
+|--------------|-----------|-----------------------------|-------|
+| 04000000     | int32     | Spawn version<sup>1</sup>   | 4     |
+| 09000000     | int32     | World version<sup>2</sup>   | 9     |
+| 0000A041     | float32   | Shrink end radius           | 20    |
+| 01004842     | float32   | Shrink start radius         | 50    |
+| CDCCCC3C     | float32   | Shrink rate                 | 0.025 |
+| 00007042     | float32   | Brightness                  | 60    |
+| 00000000     | int32     | Game mode<sup>3</sup>       | 0     |
+| 33000000     | int32     | Arena dimension<sup>4</sup> | 51    |
+| 01000000     | ?         | Unknown<sup>5</sup>         | ?     |
 
-* Only 51 as arena dimension works correctly. Other values cause the tiles to render incorrectly and replays will glitch out and sometimes crash. The game will also instantly crash when loading a spawnset with a dimension of 52 or higher.
+<sup>1</sup> World version is 8 for V1, and 9 for all later versions.
 
-World version is 8 for V1, and 9 for all later versions.
+<sup>2</sup> Spawn version is always 4 except when using practice settings buffer which was added in V3.1. Spawn version 5 adds support for initial hand upgrade and additional gems. Spawn version 6 adds support for timer start.
 
-Spawn version is always 4 except when using settings buffer which was added in V3.1. Spawn version 5 adds support for initial hand upgrade and additional gems. Spawn version 6 adds support for timer start.
+<sup>3</sup> Game mode is 0 for Survival, 1 for Time Attack, and 2 for Race.
+
+<sup>4</sup> Only 51 as arena dimension works correctly. Other values cause the tiles to render incorrectly and replays will glitch out and sometimes crash. The game will also instantly crash when loading a spawnset with a dimension of 52 or higher.
+
+<sup>5</sup> Crashes the game when set to all 0 bytes.
 
 ### Arena buffer
 
@@ -87,12 +91,14 @@ The spawns header buffer for the default spawnset looks like this:
 | FA000000     | int32     | Golden dagger unlock time (unused) | 250   |
 | 78000000     | int32     | Silver dagger unlock time (unused) | 120   |
 | 3C000000     | int32     | Bronze dagger unlock time (unused) | 60    |
-| 00000000     | ?         | ?                                  | ?     |
+| 00000000     | int32     | Debug flag<sup>1</sup>             | 0     |
 | 76000000     | int32     | Spawn count                        | 118   |
+
+<sup>1</sup> Setting this value to 1 removes all enemies and changes hand level to Level 3 with 0 homing regardless of practice settings. Setting the value to 2 crashes the game. 
 
 ### Spawns buffer
 
-This is the only part of the file with a variable length. It represents the list of spawns. Each spawn buffer consists of 28 bytes that include the enemy type as a int32 and the delay value as a float32. The other bytes in each of the spawn buffers seem to be the same for all of them and appear to have no meaning.
+This is the only part of the file with a variable length. It represents the list of spawns. Each spawn buffer consists of 28 bytes that include the enemy type as an int32 and the delay value as a float32. The other bytes in each of the spawn buffers seem to be the same for all of them and appear to have no meaning.
 
 These are the first 3 spawns in the original game:
 
@@ -173,7 +179,7 @@ Here's the list of enemy types that the survival file defines:
 | 05000000     | int32     | Gigapede  | 5     |
 | FFFFFFFF     | int32     | Empty     | -1    |
 
-### Settings buffer
+### Practice settings buffer
 
 Fixed-length buffer of 9 bytes. It was added to the game's V3.1 update which released on February 2021, specifically for practice and modding purposes, and is not used in the default spawnset. It only works when the header's spawn version is 5 or 6. The last value, timer start, only works on spawn version 6.
 
