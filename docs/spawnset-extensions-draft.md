@@ -31,9 +31,15 @@ When multiple conflicting extensions are used (for example, two extensions that 
 
 ### Extensions
 
-#### Player extension
+| ID | Name        | Implemented by | Status |
+|----|-------------|----------------|--------|
+| 1  | Player      | N/A            | Draft  |
+| 2  | Upgrade     | N/A            | Draft  |
+| 3  | Shot        | N/A            | Draft  |
+| 4  | Tile shrink | N/A            | Draft  |
+| 5  | End loop    | N/A            | Draft  |
 
-ID: 1
+#### Player extension
 
 | Data type   | Name                   | Remarks                                                            | Default value |
 |-------------|------------------------|--------------------------------------------------------------------|---------------|
@@ -46,8 +52,6 @@ ID: 1
 
 #### Upgrade extension
 
-ID: 2
-
 | Data type   | Name                      | Remarks                                                            | Default value |
 |-------------|---------------------------|--------------------------------------------------------------------|---------------|
 | `i32`       | Gems needed for Level 2   | The amount of gems needed to upgrade to level 2.                   | 10            |
@@ -56,9 +60,7 @@ ID: 2
 
 #### Shot extension
 
-ID: 3
-
-| Data type | Name        -                    | Remarks                                               | Default value |
+| Data type | Name                             | Remarks                                               | Default value |
 |-----------|----------------------------------|-------------------------------------------------------|---------------|
 | `i32`     | Level 1 normal dagger shot count | The amount of normal daggers shot using Level 1 hand. | 10            |
 | `i32`     | Level 2 normal dagger shot count | The amount of normal daggers shot using Level 2 hand. | 20            |
@@ -69,8 +71,6 @@ ID: 3
 
 #### Tile shrink extension
 
-ID: 4
-
 | Data type | Name       | Remarks                      | Default value |
 |-----------|------------|------------------------------|---------------|
 | `i32`     | Tile count | The amount of tiles changed. | 0             |
@@ -79,11 +79,18 @@ Per tile:
 
 | Data type | Name                                 | Remarks                                                          | Default value |
 |-----------|--------------------------------------|------------------------------------------------------------------|---------------|
-| `i8`      | Tile X coordinate                    | Signed tile X coordinate (-128 to 127)                           | 0             |
-| `i8`      | Tile Z coordinate                    | Signed tile Z coordinate (-128 to 127)                           | 0             |
+| `u8`      | Tile X coordinate                    | Tile X coordinate (valid values: 0-50)                           | 0             |
+| `u8`      | Tile Z coordinate                    | Tile Z coordinate (valid values: 0-50)                           | 0             |
 | `f32`     | Tile shrink start time               | The time at which the tile starts to shrink.                     | 0             |
 | `f32`     | Tile shrink fall time                | The time at which the tile starts to rapidly fall into the void. | 0             |
 | `f32`     | Tile shrink speed (units per second) | The speed at which the tile shrinks.                             | 4 (?)         |
+
+#### End loop extension
+
+| Data type | Name               | Remarks                                                               | Default value |
+|-----------|--------------------|-----------------------------------------------------------------------|---------------|
+| `i8`      | Ghostpede interval | The wave interval at which all Gigapedes are changed into Ghostpedes. | 3             |
+| `f32`     | Wave modifier      | The rate at which the end loop speeds up.                             | 0.00208333333 |
 
 - rapid extension
   - need to think about how to do this
@@ -117,4 +124,4 @@ Per tile:
 	- lvl4homing
 	- splash
   - speed?
-- enemy gem drop on kill mod
+- enemy gem drop on kill extension
