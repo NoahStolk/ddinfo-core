@@ -305,6 +305,9 @@ dotnet_diagnostic.S1144.severity                                         = none
 # Make this method private or simplify its parameters to not use multidimensional arrays.
 dotnet_diagnostic.S2368.severity                                         = none
 
+# Conditionally executed code should be reachable. (False positive)
+dotnet_diagnostic.S2583.severity                                         = none
+
 # Static fields should not be used in generic types (C# 11 static abstract members).
 dotnet_diagnostic.S2743.severity                                         = none
 

@@ -1,13 +1,11 @@
 using DevilDaggersInfo.Core.Replay.Events.Data;
 using DevilDaggersInfo.Core.Replay.Events.Enums;
 using DevilDaggersInfo.Core.Replay.Numerics;
-using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 
 namespace DevilDaggersInfo.Core.Replay.Test;
 
 [TestClass]
-[SuppressMessage("Major Bug", "S2583:Conditionally executed code should be reachable", Justification = "False positive. This analyzer doesn't always work correctly.")]
 public class ReplayEventsEditingTests
 {
 	private const int _eventCount = 72;
