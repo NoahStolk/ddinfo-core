@@ -2,6 +2,12 @@
 
 This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.7.3
+
+### Removed
+
+- Removed `EntityTypeExtensions.GetColor` method.
+
 ## 0.7.2
 
 ### Removed
