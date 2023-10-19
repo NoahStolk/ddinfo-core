@@ -38,6 +38,7 @@ When multiple conflicting extensions are used (for example, two extensions that 
 | 3  | Shot        | N/A            | Draft  |
 | 4  | Tile shrink | N/A            | Draft  |
 | 5  | End loop    | N/A            | Draft  |
+| 6  | Squid       | N/A            | Draft  |
 
 #### Player extension
 
@@ -89,19 +90,23 @@ Per tile:
 
 | Data type | Name               | Remarks                                                               | Default value |
 |-----------|--------------------|-----------------------------------------------------------------------|---------------|
-| `i8`      | Ghostpede interval | The wave interval at which all Gigapedes are changed into Ghostpedes. | 3             |
+| `u8`      | Ghostpede interval | The wave interval at which all Gigapedes are changed into Ghostpedes. | 3             |
 | `f32`     | Wave modifier      | The rate at which the end loop speeds up.                             | 0.00208333333 |
+
+#### Squid extension
+
+| Data type | Name                              | Remarks                                                           | Default value |
+|-----------|-----------------------------------|-------------------------------------------------------------------|---------------|
+| `u16`     | Gem HP                            | The amount of HP the squid has.                                   | 10            |
+| `u16`     | Damage from normal dagger         | The amount of damage the squid takes from normal daggers.         | 1             |
+| `u16`     | Damage from Level 3 homing dagger | The amount of damage the squid takes from Level 3 homing daggers. | 10            |
+| `u16`     | Damage from Level 4 homing dagger | The amount of damage the squid takes from Level 4 homing daggers. | 10            |
+| `u16`     | Damage from splash                | The amount of damage the squid takes from splash damage.          | 10            |
+| `u16`     | Skull gush count                  | The amount of Skull Is the squid spawns.                          | 10            |
+| `f32`     | Gush interval                     | The interval at which the squid spawns new skulls.                | 20.333 (?)    |
 
 - rapid extension
   - need to think about how to do this
-- squid extension
-  - gem hp
-    - normal dagger
-    - lvl3homing
-    - lvl4homing
-    - splash
-  - skull gush count
-  - speed?
 - pede extension
   - gem hp
     - normal dagger
