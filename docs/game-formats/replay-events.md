@@ -188,6 +188,9 @@ Weak points:
 | Leviathan  | 0, 1, 2, 3, 4, 5  |
 | Spider I   | 0                 |
 | Spider II  | 0                 |
+| Centipede  | 0 - 24            |
+| Gigapede   | 0 - 49            |
+| Ghostpede  | 0 - 9             |
 
 Any other value means the enemy was hit but not damaged.
 
