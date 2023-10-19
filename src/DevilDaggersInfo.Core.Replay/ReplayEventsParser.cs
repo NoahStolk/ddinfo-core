@@ -101,19 +101,9 @@ public static class ReplayEventsParser
 	private static IEventData ParseHitEvent(BinaryReader br)
 	{
 		int entityIdA = br.ReadInt32();
-		if (entityIdA == 0)
-			return ParseDeathEvent(br);
-
 		int entityIdB = br.ReadInt32();
 		int userData = br.ReadInt32();
 		return new HitEventData(entityIdA, entityIdB, userData);
-	}
-
-	private static DeathEventData ParseDeathEvent(BinaryReader br)
-	{
-		int deathType = br.ReadInt32();
-		_ = br.ReadInt32();
-		return new(deathType);
 	}
 
 	private static TransmuteEventData ParseTransmuteEvent(BinaryReader br)

@@ -2,6 +2,12 @@
 
 This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.7.2
+
+### Removed
+
+- Removed `DeathEventData`. This is now simply parsed as `HitEventData`.
+
 ## 0.7.1
 
 ### Fixed
