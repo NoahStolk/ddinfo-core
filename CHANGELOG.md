@@ -2,6 +2,16 @@
 
 This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.7.4
+
+### Added
+
+- Added `ReplayEventsData.GetEntityTypeIncludingNegated` method, which tries to resolve negated pede entity IDs as well. These are used in HitEventData when a dead pede segment is hit.
+
+### Changed
+
+- `ReplayEventsData.GetEntityType` now returns `null` instead of throwing an `ArgumentOutOfRangeException` when the entity type is not found.
+
 ## 0.7.3
 
 ### Removed

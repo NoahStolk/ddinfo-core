@@ -755,7 +755,7 @@ public class ReplayEventsEditingTests
 		replay.EventsData.RemoveEvent(0);
 
 		// Test if all entity position events are now referring to -1.
-		Assert.ThrowsException<ArgumentOutOfRangeException>(() => replay.EventsData.GetEntityType(1));
+		Assert.IsNull(replay.EventsData.GetEntityType(1));
 		Assert.AreEqual(-1, firstUpdate.EntityId);
 		Assert.AreEqual(-1, secondUpdate.EntityId);
 	}

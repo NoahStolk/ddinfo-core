@@ -158,18 +158,34 @@ public class ReplayEventsData
 	}
 
 	/// <summary>
-	/// Returns the entity type of the entity with the specified entity ID.
+	/// Returns the entity type of the entity with the specified entity ID, or <see langword="null" /> if a valid entity type could not be resolved.
 	/// </summary>
-	/// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="entityId"/> is negative or higher than or equal to <see cref="SpawnEventCount"/>.</exception>
-	public EntityType GetEntityType(int entityId)
+	public EntityType? GetEntityType(int entityId)
 	{
 		if (entityId == 0)
 			return EntityType.Zero;
 
-		if (entityId < 0 || entityId >= _entitySpawnReplayEvents.Count + 1)
-			throw new ArgumentOutOfRangeException(nameof(entityId));
+		if (entityId < 0 || entityId > _entitySpawnReplayEvents.Count)
+			return null;
 
 		return _entitySpawnReplayEvents[entityId - 1].Data.EntityType;
+	}
+
+	/// <summary>
+	/// Returns the entity type of the entity with the specified entity ID, or <see langword="null" /> if a valid entity type could not be resolved.
+	/// This includes negated entity IDs that are used in <see cref="HitEventData"/> when a dead pede segment is hit.
+	/// </summary>
+	public EntityType? GetEntityTypeIncludingNegated(int entityId)
+	{
+		int absoluteEntityId = Math.Abs(entityId);
+		if (absoluteEntityId > _entitySpawnReplayEvents.Count)
+			return null;
+
+		EntityType? entityType = GetEntityType(absoluteEntityId);
+		if (entityId < 0 && entityType is not EntityType.Centipede and not EntityType.Gigapede and not EntityType.Ghostpede)
+			return null;
+
+		return entityType;
 	}
 
 	/// <summary>
