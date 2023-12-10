@@ -2,6 +2,12 @@
 
 This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.7.5
+
+### Changed
+
+- `EnablePreviewFeatures` has been turned off since we don't use any preview features.
+
 ## 0.7.4
 
 ### Added

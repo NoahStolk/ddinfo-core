@@ -194,6 +194,9 @@ dotnet_diagnostic.RCS1090.severity                                       = none
 # Add parentheses when necessary.
 dotnet_diagnostic.RCS1123.severity                                       = none
 
+# XML comment analysis is disabled due to project configuration.
+dotnet_diagnostic.SA0001.severity                                        = none
+
 # The keyword 'new' should be followed by a space. (C# 9)
 dotnet_diagnostic.SA1000.severity                                        = none
 
