@@ -12,7 +12,7 @@ This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
-- Added `ReplayEventsData.GetEntityTypeIncludingNegated` method, which tries to resolve negated pede entity IDs as well. These are used in HitEventData when a dead pede segment is hit.
+- Added `ReplayEventsData.GetEntityTypeIncludingNegated` method, which tries to resolve negated pede entity IDs as well. These are used in `HitEventData` when a dead pede segment is hit.
 
 ### Changed
 

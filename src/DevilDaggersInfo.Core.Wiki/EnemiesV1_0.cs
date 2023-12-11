@@ -1,6 +1,9 @@
 namespace DevilDaggersInfo.Core.Wiki;
 
+#pragma warning disable CA1707
+// ReSharper disable once InconsistentNaming
 public static class EnemiesV1_0
+#pragma warning restore CA1707
 {
 	public static readonly Enemy Squid1 = new(GameVersion.V1_0, "Squid I", EnemyColors.Squid1, 10, 1, 2, DeathsV1_0.Purged, new(1f, null), 3);
 	public static readonly Enemy Squid2 = new(GameVersion.V1_0, "Squid II", EnemyColors.Squid2, 20, 2, 3, DeathsV1_0.Sacrificed, new(2f, null), 39);

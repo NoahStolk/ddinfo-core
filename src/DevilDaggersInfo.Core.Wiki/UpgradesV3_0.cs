@@ -1,6 +1,9 @@
 namespace DevilDaggersInfo.Core.Wiki;
 
+#pragma warning disable CA1707
+// ReSharper disable once InconsistentNaming
 public static class UpgradesV3_0
+#pragma warning restore CA1707
 {
 	public static readonly Upgrade Level1 = new(GameVersion.V3_0, "Level 1", UpgradeColors.Level1, 1, new(10, 20f), null, new(UpgradeUnlockType.Gems, 0));
 	public static readonly Upgrade Level2 = new(GameVersion.V3_0, "Level 2", UpgradeColors.Level2, 2, new(20, 40f), null, new(UpgradeUnlockType.Gems, 10));

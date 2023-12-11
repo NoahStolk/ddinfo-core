@@ -1,6 +1,9 @@
 namespace DevilDaggersInfo.Core.Wiki;
 
+#pragma warning disable CA1707
+// ReSharper disable once InconsistentNaming
 public static class DeathsV2_0
+#pragma warning restore CA1707
 {
 	public static readonly Death Fallen = new(GameVersion.V2_0, "FALLEN", EnemyColors.Void, 0);
 	public static readonly Death Swarmed = new(GameVersion.V2_0, "SWARMED", EnemyColors.Skull1, 1);
