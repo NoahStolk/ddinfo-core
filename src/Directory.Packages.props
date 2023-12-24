@@ -8,7 +8,7 @@
 		<PackageVersion Include="Nullable.Extended.Analyzer" Version="1.10.4539" />
 		<PackageVersion Include="Roslynator.Analyzers" Version="4.7.0" />
 		<PackageVersion Include="SonarAnalyzer.CSharp" Version="9.16.0.82469" />
-		<PackageVersion Include="StyleCop.Analyzers" Version="1.2.0-beta.507" />
+		<PackageVersion Include="StyleCop.Analyzers" Version="1.2.0-beta.556" />
 	</ItemGroup>
 
 	<ItemGroup Label="Tests">
