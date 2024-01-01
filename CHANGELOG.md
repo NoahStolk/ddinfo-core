@@ -2,6 +2,12 @@
 
 This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [unreleased]
+
+### Changed
+
+- Updated `SixLabors.ImageSharp` from 3.0.2 to 3.1.2.
+
 ## 0.7.5
 
 ### Changed

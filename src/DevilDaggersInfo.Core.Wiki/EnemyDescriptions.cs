@@ -114,6 +114,6 @@ public static class EnemyDescriptions
 				return kvp.Value;
 		}
 
-		throw new($"Could not find enemy description for {nameof(Enemy)} '{enemy}'.");
+		throw new InvalidOperationException($"Could not find enemy description for {nameof(Enemy)} '{enemy}'.");
 	}
 }

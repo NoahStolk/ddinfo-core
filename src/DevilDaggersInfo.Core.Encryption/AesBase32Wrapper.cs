@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -64,7 +65,7 @@ public class AesBase32Wrapper
 		{
 			TransformType.Encrypt => symmetricAlgorithm.CreateEncryptor(),
 			TransformType.Decrypt => symmetricAlgorithm.CreateDecryptor(),
-			_ => throw new($"Unknown {nameof(TransformType)} '{transformType}'."),
+			_ => throw new UnreachableException($"Unknown {nameof(TransformType)} '{transformType}'."),
 		};
 	}
 }
