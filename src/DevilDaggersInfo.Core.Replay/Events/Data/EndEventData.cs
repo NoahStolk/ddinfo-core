@@ -6,4 +6,9 @@ public record EndEventData : IEventData
 	{
 		bw.Write((byte)0x0b);
 	}
+
+	public static EndEventData CreateDefault()
+	{
+		return new();
+	}
 }

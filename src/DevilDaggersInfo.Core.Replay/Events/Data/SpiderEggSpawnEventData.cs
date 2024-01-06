@@ -19,4 +19,9 @@ public record SpiderEggSpawnEventData(int SpawnerEntityId, Vector3 Position, Vec
 		bw.Write(Position);
 		bw.Write(TargetPosition);
 	}
+
+	public static SpiderEggSpawnEventData CreateDefault()
+	{
+		return new(IEventData.DefaultEntityId, Vector3.Zero, Vector3.Zero);
+	}
 }

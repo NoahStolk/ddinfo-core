@@ -42,4 +42,9 @@ public record BoidSpawnEventData(int SpawnerEntityId, BoidType BoidType, Int16Ve
 		bw.Write(Velocity);
 		bw.Write(Speed);
 	}
+
+	public static BoidSpawnEventData CreateDefault()
+	{
+		return new(IEventData.DefaultEntityId, BoidType.Skull1, Int16Vec3.Zero, Int16Mat3x3.Identity, Vector3.Zero, 0f);
+	}
 }

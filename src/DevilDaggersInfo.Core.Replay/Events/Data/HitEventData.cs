@@ -13,4 +13,9 @@ public record HitEventData(int EntityIdA, int EntityIdB, int UserData) : IEventD
 		bw.Write(EntityIdB);
 		bw.Write(UserData);
 	}
+
+	public static HitEventData CreateDefault()
+	{
+		return new(IEventData.DefaultEntityId, IEventData.DefaultEntityId, 0);
+	}
 }

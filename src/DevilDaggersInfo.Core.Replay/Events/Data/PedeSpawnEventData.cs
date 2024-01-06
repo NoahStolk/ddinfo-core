@@ -16,7 +16,7 @@ public record PedeSpawnEventData(PedeType PedeType, int A, Vector3 Position, Vec
 		PedeType.Centipede => EntityType.Centipede,
 		PedeType.Gigapede => EntityType.Gigapede,
 		PedeType.Ghostpede => EntityType.Ghostpede,
-		_ => throw new UnreachableException(),
+		_ => throw new UnreachableException($"Unknown pede type {PedeType}."),
 	};
 
 	public void Write(BinaryWriter bw)
@@ -34,5 +34,10 @@ public record PedeSpawnEventData(PedeType PedeType, int A, Vector3 Position, Vec
 		bw.Write(Position);
 		bw.Write(B);
 		bw.Write(Orientation);
+	}
+
+	public static PedeSpawnEventData CreateDefault()
+	{
+		return new(PedeType.Centipede, -1, Vector3.Zero, Vector3.Zero, Matrix3x3.Identity);
 	}
 }

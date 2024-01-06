@@ -2,7 +2,11 @@
 
 This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [unreleased]
+## 0.7.6
+
+### Added
+
+- Added `CreateDefault` methods to all event data types.
 
 ### Changed
 

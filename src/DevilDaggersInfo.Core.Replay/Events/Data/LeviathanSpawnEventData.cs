@@ -15,4 +15,9 @@ public record LeviathanSpawnEventData(int A) : ISpawnEventData
 
 		bw.Write(A);
 	}
+
+	public static LeviathanSpawnEventData CreateDefault()
+	{
+		return new(-1);
+	}
 }

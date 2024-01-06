@@ -11,4 +11,9 @@ public record EntityTargetEventData(int EntityId, Int16Vec3 TargetPosition) : IE
 		bw.Write(EntityId);
 		bw.Write(TargetPosition);
 	}
+
+	public static EntityTargetEventData CreateDefault()
+	{
+		return new(IEventData.DefaultEntityId, Int16Vec3.Zero);
+	}
 }

@@ -6,4 +6,9 @@ public record GemEventData : IEventData
 	{
 		bw.Write((byte)0x06);
 	}
+
+	public static GemEventData CreateDefault()
+	{
+		return new();
+	}
 }

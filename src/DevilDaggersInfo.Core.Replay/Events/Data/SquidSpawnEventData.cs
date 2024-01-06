@@ -35,4 +35,9 @@ public record SquidSpawnEventData(SquidType SquidType, int A, Vector3 Position, 
 		bw.Write(Direction);
 		bw.Write(RotationInRadians);
 	}
+
+	public static SquidSpawnEventData CreateDefault()
+	{
+		return new(SquidType.Squid1, -1, Vector3.Zero, Vector3.Zero, 0f);
+	}
 }

@@ -34,4 +34,9 @@ public record DaggerSpawnEventData(int A, Int16Vec3 Position, Int16Mat3x3 Orient
 		bw.Write(IsShot);
 		bw.Write((byte)DaggerType);
 	}
+
+	public static DaggerSpawnEventData CreateDefault()
+	{
+		return new(-1, Int16Vec3.Zero, Int16Mat3x3.Identity, false, DaggerType.Level1);
+	}
 }

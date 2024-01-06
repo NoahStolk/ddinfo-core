@@ -29,4 +29,9 @@ public record SpiderSpawnEventData(SpiderType SpiderType, int A, Vector3 Positio
 		bw.Write(A);
 		bw.Write(Position);
 	}
+
+	public static SpiderSpawnEventData CreateDefault()
+	{
+		return new(SpiderType.Spider1, -1, Vector3.Zero);
+	}
 }

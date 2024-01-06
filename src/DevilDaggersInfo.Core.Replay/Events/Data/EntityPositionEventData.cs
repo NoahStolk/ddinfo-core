@@ -11,4 +11,9 @@ public record EntityPositionEventData(int EntityId, Int16Vec3 Position) : IEvent
 		bw.Write(EntityId);
 		bw.Write(Position);
 	}
+
+	public static EntityPositionEventData CreateDefault()
+	{
+		return new(IEventData.DefaultEntityId, Int16Vec3.Zero);
+	}
 }

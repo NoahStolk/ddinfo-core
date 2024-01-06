@@ -19,4 +19,9 @@ public record ThornSpawnEventData(int A, Vector3 Position, float RotationInRadia
 		bw.Write(Position);
 		bw.Write(RotationInRadians);
 	}
+
+	public static ThornSpawnEventData CreateDefault()
+	{
+		return new(-1, Vector3.Zero, 0f);
+	}
 }

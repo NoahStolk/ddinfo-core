@@ -30,4 +30,9 @@ public record InitialInputsEventData(bool Left, bool Right, bool Forward, bool B
 		bw.Write(LookSpeed);
 		bw.Write((byte)0x0a);
 	}
+
+	public static InitialInputsEventData CreateDefault()
+	{
+		return new(false, false, false, false, JumpType.None, ShootType.None, ShootType.None, 0, 0, 2);
+	}
 }
