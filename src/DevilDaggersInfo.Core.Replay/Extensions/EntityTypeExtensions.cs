@@ -90,13 +90,15 @@ public static class EntityTypeExtensions
 			{
 				EntityType.Leviathan => 1, // Homing deals normal damage to Leviathan (and Orb, which is the same enemy in this context)
 				EntityType.Centipede or EntityType.Gigapede or EntityType.Ghostpede => 0, // Only splash damages pedes (including Ghostpede)
-				_ => 10,
+				EntityType.Squid1 or EntityType.Squid2 or EntityType.Squid3 => 0,
+				_ => 10, // TODO: Test if this is correct.
 			},
 			EntityType.Level4HomingSplash => enemyType switch
 			{
 				EntityType.Thorn => 1, // Thorns are an exception
 				EntityType.Centipede or EntityType.Gigapede or EntityType.Ghostpede => 10, // Only splash damages pedes (including Ghostpede)
-				_ => 0, // TODO: This is probably wrong. Squids and Skulls should be damaged by splash.
+				EntityType.Squid1 or EntityType.Squid2 or EntityType.Squid3 => 10,
+				_ => 0, // TODO: This is probably wrong. Skulls should be damaged by splash.
 			},
 			_ => 0,
 		};
