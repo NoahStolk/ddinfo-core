@@ -2,6 +2,12 @@
 
 This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.8.0
+
+### Changed
+
+- Upgraded to .NET 8.0.
+
 ## 0.7.6
 
 ### Added
