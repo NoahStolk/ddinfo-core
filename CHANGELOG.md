@@ -2,6 +2,12 @@
 
 This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.8.1
+
+### Added
+
+- Added `IEventData.CloneEventData` extension method.
+
 ## 0.8.0
 
 ### Changed
