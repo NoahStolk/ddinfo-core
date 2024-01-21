@@ -2,6 +2,17 @@
 
 This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.9.1
+
+### Added
+
+- Support for loudness values has been added. A loudness asset is now automatically generated if needed.
+- Added `float? loudnessValue` parameter to `AudioModBinaryBuilder.AddAudio` method.
+
+### Changed
+
+- Loudness file is now extracted to `loudness.ini` instead of `loudness.wav`.
+
 ## 0.9.0
 
 Rewrote the Mod library. The API is now much more stable and easier to use.

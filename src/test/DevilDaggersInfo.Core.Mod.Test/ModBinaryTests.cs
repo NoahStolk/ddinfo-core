@@ -29,7 +29,7 @@ public class ModBinaryTests
 			AssetExtractionResult extractedAsset = modBinary.ExtractAsset(entry.Name, entry.AssetType);
 			switch (entry.AssetType)
 			{
-				case AssetType.Audio: audioBuilder.AddAudio(entry.Name, extractedAsset.ExtractedAssetFiles[$"{entry.Name}.wav"]); break;
+				case AssetType.Audio: audioBuilder.AddAudio(entry.Name, extractedAsset.ExtractedAssetFiles[$"{entry.Name}.wav"], null); break;
 				case AssetType.Mesh: ddBuilder.AddMesh(entry.Name, extractedAsset.ExtractedAssetFiles[$"{entry.Name}.obj"]); break;
 				case AssetType.ObjectBinding: ddBuilder.AddObjectBinding(entry.Name, extractedAsset.ExtractedAssetFiles[$"{entry.Name}.txt"]); break;
 				case AssetType.Shader: ddBuilder.AddShader(entry.Name, extractedAsset.ExtractedAssetFiles[$"{entry.Name}.vert"], extractedAsset.ExtractedAssetFiles[$"{entry.Name}.frag"]); break;

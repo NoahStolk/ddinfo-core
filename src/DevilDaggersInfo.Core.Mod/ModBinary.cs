@@ -64,7 +64,7 @@ public class ModBinary
 
 		return assetType switch
 		{
-			AssetType.Audio => AssetExtractionResult.Single(assetName, "wav", value.Buffer),
+			AssetType.Audio => AssetExtractionResult.Single(assetName, assetName == "loudness" ? "ini" : "wav", value.Buffer),
 			AssetType.Mesh => AssetExtractionResult.Single(assetName, "obj", ObjFileHandler.Extract(value.Buffer)),
 			AssetType.ObjectBinding => AssetExtractionResult.Single(assetName, "txt", value.Buffer),
 			AssetType.Shader => AssetExtractionResult.Shader(assetName, GlslFileHandler.Extract(value.Buffer)),
