@@ -34,16 +34,16 @@ public class ModBinary
 
 	private void BuildAssetMap(BinaryReader br)
 	{
-		// If chunks point to the same asset position; the asset is re-used (TODO: test if this even works in DD -- if not, remove DistinctBy).
-		foreach (ModBinaryChunk chunk in Toc.Chunks.DistinctBy(c => c.Offset))
+		// If entries point to the same asset position; the asset is re-used (TODO: test if this even works in DD -- if not, remove DistinctBy).
+		foreach (ModBinaryTocEntry entry in Toc.Entries.DistinctBy(c => c.Offset))
 		{
-			if (!_readFilter.ShouldRead(new(chunk.AssetType, chunk.Name)))
+			if (!_readFilter.ShouldRead(new(entry.AssetType, entry.Name)))
 				continue;
 
-			br.BaseStream.Seek(chunk.Offset, SeekOrigin.Begin);
-			byte[] buffer = br.ReadBytes(chunk.Size);
+			br.BaseStream.Seek(entry.Offset, SeekOrigin.Begin);
+			byte[] buffer = br.ReadBytes(entry.Size);
 
-			AssetMap[new(chunk.AssetType, chunk.Name)] = new(buffer);
+			AssetMap[new(entry.AssetType, entry.Name)] = new(buffer);
 		}
 	}
 

@@ -4,15 +4,15 @@ namespace DevilDaggersInfo.Core.Mod;
 
 public sealed class ModBinaryToc
 {
-	private ModBinaryToc(ModBinaryType type, IReadOnlyList<ModBinaryChunk> chunks)
+	private ModBinaryToc(ModBinaryType type, IReadOnlyList<ModBinaryTocEntry> entries)
 	{
 		Type = type;
-		Chunks = chunks;
+		Entries = entries;
 	}
 
 	public ModBinaryType Type { get; }
 
-	public IReadOnlyList<ModBinaryChunk> Chunks { get; }
+	public IReadOnlyList<ModBinaryTocEntry> Entries { get; }
 
 	/// <summary>
 	/// Reads the mod binary header and TOC from the byte array.
@@ -32,29 +32,29 @@ public sealed class ModBinaryToc
 		uint tocSize = GetSize(br.BaseStream.Length, br);
 
 		ModBinaryType? modBinaryType = null;
-		List<ModBinaryChunk> chunks = new();
+		List<ModBinaryTocEntry> entries = [];
 		while (br.BaseStream.Position < ModBinaryConstants.HeaderSize + tocSize)
 		{
 			ushort type = br.ReadUInt16();
 			if (type == 0)
 				break; // Break the loop when the end of the TOC is reached (which is 0x0000).
 
-			ModBinaryChunk? chunk = ReadChunk(tocSize, type, br);
-			if (chunk == null)
-				continue; // Skip invalid chunks.
+			ModBinaryTocEntry? entry = ReadEntry(tocSize, type, br);
+			if (entry == null)
+				continue; // Skip invalid entries.
 
-			chunks.Add(chunk);
+			entries.Add(entry);
 
 			if (!modBinaryType.HasValue)
-				modBinaryType = chunk.AssetType == AssetType.Audio ? ModBinaryType.Audio : ModBinaryType.Dd;
-			else if (!modBinaryType.Value.IsAssetTypeValid(chunk.AssetType))
-				throw new InvalidModBinaryException($"Asset type '{chunk.AssetType}' is not compatible with binary type '{modBinaryType}'.");
+				modBinaryType = entry.AssetType == AssetType.Audio ? ModBinaryType.Audio : ModBinaryType.Dd;
+			else if (!modBinaryType.Value.IsAssetTypeValid(entry.AssetType))
+				throw new InvalidModBinaryException($"Asset type '{entry.AssetType}' is not compatible with binary type '{modBinaryType}'.");
 		}
 
 		if (!modBinaryType.HasValue)
 			throw new InvalidModBinaryException("Mod binary type could not be determined, probably because there are no assets.");
 
-		return new(modBinaryType.Value, chunks);
+		return new(modBinaryType.Value, entries);
 	}
 
 	public static ModBinaryType DetermineType(byte[] contents)
@@ -69,9 +69,9 @@ public sealed class ModBinaryToc
 			if (type == 0)
 				break;
 
-			ModBinaryChunk? chunk = ReadChunk(tocSize, type, br);
-			if (chunk != null)
-				return chunk.AssetType == AssetType.Audio ? ModBinaryType.Audio : ModBinaryType.Dd;
+			ModBinaryTocEntry? entry = ReadEntry(tocSize, type, br);
+			if (entry != null)
+				return entry.AssetType == AssetType.Audio ? ModBinaryType.Audio : ModBinaryType.Dd;
 		}
 
 		throw new InvalidModBinaryException("Mod binary type could not be determined, probably because there are no assets.");
@@ -82,11 +82,11 @@ public sealed class ModBinaryToc
 	/// </summary>
 	public static ModBinaryToc EnableAllAssets(ModBinaryToc original)
 	{
-		List<ModBinaryChunk> chunks = new();
-		foreach (ModBinaryChunk chunk in original.Chunks)
-			chunks.Add(chunk with { Name = chunk.Name.ToLower() });
+		List<ModBinaryTocEntry> entries = [];
+		foreach (ModBinaryTocEntry entry in original.Entries)
+			entries.Add(entry with { Name = entry.Name.ToLower() });
 
-		return new(original.Type, chunks);
+		return new(original.Type, entries);
 	}
 
 	/// <summary>
@@ -94,16 +94,16 @@ public sealed class ModBinaryToc
 	/// </summary>
 	public static ModBinaryToc DisableProhibitedAssets(ModBinaryToc original)
 	{
-		List<ModBinaryChunk> chunks = new();
-		foreach (ModBinaryChunk chunk in original.Chunks)
+		List<ModBinaryTocEntry> entries = [];
+		foreach (ModBinaryTocEntry entry in original.Entries)
 		{
-			if (AssetContainer.IsProhibited(chunk.AssetType, chunk.Name))
-				chunks.Add(chunk with { Name = chunk.Name.ToUpper() });
+			if (AssetContainer.IsProhibited(entry.AssetType, entry.Name))
+				entries.Add(entry with { Name = entry.Name.ToUpper() });
 			else
-				chunks.Add(chunk);
+				entries.Add(entry);
 		}
 
-		return new(original.Type, chunks);
+		return new(original.Type, entries);
 	}
 
 	private static uint GetSize(long totalStreamLength, BinaryReader br)
@@ -122,7 +122,7 @@ public sealed class ModBinaryToc
 		return tocSize;
 	}
 
-	private static ModBinaryChunk? ReadChunk(uint tocSize, ushort type, BinaryReader br)
+	private static ModBinaryTocEntry? ReadEntry(uint tocSize, ushort type, BinaryReader br)
 	{
 		// Read everything first.
 		AssetType? assetType = type.GetAssetType();
@@ -131,7 +131,7 @@ public sealed class ModBinaryToc
 		int size = br.ReadInt32();
 		_ = br.ReadInt32();
 
-		// Skip invalid chunks (present in default dd binary).
+		// Skip invalid entries (present in default dd binary).
 		if (size <= 0 || offset < ModBinaryConstants.HeaderSize + tocSize)
 			return null;
 

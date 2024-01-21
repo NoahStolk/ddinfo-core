@@ -29,21 +29,21 @@ public class ModBinaryTocTests
 		byte[] originalBytes = File.ReadAllBytes(filePath);
 
 		ModBinaryToc modBinaryToc = ModBinaryToc.FromBytes(originalBytes);
-		Assert.AreEqual(1, modBinaryToc.Chunks.Count);
-		Assert.AreEqual("boid", modBinaryToc.Chunks[0].Name);
-		Assert.AreEqual(AssetType.Mesh, modBinaryToc.Chunks[0].AssetType);
-		Assert.AreEqual(true, AssetContainer.IsProhibited(modBinaryToc.Chunks[0].AssetType, modBinaryToc.Chunks[0].Name));
+		Assert.AreEqual(1, modBinaryToc.Entries.Count);
+		Assert.AreEqual("boid", modBinaryToc.Entries[0].Name);
+		Assert.AreEqual(AssetType.Mesh, modBinaryToc.Entries[0].AssetType);
+		Assert.AreEqual(true, AssetContainer.IsProhibited(modBinaryToc.Entries[0].AssetType, modBinaryToc.Entries[0].Name));
 
 		ModBinaryToc modBinaryTocDisabledProhibitedAssets = ModBinaryToc.DisableProhibitedAssets(modBinaryToc);
-		Assert.AreEqual(1, modBinaryTocDisabledProhibitedAssets.Chunks.Count);
-		Assert.AreEqual("BOID", modBinaryTocDisabledProhibitedAssets.Chunks[0].Name);
-		Assert.AreEqual(AssetType.Mesh, modBinaryTocDisabledProhibitedAssets.Chunks[0].AssetType);
-		Assert.AreEqual(false, AssetContainer.IsProhibited(modBinaryTocDisabledProhibitedAssets.Chunks[0].AssetType, modBinaryTocDisabledProhibitedAssets.Chunks[0].Name));
+		Assert.AreEqual(1, modBinaryTocDisabledProhibitedAssets.Entries.Count);
+		Assert.AreEqual("BOID", modBinaryTocDisabledProhibitedAssets.Entries[0].Name);
+		Assert.AreEqual(AssetType.Mesh, modBinaryTocDisabledProhibitedAssets.Entries[0].AssetType);
+		Assert.AreEqual(false, AssetContainer.IsProhibited(modBinaryTocDisabledProhibitedAssets.Entries[0].AssetType, modBinaryTocDisabledProhibitedAssets.Entries[0].Name));
 
 		ModBinaryToc modBinaryTocEnabledAssets = ModBinaryToc.EnableAllAssets(modBinaryTocDisabledProhibitedAssets);
-		Assert.AreEqual(1, modBinaryTocEnabledAssets.Chunks.Count);
-		Assert.AreEqual("boid", modBinaryTocEnabledAssets.Chunks[0].Name);
-		Assert.AreEqual(AssetType.Mesh, modBinaryTocEnabledAssets.Chunks[0].AssetType);
-		Assert.AreEqual(true, AssetContainer.IsProhibited(modBinaryTocEnabledAssets.Chunks[0].AssetType, modBinaryTocEnabledAssets.Chunks[0].Name));
+		Assert.AreEqual(1, modBinaryTocEnabledAssets.Entries.Count);
+		Assert.AreEqual("boid", modBinaryTocEnabledAssets.Entries[0].Name);
+		Assert.AreEqual(AssetType.Mesh, modBinaryTocEnabledAssets.Entries[0].AssetType);
+		Assert.AreEqual(true, AssetContainer.IsProhibited(modBinaryTocEnabledAssets.Entries[0].AssetType, modBinaryTocEnabledAssets.Entries[0].Name));
 	}
 }

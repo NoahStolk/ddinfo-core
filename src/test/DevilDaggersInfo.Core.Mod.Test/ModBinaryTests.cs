@@ -21,13 +21,13 @@ public class ModBinaryTests
 		ModBinary modBinary = new(originalBytes, ModBinaryReadFilter.AllAssets);
 		ModBinaryBuilder builder = new(type);
 
-		foreach (ModBinaryChunk chunk in modBinary.Toc.Chunks)
+		foreach (ModBinaryTocEntry entry in modBinary.Toc.Entries)
 		{
-			byte[] extractedAsset = modBinary.ExtractAsset(chunk.Name, chunk.AssetType);
-			builder.AddAsset(chunk.Name, chunk.AssetType, extractedAsset);
+			byte[] extractedAsset = modBinary.ExtractAsset(entry.Name, entry.AssetType);
+			builder.AddAsset(entry.Name, entry.AssetType, extractedAsset);
 		}
 
-		CollectionAssert.AreEqual(modBinary.Toc.Chunks.ToList(), builder.Chunks.ToList());
+		CollectionAssert.AreEqual(modBinary.Toc.Entries.ToList(), builder.TocEntries.ToList());
 
 		Assert.AreEqual(modBinary.AssetMap.Count, builder.AssetMap.Count);
 
@@ -46,11 +46,11 @@ public class ModBinaryTests
 		byte[] originalBytes = File.ReadAllBytes(filePath);
 		ModBinary modBinary = new(originalBytes, ModBinaryReadFilter.NoAssets);
 
-		Assert.AreEqual(1, modBinary.Toc.Chunks.Count);
-		ModBinaryChunk chunk = modBinary.Toc.Chunks[0];
-		Assert.AreEqual("dagger6", chunk.Name);
-		Assert.AreEqual(AssetType.Texture, chunk.AssetType);
-		Assert.AreEqual(21855, chunk.Size);
+		Assert.AreEqual(1, modBinary.Toc.Entries.Count);
+		ModBinaryTocEntry tocEntry = modBinary.Toc.Entries[0];
+		Assert.AreEqual("dagger6", tocEntry.Name);
+		Assert.AreEqual(AssetType.Texture, tocEntry.AssetType);
+		Assert.AreEqual(21855, tocEntry.Size);
 	}
 
 	[TestMethod]
@@ -61,16 +61,16 @@ public class ModBinaryTests
 		byte[] originalBytes = File.ReadAllBytes(filePath);
 		ModBinary modBinary = new(originalBytes, ModBinaryReadFilter.NoAssets);
 
-		Assert.AreEqual(8, modBinary.Toc.Chunks.Count);
+		Assert.AreEqual(8, modBinary.Toc.Entries.Count);
 
 		string[] names = { "hand", "hand2", "hand2left", "hand3", "hand3left", "hand4", "hand4left", "handleft" };
 		int[] sizes = { 166, 166, 198, 166, 198, 262, 390, 198 };
 		for (int i = 0; i < 8; i++)
 		{
-			ModBinaryChunk chunk = modBinary.Toc.Chunks[i];
-			Assert.AreEqual(names[i], chunk.Name);
-			Assert.AreEqual(AssetType.Mesh, chunk.AssetType);
-			Assert.AreEqual(sizes[i], chunk.Size);
+			ModBinaryTocEntry tocEntry = modBinary.Toc.Entries[i];
+			Assert.AreEqual(names[i], tocEntry.Name);
+			Assert.AreEqual(AssetType.Mesh, tocEntry.AssetType);
+			Assert.AreEqual(sizes[i], tocEntry.Size);
 		}
 	}
 

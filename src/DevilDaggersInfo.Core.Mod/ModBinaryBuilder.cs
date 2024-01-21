@@ -9,7 +9,7 @@ public class ModBinaryBuilder
 {
 	private const int _tocEntrySizeWithoutName = 15;
 
-	private readonly List<ModBinaryChunk> _chunks;
+	private readonly List<ModBinaryTocEntry> _tocEntries;
 	private readonly Dictionary<AssetKey, AssetData> _assetMap;
 
 	public ModBinaryBuilder(ModBinaryType modBinaryType)
@@ -18,13 +18,13 @@ public class ModBinaryBuilder
 			throw new NotSupportedException($"Creating mods of type '{modBinaryType}' is not supported.");
 
 		Type = modBinaryType;
-		_chunks = new();
+		_tocEntries = [];
 		_assetMap = new();
 	}
 
 	public ModBinaryType Type { get; }
 
-	public IReadOnlyList<ModBinaryChunk> Chunks => _chunks;
+	public IReadOnlyList<ModBinaryTocEntry> TocEntries => _tocEntries;
 
 	public IReadOnlyDictionary<AssetKey, AssetData> AssetMap => _assetMap;
 
@@ -36,13 +36,13 @@ public class ModBinaryBuilder
 
 		_assetMap.Add(new(assetType, assetName), AssetConverter.Compile(assetType, fileContents));
 
-		_chunks.Clear();
+		_tocEntries.Clear();
 
 		int offset = ModBinaryConstants.HeaderSize + _tocEntrySizeWithoutName * _assetMap.Count + _assetMap.Sum(kvp => Encoding.UTF8.GetBytes(kvp.Key.AssetName).Length) + sizeof(short);
 		foreach (KeyValuePair<AssetKey, AssetData> kvp in _assetMap)
 		{
 			int size = kvp.Value.Buffer.Length;
-			_chunks.Add(new(kvp.Key.AssetName, offset, size, kvp.Key.AssetType));
+			_tocEntries.Add(new(kvp.Key.AssetName, offset, size, kvp.Key.AssetType));
 
 			offset += size;
 		}
@@ -52,7 +52,7 @@ public class ModBinaryBuilder
 
 	public byte[] Compile()
 	{
-		int tocBufferSize = _tocEntrySizeWithoutName * _assetMap.Count + _chunks.Sum(c => Encoding.UTF8.GetBytes(c.Name).Length) + sizeof(short);
+		int tocBufferSize = _tocEntrySizeWithoutName * _assetMap.Count + _tocEntries.Sum(c => Encoding.UTF8.GetBytes(c.Name).Length) + sizeof(short);
 		int offset = ModBinaryConstants.HeaderSize + tocBufferSize;
 		byte[]? tocBuffer;
 		using (MemoryStream tocStream = new())

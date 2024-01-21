@@ -2,6 +2,12 @@
 
 This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [unreleased]
+
+### Changed
+
+- Renamed `ModBinaryChunk` to `ModBinaryTocEntry`. This naming change applies to some properties and methods as well.
+
 ## 0.8.1
 
 ### Added
