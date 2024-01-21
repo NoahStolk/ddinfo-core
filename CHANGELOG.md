@@ -2,11 +2,32 @@
 
 This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [unreleased]
+## 0.9.0
+
+Rewrote the Mod library. The API is now much more stable and easier to use.
+
+### Added
+
+- Added `AssetExtractionResult` record which is used to return the result of an asset extraction.
+  - This allows for proper shader extraction where a single asset contains multiple files.
+  - The `ModBinary.ExtractAsset` methods now return an instance of this type.
 
 ### Changed
 
-- Renamed `ModBinaryChunk` to `ModBinaryTocEntry`. This naming change applies to some properties and methods as well.
+- Renamed "chunks" to "TOC entries".
+  - Renamed `ModBinaryChunk` to `ModBinaryTocEntry`.
+  - Renamed `ModBinaryBuilder.Chunks` to `ModBinaryBuilder.TocEntries`.
+  - Renamed `ModBinaryToc.Chunks` to `ModBinaryToc.Entries`.
+- `ModBinaryBuilder` is now abstract.
+  - The `ModBinaryBuilder.AddAsset` method has been removed.
+  - Use the `AudioModBinaryBuilder` and `DdModBinaryBuilder` classes to create audio and dd mods respectively.
+  - The `AudioModBinaryBuilder` class exposes an `AddAudio` method.
+  - The `DdModBinaryBuilder` class exposes `AddMesh`, `AddObjectBinding`, `AddShader`, and `AddTexture` methods.
+
+### Removed
+
+- Removed `AssetTypeExtensions.GetFileExtension` and `AssetTypeExtensions.ToDisplayString` methods.
+- Removed `AssetConverter` class.
 
 ## 0.8.1
 

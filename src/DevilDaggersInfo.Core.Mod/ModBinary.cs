@@ -1,4 +1,5 @@
 using DevilDaggersInfo.Core.Asset;
+using System.Diagnostics;
 
 namespace DevilDaggersInfo.Core.Mod;
 
@@ -47,18 +48,28 @@ public class ModBinary
 		}
 	}
 
-	public byte[] ExtractAsset(AssetKey assetKey)
-		=> ExtractAsset(assetKey.AssetName, assetKey.AssetType);
+	public AssetExtractionResult ExtractAsset(AssetKey assetKey)
+	{
+		return ExtractAsset(assetKey.AssetName, assetKey.AssetType);
+	}
 
-	public byte[] ExtractAsset(string assetName, AssetType assetType)
+	public AssetExtractionResult ExtractAsset(string assetName, AssetType assetType)
 	{
 		if (!_readFilter.ShouldRead(new(assetType, assetName)))
 			throw new InvalidOperationException("This asset has not been read. It was not included in the filter, so it cannot be extracted.");
 
 		AssetKey key = new(assetType, assetName);
-		if (!AssetMap.ContainsKey(key))
+		if (!AssetMap.TryGetValue(key, out AssetData? value))
 			throw new InvalidOperationException($"Mod binary does not contain an asset of type '{assetType}' with name '{assetName}'.");
 
-		return AssetConverter.Extract(assetType, AssetMap[key]);
+		return assetType switch
+		{
+			AssetType.Audio => AssetExtractionResult.Single(assetName, "wav", value.Buffer),
+			AssetType.Mesh => AssetExtractionResult.Single(assetName, "obj", ObjFileHandler.Extract(value.Buffer)),
+			AssetType.ObjectBinding => AssetExtractionResult.Single(assetName, "txt", value.Buffer),
+			AssetType.Shader => AssetExtractionResult.Shader(assetName, GlslFileHandler.Extract(value.Buffer)),
+			AssetType.Texture => AssetExtractionResult.Single(assetName, "png", PngFileHandler.Extract(value.Buffer)),
+			_ => throw new UnreachableException($"Asset type '{assetType}' not supported."),
+		};
 	}
 }

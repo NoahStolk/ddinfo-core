@@ -1,5 +1,7 @@
 using DevilDaggersInfo.Core.Asset;
+using DevilDaggersInfo.Core.Mod.Builders;
 using DevilDaggersInfo.Core.Mod.Extensions;
+using System.Diagnostics;
 
 namespace DevilDaggersInfo.Core.Mod.Test;
 
@@ -19,13 +21,29 @@ public class ModBinaryTests
 		byte[] originalBytes = File.ReadAllBytes(filePath);
 
 		ModBinary modBinary = new(originalBytes, ModBinaryReadFilter.AllAssets);
-		ModBinaryBuilder builder = new(type);
+		AudioModBinaryBuilder audioBuilder = new();
+		DdModBinaryBuilder ddBuilder = new();
 
 		foreach (ModBinaryTocEntry entry in modBinary.Toc.Entries)
 		{
-			byte[] extractedAsset = modBinary.ExtractAsset(entry.Name, entry.AssetType);
-			builder.AddAsset(entry.Name, entry.AssetType, extractedAsset);
+			AssetExtractionResult extractedAsset = modBinary.ExtractAsset(entry.Name, entry.AssetType);
+			switch (entry.AssetType)
+			{
+				case AssetType.Audio: audioBuilder.AddAudio(entry.Name, extractedAsset.ExtractedAssetFiles[$"{entry.Name}.wav"]); break;
+				case AssetType.Mesh: ddBuilder.AddMesh(entry.Name, extractedAsset.ExtractedAssetFiles[$"{entry.Name}.obj"]); break;
+				case AssetType.ObjectBinding: ddBuilder.AddObjectBinding(entry.Name, extractedAsset.ExtractedAssetFiles[$"{entry.Name}.txt"]); break;
+				case AssetType.Shader: ddBuilder.AddShader(entry.Name, extractedAsset.ExtractedAssetFiles[$"{entry.Name}.vert"], extractedAsset.ExtractedAssetFiles[$"{entry.Name}.frag"]); break;
+				case AssetType.Texture: ddBuilder.AddTexture(entry.Name, extractedAsset.ExtractedAssetFiles[$"{entry.Name}.png"]); break;
+				default: throw new UnreachableException();
+			}
 		}
+
+		ModBinaryBuilder builder = type switch
+		{
+			ModBinaryType.Audio => audioBuilder,
+			ModBinaryType.Dd => ddBuilder,
+			_ => throw new UnreachableException(),
+		};
 
 		CollectionAssert.AreEqual(modBinary.Toc.Entries.ToList(), builder.TocEntries.ToList());
 
@@ -63,8 +81,8 @@ public class ModBinaryTests
 
 		Assert.AreEqual(8, modBinary.Toc.Entries.Count);
 
-		string[] names = { "hand", "hand2", "hand2left", "hand3", "hand3left", "hand4", "hand4left", "handleft" };
-		int[] sizes = { 166, 166, 198, 166, 198, 262, 390, 198 };
+		string[] names = ["hand", "hand2", "hand2left", "hand3", "hand3left", "hand4", "hand4left", "handleft"];
+		int[] sizes = [166, 166, 198, 166, 198, 262, 390, 198];
 		for (int i = 0; i < 8; i++)
 		{
 			ModBinaryTocEntry tocEntry = modBinary.Toc.Entries[i];

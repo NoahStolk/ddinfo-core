@@ -15,9 +15,13 @@ public class ExtractionTests
 
 		KeyValuePair<AssetKey, AssetData> asset = modBinary.AssetMap.First(kvp => kvp.Key.AssetName == assetName);
 
-		byte[] extractedPngContents = modBinary.ExtractAsset(asset.Key);
 		byte[] sourcePngContents = File.ReadAllBytes(Path.Combine("Resources", "Texture", sourcePngFileName));
 
-		CollectionAssert.AreEqual(extractedPngContents, sourcePngContents);
+		AssetExtractionResult extractedPngContents = modBinary.ExtractAsset(asset.Key);
+		Assert.AreEqual(1, extractedPngContents.ExtractedAssetFiles.Count);
+		if (extractedPngContents.ExtractedAssetFiles.TryGetValue($"{assetName}.png", out byte[]? pngContents))
+			CollectionAssert.AreEqual(pngContents, sourcePngContents);
+		else
+			Assert.Fail($"Asset name '{assetName}' not found in extracted asset files.");
 	}
 }

@@ -2,22 +2,12 @@ using DevilDaggersInfo.Core.Mod.Parsers;
 
 namespace DevilDaggersInfo.Core.Mod.FileHandling;
 
-internal sealed class ObjFileHandler : IFileHandler
+internal static class ObjFileHandler
 {
-	private static readonly Lazy<ObjFileHandler> _lazy = new(() => new());
-
-	private ObjFileHandler()
-	{
-	}
-
-	public static ObjFileHandler Instance => _lazy.Value;
-
-	public int HeaderSize => 10;
-
-	public byte[] Compile(byte[] buffer)
+	public static byte[] Compile(byte[] objFileContents)
 	{
 		ObjParsingContext parsingContext = new();
-		ParsedObjData parsedObj = parsingContext.Parse(Encoding.UTF8.GetString(buffer, 0, buffer.Length));
+		ParsedObjData parsedObj = parsingContext.Parse(Encoding.UTF8.GetString(objFileContents, 0, objFileContents.Length));
 
 		int vertexCount = parsedObj.Positions.Count;
 
@@ -40,7 +30,7 @@ internal sealed class ObjFileHandler : IFileHandler
 		return ms.ToArray();
 	}
 
-	public byte[] Extract(byte[] buffer)
+	public static byte[] Extract(byte[] buffer)
 	{
 		using MemoryStream ms = new(buffer);
 		using BinaryReader br = new(ms);

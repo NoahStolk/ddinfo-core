@@ -1,41 +1,32 @@
-using DevilDaggersInfo.Core.Asset;
-
-namespace DevilDaggersInfo.Core.Mod;
+namespace DevilDaggersInfo.Core.Mod.Builders;
 
 /// <summary>
-/// Exposes a way of building and compiling a mod binary.
+/// Exposes a way of compiling a mod binary.
 /// </summary>
-public class ModBinaryBuilder
+public abstract class ModBinaryBuilder
 {
 	private const int _tocEntrySizeWithoutName = 15;
 
-	private readonly List<ModBinaryTocEntry> _tocEntries;
-	private readonly Dictionary<AssetKey, AssetData> _assetMap;
+	private readonly List<ModBinaryTocEntry> _tocEntries = [];
+	private protected readonly Dictionary<AssetKey, AssetData> _assetMap = new();
 
-	public ModBinaryBuilder(ModBinaryType modBinaryType)
-	{
-		if (modBinaryType is not (ModBinaryType.Audio or ModBinaryType.Dd))
-			throw new NotSupportedException($"Creating mods of type '{modBinaryType}' is not supported.");
-
-		Type = modBinaryType;
-		_tocEntries = [];
-		_assetMap = new();
-	}
-
-	public ModBinaryType Type { get; }
+	public abstract ModBinaryType Type { get; }
 
 	public IReadOnlyList<ModBinaryTocEntry> TocEntries => _tocEntries;
 
 	public IReadOnlyDictionary<AssetKey, AssetData> AssetMap => _assetMap;
 
-	public void AddAsset(string assetName, AssetType assetType, byte[] fileContents)
+	private protected void ValidateAsset(AssetKey assetKey)
 	{
-		// TODO: Check if asset name and type combination already exists?
-		if (!Type.IsAssetTypeValid(assetType))
-			throw new InvalidModBinaryException($"Asset type '{assetType}' is not compatible with binary type '{Type}'.");
+		if (!Type.IsAssetTypeValid(assetKey.AssetType))
+			throw new InvalidModCompilationException($"Asset type '{assetKey.AssetType}' is not compatible with binary type '{Type}'.");
 
-		_assetMap.Add(new(assetType, assetName), AssetConverter.Compile(assetType, fileContents));
+		if (_tocEntries.Exists(t => t.Name == assetKey.AssetName && t.AssetType == assetKey.AssetType))
+			throw new InvalidModCompilationException($"Asset of type '{assetKey.AssetType}' named '{assetKey.AssetName}' already exists in the mod binary.");
+	}
 
+	private protected void RebuildToc()
+	{
 		_tocEntries.Clear();
 
 		int offset = ModBinaryConstants.HeaderSize + _tocEntrySizeWithoutName * _assetMap.Count + _assetMap.Sum(kvp => Encoding.UTF8.GetBytes(kvp.Key.AssetName).Length) + sizeof(short);
@@ -46,11 +37,9 @@ public class ModBinaryBuilder
 
 			offset += size;
 		}
-
-		// TODO: Loudness.
 	}
 
-	public byte[] Compile()
+	public virtual byte[] Compile()
 	{
 		int tocBufferSize = _tocEntrySizeWithoutName * _assetMap.Count + _tocEntries.Sum(c => Encoding.UTF8.GetBytes(c.Name).Length) + sizeof(short);
 		int offset = ModBinaryConstants.HeaderSize + tocBufferSize;

@@ -4,29 +4,20 @@ using SixLabors.ImageSharp.Processing;
 
 namespace DevilDaggersInfo.Core.Mod.FileHandling;
 
-internal sealed class PngFileHandler : IFileHandler
+internal static class PngFileHandler
 {
-	private const ushort _header = 16401;
+	private const ushort _headerMagic = 16401;
+	private const int _headerSize = 11;
 
-	private static readonly Lazy<PngFileHandler> _lazy = new(() => new());
-
-	private PngFileHandler()
+	public static byte[] Compile(byte[] pngFileContents)
 	{
-	}
-
-	public static PngFileHandler Instance => _lazy.Value;
-
-	public int HeaderSize => 11;
-
-	public byte[] Compile(byte[] buffer)
-	{
-		using Image<Rgba32> image = Image.Load<Rgba32>(buffer);
+		using Image<Rgba32> image = Image.Load<Rgba32>(pngFileContents);
 		using MemoryStream ms = new();
 		using BinaryWriter bw = new(ms);
 
 		byte mipmapCount = MipmapUtils.GetMipmapCount(image.Width, image.Height);
 
-		bw.Write(_header);
+		bw.Write(_headerMagic);
 		bw.Write(image.Width);
 		bw.Write(image.Height);
 		bw.Write(mipmapCount);
@@ -58,13 +49,13 @@ internal sealed class PngFileHandler : IFileHandler
 		return ms.ToArray();
 	}
 
-	public byte[] Extract(byte[] buffer)
+	public static byte[] Extract(byte[] buffer)
 	{
 		using MemoryStream ms = new(buffer);
 		using BinaryReader br = new(ms);
 		ushort header = br.ReadUInt16();
-		if (header != _header)
-			throw new InvalidModBinaryException($"Invalid texture header. Should be {_header} but got {header}.");
+		if (header != _headerMagic)
+			throw new InvalidModBinaryException($"Invalid texture header. Should be {_headerMagic} but got {header}.");
 
 		int width = br.ReadInt32();
 		int height = br.ReadInt32();
@@ -73,7 +64,7 @@ internal sealed class PngFileHandler : IFileHandler
 
 		_ = br.ReadByte(); // Mipmap count
 
-		int minimumSize = width * height * 4 + HeaderSize;
+		int minimumSize = width * height * 4 + _headerSize;
 		if (buffer.Length < minimumSize)
 			throw new InvalidModBinaryException($"Invalid texture. Not enough pixel data for complete texture ({buffer.Length:N0} / {minimumSize:N0}).");
 
