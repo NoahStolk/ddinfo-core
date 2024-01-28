@@ -98,12 +98,12 @@ public static class ReplayEventsParser
 		return new(entityId, targetPosition);
 	}
 
-	private static IEventData ParseHitEvent(BinaryReader br)
+	private static HitEventData ParseHitEvent(BinaryReader br)
 	{
 		int entityIdA = br.ReadInt32();
 		int entityIdB = br.ReadInt32();
 		int userData = br.ReadInt32();
-		return new HitEventData(entityIdA, entityIdB, userData);
+		return new(entityIdA, entityIdB, userData);
 	}
 
 	private static TransmuteEventData ParseTransmuteEvent(BinaryReader br)

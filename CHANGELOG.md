@@ -2,6 +2,20 @@
 
 This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.10.0
+
+### Changed
+
+- The following types are now records instead of a record structs, and no longer have a public constructor:
+  - `Dagger`
+  - `Death`
+  - `Enemy`
+  - `Upgrade`
+
+### Removed
+
+- Removed obsolete `Deaths.GetDeathByLeaderboardType` method. Use `Deaths.GetDeathByType` instead.
+
 ## 0.9.1
 
 ### Added

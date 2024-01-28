@@ -21,8 +21,7 @@ public static class Daggers
 
 	public static Dagger? GetDaggerByName(string name)
 	{
-		Dagger dagger = All.FirstOrDefault(d => d.Name == name);
-		return dagger == default ? null : dagger;
+		return All.FirstOrDefault(d => d.Name == name);
 	}
 
 	public static Dagger GetDaggerFromSeconds(GameVersion gameVersion, double timeInSeconds)

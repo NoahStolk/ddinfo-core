@@ -15,8 +15,7 @@ public static class HandLevelExtensions
 
 	public static Upgrade? GetUpgradeByHandLevel(this HandLevel handLevel, GameVersion gameVersion = GameConstants.CurrentVersion)
 	{
-		Upgrade upgrade = Upgrades.GetUpgrades(gameVersion).FirstOrDefault(u => u.Level == (byte)handLevel);
-		return upgrade == default ? null : upgrade;
+		return Upgrades.GetUpgrades(gameVersion).FirstOrDefault(u => u.Level == (byte)handLevel);
 	}
 
 	public static string ToDisplayString(this HandLevel handLevel) => handLevel switch

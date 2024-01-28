@@ -24,15 +24,7 @@ public static class Deaths
 	// TODO: Rewrite this method to not allocate memory.
 	public static Death? GetDeathByName(GameVersion gameVersion, string name, bool skipUnknown = true)
 	{
-		Death death = GetDeaths(gameVersion, skipUnknown).FirstOrDefault(d => d.Name == name);
-		return death == default ? null : death;
-	}
-
-	[Obsolete("Use GetDeathByType instead.")]
-	public static Death? GetDeathByLeaderboardType(GameVersion gameVersion, byte leaderboardDeathType, bool skipUnknown = true)
-	{
-		Death death = GetDeaths(gameVersion, skipUnknown).FirstOrDefault(d => d.LeaderboardDeathType == leaderboardDeathType);
-		return death == default ? null : death;
+		return GetDeaths(gameVersion, skipUnknown).FirstOrDefault(d => d.Name == name);
 	}
 
 	public static Death? GetDeathByType(GameVersion gameVersion, byte type)

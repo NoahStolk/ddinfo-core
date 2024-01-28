@@ -6,11 +6,11 @@ public class DeathTests
 	[TestMethod]
 	public void TestFallen()
 	{
-		Assert.AreEqual(DeathsV1_0.Fallen, Deaths.GetDeathByLeaderboardType(GameVersion.V1_0, 0));
-		Assert.AreEqual(DeathsV2_0.Fallen, Deaths.GetDeathByLeaderboardType(GameVersion.V2_0, 0));
-		Assert.AreEqual(DeathsV3_0.Fallen, Deaths.GetDeathByLeaderboardType(GameVersion.V3_0, 0));
-		Assert.AreEqual(DeathsV3_1.Fallen, Deaths.GetDeathByLeaderboardType(GameVersion.V3_1, 0));
-		Assert.AreEqual(DeathsV3_2.Fallen, Deaths.GetDeathByLeaderboardType(GameVersion.V3_2, 0));
+		Assert.AreEqual(DeathsV1_0.Fallen, Deaths.GetDeathByType(GameVersion.V1_0, 0));
+		Assert.AreEqual(DeathsV2_0.Fallen, Deaths.GetDeathByType(GameVersion.V2_0, 0));
+		Assert.AreEqual(DeathsV3_0.Fallen, Deaths.GetDeathByType(GameVersion.V3_0, 0));
+		Assert.AreEqual(DeathsV3_1.Fallen, Deaths.GetDeathByType(GameVersion.V3_1, 0));
+		Assert.AreEqual(DeathsV3_2.Fallen, Deaths.GetDeathByType(GameVersion.V3_2, 0));
 
 		Assert.AreEqual(DeathsV1_0.Fallen.Color, EnemyColors.Void);
 		Assert.AreEqual(DeathsV2_0.Fallen.Color, EnemyColors.Void);
@@ -22,11 +22,11 @@ public class DeathTests
 	[TestMethod]
 	public void TestSwarmed()
 	{
-		Assert.AreEqual(DeathsV1_0.Swarmed, Deaths.GetDeathByLeaderboardType(GameVersion.V1_0, 1));
-		Assert.AreEqual(DeathsV2_0.Swarmed, Deaths.GetDeathByLeaderboardType(GameVersion.V2_0, 1));
-		Assert.AreEqual(DeathsV3_0.Swarmed, Deaths.GetDeathByLeaderboardType(GameVersion.V3_0, 1));
-		Assert.AreEqual(DeathsV3_1.Swarmed, Deaths.GetDeathByLeaderboardType(GameVersion.V3_1, 1));
-		Assert.AreEqual(DeathsV3_2.Swarmed, Deaths.GetDeathByLeaderboardType(GameVersion.V3_2, 1));
+		Assert.AreEqual(DeathsV1_0.Swarmed, Deaths.GetDeathByType(GameVersion.V1_0, 1));
+		Assert.AreEqual(DeathsV2_0.Swarmed, Deaths.GetDeathByType(GameVersion.V2_0, 1));
+		Assert.AreEqual(DeathsV3_0.Swarmed, Deaths.GetDeathByType(GameVersion.V3_0, 1));
+		Assert.AreEqual(DeathsV3_1.Swarmed, Deaths.GetDeathByType(GameVersion.V3_1, 1));
+		Assert.AreEqual(DeathsV3_2.Swarmed, Deaths.GetDeathByType(GameVersion.V3_2, 1));
 		Assert.AreEqual(DeathsV1_0.Swarmed, EnemiesV1_0.Skull1.Death);
 		Assert.AreEqual(DeathsV2_0.Swarmed, EnemiesV2_0.Skull1.Death);
 		Assert.AreEqual(DeathsV3_0.Swarmed, EnemiesV3_0.Skull1.Death);
@@ -47,11 +47,11 @@ public class DeathTests
 	[TestMethod]
 	public void TestImpaled()
 	{
-		Assert.AreEqual(DeathsV1_0.Impaled, Deaths.GetDeathByLeaderboardType(GameVersion.V1_0, 2));
-		Assert.AreEqual(DeathsV2_0.Impaled, Deaths.GetDeathByLeaderboardType(GameVersion.V2_0, 2));
-		Assert.AreEqual(DeathsV3_0.Impaled, Deaths.GetDeathByLeaderboardType(GameVersion.V3_0, 2));
-		Assert.AreEqual(DeathsV3_1.Impaled, Deaths.GetDeathByLeaderboardType(GameVersion.V3_1, 2));
-		Assert.AreEqual(DeathsV3_2.Impaled, Deaths.GetDeathByLeaderboardType(GameVersion.V3_2, 2));
+		Assert.AreEqual(DeathsV1_0.Impaled, Deaths.GetDeathByType(GameVersion.V1_0, 2));
+		Assert.AreEqual(DeathsV2_0.Impaled, Deaths.GetDeathByType(GameVersion.V2_0, 2));
+		Assert.AreEqual(DeathsV3_0.Impaled, Deaths.GetDeathByType(GameVersion.V3_0, 2));
+		Assert.AreEqual(DeathsV3_1.Impaled, Deaths.GetDeathByType(GameVersion.V3_1, 2));
+		Assert.AreEqual(DeathsV3_2.Impaled, Deaths.GetDeathByType(GameVersion.V3_2, 2));
 		Assert.AreEqual(DeathsV1_0.Impaled, EnemiesV1_0.Skull2.Death);
 		Assert.AreEqual(DeathsV2_0.Impaled, EnemiesV2_0.Skull2.Death);
 		Assert.AreEqual(DeathsV3_0.Impaled, EnemiesV3_0.Skull2.Death);
@@ -73,10 +73,10 @@ public class DeathTests
 	[TestMethod]
 	public void TestGored()
 	{
-		Assert.AreEqual(DeathsV2_0.Gored, Deaths.GetDeathByLeaderboardType(GameVersion.V2_0, 3));
-		Assert.AreEqual(DeathsV3_0.Gored, Deaths.GetDeathByLeaderboardType(GameVersion.V3_0, 3));
-		Assert.AreEqual(DeathsV3_1.Gored, Deaths.GetDeathByLeaderboardType(GameVersion.V3_1, 3));
-		Assert.AreEqual(DeathsV3_2.Gored, Deaths.GetDeathByLeaderboardType(GameVersion.V3_2, 3));
+		Assert.AreEqual(DeathsV2_0.Gored, Deaths.GetDeathByType(GameVersion.V2_0, 3));
+		Assert.AreEqual(DeathsV3_0.Gored, Deaths.GetDeathByType(GameVersion.V3_0, 3));
+		Assert.AreEqual(DeathsV3_1.Gored, Deaths.GetDeathByType(GameVersion.V3_1, 3));
+		Assert.AreEqual(DeathsV3_2.Gored, Deaths.GetDeathByType(GameVersion.V3_2, 3));
 		Assert.AreEqual(DeathsV2_0.Gored, EnemiesV2_0.Skull3.Death);
 		Assert.AreEqual(DeathsV3_0.Gored, EnemiesV3_0.Skull3.Death);
 		Assert.AreEqual(DeathsV3_1.Gored, EnemiesV3_1.Skull3.Death);
@@ -95,11 +95,11 @@ public class DeathTests
 	[TestMethod]
 	public void TestInfested()
 	{
-		Assert.AreEqual(DeathsV1_0.Infested, Deaths.GetDeathByLeaderboardType(GameVersion.V1_0, 4));
-		Assert.AreEqual(DeathsV2_0.Infested, Deaths.GetDeathByLeaderboardType(GameVersion.V2_0, 4));
-		Assert.AreEqual(DeathsV3_0.Infested, Deaths.GetDeathByLeaderboardType(GameVersion.V3_0, 4));
-		Assert.AreEqual(DeathsV3_1.Infested, Deaths.GetDeathByLeaderboardType(GameVersion.V3_1, 4));
-		Assert.AreEqual(DeathsV3_2.Infested, Deaths.GetDeathByLeaderboardType(GameVersion.V3_2, 4));
+		Assert.AreEqual(DeathsV1_0.Infested, Deaths.GetDeathByType(GameVersion.V1_0, 4));
+		Assert.AreEqual(DeathsV2_0.Infested, Deaths.GetDeathByType(GameVersion.V2_0, 4));
+		Assert.AreEqual(DeathsV3_0.Infested, Deaths.GetDeathByType(GameVersion.V3_0, 4));
+		Assert.AreEqual(DeathsV3_1.Infested, Deaths.GetDeathByType(GameVersion.V3_1, 4));
+		Assert.AreEqual(DeathsV3_2.Infested, Deaths.GetDeathByType(GameVersion.V3_2, 4));
 		Assert.AreEqual(DeathsV1_0.Infested, EnemiesV1_0.SpiderEgg1.Death);
 		Assert.AreEqual(DeathsV2_0.Infested, EnemiesV2_0.SpiderEgg1.Death);
 		Assert.AreEqual(DeathsV3_0.Infested, EnemiesV3_0.Spiderling.Death);
@@ -116,10 +116,10 @@ public class DeathTests
 	[TestMethod]
 	public void TestOpened()
 	{
-		Assert.AreEqual(DeathsV2_0.Opened, Deaths.GetDeathByLeaderboardType(GameVersion.V2_0, 5));
-		Assert.AreEqual(DeathsV3_0.Opened, Deaths.GetDeathByLeaderboardType(GameVersion.V3_0, 5));
-		Assert.AreEqual(DeathsV3_1.Opened, Deaths.GetDeathByLeaderboardType(GameVersion.V3_1, 5));
-		Assert.AreEqual(DeathsV3_2.Opened, Deaths.GetDeathByLeaderboardType(GameVersion.V3_2, 5));
+		Assert.AreEqual(DeathsV2_0.Opened, Deaths.GetDeathByType(GameVersion.V2_0, 5));
+		Assert.AreEqual(DeathsV3_0.Opened, Deaths.GetDeathByType(GameVersion.V3_0, 5));
+		Assert.AreEqual(DeathsV3_1.Opened, Deaths.GetDeathByType(GameVersion.V3_1, 5));
+		Assert.AreEqual(DeathsV3_2.Opened, Deaths.GetDeathByType(GameVersion.V3_2, 5));
 		Assert.AreEqual(DeathsV2_0.Opened, EnemiesV2_0.Skull4.Death);
 		Assert.AreEqual(DeathsV3_0.Opened, EnemiesV3_0.Skull4.Death);
 		Assert.AreEqual(DeathsV3_1.Opened, EnemiesV3_1.Skull4.Death);
@@ -138,11 +138,11 @@ public class DeathTests
 	[TestMethod]
 	public void TestPurged()
 	{
-		Assert.AreEqual(DeathsV1_0.Purged, Deaths.GetDeathByLeaderboardType(GameVersion.V1_0, 6));
-		Assert.AreEqual(DeathsV2_0.Purged, Deaths.GetDeathByLeaderboardType(GameVersion.V2_0, 6));
-		Assert.AreEqual(DeathsV3_0.Purged, Deaths.GetDeathByLeaderboardType(GameVersion.V3_0, 6));
-		Assert.AreEqual(DeathsV3_1.Purged, Deaths.GetDeathByLeaderboardType(GameVersion.V3_1, 6));
-		Assert.AreEqual(DeathsV3_2.Purged, Deaths.GetDeathByLeaderboardType(GameVersion.V3_2, 6));
+		Assert.AreEqual(DeathsV1_0.Purged, Deaths.GetDeathByType(GameVersion.V1_0, 6));
+		Assert.AreEqual(DeathsV2_0.Purged, Deaths.GetDeathByType(GameVersion.V2_0, 6));
+		Assert.AreEqual(DeathsV3_0.Purged, Deaths.GetDeathByType(GameVersion.V3_0, 6));
+		Assert.AreEqual(DeathsV3_1.Purged, Deaths.GetDeathByType(GameVersion.V3_1, 6));
+		Assert.AreEqual(DeathsV3_2.Purged, Deaths.GetDeathByType(GameVersion.V3_2, 6));
 		Assert.AreEqual(DeathsV1_0.Purged, EnemiesV1_0.Squid1.Death);
 		Assert.AreEqual(DeathsV2_0.Purged, EnemiesV2_0.Squid1.Death);
 		Assert.AreEqual(DeathsV3_0.Purged, EnemiesV3_0.Squid1.Death);
@@ -159,10 +159,10 @@ public class DeathTests
 	[TestMethod]
 	public void TestDesecrated()
 	{
-		Assert.AreEqual(DeathsV2_0.Desecrated, Deaths.GetDeathByLeaderboardType(GameVersion.V2_0, 7));
-		Assert.AreEqual(DeathsV3_0.Desecrated, Deaths.GetDeathByLeaderboardType(GameVersion.V3_0, 7));
-		Assert.AreEqual(DeathsV3_1.Desecrated, Deaths.GetDeathByLeaderboardType(GameVersion.V3_1, 7));
-		Assert.AreEqual(DeathsV3_2.Desecrated, Deaths.GetDeathByLeaderboardType(GameVersion.V3_2, 7));
+		Assert.AreEqual(DeathsV2_0.Desecrated, Deaths.GetDeathByType(GameVersion.V2_0, 7));
+		Assert.AreEqual(DeathsV3_0.Desecrated, Deaths.GetDeathByType(GameVersion.V3_0, 7));
+		Assert.AreEqual(DeathsV3_1.Desecrated, Deaths.GetDeathByType(GameVersion.V3_1, 7));
+		Assert.AreEqual(DeathsV3_2.Desecrated, Deaths.GetDeathByType(GameVersion.V3_2, 7));
 		Assert.AreEqual(DeathsV2_0.Desecrated, EnemiesV2_0.Squid2.Death);
 		Assert.AreEqual(DeathsV3_0.Desecrated, EnemiesV3_0.Squid2.Death);
 		Assert.AreEqual(DeathsV3_1.Desecrated, EnemiesV3_1.Squid2.Death);
@@ -177,11 +177,11 @@ public class DeathTests
 	[TestMethod]
 	public void TestSacrificed()
 	{
-		Assert.AreEqual(DeathsV1_0.Sacrificed, Deaths.GetDeathByLeaderboardType(GameVersion.V1_0, 8));
-		Assert.AreEqual(DeathsV2_0.Sacrificed, Deaths.GetDeathByLeaderboardType(GameVersion.V2_0, 8));
-		Assert.AreEqual(DeathsV3_0.Sacrificed, Deaths.GetDeathByLeaderboardType(GameVersion.V3_0, 8));
-		Assert.AreEqual(DeathsV3_1.Sacrificed, Deaths.GetDeathByLeaderboardType(GameVersion.V3_1, 8));
-		Assert.AreEqual(DeathsV3_2.Sacrificed, Deaths.GetDeathByLeaderboardType(GameVersion.V3_2, 8));
+		Assert.AreEqual(DeathsV1_0.Sacrificed, Deaths.GetDeathByType(GameVersion.V1_0, 8));
+		Assert.AreEqual(DeathsV2_0.Sacrificed, Deaths.GetDeathByType(GameVersion.V2_0, 8));
+		Assert.AreEqual(DeathsV3_0.Sacrificed, Deaths.GetDeathByType(GameVersion.V3_0, 8));
+		Assert.AreEqual(DeathsV3_1.Sacrificed, Deaths.GetDeathByType(GameVersion.V3_1, 8));
+		Assert.AreEqual(DeathsV3_2.Sacrificed, Deaths.GetDeathByType(GameVersion.V3_2, 8));
 		Assert.AreEqual(DeathsV1_0.Sacrificed, EnemiesV1_0.Squid2.Death);
 		Assert.AreEqual(DeathsV2_0.Sacrificed, EnemiesV2_0.Squid3.Death);
 		Assert.AreEqual(DeathsV3_0.Sacrificed, EnemiesV3_0.Squid3.Death);
@@ -198,11 +198,11 @@ public class DeathTests
 	[TestMethod]
 	public void TestEviscerated()
 	{
-		Assert.AreEqual(DeathsV1_0.Eviscerated, Deaths.GetDeathByLeaderboardType(GameVersion.V1_0, 9));
-		Assert.AreEqual(DeathsV2_0.Eviscerated, Deaths.GetDeathByLeaderboardType(GameVersion.V2_0, 9));
-		Assert.AreEqual(DeathsV3_0.Eviscerated, Deaths.GetDeathByLeaderboardType(GameVersion.V3_0, 9));
-		Assert.AreEqual(DeathsV3_1.Eviscerated, Deaths.GetDeathByLeaderboardType(GameVersion.V3_1, 9));
-		Assert.AreEqual(DeathsV3_2.Eviscerated, Deaths.GetDeathByLeaderboardType(GameVersion.V3_2, 9));
+		Assert.AreEqual(DeathsV1_0.Eviscerated, Deaths.GetDeathByType(GameVersion.V1_0, 9));
+		Assert.AreEqual(DeathsV2_0.Eviscerated, Deaths.GetDeathByType(GameVersion.V2_0, 9));
+		Assert.AreEqual(DeathsV3_0.Eviscerated, Deaths.GetDeathByType(GameVersion.V3_0, 9));
+		Assert.AreEqual(DeathsV3_1.Eviscerated, Deaths.GetDeathByType(GameVersion.V3_1, 9));
+		Assert.AreEqual(DeathsV3_2.Eviscerated, Deaths.GetDeathByType(GameVersion.V3_2, 9));
 		Assert.AreEqual(DeathsV1_0.Eviscerated, EnemiesV1_0.Gigapede.Death);
 		Assert.AreEqual(DeathsV1_0.Eviscerated, EnemiesV1_0.Centipede.Death);
 		Assert.AreEqual(DeathsV2_0.Eviscerated, EnemiesV2_0.Centipede.Death);
@@ -220,11 +220,11 @@ public class DeathTests
 	[TestMethod]
 	public void TestAnnihilated()
 	{
-		Assert.AreEqual(DeathsV1_0.Annihilated, Deaths.GetDeathByLeaderboardType(GameVersion.V1_0, 10));
-		Assert.AreEqual(DeathsV2_0.Annihilated, Deaths.GetDeathByLeaderboardType(GameVersion.V2_0, 10));
-		Assert.AreEqual(DeathsV3_0.Annihilated, Deaths.GetDeathByLeaderboardType(GameVersion.V3_0, 10));
-		Assert.AreEqual(DeathsV3_1.Annihilated, Deaths.GetDeathByLeaderboardType(GameVersion.V3_1, 10));
-		Assert.AreEqual(DeathsV3_2.Annihilated, Deaths.GetDeathByLeaderboardType(GameVersion.V3_2, 10));
+		Assert.AreEqual(DeathsV1_0.Annihilated, Deaths.GetDeathByType(GameVersion.V1_0, 10));
+		Assert.AreEqual(DeathsV2_0.Annihilated, Deaths.GetDeathByType(GameVersion.V2_0, 10));
+		Assert.AreEqual(DeathsV3_0.Annihilated, Deaths.GetDeathByType(GameVersion.V3_0, 10));
+		Assert.AreEqual(DeathsV3_1.Annihilated, Deaths.GetDeathByType(GameVersion.V3_1, 10));
+		Assert.AreEqual(DeathsV3_2.Annihilated, Deaths.GetDeathByType(GameVersion.V3_2, 10));
 		Assert.AreEqual(DeathsV1_0.Annihilated, EnemiesV1_0.TransmutedSkull4.Death);
 		Assert.AreEqual(DeathsV2_0.Annihilated, EnemiesV2_0.Gigapede.Death);
 		Assert.AreEqual(DeathsV3_0.Annihilated, EnemiesV3_0.Gigapede.Death);
@@ -241,9 +241,9 @@ public class DeathTests
 	[TestMethod]
 	public void TestIntoxicated()
 	{
-		Assert.AreEqual(DeathsV3_0.Intoxicated, Deaths.GetDeathByLeaderboardType(GameVersion.V3_0, 11));
-		Assert.AreEqual(DeathsV3_1.Intoxicated, Deaths.GetDeathByLeaderboardType(GameVersion.V3_1, 11));
-		Assert.AreEqual(DeathsV3_2.Intoxicated, Deaths.GetDeathByLeaderboardType(GameVersion.V3_2, 11));
+		Assert.AreEqual(DeathsV3_0.Intoxicated, Deaths.GetDeathByType(GameVersion.V3_0, 11));
+		Assert.AreEqual(DeathsV3_1.Intoxicated, Deaths.GetDeathByType(GameVersion.V3_1, 11));
+		Assert.AreEqual(DeathsV3_2.Intoxicated, Deaths.GetDeathByType(GameVersion.V3_2, 11));
 		Assert.AreEqual(DeathsV3_0.Intoxicated, EnemiesV3_0.SpiderEgg1.Death);
 		Assert.AreEqual(DeathsV3_0.Intoxicated, EnemiesV3_0.Spider1.Death);
 		Assert.AreEqual(DeathsV3_0.Intoxicated, EnemiesV3_0.Ghostpede.Death);
@@ -260,10 +260,10 @@ public class DeathTests
 	[TestMethod]
 	public void TestEnvenomated()
 	{
-		Assert.AreEqual(DeathsV2_0.Envenomated, Deaths.GetDeathByLeaderboardType(GameVersion.V2_0, 12));
-		Assert.AreEqual(DeathsV3_0.Envenomated, Deaths.GetDeathByLeaderboardType(GameVersion.V3_0, 12));
-		Assert.AreEqual(DeathsV3_1.Envenomated, Deaths.GetDeathByLeaderboardType(GameVersion.V3_1, 12));
-		Assert.AreEqual(DeathsV3_2.Envenomated, Deaths.GetDeathByLeaderboardType(GameVersion.V3_2, 12));
+		Assert.AreEqual(DeathsV2_0.Envenomated, Deaths.GetDeathByType(GameVersion.V2_0, 12));
+		Assert.AreEqual(DeathsV3_0.Envenomated, Deaths.GetDeathByType(GameVersion.V3_0, 12));
+		Assert.AreEqual(DeathsV3_1.Envenomated, Deaths.GetDeathByType(GameVersion.V3_1, 12));
+		Assert.AreEqual(DeathsV3_2.Envenomated, Deaths.GetDeathByType(GameVersion.V3_2, 12));
 		Assert.AreEqual(DeathsV2_0.Envenomated, EnemiesV2_0.SpiderEgg2.Death);
 		Assert.AreEqual(DeathsV2_0.Envenomated, EnemiesV2_0.Spider2.Death);
 		Assert.AreEqual(DeathsV3_0.Envenomated, EnemiesV3_0.SpiderEgg2.Death);
@@ -282,9 +282,9 @@ public class DeathTests
 	[TestMethod]
 	public void TestIncarnated()
 	{
-		Assert.AreEqual(DeathsV3_0.Incarnated, Deaths.GetDeathByLeaderboardType(GameVersion.V3_0, 13));
-		Assert.AreEqual(DeathsV3_1.Incarnated, Deaths.GetDeathByLeaderboardType(GameVersion.V3_1, 13));
-		Assert.AreEqual(DeathsV3_2.Incarnated, Deaths.GetDeathByLeaderboardType(GameVersion.V3_2, 13));
+		Assert.AreEqual(DeathsV3_0.Incarnated, Deaths.GetDeathByType(GameVersion.V3_0, 13));
+		Assert.AreEqual(DeathsV3_1.Incarnated, Deaths.GetDeathByType(GameVersion.V3_1, 13));
+		Assert.AreEqual(DeathsV3_2.Incarnated, Deaths.GetDeathByType(GameVersion.V3_2, 13));
 		Assert.AreEqual(DeathsV3_0.Incarnated, EnemiesV3_0.Leviathan.Death);
 		Assert.AreEqual(DeathsV3_1.Incarnated, EnemiesV3_1.Leviathan.Death);
 		Assert.AreEqual(DeathsV3_2.Incarnated, EnemiesV3_2.Leviathan.Death);
@@ -297,9 +297,9 @@ public class DeathTests
 	[TestMethod]
 	public void TestDiscarnated()
 	{
-		Assert.AreEqual(DeathsV3_0.Discarnated, Deaths.GetDeathByLeaderboardType(GameVersion.V3_0, 14));
-		Assert.AreEqual(DeathsV3_1.Discarnated, Deaths.GetDeathByLeaderboardType(GameVersion.V3_1, 14));
-		Assert.AreEqual(DeathsV3_2.Discarnated, Deaths.GetDeathByLeaderboardType(GameVersion.V3_2, 14));
+		Assert.AreEqual(DeathsV3_0.Discarnated, Deaths.GetDeathByType(GameVersion.V3_0, 14));
+		Assert.AreEqual(DeathsV3_1.Discarnated, Deaths.GetDeathByType(GameVersion.V3_1, 14));
+		Assert.AreEqual(DeathsV3_2.Discarnated, Deaths.GetDeathByType(GameVersion.V3_2, 14));
 		Assert.AreEqual(DeathsV3_0.Discarnated, EnemiesV3_0.TheOrb.Death);
 		Assert.AreEqual(DeathsV3_1.Discarnated, EnemiesV3_1.TheOrb.Death);
 		Assert.AreEqual(DeathsV3_2.Discarnated, EnemiesV3_2.TheOrb.Death);
@@ -312,7 +312,7 @@ public class DeathTests
 	[TestMethod]
 	public void TestBarbed()
 	{
-		Assert.AreEqual(DeathsV3_0.Barbed, Deaths.GetDeathByLeaderboardType(GameVersion.V3_0, 15));
+		Assert.AreEqual(DeathsV3_0.Barbed, Deaths.GetDeathByType(GameVersion.V3_0, 15));
 		Assert.AreEqual(DeathsV3_0.Barbed, EnemiesV3_0.Thorn.Death);
 
 		Assert.AreEqual(DeathsV3_0.Barbed.Color, EnemyColors.Thorn);
@@ -321,8 +321,8 @@ public class DeathTests
 	[TestMethod]
 	public void TestEntangled()
 	{
-		Assert.AreEqual(DeathsV3_1.Entangled, Deaths.GetDeathByLeaderboardType(GameVersion.V3_1, 15));
-		Assert.AreEqual(DeathsV3_2.Entangled, Deaths.GetDeathByLeaderboardType(GameVersion.V3_2, 15));
+		Assert.AreEqual(DeathsV3_1.Entangled, Deaths.GetDeathByType(GameVersion.V3_1, 15));
+		Assert.AreEqual(DeathsV3_2.Entangled, Deaths.GetDeathByType(GameVersion.V3_2, 15));
 		Assert.AreEqual(DeathsV3_1.Entangled, EnemiesV3_1.Thorn.Death);
 		Assert.AreEqual(DeathsV3_2.Entangled, EnemiesV3_2.Thorn.Death);
 
@@ -333,8 +333,8 @@ public class DeathTests
 	[TestMethod]
 	public void TestHaunted()
 	{
-		Assert.AreEqual(DeathsV3_1.Haunted, Deaths.GetDeathByLeaderboardType(GameVersion.V3_1, 16));
-		Assert.AreEqual(DeathsV3_2.Haunted, Deaths.GetDeathByLeaderboardType(GameVersion.V3_2, 16));
+		Assert.AreEqual(DeathsV3_1.Haunted, Deaths.GetDeathByType(GameVersion.V3_1, 16));
+		Assert.AreEqual(DeathsV3_2.Haunted, Deaths.GetDeathByType(GameVersion.V3_2, 16));
 		Assert.AreEqual(DeathsV3_1.Haunted, EnemiesV3_1.Ghostpede.Death);
 		Assert.AreEqual(DeathsV3_2.Haunted, EnemiesV3_2.Ghostpede.Death);
 
@@ -345,8 +345,8 @@ public class DeathTests
 	[TestMethod]
 	public void TestStricken()
 	{
-		Assert.AreEqual(DeathsV1_0.Stricken, Deaths.GetDeathByLeaderboardType(GameVersion.V1_0, 16));
-		Assert.AreEqual(DeathsV2_0.Stricken, Deaths.GetDeathByLeaderboardType(GameVersion.V2_0, 16));
+		Assert.AreEqual(DeathsV1_0.Stricken, Deaths.GetDeathByType(GameVersion.V1_0, 16));
+		Assert.AreEqual(DeathsV2_0.Stricken, Deaths.GetDeathByType(GameVersion.V2_0, 16));
 		Assert.AreEqual(DeathsV1_0.Stricken, EnemiesV1_0.Spiderling.Death);
 		Assert.AreEqual(DeathsV2_0.Stricken, EnemiesV2_0.Spiderling.Death);
 
@@ -357,8 +357,8 @@ public class DeathTests
 	[TestMethod]
 	public void TestDevastated()
 	{
-		Assert.AreEqual(DeathsV1_0.Devastated, Deaths.GetDeathByLeaderboardType(GameVersion.V1_0, 17));
-		Assert.AreEqual(DeathsV2_0.Devastated, Deaths.GetDeathByLeaderboardType(GameVersion.V2_0, 17));
+		Assert.AreEqual(DeathsV1_0.Devastated, Deaths.GetDeathByType(GameVersion.V1_0, 17));
+		Assert.AreEqual(DeathsV2_0.Devastated, Deaths.GetDeathByType(GameVersion.V2_0, 17));
 		Assert.AreEqual(DeathsV1_0.Devastated, EnemiesV1_0.Leviathan.Death);
 		Assert.AreEqual(DeathsV2_0.Devastated, EnemiesV2_0.Leviathan.Death);
 
@@ -369,7 +369,7 @@ public class DeathTests
 	[TestMethod]
 	public void TestDismembered()
 	{
-		Assert.AreEqual(DeathsV1_0.Dismembered, Deaths.GetDeathByLeaderboardType(GameVersion.V1_0, 18));
+		Assert.AreEqual(DeathsV1_0.Dismembered, Deaths.GetDeathByType(GameVersion.V1_0, 18));
 		Assert.AreEqual(DeathsV1_0.Dismembered, EnemiesV1_0.Skull3.Death);
 		Assert.AreEqual(DeathsV1_0.Dismembered, EnemiesV1_0.TransmutedSkull3.Death);
 
@@ -379,11 +379,11 @@ public class DeathTests
 	[TestMethod]
 	public void TestUnknown()
 	{
-		Assert.AreEqual(DeathsV1_0.Unknown, Deaths.GetDeathByLeaderboardType(GameVersion.V1_0, 255, false));
-		Assert.AreEqual(DeathsV2_0.Unknown, Deaths.GetDeathByLeaderboardType(GameVersion.V2_0, 255, false));
-		Assert.AreEqual(DeathsV3_0.Unknown, Deaths.GetDeathByLeaderboardType(GameVersion.V3_0, 255, false));
-		Assert.AreEqual(DeathsV3_1.Unknown, Deaths.GetDeathByLeaderboardType(GameVersion.V3_1, 255, false));
-		Assert.AreEqual(DeathsV3_2.Unknown, Deaths.GetDeathByLeaderboardType(GameVersion.V3_2, 255, false));
+		Assert.AreEqual(DeathsV1_0.Unknown, Deaths.GetDeathByType(GameVersion.V1_0, 255));
+		Assert.AreEqual(DeathsV2_0.Unknown, Deaths.GetDeathByType(GameVersion.V2_0, 255));
+		Assert.AreEqual(DeathsV3_0.Unknown, Deaths.GetDeathByType(GameVersion.V3_0, 255));
+		Assert.AreEqual(DeathsV3_1.Unknown, Deaths.GetDeathByType(GameVersion.V3_1, 255));
+		Assert.AreEqual(DeathsV3_2.Unknown, Deaths.GetDeathByType(GameVersion.V3_2, 255));
 
 		Assert.AreEqual(DeathsV1_0.Unknown.Color, EnemyColors.Unknown);
 		Assert.AreEqual(DeathsV2_0.Unknown.Color, EnemyColors.Unknown);
@@ -395,7 +395,7 @@ public class DeathTests
 	[TestMethod]
 	public void TestNone()
 	{
-		Assert.AreEqual(DeathsV2_0.None, Deaths.GetDeathByLeaderboardType(GameVersion.V2_0, 200));
+		Assert.AreEqual(DeathsV2_0.None, Deaths.GetDeathByType(GameVersion.V2_0, 200));
 
 		Assert.AreEqual(DeathsV2_0.None.Color, EnemyColors.Andras);
 	}
