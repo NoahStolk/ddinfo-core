@@ -1,3 +1,3 @@
 namespace DevilDaggersInfo.Core.Mod;
 
-internal record ShaderData(string ShaderName, byte[] VertexShaderFileContents, byte[] FragmentShaderFileContents);
+internal sealed record ShaderData(string ShaderName, byte[] VertexShaderFileContents, byte[] FragmentShaderFileContents);

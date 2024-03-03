@@ -42,7 +42,7 @@ public class ReplayBinary<TReplayBinaryHeader>
 	{
 		return new(
 			header: TReplayBinaryHeader.CreateDefault(),
-			compressedEvents: ReplayEventsCompiler.CompileEvents(new() { new(new InitialInputsEventData(false, false, false, false, JumpType.None, ShootType.None, ShootType.None, 0, 0, 2)), new(new EndEventData()) }));
+			compressedEvents: ReplayEventsCompiler.CompileEvents([new(new InitialInputsEventData(false, false, false, false, JumpType.None, ShootType.None, ShootType.None, 0, 0, 2)), new(new EndEventData())]));
 	}
 
 	public static bool TryParse(byte[] fileContents, [NotNullWhen(true)] out ReplayBinary<TReplayBinaryHeader>? replayBinary)

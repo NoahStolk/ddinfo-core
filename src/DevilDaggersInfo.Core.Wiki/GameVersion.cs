@@ -1,6 +1,7 @@
 // ReSharper disable InconsistentNaming
 namespace DevilDaggersInfo.Core.Wiki;
 
+#pragma warning disable CA1707
 public enum GameVersion
 {
 	V1_0 = 0,
@@ -9,3 +10,4 @@ public enum GameVersion
 	V3_1 = 3,
 	V3_2 = 4,
 }
+#pragma warning restore CA1707

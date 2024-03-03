@@ -5,6 +5,7 @@ using System.Diagnostics;
 
 namespace DevilDaggersInfo.Core.Replay.PostProcessing.ReplaySimulation;
 
+// TODO: Move to ddinfo-tools.
 public static class ReplaySimulationBuilder
 {
 	public static ReplaySimulation Build(ReplayBinary<LocalReplayBinaryHeader> replay)
@@ -16,9 +17,9 @@ public static class ReplaySimulationBuilder
 		SpawnsetBinary spawnset = replay.Header.Spawnset;
 		PlayerContext playerContext = new(spawnset.ArenaTiles[SpawnsetBinary.ArenaDimensionMax / 2, SpawnsetBinary.ArenaDimensionMax / 2]);
 
-		List<PlayerMovementSnapshot> playerMovementSnapshots = new() { new(playerContext.Rotation, playerContext.Position, true) };
-		List<PlayerInputSnapshot> playerInputSnapshots = new();
-		List<SoundSnapshot> soundSnapshots = new();
+		List<PlayerMovementSnapshot> playerMovementSnapshots = [new(playerContext.Rotation, playerContext.Position, true)];
+		List<PlayerInputSnapshot> playerInputSnapshots = [];
+		List<SoundSnapshot> soundSnapshots = [];
 
 		foreach (ReplayEvent e in replay.EventsData.Events)
 		{

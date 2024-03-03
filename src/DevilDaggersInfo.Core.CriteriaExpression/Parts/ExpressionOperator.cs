@@ -1,5 +1,3 @@
-using System.Diagnostics;
-
 namespace DevilDaggersInfo.Core.CriteriaExpression.Parts;
 
 public record ExpressionOperator(ExpressionOperatorType Operator) : IExpressionPart
@@ -8,6 +6,6 @@ public record ExpressionOperator(ExpressionOperatorType Operator) : IExpressionP
 	{
 		ExpressionOperatorType.Add => "+",
 		ExpressionOperatorType.Subtract => "-",
-		_ => throw new UnreachableException(),
+		_ => $"Invalid operator '{Operator}'",
 	};
 }

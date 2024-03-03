@@ -1,5 +1,3 @@
 namespace DevilDaggersInfo.Core.CriteriaExpression.Parts;
 
-public interface IExpressionPart
-{
-}
+public interface IExpressionPart;
