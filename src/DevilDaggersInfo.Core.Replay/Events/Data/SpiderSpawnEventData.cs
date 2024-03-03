@@ -5,9 +5,11 @@ namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
 public record SpiderSpawnEventData(SpiderType SpiderType, int A, Vector3 Position) : ISpawnEventData
 {
+#pragma warning disable CA1051 // Visible instance fields.
 	public SpiderType SpiderType = SpiderType;
 	public int A = A;
 	public Vector3 Position = Position;
+#pragma warning restore CA1051
 
 	public EntityType EntityType => SpiderType switch
 	{

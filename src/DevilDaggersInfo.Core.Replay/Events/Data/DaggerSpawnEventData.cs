@@ -5,11 +5,13 @@ namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
 public record DaggerSpawnEventData(int A, Int16Vec3 Position, Int16Mat3x3 Orientation, bool IsShot, DaggerType DaggerType) : ISpawnEventData
 {
+#pragma warning disable CA1051 // Visible instance fields.
 	public int A = A;
 	public Int16Vec3 Position = Position;
 	public Int16Mat3x3 Orientation = Orientation;
 	public bool IsShot = IsShot;
 	public DaggerType DaggerType = DaggerType;
+#pragma warning restore CA1051
 
 	public EntityType EntityType => DaggerType switch
 	{

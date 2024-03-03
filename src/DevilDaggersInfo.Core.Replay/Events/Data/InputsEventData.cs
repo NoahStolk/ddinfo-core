@@ -4,6 +4,7 @@ namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
 public record InputsEventData(bool Left, bool Right, bool Forward, bool Backward, JumpType Jump, ShootType Shoot, ShootType ShootHoming, short MouseX, short MouseY) : IEventData
 {
+#pragma warning disable CA1051 // Visible instance fields.
 	public bool Left = Left;
 	public bool Right = Right;
 	public bool Forward = Forward;
@@ -13,6 +14,7 @@ public record InputsEventData(bool Left, bool Right, bool Forward, bool Backward
 	public ShootType ShootHoming = ShootHoming;
 	public short MouseX = MouseX;
 	public short MouseY = MouseY;
+#pragma warning restore CA1051
 
 	public void Write(BinaryWriter bw)
 	{

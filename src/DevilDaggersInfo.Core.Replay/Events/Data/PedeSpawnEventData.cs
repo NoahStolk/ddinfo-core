@@ -5,11 +5,13 @@ namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
 public record PedeSpawnEventData(PedeType PedeType, int A, Vector3 Position, Vector3 B, Matrix3x3 Orientation) : ISpawnEventData
 {
+#pragma warning disable CA1051 // Visible instance fields.
 	public PedeType PedeType = PedeType;
 	public int A = A;
 	public Vector3 Position = Position;
 	public Vector3 B = B;
 	public Matrix3x3 Orientation = Orientation;
+#pragma warning restore CA1051
 
 	public EntityType EntityType => PedeType switch
 	{

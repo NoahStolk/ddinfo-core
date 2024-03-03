@@ -4,9 +4,11 @@ namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
 public record SpiderEggSpawnEventData(int SpawnerEntityId, Vector3 Position, Vector3 TargetPosition) : ISpawnEventData
 {
+#pragma warning disable CA1051 // Visible instance fields.
 	public int SpawnerEntityId = SpawnerEntityId;
 	public Vector3 Position = Position;
 	public Vector3 TargetPosition = TargetPosition;
+#pragma warning restore CA1051
 
 	public EntityType EntityType => EntityType.SpiderEgg;
 

@@ -5,11 +5,13 @@ namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
 public record SquidSpawnEventData(SquidType SquidType, int A, Vector3 Position, Vector3 Direction, float RotationInRadians) : ISpawnEventData
 {
+#pragma warning disable CA1051 // Visible instance fields.
 	public SquidType SquidType = SquidType;
 	public int A = A;
 	public Vector3 Position = Position;
 	public Vector3 Direction = Direction;
 	public float RotationInRadians = RotationInRadians;
+#pragma warning restore CA1051
 
 	public EntityType EntityType => SquidType switch
 	{

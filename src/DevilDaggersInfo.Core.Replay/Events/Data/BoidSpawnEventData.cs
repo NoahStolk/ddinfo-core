@@ -5,12 +5,14 @@ namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
 public record BoidSpawnEventData(int SpawnerEntityId, BoidType BoidType, Int16Vec3 Position, Int16Mat3x3 Orientation, Vector3 Velocity, float Speed) : ISpawnEventData
 {
+#pragma warning disable CA1051 // Visible instance fields.
 	public int SpawnerEntityId = SpawnerEntityId;
 	public BoidType BoidType = BoidType;
 	public Int16Vec3 Position = Position;
 	public Int16Mat3x3 Orientation = Orientation;
 	public Vector3 Velocity = Velocity;
 	public float Speed = Speed;
+#pragma warning restore CA1051
 
 	public EntityType EntityType => BoidType switch
 	{
