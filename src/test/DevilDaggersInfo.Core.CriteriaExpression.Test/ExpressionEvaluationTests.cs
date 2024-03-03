@@ -38,10 +38,10 @@ public class ExpressionEvaluationTests
 			ThornKills = 8,
 		};
 
-		TestExpression(200, tc, new() { new ExpressionValue(100), new ExpressionOperator(ExpressionOperatorType.Add), new ExpressionTarget(CustomLeaderboardCriteriaType.GemsCollected) });
-		TestExpression(55, tc, new() { new ExpressionTarget(CustomLeaderboardCriteriaType.GemsCollected), new ExpressionOperator(ExpressionOperatorType.Subtract), new ExpressionTarget(CustomLeaderboardCriteriaType.HomingStored), new ExpressionOperator(ExpressionOperatorType.Subtract), new ExpressionTarget(CustomLeaderboardCriteriaType.GemsEaten) });
-		TestExpression(15, tc, new() { new ExpressionValue(10), new ExpressionOperator(ExpressionOperatorType.Add), new ExpressionValue(5) });
-		TestExpression(20, tc, new() { new ExpressionValue(20) });
+		TestExpression(200, tc, [new ExpressionValue(100), new ExpressionOperator(ExpressionOperatorType.Add), new ExpressionTarget(CustomLeaderboardCriteriaType.GemsCollected)]);
+		TestExpression(55, tc, [new ExpressionTarget(CustomLeaderboardCriteriaType.GemsCollected), new ExpressionOperator(ExpressionOperatorType.Subtract), new ExpressionTarget(CustomLeaderboardCriteriaType.HomingStored), new ExpressionOperator(ExpressionOperatorType.Subtract), new ExpressionTarget(CustomLeaderboardCriteriaType.GemsEaten)]);
+		TestExpression(15, tc, [new ExpressionValue(10), new ExpressionOperator(ExpressionOperatorType.Add), new ExpressionValue(5)]);
+		TestExpression(20, tc, [new ExpressionValue(20)]);
 	}
 
 	private static void TestExpression(int expectedResult, TargetCollection tc, List<IExpressionPart> parts)
