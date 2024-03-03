@@ -1,0 +1,11 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="Current">
+
+	<ImportGroup>
+		<Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)..\'))" />
+	</ImportGroup>
+
+	<ItemGroup>
+		<GlobalAnalyzerConfigFiles Include="..\Tests.globalconfig" />
+	</ItemGroup>
+
+</Project>
