@@ -19,13 +19,12 @@ public static class EnemyColors
 	public static readonly Rgb Gigapede = new(0x47, 0x8B, 0x41);
 	public static readonly Rgb Ghostpede = new(0xC8, 0xA2, 0xC8);
 	public static readonly Rgb Leviathan = new(0xFF, 0x00, 0x00);
-	public static readonly Rgb TheOrb = new(0xFF, 0x31, 0x31);
+	public static readonly Rgb Orb = new(0xFF, 0x31, 0x31);
 	public static readonly Rgb Spider1 = new(0x09, 0x7A, 0x00);
 	public static readonly Rgb Spider2 = new(0x13, 0xFF, 0x00);
 	public static readonly Rgb SpiderEgg1 = new(0x99, 0xA1, 0x00);
 	public static readonly Rgb SpiderEgg2 = new(0x65, 0x7A, 0x00);
 	public static readonly Rgb Thorn = new(0x77, 0x1D, 0x00);
 	public static readonly Rgb Andras = new(0xFF, 0x3C, 0x00);
-	public static readonly Rgb Unknown = new(0x66, 0x66, 0x66);
 	public static readonly Rgb Void = new(0xDD, 0xDD, 0xDD);
 }

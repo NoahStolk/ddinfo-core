@@ -20,7 +20,7 @@ public sealed class V3_2 : IGameData
 		Death intoxicated = new(11, "INTOXICATED", EnemyColors.SpiderEgg1);
 		Death envenomated = new(12, "ENVENOMATED", EnemyColors.SpiderEgg2);
 		Death incarnated = new(13, "INCARNATED", EnemyColors.Leviathan);
-		Death discarnated = new(14, "DISCARNATED", EnemyColors.TheOrb);
+		Death discarnated = new(14, "DISCARNATED", EnemyColors.Orb);
 		Death entangled = new(15, "ENTANGLED", EnemyColors.Thorn);
 		Death haunted = new(16, "HAUNTED", EnemyColors.Ghostpede);
 
@@ -37,7 +37,7 @@ public sealed class V3_2 : IGameData
 		Spider2 = new("Spider II", 1, 1, 200, true, 274, EnemyColors.Spider2, envenomated);
 		Thorn = new("Thorn", 0, 1, 120, true, 447, EnemyColors.Thorn, entangled);
 
-		Orb = new("Orb", 0, 1, 2400, false, null, EnemyColors.TheOrb, discarnated);
+		Orb = new("Orb", 0, 1, 2400, false, null, EnemyColors.Orb, discarnated);
 		Skull1 = new("Skull I", 0, 1, 1, true, null, EnemyColors.Skull1, swarmed);
 		Skull2 = new("Skull II", 1, 1, 5, true, null, EnemyColors.Skull2, impaled);
 		Skull3 = new("Skull III", 1, 1, 10, true, null, EnemyColors.Skull3, gored);

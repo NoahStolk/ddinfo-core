@@ -24,8 +24,6 @@ public class Enemy
 	public bool IsTargetedByHomingDaggers { get; }
 	public Enemy? TransmutesInto { get; private set; }
 	public FrozenSet<Enemy>? SpawnedBy { get; private set; }
-	// public EnemyInternalType InternalType { get; }
-	// public string InternalName { get; }
 	public GameTime? FirstSpawn { get; }
 	public Rgb Color { get; }
 	public Death Death { get; }
