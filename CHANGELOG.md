@@ -13,6 +13,10 @@ This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - Some inaccuracies in the `EntityTypeExtensions.GetDamage` method have been fixed.
 
+### Deprecated
+
+- Deprecated all `TimeExtensions` methods.
+
 ### Removed
 
 - Remove obsolete binary serialization support from exception types.

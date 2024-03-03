@@ -1,4 +1,5 @@
-﻿using DevilDaggersInfo.Core.GameData.Colors;
+﻿using DevilDaggersInfo.Core.Common;
+using DevilDaggersInfo.Core.GameData.Colors;
 
 namespace DevilDaggersInfo.Core.GameData;
 
@@ -26,16 +27,16 @@ public sealed class V3_2 : IGameData
 
 		Death[] deaths = [fallen, swarmed, impaled, gored, infested, opened, purged, desecrated, sacrificed, eviscerated, annihilated, intoxicated, envenomated, incarnated, discarnated, entangled, haunted];
 
-		Squid1 = new("Squid I", 1, 1, 10, true, 3, EnemyColors.Squid1, purged);
-		Squid2 = new("Squid II", 2, 2, 10, true, 39, EnemyColors.Squid2, desecrated);
-		Squid3 = new("Squid III", 3, 3, 30, true, 244, EnemyColors.Squid3, sacrificed);
-		Centipede = new("Centipede", 25, 25, 3, true, 114, EnemyColors.Centipede, eviscerated);
-		Gigapede = new("Gigapede", 50, 50, 5, true, 259, EnemyColors.Gigapede, annihilated);
-		Ghostpede = new("Ghostpede", 10, 10, 50, true, 442, EnemyColors.Ghostpede, haunted);
-		Leviathan = new("Leviathan", 6, 6, 250, true, 350, EnemyColors.Leviathan, incarnated);
-		Spider1 = new("Spider I", 1, 1, 25, true, 39, EnemyColors.Spider1, intoxicated);
-		Spider2 = new("Spider II", 1, 1, 200, true, 274, EnemyColors.Spider2, envenomated);
-		Thorn = new("Thorn", 0, 1, 120, true, 447, EnemyColors.Thorn, entangled);
+		Squid1 = new("Squid I", 1, 1, 10, true, GameTime.FromSeconds(3), EnemyColors.Squid1, purged);
+		Squid2 = new("Squid II", 2, 2, 10, true, GameTime.FromSeconds(39), EnemyColors.Squid2, desecrated);
+		Squid3 = new("Squid III", 3, 3, 30, true, GameTime.FromSeconds(244), EnemyColors.Squid3, sacrificed);
+		Centipede = new("Centipede", 25, 25, 3, true, GameTime.FromSeconds(114), EnemyColors.Centipede, eviscerated);
+		Gigapede = new("Gigapede", 50, 50, 5, true, GameTime.FromSeconds(259), EnemyColors.Gigapede, annihilated);
+		Ghostpede = new("Ghostpede", 10, 10, 50, true, GameTime.FromSeconds(442), EnemyColors.Ghostpede, haunted);
+		Leviathan = new("Leviathan", 6, 6, 250, true, GameTime.FromSeconds(350), EnemyColors.Leviathan, incarnated);
+		Spider1 = new("Spider I", 1, 1, 25, true, GameTime.FromSeconds(39), EnemyColors.Spider1, intoxicated);
+		Spider2 = new("Spider II", 1, 1, 200, true, GameTime.FromSeconds(274), EnemyColors.Spider2, envenomated);
+		Thorn = new("Thorn", 0, 1, 120, true, GameTime.FromSeconds(447), EnemyColors.Thorn, entangled);
 
 		Orb = new("Orb", 0, 1, 2400, false, null, EnemyColors.Orb, discarnated);
 		Skull1 = new("Skull I", 0, 1, 1, true, null, EnemyColors.Skull1, swarmed);
@@ -85,12 +86,12 @@ public sealed class V3_2 : IGameData
 
 		UnlockDagger[] unlockDaggers =
 		[
-			new("Default", DaggerColors.Default, 0),
-			new("Bronze", DaggerColors.Bronze, 60),
-			new("Silver", DaggerColors.Silver, 120),
-			new("Golden", DaggerColors.Golden, 250),
-			new("Devil", DaggerColors.Devil, 500),
-			new("Leviathan", DaggerColors.Leviathan, 1000),
+			new("Default", DaggerColors.Default, GameTime.FromSeconds(0)),
+			new("Bronze", DaggerColors.Bronze, GameTime.FromSeconds(60)),
+			new("Silver", DaggerColors.Silver, GameTime.FromSeconds(120)),
+			new("Golden", DaggerColors.Golden, GameTime.FromSeconds(250)),
+			new("Devil", DaggerColors.Devil, GameTime.FromSeconds(500)),
+			new("Leviathan", DaggerColors.Leviathan, GameTime.FromSeconds(1000)),
 		];
 
 		// All normal daggers deal 1 damage and get destroyed on impact.

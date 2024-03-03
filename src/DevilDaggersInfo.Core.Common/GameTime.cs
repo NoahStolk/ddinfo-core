@@ -10,29 +10,14 @@ public readonly struct GameTime : IEquatable<GameTime>
 	/// <summary>
 	/// There are 10,000 game units per second.
 	/// </summary>
-	private readonly int _gameUnits;
+	private readonly long _gameUnits;
 
-	public GameTime(int seconds)
+	private GameTime(long gameUnits)
 	{
-		_gameUnits = seconds * _gameUnitsPerSecond;
-	}
-
-	public GameTime(double seconds)
-	{
-		_gameUnits = (int)(seconds * _gameUnitsPerSecond);
+		_gameUnits = gameUnits;
 	}
 
 	public double Seconds => _gameUnits / (double)_gameUnitsPerSecond;
-
-	public static implicit operator GameTime(int seconds)
-	{
-		return ToGameTime(seconds);
-	}
-
-	public static implicit operator GameTime(double seconds)
-	{
-		return ToGameTime(seconds);
-	}
 
 	public static bool operator ==(GameTime left, GameTime right)
 	{
@@ -59,13 +44,31 @@ public readonly struct GameTime : IEquatable<GameTime>
 		return _gameUnits.GetHashCode();
 	}
 
-	public static GameTime ToGameTime(int seconds)
+	public static GameTime FromSeconds(int seconds)
 	{
-		return new(seconds);
+		return new(seconds * _gameUnitsPerSecond);
 	}
 
-	public static GameTime ToGameTime(double seconds)
+	public static GameTime FromSeconds(double seconds)
 	{
-		return new(seconds);
+		return new((long)(seconds * _gameUnitsPerSecond));
+	}
+
+	public static GameTime FromGameUnits(int gameUnits)
+	{
+		return new(gameUnits);
+	}
+
+	public static GameTime FromGameUnits(long gameUnits)
+	{
+		return new(gameUnits);
+	}
+
+	public static GameTime FromGameUnits(ulong gameUnits)
+	{
+		if (gameUnits > long.MaxValue)
+			throw new ArgumentOutOfRangeException(nameof(gameUnits), "Value is too large to fit in a long.");
+
+		return new((long)gameUnits);
 	}
 }
