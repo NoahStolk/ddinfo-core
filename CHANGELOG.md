@@ -6,7 +6,8 @@ This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
-- Added new GameData project which is a rewrite of the Wiki project. The plan is to eventually replace the Wiki project with this new project.
+- Added new `GameData` project which is a rewrite of the `Wiki` project. The plan is to eventually replace the `Wiki` project with this new project.
+- Added `GameTime` struct to the `Common` project.
 
 ### Changed
 
