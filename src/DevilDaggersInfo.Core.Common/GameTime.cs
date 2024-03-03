@@ -24,6 +24,16 @@ public readonly struct GameTime : IEquatable<GameTime>
 
 	public double Seconds => _gameUnits / (double)_gameUnitsPerSecond;
 
+	public static implicit operator GameTime(int seconds)
+	{
+		return ToGameTime(seconds);
+	}
+
+	public static implicit operator GameTime(double seconds)
+	{
+		return ToGameTime(seconds);
+	}
+
 	public static bool operator ==(GameTime left, GameTime right)
 	{
 		return left._gameUnits == right._gameUnits;
@@ -47,5 +57,15 @@ public readonly struct GameTime : IEquatable<GameTime>
 	public override int GetHashCode()
 	{
 		return _gameUnits.GetHashCode();
+	}
+
+	public static GameTime ToGameTime(int seconds)
+	{
+		return new(seconds);
+	}
+
+	public static GameTime ToGameTime(double seconds)
+	{
+		return new(seconds);
 	}
 }

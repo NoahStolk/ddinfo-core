@@ -5,27 +5,43 @@ namespace DevilDaggersInfo.Core.GameData;
 
 public class Enemy
 {
-	public required string Name { get; init; }
+	public Enemy(string name, int gems, int weakPointRepeatCount, int weakPointHealth, bool isTargetedByHomingDaggers, GameTime? firstSpawn, Rgb color, Death death)
+	{
+		Name = name;
+		Gems = gems;
+		WeakPointRepeatCount = weakPointRepeatCount;
+		WeakPointHealth = weakPointHealth;
+		IsTargetedByHomingDaggers = isTargetedByHomingDaggers;
+		FirstSpawn = firstSpawn;
+		Color = color;
+		Death = death;
+	}
 
-	public required int Gems { get; init; }
+	public string Name { get; }
+	public int Gems { get; }
+	public int WeakPointRepeatCount { get; }
+	public int WeakPointHealth { get; }
+	public bool IsTargetedByHomingDaggers { get; }
+	public Enemy? TransmutesInto { get; private set; }
+	public FrozenSet<Enemy>? SpawnedBy { get; private set; }
+	// public EnemyInternalType InternalType { get; }
+	// public string InternalName { get; }
+	public GameTime? FirstSpawn { get; }
+	public Rgb Color { get; }
+	public Death Death { get; }
 
-	public required int WeakPointRepeatCount { get; init; }
+	internal void SetTransmuteInto(Enemy enemy)
+	{
+		TransmutesInto = enemy;
+	}
 
-	public required int WeakPointHealth { get; init; }
+	internal void SetSpawnedBy(Enemy enemy)
+	{
+		SpawnedBy = new[] { enemy }.ToFrozenSet();
+	}
 
-	public required bool IsTargetedByHomingDaggers { get; init; }
-
-	public required Enemy? TransmutesInto { get; init; }
-
-	public required FrozenSet<Enemy> SpawnedBy { get; init; }
-
-	public required EnemyInternalType InternalType { get; init; }
-
-	public required string InternalName { get; init; }
-
-	public required GameTime? FirstSpawn { get; init; }
-
-	public required Rgb Color { get; init; }
-
-	public required Death Death { get; init; }
+	internal void SetSpawnedBy(params Enemy[] enemies)
+	{
+		SpawnedBy = enemies.ToFrozenSet();
+	}
 }

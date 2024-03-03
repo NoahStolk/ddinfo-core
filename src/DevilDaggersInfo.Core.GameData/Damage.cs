@@ -2,11 +2,16 @@ namespace DevilDaggersInfo.Core.GameData;
 
 public class Damage
 {
-	public required Dagger Dagger { get; init; }
+	public Damage(Dagger dagger, Enemy enemy, float daggerDepletionPercentage, int enemyDamage)
+	{
+		Dagger = dagger;
+		Enemy = enemy;
+		DaggerDepletionPercentage = daggerDepletionPercentage;
+		EnemyDamage = enemyDamage;
+	}
 
-	public required Enemy Enemy { get; init; }
-
-	public required float DamagePercentageToDagger { get; init; }
-
-	public required int DamageToEnemy { get; init; }
+	public Dagger Dagger { get; }
+	public Enemy Enemy { get; }
+	public float DaggerDepletionPercentage { get; } // TODO: Not sure if this makes sense for splash.
+	public int EnemyDamage { get; }
 }

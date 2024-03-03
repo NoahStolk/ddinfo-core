@@ -2,7 +2,12 @@ namespace DevilDaggersInfo.Core.GameData;
 
 public class Dagger
 {
-	public required string Name { get; init; }
+	public Dagger(string name, Rgb color)
+	{
+		Name = name;
+		Color = color;
+	}
 
-	public required Rgb Color { get; init; }
+	public string Name { get; }
+	public Rgb Color { get; }
 }

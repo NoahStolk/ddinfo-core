@@ -2,16 +2,20 @@ namespace DevilDaggersInfo.Core.GameData;
 
 public class Upgrade
 {
-	public required string Name { get; init; }
+	public Upgrade(string name, Rgb color, UpgradeUnlockType unlockType, int gemsOrHomingRequired, UpgradeAttack normalAttack, UpgradeAttack? homingAttack)
+	{
+		Name = name;
+		Color = color;
+		UnlockType = unlockType;
+		GemsOrHomingRequired = gemsOrHomingRequired;
+		NormalAttack = normalAttack;
+		HomingAttack = homingAttack;
+	}
 
-	public required Rgb Color { get; init; }
-
-	public required UpgradeUnlockType UnlockType { get; init; }
-
-	// TODO: Rewrite to union type if this ever gets added to C#.
-	public required int GemsOrHomingRequired { get; init; }
-
-	public required UpgradeAttack NormalAttack { get; init; }
-
-	public required UpgradeAttack? HomingAttack { get; init; }
+	public string Name { get; }
+	public Rgb Color { get; }
+	public UpgradeUnlockType UnlockType { get; }
+	public int GemsOrHomingRequired { get; } // TODO: Rewrite to union type if this ever gets added to C#.
+	public UpgradeAttack NormalAttack { get; }
+	public UpgradeAttack? HomingAttack { get; }
 }

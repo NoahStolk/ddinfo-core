@@ -4,9 +4,14 @@ namespace DevilDaggersInfo.Core.GameData;
 
 public class UnlockDagger
 {
-	public required string Name { get; init; }
+	public UnlockDagger(string name, Rgb color, GameTime unlocksAt)
+	{
+		Name = name;
+		Color = color;
+		UnlocksAt = unlocksAt;
+	}
 
-	public required Rgb Color { get; init; }
-
-	public required GameTime UnlocksAt { get; init; }
+	public string Name { get; }
+	public Rgb Color { get; }
+	public GameTime UnlocksAt { get; }
 }

@@ -2,9 +2,14 @@ namespace DevilDaggersInfo.Core.GameData;
 
 public class Death
 {
-	public required int Value { get; init; }
+	public Death(int value, string name, Rgb color)
+	{
+		Value = value;
+		Name = name;
+		Color = color;
+	}
 
-	public required string Name { get; init; }
-
-	public required Rgb Color { get; init; }
+	public int Value { get; }
+	public string Name { get; }
+	public Rgb Color { get; }
 }
