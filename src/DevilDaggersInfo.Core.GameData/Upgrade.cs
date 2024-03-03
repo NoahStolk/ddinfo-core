@@ -2,7 +2,7 @@ namespace DevilDaggersInfo.Core.GameData;
 
 public class Upgrade
 {
-	public Upgrade(string name, Rgb color, UpgradeUnlockType unlockType, int gemsOrHomingRequired, UpgradeAttack normalAttack, UpgradeAttack? homingAttack)
+	internal Upgrade(string name, Rgb color, UpgradeUnlockType unlockType, int gemsOrHomingRequired, UpgradeAttack normalAttack, UpgradeAttack? homingAttack)
 	{
 		Name = name;
 		Color = color;

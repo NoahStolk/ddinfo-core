@@ -2,7 +2,7 @@ namespace DevilDaggersInfo.Core.GameData;
 
 public class Death
 {
-	public Death(int value, string name, Rgb color)
+	internal Death(int value, string name, Rgb color)
 	{
 		Value = value;
 		Name = name;

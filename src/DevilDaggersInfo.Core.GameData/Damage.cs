@@ -2,7 +2,7 @@ namespace DevilDaggersInfo.Core.GameData;
 
 public class Damage
 {
-	public Damage(Dagger dagger, Enemy enemy, float daggerDepletionPercentage, int enemyDamage)
+	internal Damage(Dagger dagger, Enemy enemy, float daggerDepletionPercentage, int enemyDamage)
 	{
 		Dagger = dagger;
 		Enemy = enemy;

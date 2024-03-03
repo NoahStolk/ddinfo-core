@@ -80,6 +80,8 @@ public static class EntityTypeExtensions
 		if (!enemyType.IsWeakPoint(userData))
 			return 0;
 
+		// Note that we don't use the GameData project here, since there is a discrepancy between the game's code and the wiki.
+		// TODO: We probably need to know if a skull is transmuted at this point.
 		return daggerType switch
 		{
 			EntityType.Level1Dagger or EntityType.Level2Dagger or EntityType.Level3Dagger or EntityType.Level4Dagger => 1,

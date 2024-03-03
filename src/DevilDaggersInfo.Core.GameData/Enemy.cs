@@ -5,7 +5,7 @@ namespace DevilDaggersInfo.Core.GameData;
 
 public class Enemy
 {
-	public Enemy(string name, int gems, int weakPointRepeatCount, int weakPointHealth, bool isTargetedByHomingDaggers, GameTime? firstSpawn, Rgb color, Death death)
+	internal Enemy(string name, int gems, int weakPointRepeatCount, int weakPointHealth, bool isTargetedByHomingDaggers, GameTime? firstSpawn, Rgb color, Death death)
 	{
 		Name = name;
 		Gems = gems;
