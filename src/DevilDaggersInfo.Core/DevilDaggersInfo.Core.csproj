@@ -41,6 +41,10 @@
       <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
       <IncludeAssets>DevilDaggersInfo.Core.Encryption.dll</IncludeAssets>
     </ProjectReference>
+    <ProjectReference Include="..\DevilDaggersInfo.Core.GameData\DevilDaggersInfo.Core.GameData.csproj">
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <IncludeAssets>DevilDaggersInfo.Core.GameData.dll</IncludeAssets>
+    </ProjectReference>
     <ProjectReference Include="..\DevilDaggersInfo.Core.Mod\DevilDaggersInfo.Core.Mod.csproj">
       <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
       <IncludeAssets>DevilDaggersInfo.Core.Mod.dll</IncludeAssets>
