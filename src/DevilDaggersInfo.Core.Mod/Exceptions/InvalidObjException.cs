@@ -1,6 +1,5 @@
 namespace DevilDaggersInfo.Core.Mod.Exceptions;
 
-[Serializable]
 public class InvalidObjException : Exception
 {
 	public InvalidObjException()
@@ -14,11 +13,6 @@ public class InvalidObjException : Exception
 
 	public InvalidObjException(string? message, Exception? innerException)
 		: base(message, innerException)
-	{
-	}
-
-	protected InvalidObjException(SerializationInfo info, StreamingContext context)
-		: base(info, context)
 	{
 	}
 }

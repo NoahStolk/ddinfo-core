@@ -1,6 +1,5 @@
 namespace DevilDaggersInfo.Core.Mod.Exceptions;
 
-[Serializable]
 public class InvalidModBinaryException : Exception
 {
 	public InvalidModBinaryException()
@@ -14,11 +13,6 @@ public class InvalidModBinaryException : Exception
 
 	public InvalidModBinaryException(string? message, Exception? innerException)
 		: base(message, innerException)
-	{
-	}
-
-	protected InvalidModBinaryException(SerializationInfo info, StreamingContext context)
-		: base(info, context)
 	{
 	}
 }
