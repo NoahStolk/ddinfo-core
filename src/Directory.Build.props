@@ -9,7 +9,6 @@
 		<InvariantGlobalization>true</InvariantGlobalization>
 		<WarningsAsErrors>nullable</WarningsAsErrors>
 		<LangVersion>12.0</LangVersion>
-		<ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)' == 'Release'">
@@ -18,19 +17,19 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Nullable.Extended.Analyzer">
+		<PackageReference Include="Nullable.Extended.Analyzer" Version="1.15.6169">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Roslynator.Analyzers">
+		<PackageReference Include="Roslynator.Analyzers" Version="4.11.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="SonarAnalyzer.CSharp">
+		<PackageReference Include="SonarAnalyzer.CSharp" Version="9.20.0.85982">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="StyleCop.Analyzers">
+		<PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.556">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
