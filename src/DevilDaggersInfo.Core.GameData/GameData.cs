@@ -1,5 +1,4 @@
 ﻿using DevilDaggersInfo.Core.GameData.Colors;
-using System.Collections.Frozen;
 
 namespace DevilDaggersInfo.Core.GameData;
 
@@ -13,19 +12,31 @@ public sealed class GameData
 
 	public required DateOnly ReleaseDate { get; init; }
 
-	public required FrozenSet<Enemy> Enemies { get; init; }
+	public required IReadOnlyList<Enemy> Enemies { get; init; }
 
-	public required FrozenSet<Dagger> Daggers { get; init; }
+	public required IReadOnlyList<Dagger> Daggers { get; init; }
 
-	public required FrozenSet<Upgrade> Upgrades { get; init; }
+	public required IReadOnlyList<Upgrade> Upgrades { get; init; }
 
-	public required FrozenSet<UnlockDagger> UnlockDaggers { get; init; }
+	public required IReadOnlyList<UnlockDagger> UnlockDaggers { get; init; }
 
-	public required FrozenSet<Damage> Damages { get; init; }
+	public required IReadOnlyList<Damage> Damages { get; init; }
 
-	public required FrozenSet<Death> Deaths { get; init; }
+	public required IReadOnlyList<Death> Deaths { get; init; }
 
 	public static GameData V3_2 { get; } = CreateV3_2();
+
+	public Damage? GetDamage(Dagger dagger, Enemy enemy)
+	{
+		for (int i = 0; i < Damages.Count; i++)
+		{
+			Damage damage = Damages[i];
+			if (damage.Dagger == dagger && damage.Enemy == enemy)
+				return damage;
+		}
+
+		return null;
+	}
 
 	private static GameData CreateV3_2()
 	{
@@ -214,12 +225,12 @@ public sealed class GameData
 		{
 			Name = "V3.2",
 			ReleaseDate = new(2021, 10, 27),
-			Deaths = deaths.ToFrozenSet(),
-			Enemies = enemies.ToFrozenSet(),
-			Daggers = daggers.ToFrozenSet(),
-			Upgrades = upgrades.ToFrozenSet(),
-			UnlockDaggers = unlockDaggers.ToFrozenSet(),
-			Damages = damages.ToFrozenSet(),
+			Deaths = deaths,
+			Enemies = enemies,
+			Daggers = daggers,
+			Upgrades = upgrades,
+			UnlockDaggers = unlockDaggers,
+			Damages = damages,
 		};
 	}
 }
