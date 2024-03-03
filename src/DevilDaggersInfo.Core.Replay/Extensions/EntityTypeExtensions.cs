@@ -5,10 +5,14 @@ namespace DevilDaggersInfo.Core.Replay.Extensions;
 public static class EntityTypeExtensions
 {
 	public static bool IsEnemy(this EntityType entityType)
-		=> !entityType.IsDagger() && entityType != EntityType.Zero;
+	{
+		return !entityType.IsDagger() && entityType != EntityType.Zero;
+	}
 
 	public static bool IsDagger(this EntityType entityType)
-		=> entityType is EntityType.Level1Dagger or EntityType.Level2Dagger or EntityType.Level3Dagger or EntityType.Level3HomingDagger or EntityType.Level4Dagger or EntityType.Level4HomingDagger or EntityType.Level4HomingSplash;
+	{
+		return entityType is EntityType.Level1Dagger or EntityType.Level2Dagger or EntityType.Level3Dagger or EntityType.Level3HomingDagger or EntityType.Level4Dagger or EntityType.Level4HomingDagger or EntityType.Level4HomingSplash;
+	}
 
 	public static DaggerType GetDaggerType(this EntityType entityType) => entityType switch
 	{
@@ -76,6 +80,8 @@ public static class EntityTypeExtensions
 		if (!enemyType.IsWeakPoint(userData))
 			return 0;
 
+		// Note that we don't use the GameData project here, since there is a discrepancy between the game's code and the wiki.
+		// TODO: We probably need to know if a skull is transmuted at this point.
 		return daggerType switch
 		{
 			EntityType.Level1Dagger or EntityType.Level2Dagger or EntityType.Level3Dagger or EntityType.Level4Dagger => 1,
@@ -90,13 +96,16 @@ public static class EntityTypeExtensions
 			{
 				EntityType.Leviathan => 1, // Homing deals normal damage to Leviathan (and Orb, which is the same enemy in this context)
 				EntityType.Centipede or EntityType.Gigapede or EntityType.Ghostpede => 0, // Only splash damages pedes (including Ghostpede)
-				_ => 10,
+				EntityType.Squid1 or EntityType.Squid2 or EntityType.Squid3 => 0,
+				EntityType.Thorn => 1, // Both splash and homing deal damage to Thorns, so the total damage is 11.
+				_ => 10, // TODO: Test if this is correct.
 			},
 			EntityType.Level4HomingSplash => enemyType switch
 			{
-				EntityType.Thorn => 1, // Thorns are an exception
+				EntityType.Thorn => 10, // Thorns are an exception
 				EntityType.Centipede or EntityType.Gigapede or EntityType.Ghostpede => 10, // Only splash damages pedes (including Ghostpede)
-				_ => 0, // TODO: This is probably wrong. Squids and Skulls should be damaged by splash.
+				EntityType.Squid1 or EntityType.Squid2 or EntityType.Squid3 => 10,
+				_ => 0, // TODO: This is probably wrong. Skulls should be damaged by splash.
 			},
 			_ => 0,
 		};

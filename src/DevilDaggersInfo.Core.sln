@@ -16,6 +16,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevilDaggersInfo.Core.Crite
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevilDaggersInfo.Core.Encryption", "DevilDaggersInfo.Core.Encryption\DevilDaggersInfo.Core.Encryption.csproj", "{6F010EA4-496C-49C5-B947-82BA4EDA2648}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevilDaggersInfo.Core.GameData", "DevilDaggersInfo.Core.GameData\DevilDaggersInfo.Core.GameData.csproj", "{C6ED3872-EF16-423D-8EB0-E72439BB85DD}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevilDaggersInfo.Core.Mod", "DevilDaggersInfo.Core.Mod\DevilDaggersInfo.Core.Mod.csproj", "{1C25E368-6E37-4144-AAC7-EBA5475BD833}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DevilDaggersInfo.Core.Mod.Test", "test\DevilDaggersInfo.Core.Mod.Test\DevilDaggersInfo.Core.Mod.Test.csproj", "{4E3108DD-0F00-45E6-89E9-4F27BCAEF08E}"
@@ -100,6 +102,10 @@ Global
 		{EE16B42E-70F2-49E6-B912-838B2BF5DD70}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE16B42E-70F2-49E6-B912-838B2BF5DD70}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE16B42E-70F2-49E6-B912-838B2BF5DD70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6ED3872-EF16-423D-8EB0-E72439BB85DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6ED3872-EF16-423D-8EB0-E72439BB85DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6ED3872-EF16-423D-8EB0-E72439BB85DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6ED3872-EF16-423D-8EB0-E72439BB85DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
