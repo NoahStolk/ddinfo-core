@@ -2,6 +2,20 @@
 
 This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [unreleased]
+
+### Added
+
+- Added new GameData project which is a rewrite of the Wiki project. The plan is to eventually replace the Wiki project with this new project.
+
+### Changed
+
+- Some inaccuracies in the `EntityTypeExtensions.GetDamage` method have been fixed.
+
+### Removed
+
+- Remove obsolete binary serialization support from exception types.
+
 ## 0.10.0
 
 ### Changed
