@@ -10,7 +10,9 @@ public class ObjParsingContext
 	private readonly List<VertexReference> _vertices = new();
 
 	private static float ParseVertexValue(string value)
-		=> (float)double.Parse(value, NumberStyles.Float);
+	{
+		return (float)double.Parse(value, NumberStyles.Float);
+	}
 
 	public ParsedObjData Parse(string objText)
 	{

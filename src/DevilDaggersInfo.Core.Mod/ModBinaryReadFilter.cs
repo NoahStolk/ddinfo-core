@@ -14,7 +14,10 @@ public sealed class ModBinaryReadFilter
 	public static ModBinaryReadFilter AllAssets => new(true, Array.Empty<AssetKey>());
 	public static ModBinaryReadFilter NoAssets => new(false, Array.Empty<AssetKey>());
 
-	public static ModBinaryReadFilter Assets(params AssetKey[] keys) => new(false, keys);
+	public static ModBinaryReadFilter Assets(params AssetKey[] keys)
+	{
+		return new(false, keys);
+	}
 
 	public bool ShouldRead(AssetKey key)
 	{

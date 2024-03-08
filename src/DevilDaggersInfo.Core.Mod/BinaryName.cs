@@ -3,7 +3,9 @@ namespace DevilDaggersInfo.Core.Mod;
 public readonly record struct BinaryName(ModBinaryType BinaryType, string Name)
 {
 	public string ToFullName(string modName)
-		=> $"{BinaryType.ToString().ToLower()}-{modName}-{Name}";
+	{
+		return $"{BinaryType.ToString().ToLower()}-{modName}-{Name}";
+	}
 
 	public static BinaryName Parse(string fullName, string modName)
 	{
