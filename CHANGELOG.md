@@ -2,6 +2,19 @@
 
 This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.11.1
+
+### Added
+
+- Added new `ModBinaryTocEntry` methods:
+  - `Enable`
+  - `Disable`
+- Added new `ModBinaryToc` methods:
+  - `DisableAllAssets`
+  - `EnableProhibitedAssets`
+  - `EnableAsset`
+  - `DisableAsset`
+
 ## 0.11.0
 
 ### Added

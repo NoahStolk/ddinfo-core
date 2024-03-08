@@ -82,11 +82,23 @@ public sealed class ModBinaryToc
 	/// </summary>
 	public static ModBinaryToc EnableAllAssets(ModBinaryToc original)
 	{
-		List<ModBinaryTocEntry> entries = [];
-		foreach (ModBinaryTocEntry entry in original.Entries)
-			entries.Add(entry with { Name = entry.Name.ToLower() });
+		return ToggleAssetsCore(original, entry => entry.Enable());
+	}
 
-		return new(original.Type, entries);
+	/// <summary>
+	/// Disables all assets in the TOC by converting their names to uppercase. All the original assets use lowercase names, so uppercase entries are always ignored by the game.
+	/// </summary>
+	public static ModBinaryToc DisableAllAssets(ModBinaryToc original)
+	{
+		return ToggleAssetsCore(original, entry => entry.Disable());
+	}
+
+	/// <summary>
+	/// Enables all prohibited assets in the TOC by converting their names to lowercase. All the original assets use lowercase names, so this is the default state.
+	/// </summary>
+	public static ModBinaryToc EnableProhibitedAssets(ModBinaryToc original)
+	{
+		return ToggleAssetsCore(original, entry => AssetContainer.IsProhibited(entry.AssetType, entry.Name) ? entry.Enable() : entry);
 	}
 
 	/// <summary>
@@ -94,14 +106,30 @@ public sealed class ModBinaryToc
 	/// </summary>
 	public static ModBinaryToc DisableProhibitedAssets(ModBinaryToc original)
 	{
+		return ToggleAssetsCore(original, entry => AssetContainer.IsProhibited(entry.AssetType, entry.Name) ? entry.Disable() : entry);
+	}
+
+	/// <summary>
+	/// Enables an asset in the TOC by converting its name to lowercase. All the original assets use lowercase names, so this is the default state.
+	/// </summary>
+	public static ModBinaryToc EnableAsset(ModBinaryToc original, AssetKey assetKey)
+	{
+		return ToggleAssetsCore(original, entry => entry.AssetType == assetKey.AssetType && entry.Name == assetKey.AssetName ? entry.Enable() : entry);
+	}
+
+	/// <summary>
+	/// Disables an asset in the TOC by converting its name to uppercase. This asset will not be loaded by the game.
+	/// </summary>
+	public static ModBinaryToc DisableAsset(ModBinaryToc original, AssetKey assetKey)
+	{
+		return ToggleAssetsCore(original, entry => entry.AssetType == assetKey.AssetType && entry.Name == assetKey.AssetName ? entry.Disable() : entry);
+	}
+
+	private static ModBinaryToc ToggleAssetsCore(ModBinaryToc original, Func<ModBinaryTocEntry, ModBinaryTocEntry> toggleFunc)
+	{
 		List<ModBinaryTocEntry> entries = [];
 		foreach (ModBinaryTocEntry entry in original.Entries)
-		{
-			if (AssetContainer.IsProhibited(entry.AssetType, entry.Name))
-				entries.Add(entry with { Name = entry.Name.ToUpper() });
-			else
-				entries.Add(entry);
-		}
+			entries.Add(toggleFunc(entry));
 
 		return new(original.Type, entries);
 	}
