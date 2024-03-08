@@ -32,18 +32,31 @@ public class ModBinaryTocTests
 		Assert.AreEqual(1, modBinaryToc.Entries.Count);
 		Assert.AreEqual("boid", modBinaryToc.Entries[0].Name);
 		Assert.AreEqual(AssetType.Mesh, modBinaryToc.Entries[0].AssetType);
-		Assert.AreEqual(true, AssetContainer.IsProhibited(modBinaryToc.Entries[0].AssetType, modBinaryToc.Entries[0].Name));
+		Assert.IsTrue(AssetContainer.IsProhibited(modBinaryToc.Entries[0].AssetType, modBinaryToc.Entries[0].Name));
 
 		ModBinaryToc modBinaryTocDisabledProhibitedAssets = ModBinaryToc.DisableProhibitedAssets(modBinaryToc);
 		Assert.AreEqual(1, modBinaryTocDisabledProhibitedAssets.Entries.Count);
 		Assert.AreEqual("BOID", modBinaryTocDisabledProhibitedAssets.Entries[0].Name);
 		Assert.AreEqual(AssetType.Mesh, modBinaryTocDisabledProhibitedAssets.Entries[0].AssetType);
-		Assert.AreEqual(false, AssetContainer.IsProhibited(modBinaryTocDisabledProhibitedAssets.Entries[0].AssetType, modBinaryTocDisabledProhibitedAssets.Entries[0].Name));
+		Assert.IsFalse(AssetContainer.IsProhibited(modBinaryTocDisabledProhibitedAssets.Entries[0].AssetType, modBinaryTocDisabledProhibitedAssets.Entries[0].Name));
 
 		ModBinaryToc modBinaryTocEnabledAssets = ModBinaryToc.EnableAllAssets(modBinaryTocDisabledProhibitedAssets);
 		Assert.AreEqual(1, modBinaryTocEnabledAssets.Entries.Count);
 		Assert.AreEqual("boid", modBinaryTocEnabledAssets.Entries[0].Name);
 		Assert.AreEqual(AssetType.Mesh, modBinaryTocEnabledAssets.Entries[0].AssetType);
-		Assert.AreEqual(true, AssetContainer.IsProhibited(modBinaryTocEnabledAssets.Entries[0].AssetType, modBinaryTocEnabledAssets.Entries[0].Name));
+		Assert.IsTrue(AssetContainer.IsProhibited(modBinaryTocEnabledAssets.Entries[0].AssetType, modBinaryTocEnabledAssets.Entries[0].Name));
+	}
+
+	[DataTestMethod]
+	[DataRow(false, "BOID")]
+	[DataRow(false, "BOID2")]
+	[DataRow(false, "Boid2")]
+	[DataRow(false, "boiD2")]
+	[DataRow(true, "boid")]
+	[DataRow(true, "boid2")]
+	public void TestIsEnabled(bool expectedIsEnabled, string name)
+	{
+		ModBinaryTocEntry entry = new(name, 0, 4, AssetType.Mesh);
+		Assert.AreEqual(expectedIsEnabled, entry.IsEnabled);
 	}
 }

@@ -2,6 +2,16 @@
 
 This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.11.2
+
+### Added
+
+- Added `ModBinaryTocEntry.IsEnabled` property.
+
+### Changed
+
+- The mod binary TOC no longer allows assets with a name that is empty or consists only of whitespace.
+
 ## 0.11.1
 
 ### Added

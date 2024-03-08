@@ -167,6 +167,10 @@ public sealed class ModBinaryToc
 		if (!assetType.HasValue)
 			return null;
 
+		// Add an extra safety check for assets with an empty name.
+		if (string.IsNullOrWhiteSpace(name))
+			return null;
+
 		return new(name, offset, size, assetType.Value);
 	}
 }
