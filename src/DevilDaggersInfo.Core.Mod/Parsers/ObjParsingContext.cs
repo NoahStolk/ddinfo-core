@@ -4,10 +4,10 @@ namespace DevilDaggersInfo.Core.Mod.Parsers;
 
 public class ObjParsingContext
 {
-	private readonly List<Vector3> _positions = new();
-	private readonly List<Vector2> _texCoords = new();
-	private readonly List<Vector3> _normals = new();
-	private readonly List<VertexReference> _vertices = new();
+	private readonly List<Vector3> _positions = [];
+	private readonly List<Vector2> _texCoords = [];
+	private readonly List<Vector3> _normals = [];
+	private readonly List<VertexReference> _vertices = [];
 
 	private static float ParseVertexValue(string value)
 	{
