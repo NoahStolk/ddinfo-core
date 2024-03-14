@@ -162,13 +162,13 @@ public sealed class V3_2 : IGameData
 		damages.Add(new(Level4HomingDagger, Thorn, 1, 1));
 		damages.Add(new(Level4Splash, Thorn, 1, 10));
 
-		damages.Add(new(Level4HomingDagger, Skull1, 0.25f, 10));
+		damages.Add(new(Level4HomingDagger, Skull1, 0.25f, 1)); // This doesn't really matter, but when we change the Skull I's HP to 10 we can see that Level 4 homing only deals 1 damage.
 		damages.Add(new(Level4HomingDagger, Skull2, 1, 10));
 		damages.Add(new(Level4HomingDagger, Skull3, 1, 10));
 		damages.Add(new(Level4HomingDagger, Skull4, 1, 10));
-		damages.Add(new(Level4Splash, Skull1, 1, 10));
-		damages.Add(new(Level4Splash, Skull2, 1, 10));
-		damages.Add(new(Level4Splash, Skull3, 1, 10));
+		damages.Add(new(Level4Splash, Skull1, 1, 10)); // TODO: Test.
+		damages.Add(new(Level4Splash, Skull2, 1, 10)); // TODO: Test.
+		damages.Add(new(Level4Splash, Skull3, 1, 10)); // TODO: Test.
 		damages.Add(new(Level4Splash, Skull4, 1, 0)); // TODO: Test.
 
 		damages.Add(new(Level4HomingDagger, TransmutedSkull1, 1, 10));
