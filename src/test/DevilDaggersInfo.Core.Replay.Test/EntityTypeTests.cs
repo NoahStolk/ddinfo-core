@@ -2,6 +2,7 @@ using DevilDaggersInfo.Core.Replay.Events.Enums;
 
 namespace DevilDaggersInfo.Core.Replay.Test;
 
+// TODO: Move tests to ddinfo-tools.
 [TestClass]
 public class EntityTypeTests
 {
