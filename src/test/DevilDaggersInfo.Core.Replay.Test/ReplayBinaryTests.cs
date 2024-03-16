@@ -29,7 +29,6 @@ public class ReplayBinaryTests
 	public void ParseAndCompileEvents()
 	{
 		ReplayBinary<LocalReplayBinaryHeader> replayBinary = ReplayBinary<LocalReplayBinaryHeader>.CreateDefault();
-		replayBinary.EventsData.Clear();
 		replayBinary.EventsData.AddEvent(new InitialInputsEventData(true, false, false, false, JumpType.None, ShootType.Hold, ShootType.None, 0, 0, 0.2f));
 
 		replayBinary.EventsData.AddEvent(new SquidSpawnEventData(SquidType.Squid3, -1, Vector3.Zero, Vector3.Zero, 0));
