@@ -197,6 +197,9 @@ dotnet_diagnostic.CA1062.severity                                        = none
 # Prefer jagged arrays over multidimensional.
 dotnet_diagnostic.CA1814.severity                                        = none
 
+# Operator overloads have named alternates.
+dotnet_diagnostic.CA2225.severity                                        = none
+
 # Do not use broken cryptographic algorithms.
 dotnet_diagnostic.CA5351.severity                                        = none
 

@@ -2,26 +2,68 @@ using System.Diagnostics;
 
 namespace DevilDaggersInfo.Core.Common;
 
-[DebuggerDisplay("{Seconds} seconds ({_gameUnits} game units)")]
+[DebuggerDisplay("{Seconds} seconds ({GameUnits} game units)")]
 public readonly struct GameTime : IEquatable<GameTime>
 {
 	private const int _gameUnitsPerSecond = 10_000;
 
-	/// <summary>
-	/// There are 10,000 game units per second.
-	/// </summary>
-	private readonly long _gameUnits;
-
 	private GameTime(long gameUnits)
 	{
-		_gameUnits = gameUnits;
+		GameUnits = gameUnits;
 	}
 
-	public double Seconds => _gameUnits / (double)_gameUnitsPerSecond;
+	public long GameUnits { get; }
+
+	public double Seconds => GameUnits / (double)_gameUnitsPerSecond;
+
+	public static GameTime operator +(GameTime left, GameTime right)
+	{
+		return new(left.GameUnits + right.GameUnits);
+	}
+
+	public static GameTime operator -(GameTime left, GameTime right)
+	{
+		return new(left.GameUnits - right.GameUnits);
+	}
+
+	public static GameTime operator *(GameTime left, GameTime right)
+	{
+		return new(left.GameUnits * right.GameUnits);
+	}
+
+	public static GameTime operator /(GameTime left, GameTime right)
+	{
+		return new(left.GameUnits / right.GameUnits);
+	}
+
+	public static GameTime operator %(GameTime left, GameTime right)
+	{
+		return new(left.GameUnits % right.GameUnits);
+	}
+
+	public static bool operator <(GameTime left, GameTime right)
+	{
+		return left.GameUnits < right.GameUnits;
+	}
+
+	public static bool operator <=(GameTime left, GameTime right)
+	{
+		return left.GameUnits <= right.GameUnits;
+	}
+
+	public static bool operator >(GameTime left, GameTime right)
+	{
+		return left.GameUnits > right.GameUnits;
+	}
+
+	public static bool operator >=(GameTime left, GameTime right)
+	{
+		return left.GameUnits >= right.GameUnits;
+	}
 
 	public static bool operator ==(GameTime left, GameTime right)
 	{
-		return left._gameUnits == right._gameUnits;
+		return left.GameUnits == right.GameUnits;
 	}
 
 	public static bool operator !=(GameTime left, GameTime right)
@@ -36,12 +78,12 @@ public readonly struct GameTime : IEquatable<GameTime>
 
 	public bool Equals(GameTime other)
 	{
-		return _gameUnits == other._gameUnits;
+		return GameUnits == other.GameUnits;
 	}
 
 	public override int GetHashCode()
 	{
-		return _gameUnits.GetHashCode();
+		return GameUnits.GetHashCode();
 	}
 
 	public static GameTime FromSeconds(int seconds)

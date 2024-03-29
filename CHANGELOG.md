@@ -2,6 +2,22 @@
 
 This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.11.3
+
+### Added
+
+- Added `GameUnits` property to `GameTime` struct.
+- Added operators to `GameTime` struct:
+  - `+`
+  - `-`
+  - `*`
+  - `/`
+  - `%`
+  - `<`
+  - `>`
+  - `<=`
+  - `>=`
+
 ## 0.11.2
 
 ### Added
