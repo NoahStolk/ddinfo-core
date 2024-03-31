@@ -21,12 +21,6 @@ public class ReplayBinary<TReplayBinaryHeader>
 		Events = ReplayEventsParser.Parse(br.ReadBytes(compressedDataLength));
 	}
 
-	public ReplayBinary(TReplayBinaryHeader header, byte[] compressedEvents)
-	{
-		Header = header;
-		Events = ReplayEventsParser.Parse(compressedEvents);
-	}
-
 	public ReplayBinary(TReplayBinaryHeader header, IReadOnlyList<ReplayEvent> events)
 	{
 		Header = header;
