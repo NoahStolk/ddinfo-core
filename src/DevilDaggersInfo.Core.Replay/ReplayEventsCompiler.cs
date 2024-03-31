@@ -4,7 +4,7 @@ namespace DevilDaggersInfo.Core.Replay;
 
 public static class ReplayEventsCompiler
 {
-	public static byte[] CompileEvents(List<ReplayEvent> events)
+	public static byte[] CompileEvents(IReadOnlyList<ReplayEvent> events)
 	{
 		using MemoryStream ms = new();
 		using BinaryWriter bw = new(ms);

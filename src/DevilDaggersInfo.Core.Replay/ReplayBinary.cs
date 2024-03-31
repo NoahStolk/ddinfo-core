@@ -20,23 +20,23 @@ public class ReplayBinary<TReplayBinaryHeader>
 		else
 			compressedDataLength = (int)(contents.Length - br.BaseStream.Position);
 
-		EventsData = ReplayEventsParser.Parse(br.ReadBytes(compressedDataLength));
+		Events = ReplayEventsParser.Parse(br.ReadBytes(compressedDataLength));
 	}
 
 	public ReplayBinary(TReplayBinaryHeader header, byte[] compressedEvents)
 	{
 		Header = header;
-		EventsData = ReplayEventsParser.Parse(compressedEvents);
+		Events = ReplayEventsParser.Parse(compressedEvents);
 	}
 
-	public ReplayBinary(TReplayBinaryHeader header, ReplayEventsData eventsData)
+	public ReplayBinary(TReplayBinaryHeader header, IReadOnlyList<ReplayEvent> events)
 	{
 		Header = header;
-		EventsData = eventsData;
+		Events = events;
 	}
 
 	public TReplayBinaryHeader Header { get; }
-	public ReplayEventsData EventsData { get; }
+	public IReadOnlyList<ReplayEvent> Events { get; }
 
 	public static ReplayBinary<TReplayBinaryHeader> CreateDefault()
 	{
@@ -66,7 +66,7 @@ public class ReplayBinary<TReplayBinaryHeader>
 
 		bw.Write(Header.ToBytes());
 
-		byte[] compressedEvents = ReplayEventsCompiler.CompileEvents(EventsData.Events.ToList());
+		byte[] compressedEvents = ReplayEventsCompiler.CompileEvents(Events);
 		bw.Write(compressedEvents.Length);
 		bw.Write(compressedEvents);
 

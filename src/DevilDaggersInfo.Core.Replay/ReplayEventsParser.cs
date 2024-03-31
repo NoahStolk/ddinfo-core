@@ -6,9 +6,9 @@ namespace DevilDaggersInfo.Core.Replay;
 
 public static class ReplayEventsParser
 {
-	public static ReplayEventsData Parse(byte[] compressedEvents)
+	public static List<ReplayEvent> Parse(byte[] compressedEvents)
 	{
-		ReplayEventsData eventsData = new();
+		List<ReplayEvent> eventsData = [];
 
 		using MemoryStream ms = new(compressedEvents[2..]); // Skip ZLIB header.
 		using DeflateStream deflateStream = new(ms, CompressionMode.Decompress, true);
@@ -43,7 +43,7 @@ public static class ReplayEventsParser
 				0x0b => new EndEventData(),
 				_ => throw new InvalidReplayBinaryException($"Invalid event type '{eventType}'."),
 			};
-			eventsData.AddEvent(e);
+			eventsData.Add(new(e));
 
 			if (e is InitialInputsEventData)
 				parsedInitialInput = true;
