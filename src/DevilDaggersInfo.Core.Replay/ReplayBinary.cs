@@ -1,5 +1,3 @@
-using DevilDaggersInfo.Core.Replay.Events.Data;
-using DevilDaggersInfo.Core.Replay.Events.Enums;
 using System.Diagnostics.CodeAnalysis;
 
 namespace DevilDaggersInfo.Core.Replay;
@@ -37,13 +35,6 @@ public class ReplayBinary<TReplayBinaryHeader>
 
 	public TReplayBinaryHeader Header { get; }
 	public IReadOnlyList<ReplayEvent> Events { get; }
-
-	public static ReplayBinary<TReplayBinaryHeader> CreateDefault()
-	{
-		return new(
-			header: TReplayBinaryHeader.CreateDefault(),
-			compressedEvents: ReplayEventsCompiler.CompileEvents([new(new InitialInputsEventData(false, false, false, false, JumpType.None, ShootType.None, ShootType.None, 0, 0, 2)), new(new EndEventData())]));
-	}
 
 	public static bool TryParse(byte[] fileContents, [NotNullWhen(true)] out ReplayBinary<TReplayBinaryHeader>? replayBinary)
 	{

@@ -4,9 +4,9 @@ using System.IO.Compression;
 
 namespace DevilDaggersInfo.Core.Replay;
 
-public static class ReplayEventsParser
+internal static class ReplayEventsParser
 {
-	public static List<ReplayEvent> Parse(byte[] compressedEvents)
+	public static IReadOnlyList<ReplayEvent> Parse(byte[] compressedEvents)
 	{
 		List<ReplayEvent> eventsData = [];
 

@@ -2,7 +2,7 @@ using System.IO.Compression;
 
 namespace DevilDaggersInfo.Core.Replay;
 
-public static class ReplayEventsCompiler
+internal static class ReplayEventsCompiler
 {
 	public static byte[] CompileEvents(IReadOnlyList<ReplayEvent> events)
 	{
