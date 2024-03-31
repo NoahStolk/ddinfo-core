@@ -2,6 +2,22 @@
 
 This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.12.0
+
+Rewrote the Core.Replay library. A lot of functionality has been removed. The library is now only used for parsing and compiling replay buffers.
+
+### Changed
+
+- `ReplayEventsData` has been removed in favor of just `List<ReplayEvent>` or `IReadOnlyList<ReplayEvent>` throughout the library.
+
+### Removed
+
+- Removed `ReplayEventsData` type.
+- Removed `ReplayBinary<T>.CreateDefault` method.
+- Removed `ReplayBinary<T>` constructor accepting byte array of events data.
+- `ReplayEventsParser` is now internal.
+- `ReplayEventsCompiler` is now internal.
+
 ## 0.11.3
 
 ### Added

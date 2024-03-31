@@ -10,7 +10,7 @@ public static class ReplaySimulationBuilder
 {
 	public static ReplaySimulation Build(ReplayBinary<LocalReplayBinaryHeader> replay)
 	{
-		ReplayEvent initialInputsEvent = replay.EventsData.Events.FirstOrDefault(e => e.Data is InitialInputsEventData) ?? throw new InvalidOperationException("Replay does not contain an initial inputs event.");
+		ReplayEvent initialInputsEvent = replay.Events.FirstOrDefault(e => e.Data is InitialInputsEventData) ?? throw new InvalidOperationException("Replay does not contain an initial inputs event.");
 		float lookSpeed = ((InitialInputsEventData)initialInputsEvent.Data).LookSpeed;
 
 		int ticks = 0;
@@ -21,7 +21,7 @@ public static class ReplaySimulationBuilder
 		List<PlayerInputSnapshot> playerInputSnapshots = [];
 		List<SoundSnapshot> soundSnapshots = [];
 
-		foreach (ReplayEvent e in replay.EventsData.Events)
+		foreach (ReplayEvent e in replay.Events)
 		{
 			switch (e.Data)
 			{
@@ -151,7 +151,10 @@ public static class ReplaySimulationBuilder
 		playerContext.Position += new Vector3(playerContext.Velocity.X, playerContext.VelocityY, playerContext.Velocity.Y);
 	}
 
-	private static float ToRadians(float degrees) => degrees * (MathF.PI / 180f);
+	private static float ToRadians(float degrees)
+	{
+		return degrees * (MathF.PI / 180f);
+	}
 
 	private sealed class PlayerContext
 	{
