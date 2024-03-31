@@ -2,6 +2,12 @@
 
 This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.12.1
+
+### Fixed
+
+- Fixed `EntitySpawnReplayEvent` and `ReplayEvent` constructors not being public.
+
 ## 0.12.0
 
 Rewrote the Core.Replay library. A lot of functionality has been removed. The library is now only used for parsing and compiling replay buffers.

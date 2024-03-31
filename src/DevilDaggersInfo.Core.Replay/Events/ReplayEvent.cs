@@ -4,7 +4,7 @@ namespace DevilDaggersInfo.Core.Replay.Events;
 
 public record ReplayEvent
 {
-	internal ReplayEvent(IEventData data)
+	public ReplayEvent(IEventData data)
 	{
 		Data = data;
 	}
