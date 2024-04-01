@@ -8,26 +8,29 @@ public static class EnemyHitLogBuilder
 	public static EnemyHitLog? Build(IReadOnlyList<ReplayEvent> events, int enemyEntityId)
 	{
 		int currentTick = 0;
+		int currentEntityId = 0;
 		EnemyHitLogBuildContext? buildContext = null;
 		Dictionary<int, EntityType> daggers = new();
 
-		foreach (ReplayEvent e in events)
+		foreach (IEventData e in events.Select(e => e.Data))
 		{
-			if (e is EntitySpawnReplayEvent spawnEvent)
+			if (e is DaggerSpawnEventData or BoidSpawnEventData or LeviathanSpawnEventData or PedeSpawnEventData or SquidSpawnEventData or SpiderSpawnEventData or SpiderEggSpawnEventData or ThornSpawnEventData)
 			{
-				if (e.Data is DaggerSpawnEventData dagger)
-				{
-					daggers.Add(spawnEvent.EntityId, dagger.EntityType);
-				}
-				else if (e.Data is ISpawnEventData spawn)
-				{
-					if (spawnEvent.EntityId != enemyEntityId)
-						continue;
-
-					buildContext = new(spawn.EntityType, currentTick);
-				}
+				currentEntityId++;
 			}
-			else if (e.Data is HitEventData hit && hit.EntityIdA == enemyEntityId)
+
+			if (e is DaggerSpawnEventData dagger)
+			{
+				daggers.Add(currentEntityId, dagger.EntityType);
+			}
+			else if (e is ISpawnEventData spawn)
+			{
+				if (currentEntityId != enemyEntityId)
+					continue;
+
+				buildContext = new(spawn.EntityType, currentTick);
+			}
+			else if (e is HitEventData hit && hit.EntityIdA == enemyEntityId)
 			{
 				if (buildContext == null)
 					continue;
@@ -45,14 +48,14 @@ public static class EnemyHitLogBuilder
 				buildContext.CurrentHp -= damage;
 				buildContext.Events.Add(new(currentTick, buildContext.CurrentHp, damage, daggerEntityType.Value.GetDaggerType(), hit.UserData));
 			}
-			else if (e.Data is TransmuteEventData transmute && transmute.EntityId == enemyEntityId)
+			else if (e is TransmuteEventData transmute && transmute.EntityId == enemyEntityId)
 			{
 				if (buildContext == null)
 					continue;
 
 				buildContext.Transmute();
 			}
-			else if (e.Data is InputsEventData or InitialInputsEventData)
+			else if (e is InputsEventData or InitialInputsEventData)
 			{
 				currentTick++;
 			}

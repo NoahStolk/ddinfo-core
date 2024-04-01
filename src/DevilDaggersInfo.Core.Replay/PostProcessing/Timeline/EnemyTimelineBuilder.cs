@@ -13,21 +13,24 @@ public class EnemyTimelineBuilder
 		_builds.Clear();
 		_daggers.Clear();
 		int currentTick = 0;
+		int currentEntityId = 0;
 
-		foreach (ReplayEvent e in events)
+		foreach (IEventData e in events.Select(e => e.Data))
 		{
-			if (e is EntitySpawnReplayEvent spawnEvent)
+			if (e is DaggerSpawnEventData or BoidSpawnEventData or LeviathanSpawnEventData or PedeSpawnEventData or SquidSpawnEventData or SpiderSpawnEventData or SpiderEggSpawnEventData or ThornSpawnEventData)
 			{
-				if (e.Data is DaggerSpawnEventData dagger)
-				{
-					_daggers.Add(spawnEvent.EntityId, dagger.EntityType);
-				}
-				else if (e.Data is ISpawnEventData spawn)
-				{
-					_builds.Add(new(spawnEvent.EntityId, spawn.EntityType, currentTick));
-				}
+				currentEntityId++;
 			}
-			else if (e.Data is HitEventData hit)
+
+			if (e is DaggerSpawnEventData dagger)
+			{
+				_daggers.Add(currentEntityId, dagger.EntityType);
+			}
+			else if (e is ISpawnEventData spawn)
+			{
+				_builds.Add(new(currentEntityId, spawn.EntityType, currentTick));
+			}
+			else if (e is HitEventData hit)
 			{
 				EnemyTimelineBuildContext? enemy = _builds.Find(c => c.EntityId == hit.EntityIdA);
 				if (enemy == null)
@@ -47,7 +50,7 @@ public class EnemyTimelineBuilder
 
 				enemy.CurrentHp -= damage;
 			}
-			else if (e.Data is TransmuteEventData transmute)
+			else if (e is TransmuteEventData transmute)
 			{
 				EnemyTimelineBuildContext? enemy = _builds.Find(c => c.EntityId == transmute.EntityId);
 				if (enemy == null)
@@ -55,7 +58,7 @@ public class EnemyTimelineBuilder
 
 				enemy.Transmute();
 			}
-			else if (e.Data is InputsEventData or InitialInputsEventData)
+			else if (e is InputsEventData or InitialInputsEventData)
 			{
 				currentTick++;
 			}

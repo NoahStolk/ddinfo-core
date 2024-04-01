@@ -2,6 +2,12 @@
 
 This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.13.0
+
+### Removed
+
+- Removed `EntitySpawnReplayEvent` type. Calculate the entity ID yourself and use the `ReplayEvent` type instead.
+
 ## 0.12.1
 
 ### Fixed
