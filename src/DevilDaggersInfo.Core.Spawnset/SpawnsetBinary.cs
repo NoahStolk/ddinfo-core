@@ -585,7 +585,7 @@ public record SpawnsetBinary
 			throw new InvalidOperationException("Spawnset does not have an end loop.");
 
 		// The new spawnset cannot have an actual end loop, so we must remove all empty spawns and add their delay to the next spawn.
-		List<Spawn> newSpawns = new();
+		List<Spawn> newSpawns = [];
 		for (int i = Spawns.Length - 1; i >= 0; i--)
 		{
 			if (Spawns[i].EnemyType == EnemyType.Empty)

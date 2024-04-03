@@ -90,7 +90,7 @@ public static class EnemyHitLogBuilder
 
 		public int SpawnTick { get; }
 
-		public List<EnemyHitLogEvent> Events { get; } = new();
+		public List<EnemyHitLogEvent> Events { get; } = [];
 
 		public int CurrentHp { get; set; }
 

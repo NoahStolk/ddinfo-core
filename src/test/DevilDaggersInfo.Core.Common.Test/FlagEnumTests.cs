@@ -89,7 +89,7 @@ public class FlagEnumTests
 	[TestMethod]
 	public void TestListToFlagEnum()
 	{
-		List<int> list = new() { 1, 2, 4, 8 };
+		List<int> list = [1, 2, 4, 8];
 		Assert.AreEqual(TestFlag.A | TestFlag.B | TestFlag.C | TestFlag.D, list.ToFlagEnum<TestFlag>());
 	}
 }

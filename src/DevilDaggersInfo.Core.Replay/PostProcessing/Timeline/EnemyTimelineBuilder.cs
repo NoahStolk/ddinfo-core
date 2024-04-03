@@ -5,7 +5,7 @@ namespace DevilDaggersInfo.Core.Replay.PostProcessing.Timeline;
 
 public class EnemyTimelineBuilder
 {
-	private readonly List<EnemyTimelineBuildContext> _builds = new();
+	private readonly List<EnemyTimelineBuildContext> _builds = [];
 	private readonly Dictionary<int, EntityType> _daggers = new();
 
 	public List<EnemyTimeline> Build(IReadOnlyList<ReplayEvent> events)

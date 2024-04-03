@@ -2,7 +2,7 @@ namespace DevilDaggersInfo.Core.Wiki;
 
 public static class Enemies
 {
-	private static readonly List<Enemy> _all = new();
+	private static readonly List<Enemy> _all = [];
 
 	static Enemies()
 	{

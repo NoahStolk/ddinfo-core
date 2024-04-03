@@ -6,10 +6,10 @@ public class SpawnsView
 {
 	public SpawnsView(SpawnsetBinary spawnsetBinary, GameVersion gameVersion, int waveCount = 40)
 	{
-		PreLoop = new();
+		PreLoop = [];
 		Waves = new List<SpawnView>[waveCount];
 		for (int i = 0; i < waveCount; i++)
-			Waves[i] = new();
+			Waves[i] = [];
 
 		if (spawnsetBinary.Spawns.Length == 0)
 			return;

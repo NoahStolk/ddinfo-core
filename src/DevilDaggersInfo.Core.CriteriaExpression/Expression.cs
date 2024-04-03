@@ -53,7 +53,7 @@ public class Expression
 	{
 		str = str.Replace(" ", string.Empty);
 
-		List<string> delimiters = new() { "+", "-" };
+		List<string> delimiters = ["+", "-"];
 		string pattern = "(" + string.Join("|", delimiters.Select(Regex.Escape).ToArray()) + ")";
 		string[] result = Regex.Split(str, pattern);
 		return new(Array.ConvertAll(result, ParsePart).ToList());
@@ -83,7 +83,7 @@ public class Expression
 
 	public static Expression Parse(byte[] bytes)
 	{
-		List<IExpressionPart> parts = new();
+		List<IExpressionPart> parts = [];
 
 		using MemoryStream ms = new(bytes);
 		using BinaryReader br = new(ms);

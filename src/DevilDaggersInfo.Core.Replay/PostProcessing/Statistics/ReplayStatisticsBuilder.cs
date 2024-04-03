@@ -63,7 +63,7 @@ public class ReplayStatisticsBuilder
 		Clear();
 		int currentTick = 0;
 
-		List<ReplayStatisticsEntry> entries = new() { FlushCurrentState() };
+		List<ReplayStatisticsEntry> entries = [FlushCurrentState()];
 		foreach (IEventData e in events)
 		{
 			switch (e)
