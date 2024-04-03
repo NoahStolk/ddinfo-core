@@ -36,7 +36,7 @@ public class ObjParsingContext
 			switch (values[0])
 			{
 				case "v": ParsePosition(lineNumber, data); break;
-				case "vt": ParseTexCoord(lineNumber, data); break;
+				case "vt": ParseTexCoordinate(lineNumber, data); break;
 				case "vn": ParseNormal(lineNumber, data); break;
 				case "f": ParseFace(lineNumber, data); break;
 			}
@@ -53,7 +53,7 @@ public class ObjParsingContext
 		_positions.Add(new(ParseVertexValue(coords[0]), ParseVertexValue(coords[1]), ParseVertexValue(coords[2])));
 	}
 
-	private void ParseTexCoord(int lineNumber, string[] coords)
+	private void ParseTexCoordinate(int lineNumber, string[] coords)
 	{
 		if (coords.Length < 2)
 			throw new InvalidObjException($"Invalid texture coordinate (vt) on line {lineNumber}. Must contain at least 2 coordinates. (Additional coordinates are ignored.)");
@@ -110,12 +110,12 @@ public class ObjParsingContext
 
 				if (!int.TryParse(references[0], out int positionReference) || positionReference < 1)
 					throw new InvalidObjException($"{baseErrorMessage} Position value '{references[0]}' could not be parsed to a positive integral value.");
-				if (!int.TryParse(references[1], out int texCoordReference) || texCoordReference < 1)
+				if (!int.TryParse(references[1], out int texCoordinateReference) || texCoordinateReference < 1)
 					throw new InvalidObjException($"{baseErrorMessage} Texture coordinate value '{references[1]}' could not be parsed to a positive integral value.");
 				if (!int.TryParse(references[2], out int normalReference) || normalReference < 1)
 					throw new InvalidObjException($"{baseErrorMessage} Normal value '{references[2]}' could not be parsed to a positive integral value.");
 
-				_vertices.Add(new(positionReference, texCoordReference, normalReference));
+				_vertices.Add(new(positionReference, texCoordinateReference, normalReference));
 			}
 			else
 			{

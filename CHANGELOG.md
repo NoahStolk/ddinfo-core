@@ -2,6 +2,12 @@
 
 This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.13.1
+
+### Changed
+
+- Texture coordinates and normals are now exported explicitly for compatibility with some 3D modeling software. 
+
 ## 0.13.0
 
 ### Removed

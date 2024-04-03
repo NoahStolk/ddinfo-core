@@ -77,7 +77,7 @@ internal static class ObjFileHandler
 			VertexReference a = new(indices[i * 3] + 1);
 			VertexReference b = new(indices[i * 3 + 1] + 1);
 			VertexReference c = new(indices[i * 3 + 2] + 1);
-			sb.Append("f ").Append(a).Append(' ').Append(b).Append(' ').Append(c).AppendLine();
+			sb.AppendLine($"f {a}/{a}/{a} {b}/{b}/{b} {c}/{c}/{c}");
 		}
 
 		return Encoding.UTF8.GetBytes(sb.ToString());
