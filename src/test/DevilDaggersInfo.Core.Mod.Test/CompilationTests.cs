@@ -1,6 +1,9 @@
 using DevilDaggersInfo.Core.Asset;
 using DevilDaggersInfo.Core.Mod.Builders;
 using DevilDaggersInfo.Core.Mod.Exceptions;
+using DevilDaggersInfo.Core.Mod.FileHandling;
+using DevilDaggersInfo.Core.Mod.Parsers;
+using System.Text;
 
 namespace DevilDaggersInfo.Core.Mod.Test;
 
@@ -56,5 +59,16 @@ public class CompilationTests
 		builder.AddObjectBinding("test", Array.Empty<byte>());
 		builder.AddMesh("test", Array.Empty<byte>());
 		Assert.ThrowsException<InvalidModCompilationException>(() => builder.AddObjectBinding("test", Array.Empty<byte>()));
+	}
+
+	[TestMethod]
+	public void TestBoidMeshCompilation()
+	{
+		ObjParsingContext objParsingContext = new();
+		ParsedObjData obj = objParsingContext.Parse(Encoding.UTF8.GetString(File.ReadAllBytes(Path.Combine("Resources", "Mesh", "boid.obj"))));
+		Assert.AreEqual(396, obj.Positions.Count);
+		Assert.AreEqual(396, obj.TexCoords.Count);
+		Assert.AreEqual(396, obj.Normals.Count);
+		Assert.AreEqual(396, obj.Vertices.Count);
 	}
 }

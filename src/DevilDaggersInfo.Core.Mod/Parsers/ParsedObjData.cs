@@ -1,6 +1,6 @@
 namespace DevilDaggersInfo.Core.Mod.Parsers;
 
-public class ParsedObjData
+internal sealed class ParsedObjData
 {
 	public List<Vector3> Positions { get; } = [];
 	public List<Vector2> TexCoords { get; } = [];

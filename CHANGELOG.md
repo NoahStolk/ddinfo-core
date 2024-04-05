@@ -2,6 +2,16 @@
 
 This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.13.2
+
+### Fixed
+
+- Fixed bug in OBJ parser.
+
+### Changed
+
+- The types `ObjParsingContext` and `ParsedObjData` are now internal. These types weren't supposed to be public.
+
 ## 0.13.1
 
 ### Changed

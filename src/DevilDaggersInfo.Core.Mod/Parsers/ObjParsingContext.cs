@@ -2,7 +2,7 @@ using System.Globalization;
 
 namespace DevilDaggersInfo.Core.Mod.Parsers;
 
-public class ObjParsingContext
+internal class ObjParsingContext
 {
 	private readonly List<Vector3> _positions = [];
 	private readonly List<Vector2> _texCoords = [];
@@ -21,14 +21,14 @@ public class ObjParsingContext
 		_normals.Clear();
 		_vertices.Clear();
 
-		string[] lines = objText.Split(Environment.NewLine);
+		string[] lines = objText.Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 
 		for (int i = 0; i < lines.Length; i++)
 		{
 			int lineNumber = i + 1;
 
 			string line = lines[i].Trim();
-			string[] values = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+			string[] values = line.Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 			if (values.Length == 0)
 				continue;
 
