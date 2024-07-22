@@ -21,7 +21,7 @@
 
   <!-- TODO: This should be installed transitively from DevilDaggersInfo.Core.Mod. -->
   <ItemGroup>
-    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.4" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.5" />
   </ItemGroup>
 
   <ItemGroup Label="Internal dependencies to pack">
