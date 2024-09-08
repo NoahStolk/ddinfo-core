@@ -56,7 +56,7 @@ public class Expression
 		List<string> delimiters = ["+", "-"];
 		string pattern = "(" + string.Join("|", delimiters.Select(Regex.Escape).ToArray()) + ")";
 		string[] result = Regex.Split(str, pattern);
-		return new(Array.ConvertAll(result, ParsePart).ToList());
+		return new Expression(Array.ConvertAll(result, ParsePart).ToList());
 
 		static IExpressionPart ParsePart(string str)
 		{
@@ -104,7 +104,7 @@ public class Expression
 			});
 		}
 
-		return new(parts);
+		return new Expression(parts);
 	}
 
 	public override string ToString()
@@ -147,6 +147,8 @@ public class Expression
 			}
 		}
 
+		return ms.ToArray();
+
 		static void WriteOperator(BinaryWriter bw, ExpressionOperator op)
 		{
 			bw.Write((byte)0x00);
@@ -164,8 +166,6 @@ public class Expression
 			bw.Write((byte)0x02);
 			bw.Write(value.Value);
 		}
-
-		return ms.ToArray();
 	}
 
 	public void Validate()

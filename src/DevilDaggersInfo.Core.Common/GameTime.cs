@@ -18,27 +18,27 @@ public readonly struct GameTime : IEquatable<GameTime>
 
 	public static GameTime operator +(GameTime left, GameTime right)
 	{
-		return new(left.GameUnits + right.GameUnits);
+		return new GameTime(left.GameUnits + right.GameUnits);
 	}
 
 	public static GameTime operator -(GameTime left, GameTime right)
 	{
-		return new(left.GameUnits - right.GameUnits);
+		return new GameTime(left.GameUnits - right.GameUnits);
 	}
 
 	public static GameTime operator *(GameTime left, GameTime right)
 	{
-		return new(left.GameUnits * right.GameUnits);
+		return new GameTime(left.GameUnits * right.GameUnits);
 	}
 
 	public static GameTime operator /(GameTime left, GameTime right)
 	{
-		return new(left.GameUnits / right.GameUnits);
+		return new GameTime(left.GameUnits / right.GameUnits);
 	}
 
 	public static GameTime operator %(GameTime left, GameTime right)
 	{
-		return new(left.GameUnits % right.GameUnits);
+		return new GameTime(left.GameUnits % right.GameUnits);
 	}
 
 	public static bool operator <(GameTime left, GameTime right)
@@ -88,22 +88,22 @@ public readonly struct GameTime : IEquatable<GameTime>
 
 	public static GameTime FromSeconds(int seconds)
 	{
-		return new(seconds * _gameUnitsPerSecond);
+		return new GameTime(seconds * _gameUnitsPerSecond);
 	}
 
 	public static GameTime FromSeconds(double seconds)
 	{
-		return new((long)(seconds * _gameUnitsPerSecond));
+		return new GameTime((long)(seconds * _gameUnitsPerSecond));
 	}
 
 	public static GameTime FromGameUnits(int gameUnits)
 	{
-		return new(gameUnits);
+		return new GameTime(gameUnits);
 	}
 
 	public static GameTime FromGameUnits(long gameUnits)
 	{
-		return new(gameUnits);
+		return new GameTime(gameUnits);
 	}
 
 	public static GameTime FromGameUnits(ulong gameUnits)
@@ -111,6 +111,6 @@ public readonly struct GameTime : IEquatable<GameTime>
 		if (gameUnits > long.MaxValue)
 			throw new ArgumentOutOfRangeException(nameof(gameUnits), "Value is too large to fit in a long.");
 
-		return new((long)gameUnits);
+		return new GameTime((long)gameUnits);
 	}
 }

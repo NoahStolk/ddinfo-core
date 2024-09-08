@@ -18,5 +18,7 @@ public static class EnumExtensions
 
 	public static TEnum ToFlagEnum<TEnum>(this List<int> list)
 		where TEnum : Enum
-		=> (TEnum)(object)list.Sum();
+	{
+		return (TEnum)(object)list.Sum();
+	}
 }
