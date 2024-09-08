@@ -6,7 +6,7 @@
     <Copyright>Copyright © Noah Stolk</Copyright>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/NoahStolk/ddinfo-core</RepositoryUrl>
-    <Version>0.13.2</Version>
+    <Version>0.14.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Label="Build properties">

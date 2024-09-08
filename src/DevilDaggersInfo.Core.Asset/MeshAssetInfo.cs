@@ -1,6 +1,6 @@
 namespace DevilDaggersInfo.Core.Asset;
 
-public class MeshAssetInfo : AssetInfo
+public sealed class MeshAssetInfo : AssetInfo
 {
 	public MeshAssetInfo(string assetName, bool isProhibited, int defaultIndexCount, int defaultVertexCount)
 		: base(assetName, isProhibited)

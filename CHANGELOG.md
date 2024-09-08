@@ -2,6 +2,22 @@
 
 This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.14.0
+
+### Changed
+
+- Certain classes are now sealed:
+  - `Asset`
+    - `AudioAssetInfo`
+    - `MeshAssetInfo`
+    - `ObjectBindingAssetInfo`
+    - `ShaderAssetInfo`
+    - `TextureAssetInfo`
+
+### Removed
+
+- Removed deprecated `TimeExtensions` methods.
+
 ## 0.13.2
 
 ### Fixed

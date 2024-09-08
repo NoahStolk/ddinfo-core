@@ -1,6 +1,6 @@
 namespace DevilDaggersInfo.Core.Asset;
 
-public class TextureAssetInfo : AssetInfo
+public sealed class TextureAssetInfo : AssetInfo
 {
 	public TextureAssetInfo(string assetName, bool isProhibited, int defaultWidth, int defaultHeight, bool isTextureForMesh, string? objectBinding)
 		: base(assetName, isProhibited)

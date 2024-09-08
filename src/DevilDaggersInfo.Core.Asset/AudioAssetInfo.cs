@@ -1,6 +1,6 @@
 namespace DevilDaggersInfo.Core.Asset;
 
-public class AudioAssetInfo : AssetInfo
+public sealed class AudioAssetInfo : AssetInfo
 {
 	public AudioAssetInfo(string assetName, bool isProhibited, float defaultLoudness, bool presentInDefaultLoudness)
 		: base(assetName, isProhibited)
