@@ -2,6 +2,13 @@
 
 This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 0.14.1
+
+### Changed
+
+- `ImmutableArena` is now sealed.
+- Improved overflow exception message in `GameTime.FromGameUnits(ulong gameUnits)` method.
+
 ## 0.14.0
 
 ### Changed

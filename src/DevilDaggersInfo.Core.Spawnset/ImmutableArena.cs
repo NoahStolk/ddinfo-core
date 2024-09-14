@@ -1,6 +1,6 @@
 namespace DevilDaggersInfo.Core.Spawnset;
 
-public class ImmutableArena
+public sealed class ImmutableArena
 {
 	private readonly int _dimension;
 	private readonly float[,] _heights;

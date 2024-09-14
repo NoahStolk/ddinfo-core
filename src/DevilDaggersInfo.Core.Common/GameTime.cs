@@ -109,7 +109,7 @@ public readonly struct GameTime : IEquatable<GameTime>
 	public static GameTime FromGameUnits(ulong gameUnits)
 	{
 		if (gameUnits > long.MaxValue)
-			throw new ArgumentOutOfRangeException(nameof(gameUnits), "Value is too large to fit in a long.");
+			throw new ArgumentOutOfRangeException(nameof(gameUnits), $"Value {gameUnits} is too large to fit in a long.");
 
 		return new GameTime((long)gameUnits);
 	}
