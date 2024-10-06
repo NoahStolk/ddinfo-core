@@ -1,3 +1,5 @@
+using System.Collections;
+
 namespace DevilDaggersInfo.Core.Spawnset;
 
 public sealed class ImmutableArena
@@ -41,5 +43,61 @@ public sealed class ImmutableArena
 		}
 
 		return arenaTiles;
+	}
+
+	public byte[] GetCompressedArenaBytes()
+	{
+		if (_dimension == 0)
+			return [];
+
+		byte[] packed = Pack();
+
+		using MemoryStream stream = new();
+		using BinaryWriter writer = new(stream);
+
+		writer.Write(_dimension);
+
+		int consecutiveEqualValues = 1;
+		byte currentByte = packed[0];
+		for (int i = 1; i < packed.Length; i++)
+		{
+			if (packed[i] == currentByte)
+			{
+				consecutiveEqualValues++;
+			}
+			else
+			{
+				// Write the current byte and the number of consecutive equal values.
+				writer.Write7BitEncodedInt(consecutiveEqualValues);
+				writer.Write(currentByte);
+
+				currentByte = packed[i];
+				consecutiveEqualValues = 1;
+			}
+		}
+
+		// Write the last byte and the number of consecutive equal values.
+		writer.Write7BitEncodedInt(consecutiveEqualValues);
+		writer.Write(currentByte);
+
+		return stream.ToArray();
+	}
+
+	private byte[] Pack()
+	{
+		const int maxHeight = 15;
+
+		// Encode each tile as an 8-bit value. All values will be between 0 and 15, meaning the heights will be approximated.
+		byte[] raw = new byte[_dimension * _dimension];
+		for (int i = 0; i < _dimension; i++)
+		{
+			for (int j = 0; j < _dimension; j++)
+			{
+				float clampedHeight = Math.Clamp(_heights[i, j], 0, maxHeight);
+				raw[i * _dimension + j] = (byte)clampedHeight;
+			}
+		}
+
+		return raw;
 	}
 }
