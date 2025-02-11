@@ -2,7 +2,7 @@
 
 There are multiple HTTP endpoints used for Devil Daggers to connect to the leaderboard.
 
-## POST http://dd.hasmodai.com/backend15/get_scores.php
+## POST http://dd.hasmodai.com/dd3/get_scores.php
 
 Used to get scores from the leaderboard (max 100 at a time).
 
@@ -54,7 +54,7 @@ This data is repeated for each score returned.
 | Total daggers hit            | uint64        | 8               |
 | ?                            | ?             | 4               |
 
-## POST http://dd.hasmodai.com/backend16/get_user_search_public.php
+## POST http://dd.hasmodai.com/dd3/get_user_search_public.php
 
 Used to search for a user by username.
 
@@ -101,7 +101,7 @@ This data is repeated for each score returned.
 | Total daggers hit            | uint64        | 8               |
 | ?                            | ?             | 4               |
 
-## POST http://l.sorath.com/dd/get_multiple_users_by_id_public.php
+## POST http://dd.hasmodai.com/dd3/get_multiple_users_by_id_public.php
 
 Used to get multiple users by their player id.
 
@@ -145,7 +145,7 @@ This data is repeated for each score returned.
 | Total gems                   | uint64        | 8               |
 | Total daggers hit            | uint64        | 8               |
 
-## POST http://dd.hasmodai.com/backend16/get_user_by_id_public.php
+## POST http://dd.hasmodai.com/dd3/get_user_by_id_public.php
 
 Used to get a user by their player id.
 
@@ -181,6 +181,8 @@ The response is in binary and has the following format:
 | Total daggers hit            | uint64        | 8               |
 
 ## POST http://dd.hasmodai.com/backend16/get_replay.php
+
+(TODO: This might need to be updated to `http://dd.hasmodai.com/dd3/get_replay.php`, but I haven't tested it.)
 
 Used to get a replay by its player id.
 

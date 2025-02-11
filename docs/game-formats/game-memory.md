@@ -8,7 +8,7 @@ Devil Daggers stores various read-only data in memory so it can easily be read b
 2. Open Cheat Engine.
 3. Attach Devil Daggers process (dd.exe).
 4. Click "Memory view".
-5. Press CTRL+F or right click on the memory and click "Search memory...".
+5. Press CTRL+F or right-click on the memory and click "Search memory...".
 6. Select "Text".
 7. Set "From" to `0`.
 8. Set "To" to `7FFFFFFFFFFFFFFF`.
@@ -17,7 +17,7 @@ Devil Daggers stores various read-only data in memory so it can easily be read b
 11. Select "Add this address to the list".
 12. Leave the address as is, leave "Type" set to "Byte", leave the "Pointer" checkbox disabled, and click OK.
 13. Close the Memory Viewer window.
-14. Right click the new address in the list and click "Pointer scan for this address".
+14. Right-click the new address in the list and click "Pointer scan for this address".
 15. Enable "Max different offsets per node" and set it to 2.
 16. Set "Maximum offset value" to a large number such as 40000000.
 17. Set "Max level" to 2.

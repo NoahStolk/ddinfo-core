@@ -18,7 +18,7 @@ The loudness specifies the volume for 217 audio assets, 5 of these assets do not
 
 51 audio assets have no loudness specified. When no loudness is specified, the game defaults to loudness 1.0 for these assets.
 
-Oddly enough, the binary format treats this file exactly the same as the .wav assets. Devil Daggers Asset Editor treats this file as a .ini file however.
+The mod file format makes no distinction between the "loudness" audio asset and the other audio assets, so simply treat any audio file named "loudness" as a text file (.ini or .txt) instead of a .wav file.
 
 ### The 'dd' file
 
@@ -26,7 +26,7 @@ This binary consists of models, textures, shaders, and model bindings. The file 
 
 ### The 'core' file
 
-This binary consists of UI-related shaders. It is the smallest binary. The file contains some garbage data in the TOC buffer as well as some more garbage at the end of the file.
+This binary consists of UI-related shaders. It is the smallest binary. The file contains some garbage data in the TOC buffer as well as some more garbage at the end of the file. Modding support for this file does not exist in the game.
 
 ## Format
 
@@ -96,35 +96,32 @@ Fixed-length buffer of 12 bytes. Contains the length of the TOC buffer, as well 
 
 Variable-length buffer that lists all the chunks (assets). Here are the first 3 entries in the TOC buffer for the resource file 'dd':
 
-| Binary (hex) | Data type | Meaning            | Example value |
-|--------------|-----------|--------------------|---------------|
-| 10           | uint8     | Chunk type         | 16            |
-| 00           | uint8     | Empty              | 0             |
-| 6465627567   | string    | Chunk name         | debug         |
-| 00           | uint8     | Null terminator    | \0            |
-| 21340000     | uint32    | Data start offset  | 13345         |
-| 6E070000     | uint32    | Data buffer length | 1902          |
-| 00000000     | ?         | ?                  | ?             |
+| Binary (hex) | Data type             | Meaning            | Example value |
+|--------------|-----------------------|--------------------|---------------|
+| 10           | uint8                 | Chunk type         | 16            |
+| 00           | uint8                 | Empty              | 0             |
+| 646562756700 | Null-terminated ASCII | Chunk name         | debug\0       |
+| 21340000     | uint32                | Data start offset  | 13345         |
+| 6E070000     | uint32                | Data buffer length | 1902          |
+| 00000000     | ?                     | ?                  | ?             |
 
-| Binary (hex) | Data type | Meaning            | Example value |
-|--------------|-----------|--------------------|---------------|
-| 11           | uint8     | Chunk type         | 17            |
-| 00           | uint8     | Empty              | 0             |
-| 6465627567   | string    | Chunk name         | debug         |
-| 00           | uint8     | Null terminator    | \0            |
-| 8F3B0000     | uint32    | Data start offset  | 15247         |
-| 00000000     | uint32    | Data buffer length | 0             |
-| 7BCC0557     | ?         | ?                  | ?             |
+| Binary (hex) | Data type             | Meaning            | Example value |
+|--------------|-----------------------|--------------------|---------------|
+| 11           | uint8                 | Chunk type         | 17            |
+| 00           | uint8                 | Empty              | 0             |
+| 646562756700 | Null-terminated ASCII | Chunk name         | debug\0       |
+| 8F3B0000     | uint32                | Data start offset  | 15247         |
+| 00000000     | uint32                | Data buffer length | 0             |
+| 7BCC0557     | ?                     | ?                  | ?             |
 
-| Binary (hex) | Data type | Meaning            | Example value |
-|--------------|-----------|--------------------|---------------|
-| 10           | uint8     | Chunk type         | 16            |
-| 00           | uint8     | Empty              | 0             |
-| 6465707468   | string    | Chunk name         | depth         |
-| 00           | uint8     | Null terminator    | \0            |
-| 8F3B0000     | uint32    | Data start offset  | 15247         |
-| AB010000     | uint32    | Data buffer length | 427           |
-| 00000000     | ?         | ?                  | ?             |
+| Binary (hex) | Data type             | Meaning            | Example value |
+|--------------|-----------------------|--------------------|---------------|
+| 10           | uint8                 | Chunk type         | 16            |
+| 00           | uint8                 | Empty              | 0             |
+| 646570746800 | Null-terminated ASCII | Chunk name         | depth\0       |
+| 8F3B0000     | uint32                | Data start offset  | 15247         |
+| AB010000     | uint32                | Data buffer length | 427           |
+| 00000000     | ?                     | ?                  | ?             |
 
 The first byte represent the chunk type. Here's the list of chunk types: 
 
@@ -155,34 +152,36 @@ The chunk data for a model binding chunk is simply plain text.
 
 The chunk data for a model chunk consists of 4 parts:
 
-| Name             |               Size in bytes |
-|------------------|-----------------------------|
-| Model header     |                          10 |
-| Model vertices   | 32 x the amount of vertices |
-| Model indices    |   4 x the amount of indices |
-| Unknown/Optional |                    Variable |
+| Name                |               Size in bytes |
+|---------------------|-----------------------------|
+| Model header        |                          10 |
+| Model vertices      | 32 x the amount of vertices |
+| Model indices       |   4 x the amount of indices |
+| Unknown/Optional`*` |                    Variable |
+
+`*` This part seems to have been removed in V3.1 and is not used by any mods. Can be ignored.
 
 ##### Model header
 
 Here are the model headers for 'dagger', 'hand', and 'hand2':
 
-| Binary (hex) | Data type | Meaning      | Example value                                 |
-|--------------|-----------|--------------|-----------------------------------------------|
-| B4000000     | uint32    | Index count  | 180                                           |
-| A4000000     | uint32    | Vertex count | 164                                           |
-| 2000         | ?         | ?            | 32 (this used to be 288 (0x2001) before V3.1) |
+| Binary (hex) | Data type | Meaning      | Example value                                   |
+|--------------|-----------|--------------|-------------------------------------------------|
+| B4000000     | uint32    | Index count  | 180                                             |
+| A4000000     | uint32    | Vertex count | 164                                             |
+| 2000         | ?         | ?            | 32 (this used to be 288 (`0x2001`) before V3.1) |
 
-| Binary (hex) | Data type | Meaning      | Example value                                 |
-|--------------|-----------|--------------|-----------------------------------------------|
-| 78030000     | uint32    | Index count  | 888                                           |
-| B9000000     | uint32    | Vertex count | 185                                           |
-| 2000         | ?         | ?            | 32 (this used to be 288 (0x2001) before V3.1) |
+| Binary (hex) | Data type | Meaning      | Example value                                   |
+|--------------|-----------|--------------|-------------------------------------------------|
+| 78030000     | uint32    | Index count  | 888                                             |
+| B9000000     | uint32    | Vertex count | 185                                             |
+| 2000         | ?         | ?            | 32 (this used to be 288 (`0x2001`) before V3.1) |
 
-| Binary (hex) | Data type | Meaning      | Example value                                 |
-|--------------|-----------|--------------|-----------------------------------------------|
-| A4040000     | uint32    | Index count  | 1188                                          |
-| EE000000     | uint32    | Vertex count | 238                                           |
-| 2000         | ?         | ?            | 32 (this used to be 288 (0x2001) before V3.1) |
+| Binary (hex) | Data type | Meaning      | Example value                                   |
+|--------------|-----------|--------------|-------------------------------------------------|
+| A4040000     | uint32    | Index count  | 1188                                            |
+| EE000000     | uint32    | Vertex count | 238                                             |
+| 2000         | ?         | ?            | 32 (this used to be 288 (`0x2001`) before V3.1) |
 
 ##### Model vertex format
 
@@ -207,7 +206,7 @@ Here is an example:
 
 ##### Model index format
 
-The indices are stored as a list of uint32s.
+The indices are stored as a list of 32-bit integers.
 
 #### Shader chunks
 
@@ -244,7 +243,9 @@ Here are the shader headers for 'debug', 'depth', and 'particle':
 
 The shader name is listed so the format reader understands at which point to start reading the vertex and fragment buffers.
 
-The vertex and fragment shader buffers are stored as plain text (GLSL code).
+The vertex and fragment shader buffers contain the GLSL code, which is plain text (ASCII is known to work, but UTF-8 should also be supported by most OpenGL implementations).
+
+The vertex shader buffer is always listed before the fragment shader buffer. 
 
 #### Texture chunks
 
