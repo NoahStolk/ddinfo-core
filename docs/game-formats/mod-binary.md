@@ -89,7 +89,7 @@ Fixed-length buffer of 12 bytes. Contains the length of the TOC buffer, as well 
 
 | Binary (hex)     | Data type | Meaning                               | Example value |
 |------------------|-----------|---------------------------------------|---------------|
-| 3A68783A72673A01 | Magic     | Format identifier                     | -             |
+| 3A68783A72673A01 | -         | Format identifier                     | -             |
 | 15340000         | uint32    | Table of contents (TOC) buffer length | 13333         |
 
 ### Table of contents (TOC) buffer
