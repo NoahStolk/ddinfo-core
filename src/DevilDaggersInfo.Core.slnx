@@ -1,0 +1,20 @@
+<Solution>
+  <Folder Name="/test/">
+    <Project Path="test/DevilDaggersInfo.Core.Common.Test/DevilDaggersInfo.Core.Common.Test.csproj" />
+    <Project Path="test/DevilDaggersInfo.Core.CriteriaExpression.Test/DevilDaggersInfo.Core.CriteriaExpression.Test.csproj" />
+    <Project Path="test/DevilDaggersInfo.Core.Mod.Test/DevilDaggersInfo.Core.Mod.Test.csproj" />
+    <Project Path="test/DevilDaggersInfo.Core.Replay.Test/DevilDaggersInfo.Core.Replay.Test.csproj" />
+    <Project Path="test/DevilDaggersInfo.Core.Spawnset.Test/DevilDaggersInfo.Core.Spawnset.Test.csproj" />
+    <Project Path="test/DevilDaggersInfo.Core.Wiki.Test/DevilDaggersInfo.Core.Wiki.Test.csproj" />
+  </Folder>
+  <Project Path="DevilDaggersInfo.Core.Asset/DevilDaggersInfo.Core.Asset.csproj" />
+  <Project Path="DevilDaggersInfo.Core.Common/DevilDaggersInfo.Core.Common.csproj" />
+  <Project Path="DevilDaggersInfo.Core.CriteriaExpression/DevilDaggersInfo.Core.CriteriaExpression.csproj" />
+  <Project Path="DevilDaggersInfo.Core.Encryption/DevilDaggersInfo.Core.Encryption.csproj" />
+  <Project Path="DevilDaggersInfo.Core.GameData/DevilDaggersInfo.Core.GameData.csproj" />
+  <Project Path="DevilDaggersInfo.Core.Mod/DevilDaggersInfo.Core.Mod.csproj" />
+  <Project Path="DevilDaggersInfo.Core.Replay/DevilDaggersInfo.Core.Replay.csproj" />
+  <Project Path="DevilDaggersInfo.Core.Spawnset/DevilDaggersInfo.Core.Spawnset.csproj" />
+  <Project Path="DevilDaggersInfo.Core.Wiki/DevilDaggersInfo.Core.Wiki.csproj" />
+  <Project Path="DevilDaggersInfo.Core/DevilDaggersInfo.Core.csproj" />
+</Solution>

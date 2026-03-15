@@ -15,9 +15,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Build
-        run: dotnet build src/DevilDaggersInfo.Core.sln -c Release
+        run: dotnet build src/DevilDaggersInfo.Core.slnx -c Release
       - name: Test
-        run: dotnet test src/DevilDaggersInfo.Core.sln -c Release --no-build
+        run: dotnet test src/DevilDaggersInfo.Core.slnx -c Release --no-build
       - name: Pack
         run: dotnet pack src/DevilDaggersInfo.Core -c Release -o .
       - name: Push
