@@ -6,7 +6,7 @@
     <Copyright>Copyright © Noah Stolk</Copyright>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/NoahStolk/ddinfo-core</RepositoryUrl>
-    <Version>0.14.1</Version>
+    <Version>0.14.2</Version>
   </PropertyGroup>
 
   <PropertyGroup Label="Build properties">
@@ -21,7 +21,7 @@
 
   <!-- TODO: This should be installed transitively from DevilDaggersInfo.Core.Mod. -->
   <ItemGroup>
-    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.6" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.12" />
   </ItemGroup>
 
   <ItemGroup Label="Internal dependencies to pack">
