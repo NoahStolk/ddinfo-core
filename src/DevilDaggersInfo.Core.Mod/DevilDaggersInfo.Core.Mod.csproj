@@ -1,15 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <PackageReference Include="SixLabors.ImageSharp" Version="3.1.12" />
+    <PackageReference Include="SixLabors.ImageSharp"/>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DevilDaggersInfo.Core.Asset\DevilDaggersInfo.Core.Asset.csproj" />
+    <ProjectReference Include="..\DevilDaggersInfo.Core.Asset\DevilDaggersInfo.Core.Asset.csproj"/>
   </ItemGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="$(MSBuildProjectName).Test" />
+    <InternalsVisibleTo Include="$(MSBuildProjectName).Test"/>
   </ItemGroup>
 
 </Project>
