@@ -12,13 +12,13 @@ Everything runs from the repo root; the solution is `src/DevilDaggersInfo.Core.s
 
 ```sh
 dotnet build src/DevilDaggersInfo.Core.slnx -c Release
-dotnet test src/DevilDaggersInfo.Core.slnx -c Release --no-build
+dotnet test --solution src/DevilDaggersInfo.Core.slnx -c Release --no-build
 
 # Single test project
-dotnet test src/test/DevilDaggersInfo.Core.Replay.Test
+dotnet test --project src/test/DevilDaggersInfo.Core.Replay.Test
 
-# Single test / filtered
-dotnet test src/test/DevilDaggersInfo.Core.Spawnset.Test --filter "FullyQualifiedName~GemStateTests"
+# Single test class / filtered (path segments are /assembly/namespace/class/method)
+dotnet test --project src/test/DevilDaggersInfo.Core.Spawnset.Test -- --treenode-filter "/*/*/GemStateTests/*"
 
 # Pack (what CI pushes to nuget.org on push to main)
 dotnet pack src/DevilDaggersInfo.Core -c Release -o .
@@ -26,7 +26,9 @@ dotnet pack src/DevilDaggersInfo.Core -c Release -o .
 
 Toolchain is pinned by `global.json` to SDK 10.0.100 (`rollForward: latestMajor`); the target framework is `net10.0` with `LangVersion` 14.0, both set once in `src/Directory.Build.props` for every project.
 
-Build output goes to `src/artifacts/` and `src/test/artifacts/` (`UseArtifactsOutput`; the test tree gets its own because `src/test/Directory.Build.props` is the nearest props file there). Test results go to `test-results/` (see `src/test/.runsettings`).
+Build output goes to `src/artifacts/` and `src/test/artifacts/` (`UseArtifactsOutput`; the test tree gets its own because `src/test/Directory.Build.props` is the nearest props file there).
+
+Tests run on **TUnit** over **Microsoft.Testing.Platform**, not VSTest — `global.json` selects the runner, so `dotnet test` needs `--solution`/`--project` rather than a bare path, and VSTest options like `--filter` do not apply. Each test project is an `Exe`; the `TUnit` package supplies the entry point, the MTP wiring, and global usings for `TUnit.Core`/`TUnit.Assertions`.
 
 ## Project layout and dependency graph
 
@@ -67,4 +69,5 @@ Each library uses a `_Imports.cs` file for `global using` declarations; add name
 - NuGet versions are managed centrally in `src/Directory.Packages.props` (`ManagePackageVersionsCentrally`); `PackageReference` elements carry no `Version` attribute.
 - Parsing APIs consistently offer both a throwing `Parse`/constructor and a `TryParse` returning `bool` with a `[NotNullWhen(true)]` out parameter. Follow that pair when adding new parsers.
 - Hot paths deliberately avoid LINQ and allocations (see the loop-based lookups in `AssetContainer` and `IGameData`); keep that style in data-lookup code.
+- Test classes are `internal sealed` (TUnit discovers them fine, and `public` would trip CA1515), tests are `[Test]`-marked `async Task` methods, and parameterised cases use `[Arguments(...)]`. Every TUnit assertion returns an awaitable and **must** be awaited — an un-awaited `Assert.That(...)` never runs. Two traps worth knowing: `IsEquivalentTo` ignores element order unless you pass `CollectionOrdering.Matching`, and `IsEqualTo` will not compare across numeric types, so match the expected literal to the actual's type (`IsEqualTo((byte)1)`).
 - The package version lives in `src/DevilDaggersInfo.Core/DevilDaggersInfo.Core.csproj`. `CHANGELOG.md` follows semantic versioning and documents every release, including small changes like sealing a class or a dependency bump — record any user-visible change there under the `[unreleased]` heading. Bumping the version is a separate, deliberate release step: CI packs and pushes to nuget.org on every push to `main`, but with `--skip-duplicate`, so an unchanged version is simply a no-op. Land changes under `[unreleased]`, then rename that heading and bump the version when you actually want to publish.

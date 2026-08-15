@@ -3,44 +3,43 @@
 // namespace DevilDaggersInfo.Core.Replay.Test;
 //
 // // TODO: Move tests to ddinfo-tools.
-// [TestClass]
-// public class EntityTypeTests
+// internal sealed class EntityTypeTests
 // {
-// 	[DataTestMethod]
-// 	[DataRow(-2, null)]
-// 	[DataRow(-1, null)]
-// 	[DataRow(0, EntityType.Zero)]
-// 	[DataRow(1, EntityType.Centipede)]
-// 	[DataRow(2, EntityType.Thorn)]
-// 	[DataRow(3, EntityType.Spider1)]
-// 	[DataRow(4, EntityType.Squid1)]
-// 	[DataRow(5, EntityType.Level4Dagger)]
-// 	[DataRow(150, EntityType.Level4Dagger)]
-// 	[DataRow(163, EntityType.Skull1)]
-// 	[DataRow(173, EntityType.Skull2)]
-// 	[DataRow(743, EntityType.Level4Dagger)]
-// 	public void GetEntityType(int entityId, EntityType? expectedEntityType)
+// 	[Test]
+// 	[Arguments(-2, null)]
+// 	[Arguments(-1, null)]
+// 	[Arguments(0, EntityType.Zero)]
+// 	[Arguments(1, EntityType.Centipede)]
+// 	[Arguments(2, EntityType.Thorn)]
+// 	[Arguments(3, EntityType.Spider1)]
+// 	[Arguments(4, EntityType.Squid1)]
+// 	[Arguments(5, EntityType.Level4Dagger)]
+// 	[Arguments(150, EntityType.Level4Dagger)]
+// 	[Arguments(163, EntityType.Skull1)]
+// 	[Arguments(173, EntityType.Skull2)]
+// 	[Arguments(743, EntityType.Level4Dagger)]
+// 	public async Task GetEntityType(int entityId, EntityType? expectedEntityType)
 // 	{
-// 		ReplayBinary<LocalReplayBinaryHeader> replayBinary = new(File.ReadAllBytes(Path.Combine("Resources", "SquidSpiderCentiThorn.ddreplay")));
-// 		Assert.AreEqual(expectedEntityType, replayBinary.EventsData.GetEntityType(entityId));
+// 		ReplayBinary<LocalReplayBinaryHeader> replayBinary = new(await File.ReadAllBytesAsync(Path.Combine("Resources", "SquidSpiderCentiThorn.ddreplay")));
+// 		await Assert.That(replayBinary.EventsData.GetEntityType(entityId)).IsEqualTo(expectedEntityType);
 // 	}
 //
-// 	[DataTestMethod]
-// 	[DataRow(-2, null)]
-// 	[DataRow(-1, EntityType.Centipede)]
-// 	[DataRow(0, EntityType.Zero)]
-// 	[DataRow(1, EntityType.Centipede)]
-// 	[DataRow(2, EntityType.Thorn)]
-// 	[DataRow(3, EntityType.Spider1)]
-// 	[DataRow(4, EntityType.Squid1)]
-// 	[DataRow(5, EntityType.Level4Dagger)]
-// 	[DataRow(150, EntityType.Level4Dagger)]
-// 	[DataRow(163, EntityType.Skull1)]
-// 	[DataRow(173, EntityType.Skull2)]
-// 	[DataRow(743, EntityType.Level4Dagger)]
-// 	public void GetEntityTypeIncludingNegated(int entityId, EntityType? expectedEntityType)
+// 	[Test]
+// 	[Arguments(-2, null)]
+// 	[Arguments(-1, EntityType.Centipede)]
+// 	[Arguments(0, EntityType.Zero)]
+// 	[Arguments(1, EntityType.Centipede)]
+// 	[Arguments(2, EntityType.Thorn)]
+// 	[Arguments(3, EntityType.Spider1)]
+// 	[Arguments(4, EntityType.Squid1)]
+// 	[Arguments(5, EntityType.Level4Dagger)]
+// 	[Arguments(150, EntityType.Level4Dagger)]
+// 	[Arguments(163, EntityType.Skull1)]
+// 	[Arguments(173, EntityType.Skull2)]
+// 	[Arguments(743, EntityType.Level4Dagger)]
+// 	public async Task GetEntityTypeIncludingNegated(int entityId, EntityType? expectedEntityType)
 // 	{
-// 		ReplayBinary<LocalReplayBinaryHeader> replayBinary = new(File.ReadAllBytes(Path.Combine("Resources", "SquidSpiderCentiThorn.ddreplay")));
-// 		Assert.AreEqual(expectedEntityType, replayBinary.EventsData.GetEntityTypeIncludingNegated(entityId));
+// 		ReplayBinary<LocalReplayBinaryHeader> replayBinary = new(await File.ReadAllBytesAsync(Path.Combine("Resources", "SquidSpiderCentiThorn.ddreplay")));
+// 		await Assert.That(replayBinary.EventsData.GetEntityTypeIncludingNegated(entityId)).IsEqualTo(expectedEntityType);
 // 	}
 // }

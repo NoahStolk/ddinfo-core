@@ -7,30 +7,29 @@ using System.Text;
 
 namespace DevilDaggersInfo.Core.Mod.Test;
 
-[TestClass]
-public class CompilationTests
+internal sealed class CompilationTests
 {
-	[DataTestMethod]
-	[DataRow("iconmaskhoming.png", "iconmaskhoming", "dd-iconmaskhoming")]
-	public void CompileTextureIntoModBinary(string sourcePngFileName, string assetName, string modFileName)
+	[Test]
+	[Arguments("iconmaskhoming.png", "iconmaskhoming", "dd-iconmaskhoming")]
+	public async Task CompileTextureIntoModBinary(string sourcePngFileName, string assetName, string modFileName)
 	{
-		byte[] sourcePngContents = File.ReadAllBytes(Path.Combine("Resources", "Texture", sourcePngFileName));
+		byte[] sourcePngContents = await File.ReadAllBytesAsync(Path.Combine("Resources", "Texture", sourcePngFileName));
 
 		DdModBinaryBuilder builder = new();
 		builder.AddTexture(assetName, sourcePngContents);
 
 		byte[] compiledModBinary = builder.Compile();
 
-		byte[] sourceModBinary = File.ReadAllBytes(Path.Combine("Resources", modFileName));
-		CollectionAssert.AreEqual(compiledModBinary, sourceModBinary);
+		byte[] sourceModBinary = await File.ReadAllBytesAsync(Path.Combine("Resources", modFileName));
+		await Assert.That(sourceModBinary).IsEquivalentTo(compiledModBinary, CollectionOrdering.Matching);
 	}
 
-	[DataTestMethod]
-	[DataRow("depth.vert", "depth.frag", "depth")]
-	public void CompileShaderIntoModBinary(string sourceVertexFileName, string sourceFragmentFileName, string assetName)
+	[Test]
+	[Arguments("depth.vert", "depth.frag", "depth")]
+	public async Task CompileShaderIntoModBinary(string sourceVertexFileName, string sourceFragmentFileName, string assetName)
 	{
-		byte[] sourceVertexContents = File.ReadAllBytes(Path.Combine("Resources", "Shader", sourceVertexFileName));
-		byte[] sourceFragmentContents = File.ReadAllBytes(Path.Combine("Resources", "Shader", sourceFragmentFileName));
+		byte[] sourceVertexContents = await File.ReadAllBytesAsync(Path.Combine("Resources", "Shader", sourceVertexFileName));
+		byte[] sourceFragmentContents = await File.ReadAllBytesAsync(Path.Combine("Resources", "Shader", sourceFragmentFileName));
 
 		DdModBinaryBuilder modBinary = new();
 		modBinary.AddShader(assetName, sourceVertexContents, sourceFragmentContents);
@@ -39,36 +38,36 @@ public class CompilationTests
 
 		ModBinary extractedModBinary = new(compiledModBinary, ModBinaryReadFilter.AllAssets);
 		AssetExtractionResult assetExtractionResult = extractedModBinary.ExtractAsset(assetName, AssetType.Shader);
-		Assert.AreEqual(2, assetExtractionResult.ExtractedAssetFiles.Count);
+		await Assert.That(assetExtractionResult.ExtractedAssetFiles.Count).IsEqualTo(2);
 
 		if (assetExtractionResult.ExtractedAssetFiles.TryGetValue($"{assetName}.vert", out byte[]? vertexContents))
-			CollectionAssert.AreEqual(vertexContents, sourceVertexContents);
+			await Assert.That(sourceVertexContents).IsEquivalentTo(vertexContents, CollectionOrdering.Matching);
 		else
 			Assert.Fail("Vertex shader not found in extracted asset files.");
 
 		if (assetExtractionResult.ExtractedAssetFiles.TryGetValue($"{assetName}.frag", out byte[]? fragmentContents))
-			CollectionAssert.AreEqual(fragmentContents, sourceFragmentContents);
+			await Assert.That(sourceFragmentContents).IsEquivalentTo(fragmentContents, CollectionOrdering.Matching);
 		else
 			Assert.Fail("Fragment shader not found in extracted asset files.");
 	}
 
-	[TestMethod]
+	[Test]
 	public void TestDuplicateAsset()
 	{
 		DdModBinaryBuilder builder = new();
 		builder.AddObjectBinding("test", Array.Empty<byte>());
 		builder.AddMesh("test", Array.Empty<byte>());
-		Assert.ThrowsException<InvalidModCompilationException>(() => builder.AddObjectBinding("test", Array.Empty<byte>()));
+		Assert.ThrowsExactly<InvalidModCompilationException>(() => builder.AddObjectBinding("test", Array.Empty<byte>()));
 	}
 
-	[TestMethod]
-	public void TestBoidMeshCompilation()
+	[Test]
+	public async Task TestBoidMeshCompilation()
 	{
 		ObjParsingContext objParsingContext = new();
-		ParsedObjData obj = objParsingContext.Parse(Encoding.UTF8.GetString(File.ReadAllBytes(Path.Combine("Resources", "Mesh", "boid.obj"))));
-		Assert.AreEqual(396, obj.Positions.Count);
-		Assert.AreEqual(396, obj.TexCoords.Count);
-		Assert.AreEqual(396, obj.Normals.Count);
-		Assert.AreEqual(396, obj.Vertices.Count);
+		ParsedObjData obj = objParsingContext.Parse(Encoding.UTF8.GetString(await File.ReadAllBytesAsync(Path.Combine("Resources", "Mesh", "boid.obj"))));
+		await Assert.That(obj.Positions.Count).IsEqualTo(396);
+		await Assert.That(obj.TexCoords.Count).IsEqualTo(396);
+		await Assert.That(obj.Normals.Count).IsEqualTo(396);
+		await Assert.That(obj.Vertices.Count).IsEqualTo(396);
 	}
 }

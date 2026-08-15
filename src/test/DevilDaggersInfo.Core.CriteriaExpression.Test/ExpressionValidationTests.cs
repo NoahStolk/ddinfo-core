@@ -1,13 +1,11 @@
 using DevilDaggersInfo.Core.CriteriaExpression.Exceptions;
 using DevilDaggersInfo.Core.CriteriaExpression.Parts;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DevilDaggersInfo.Core.CriteriaExpression.Test;
 
-[TestClass]
-public class ExpressionValidationTests
+internal sealed class ExpressionValidationTests
 {
-	[TestMethod]
+	[Test]
 	public void TestValidExpressions()
 	{
 		TestExpression([new ExpressionValue(1), new ExpressionOperator(ExpressionOperatorType.Subtract), new ExpressionTarget(CustomLeaderboardCriteriaType.GemsCollected)]);
@@ -17,18 +15,18 @@ public class ExpressionValidationTests
 		TestExpression([new ExpressionTarget(CustomLeaderboardCriteriaType.GemsCollected)]);
 	}
 
-	[TestMethod]
+	[Test]
 	public void TestInvalidExpressions()
 	{
-		Assert.ThrowsException<CriteriaExpressionParseException>(() => TestExpression([new ExpressionValue(1), new ExpressionOperator(ExpressionOperatorType.Subtract)]));
-		Assert.ThrowsException<CriteriaExpressionParseException>(() => TestExpression([new ExpressionOperator(ExpressionOperatorType.Add), new ExpressionValue(5), new ExpressionValue(10)]));
-		Assert.ThrowsException<CriteriaExpressionParseException>(() => TestExpression([new ExpressionValue(20), new ExpressionValue(20)]));
-		Assert.ThrowsException<CriteriaExpressionParseException>(() => TestExpression([new ExpressionOperator(ExpressionOperatorType.Subtract)]));
-		Assert.ThrowsException<CriteriaExpressionParseException>(() => TestExpression([]));
-		Assert.ThrowsException<CriteriaExpressionParseException>(() => TestExpression([new ExpressionTarget(CustomLeaderboardCriteriaType.Time), new ExpressionOperator(ExpressionOperatorType.Add), new ExpressionValue(5)]));
-		Assert.ThrowsException<CriteriaExpressionParseException>(() => TestExpression([new ExpressionTarget(CustomLeaderboardCriteriaType.Time)]));
-		Assert.ThrowsException<CriteriaExpressionParseException>(() => TestExpression([new ExpressionTarget(CustomLeaderboardCriteriaType.DeathType)]));
-		Assert.ThrowsException<CriteriaExpressionParseException>(() => TestExpression([new ExpressionTarget(CustomLeaderboardCriteriaType.LevelUpTime2)]));
+		Assert.ThrowsExactly<CriteriaExpressionParseException>(() => TestExpression([new ExpressionValue(1), new ExpressionOperator(ExpressionOperatorType.Subtract)]));
+		Assert.ThrowsExactly<CriteriaExpressionParseException>(() => TestExpression([new ExpressionOperator(ExpressionOperatorType.Add), new ExpressionValue(5), new ExpressionValue(10)]));
+		Assert.ThrowsExactly<CriteriaExpressionParseException>(() => TestExpression([new ExpressionValue(20), new ExpressionValue(20)]));
+		Assert.ThrowsExactly<CriteriaExpressionParseException>(() => TestExpression([new ExpressionOperator(ExpressionOperatorType.Subtract)]));
+		Assert.ThrowsExactly<CriteriaExpressionParseException>(() => TestExpression([]));
+		Assert.ThrowsExactly<CriteriaExpressionParseException>(() => TestExpression([new ExpressionTarget(CustomLeaderboardCriteriaType.Time), new ExpressionOperator(ExpressionOperatorType.Add), new ExpressionValue(5)]));
+		Assert.ThrowsExactly<CriteriaExpressionParseException>(() => TestExpression([new ExpressionTarget(CustomLeaderboardCriteriaType.Time)]));
+		Assert.ThrowsExactly<CriteriaExpressionParseException>(() => TestExpression([new ExpressionTarget(CustomLeaderboardCriteriaType.DeathType)]));
+		Assert.ThrowsExactly<CriteriaExpressionParseException>(() => TestExpression([new ExpressionTarget(CustomLeaderboardCriteriaType.LevelUpTime2)]));
 	}
 
 	private static void TestExpression(List<IExpressionPart> parts)

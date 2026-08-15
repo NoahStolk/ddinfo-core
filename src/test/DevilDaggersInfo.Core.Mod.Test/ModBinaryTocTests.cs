@@ -2,61 +2,60 @@ using DevilDaggersInfo.Core.Asset;
 
 namespace DevilDaggersInfo.Core.Mod.Test;
 
-[TestClass]
-public class ModBinaryTocTests
+internal sealed class ModBinaryTocTests
 {
-	[DataTestMethod]
-	[DataRow(ModBinaryType.Audio, "audio-empty")]
-	[DataRow(ModBinaryType.Dd, "dd-mesh")]
-	[DataRow(ModBinaryType.Dd, "dd-mesh-shader-texture")]
-	[DataRow(ModBinaryType.Dd, "dd-shader")]
-	[DataRow(ModBinaryType.Dd, "dd-skull-1-2-same-texture-copied")]
-	[DataRow(ModBinaryType.Dd, "dd-texture")]
-	public void DetermineModBinaryType(ModBinaryType expectedType, string fileName)
+	[Test]
+	[Arguments(ModBinaryType.Audio, "audio-empty")]
+	[Arguments(ModBinaryType.Dd, "dd-mesh")]
+	[Arguments(ModBinaryType.Dd, "dd-mesh-shader-texture")]
+	[Arguments(ModBinaryType.Dd, "dd-shader")]
+	[Arguments(ModBinaryType.Dd, "dd-skull-1-2-same-texture-copied")]
+	[Arguments(ModBinaryType.Dd, "dd-texture")]
+	public async Task DetermineModBinaryType(ModBinaryType expectedType, string fileName)
 	{
 		string filePath = Path.Combine("Resources", fileName);
-		byte[] originalBytes = File.ReadAllBytes(filePath);
+		byte[] originalBytes = await File.ReadAllBytesAsync(filePath);
 
 		ModBinaryType type = ModBinaryToc.DetermineType(originalBytes);
-		Assert.AreEqual(expectedType, type);
+		await Assert.That(type).IsEqualTo(expectedType);
 	}
 
 	// TODO: Test with binary that has both prohibited and non-prohibited assets.
-	[TestMethod]
-	public void TestDisableProhibitedAssets()
+	[Test]
+	public async Task TestDisableProhibitedAssets()
 	{
 		string filePath = Path.Combine("Resources", "dd-cylinder-boid");
-		byte[] originalBytes = File.ReadAllBytes(filePath);
+		byte[] originalBytes = await File.ReadAllBytesAsync(filePath);
 
 		ModBinaryToc modBinaryToc = ModBinaryToc.FromBytes(originalBytes);
-		Assert.AreEqual(1, modBinaryToc.Entries.Count);
-		Assert.AreEqual("boid", modBinaryToc.Entries[0].Name);
-		Assert.AreEqual(AssetType.Mesh, modBinaryToc.Entries[0].AssetType);
-		Assert.IsTrue(AssetContainer.IsProhibited(modBinaryToc.Entries[0].AssetType, modBinaryToc.Entries[0].Name));
+		await Assert.That(modBinaryToc.Entries.Count).IsEqualTo(1);
+		await Assert.That(modBinaryToc.Entries[0].Name).IsEqualTo("boid");
+		await Assert.That(modBinaryToc.Entries[0].AssetType).IsEqualTo(AssetType.Mesh);
+		await Assert.That(AssetContainer.IsProhibited(modBinaryToc.Entries[0].AssetType, modBinaryToc.Entries[0].Name)).IsTrue();
 
 		ModBinaryToc modBinaryTocDisabledProhibitedAssets = ModBinaryToc.DisableProhibitedAssets(modBinaryToc);
-		Assert.AreEqual(1, modBinaryTocDisabledProhibitedAssets.Entries.Count);
-		Assert.AreEqual("BOID", modBinaryTocDisabledProhibitedAssets.Entries[0].Name);
-		Assert.AreEqual(AssetType.Mesh, modBinaryTocDisabledProhibitedAssets.Entries[0].AssetType);
-		Assert.IsFalse(AssetContainer.IsProhibited(modBinaryTocDisabledProhibitedAssets.Entries[0].AssetType, modBinaryTocDisabledProhibitedAssets.Entries[0].Name));
+		await Assert.That(modBinaryTocDisabledProhibitedAssets.Entries.Count).IsEqualTo(1);
+		await Assert.That(modBinaryTocDisabledProhibitedAssets.Entries[0].Name).IsEqualTo("BOID");
+		await Assert.That(modBinaryTocDisabledProhibitedAssets.Entries[0].AssetType).IsEqualTo(AssetType.Mesh);
+		await Assert.That(AssetContainer.IsProhibited(modBinaryTocDisabledProhibitedAssets.Entries[0].AssetType, modBinaryTocDisabledProhibitedAssets.Entries[0].Name)).IsFalse();
 
 		ModBinaryToc modBinaryTocEnabledAssets = ModBinaryToc.EnableAllAssets(modBinaryTocDisabledProhibitedAssets);
-		Assert.AreEqual(1, modBinaryTocEnabledAssets.Entries.Count);
-		Assert.AreEqual("boid", modBinaryTocEnabledAssets.Entries[0].Name);
-		Assert.AreEqual(AssetType.Mesh, modBinaryTocEnabledAssets.Entries[0].AssetType);
-		Assert.IsTrue(AssetContainer.IsProhibited(modBinaryTocEnabledAssets.Entries[0].AssetType, modBinaryTocEnabledAssets.Entries[0].Name));
+		await Assert.That(modBinaryTocEnabledAssets.Entries.Count).IsEqualTo(1);
+		await Assert.That(modBinaryTocEnabledAssets.Entries[0].Name).IsEqualTo("boid");
+		await Assert.That(modBinaryTocEnabledAssets.Entries[0].AssetType).IsEqualTo(AssetType.Mesh);
+		await Assert.That(AssetContainer.IsProhibited(modBinaryTocEnabledAssets.Entries[0].AssetType, modBinaryTocEnabledAssets.Entries[0].Name)).IsTrue();
 	}
 
-	[DataTestMethod]
-	[DataRow(false, "BOID")]
-	[DataRow(false, "BOID2")]
-	[DataRow(false, "Boid2")]
-	[DataRow(false, "boiD2")]
-	[DataRow(true, "boid")]
-	[DataRow(true, "boid2")]
-	public void TestIsEnabled(bool expectedIsEnabled, string name)
+	[Test]
+	[Arguments(false, "BOID")]
+	[Arguments(false, "BOID2")]
+	[Arguments(false, "Boid2")]
+	[Arguments(false, "boiD2")]
+	[Arguments(true, "boid")]
+	[Arguments(true, "boid2")]
+	public async Task TestIsEnabled(bool expectedIsEnabled, string name)
 	{
 		ModBinaryTocEntry entry = new(name, 0, 4, AssetType.Mesh);
-		Assert.AreEqual(expectedIsEnabled, entry.IsEnabled);
+		await Assert.That(entry.IsEnabled).IsEqualTo(expectedIsEnabled);
 	}
 }

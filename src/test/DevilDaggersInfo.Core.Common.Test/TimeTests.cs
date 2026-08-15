@@ -1,15 +1,14 @@
 namespace DevilDaggersInfo.Core.Common.Test;
 
-[TestClass]
-public class TimeTests
+internal sealed class TimeTests
 {
-	[TestMethod]
-	public void TestTime()
+	[Test]
+	public async Task TestTime()
 	{
-		Assert.AreEqual(1000.1998, GameTime.FromGameUnits(10001998).Seconds);
-		Assert.AreEqual(1.0, GameTime.FromSeconds(1.0).Seconds);
-		Assert.AreEqual(1.0, GameTime.FromSeconds(1).Seconds);
-		Assert.AreEqual(1234567890.1234, GameTime.FromGameUnits(12345678901234UL).Seconds);
-		Assert.AreEqual(1234567890.1234, GameTime.FromGameUnits(12345678901234L).Seconds);
+		await Assert.That(GameTime.FromGameUnits(10001998).Seconds).IsEqualTo(1000.1998);
+		await Assert.That(GameTime.FromSeconds(1.0).Seconds).IsEqualTo(1.0);
+		await Assert.That(GameTime.FromSeconds(1).Seconds).IsEqualTo(1.0);
+		await Assert.That(GameTime.FromGameUnits(12345678901234UL).Seconds).IsEqualTo(1234567890.1234);
+		await Assert.That(GameTime.FromGameUnits(12345678901234L).Seconds).IsEqualTo(1234567890.1234);
 	}
 }

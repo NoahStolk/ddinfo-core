@@ -2,8 +2,7 @@ using DevilDaggersInfo.Core.Common.Extensions;
 
 namespace DevilDaggersInfo.Core.Common.Test;
 
-[TestClass]
-public class FlagEnumTests
+internal sealed class FlagEnumTests
 {
 	[Flags]
 	private enum TestFlag
@@ -25,71 +24,71 @@ public class FlagEnumTests
 		N = 8192,
 	}
 
-	[TestMethod]
-	public void TestFlagEnumToList()
+	[Test]
+	public async Task TestFlagEnumToList()
 	{
 		TestFlag tf = TestFlag.A | TestFlag.B | TestFlag.C;
 		List<int> list = tf.AsEnumerable().ToList();
-		Assert.AreEqual(3, list.Count);
-		Assert.IsFalse(list.Contains((int)TestFlag.None));
-		Assert.IsTrue(list.Contains((int)TestFlag.A));
-		Assert.IsTrue(list.Contains((int)TestFlag.B));
-		Assert.IsTrue(list.Contains((int)TestFlag.C));
-		Assert.IsFalse(list.Contains((int)TestFlag.D));
-		Assert.IsFalse(list.Contains((int)TestFlag.E));
-		Assert.IsFalse(list.Contains((int)TestFlag.F));
-		Assert.IsFalse(list.Contains((int)TestFlag.G));
-		Assert.IsFalse(list.Contains((int)TestFlag.H));
-		Assert.IsFalse(list.Contains((int)TestFlag.I));
-		Assert.IsFalse(list.Contains((int)TestFlag.J));
-		Assert.IsFalse(list.Contains((int)TestFlag.K));
-		Assert.IsFalse(list.Contains((int)TestFlag.L));
-		Assert.IsFalse(list.Contains((int)TestFlag.M));
-		Assert.IsFalse(list.Contains((int)TestFlag.N));
+		await Assert.That(list.Count).IsEqualTo(3);
+		await Assert.That(list.Contains((int)TestFlag.None)).IsFalse();
+		await Assert.That(list.Contains((int)TestFlag.A)).IsTrue();
+		await Assert.That(list.Contains((int)TestFlag.B)).IsTrue();
+		await Assert.That(list.Contains((int)TestFlag.C)).IsTrue();
+		await Assert.That(list.Contains((int)TestFlag.D)).IsFalse();
+		await Assert.That(list.Contains((int)TestFlag.E)).IsFalse();
+		await Assert.That(list.Contains((int)TestFlag.F)).IsFalse();
+		await Assert.That(list.Contains((int)TestFlag.G)).IsFalse();
+		await Assert.That(list.Contains((int)TestFlag.H)).IsFalse();
+		await Assert.That(list.Contains((int)TestFlag.I)).IsFalse();
+		await Assert.That(list.Contains((int)TestFlag.J)).IsFalse();
+		await Assert.That(list.Contains((int)TestFlag.K)).IsFalse();
+		await Assert.That(list.Contains((int)TestFlag.L)).IsFalse();
+		await Assert.That(list.Contains((int)TestFlag.M)).IsFalse();
+		await Assert.That(list.Contains((int)TestFlag.N)).IsFalse();
 
 		tf = TestFlag.A | TestFlag.B | TestFlag.K;
 		list = tf.AsEnumerable().ToList();
-		Assert.AreEqual(3, list.Count);
-		Assert.IsFalse(list.Contains((int)TestFlag.None));
-		Assert.IsTrue(list.Contains((int)TestFlag.A));
-		Assert.IsTrue(list.Contains((int)TestFlag.B));
-		Assert.IsFalse(list.Contains((int)TestFlag.C));
-		Assert.IsFalse(list.Contains((int)TestFlag.D));
-		Assert.IsFalse(list.Contains((int)TestFlag.E));
-		Assert.IsFalse(list.Contains((int)TestFlag.F));
-		Assert.IsFalse(list.Contains((int)TestFlag.G));
-		Assert.IsFalse(list.Contains((int)TestFlag.H));
-		Assert.IsFalse(list.Contains((int)TestFlag.I));
-		Assert.IsFalse(list.Contains((int)TestFlag.J));
-		Assert.IsTrue(list.Contains((int)TestFlag.K));
-		Assert.IsFalse(list.Contains((int)TestFlag.L));
-		Assert.IsFalse(list.Contains((int)TestFlag.M));
-		Assert.IsFalse(list.Contains((int)TestFlag.N));
+		await Assert.That(list.Count).IsEqualTo(3);
+		await Assert.That(list.Contains((int)TestFlag.None)).IsFalse();
+		await Assert.That(list.Contains((int)TestFlag.A)).IsTrue();
+		await Assert.That(list.Contains((int)TestFlag.B)).IsTrue();
+		await Assert.That(list.Contains((int)TestFlag.C)).IsFalse();
+		await Assert.That(list.Contains((int)TestFlag.D)).IsFalse();
+		await Assert.That(list.Contains((int)TestFlag.E)).IsFalse();
+		await Assert.That(list.Contains((int)TestFlag.F)).IsFalse();
+		await Assert.That(list.Contains((int)TestFlag.G)).IsFalse();
+		await Assert.That(list.Contains((int)TestFlag.H)).IsFalse();
+		await Assert.That(list.Contains((int)TestFlag.I)).IsFalse();
+		await Assert.That(list.Contains((int)TestFlag.J)).IsFalse();
+		await Assert.That(list.Contains((int)TestFlag.K)).IsTrue();
+		await Assert.That(list.Contains((int)TestFlag.L)).IsFalse();
+		await Assert.That(list.Contains((int)TestFlag.M)).IsFalse();
+		await Assert.That(list.Contains((int)TestFlag.N)).IsFalse();
 
 		tf = TestFlag.D | TestFlag.M | TestFlag.N;
 		list = tf.AsEnumerable().ToList();
-		Assert.AreEqual(3, list.Count);
-		Assert.IsFalse(list.Contains((int)TestFlag.None));
-		Assert.IsFalse(list.Contains((int)TestFlag.A));
-		Assert.IsFalse(list.Contains((int)TestFlag.B));
-		Assert.IsFalse(list.Contains((int)TestFlag.C));
-		Assert.IsTrue(list.Contains((int)TestFlag.D));
-		Assert.IsFalse(list.Contains((int)TestFlag.E));
-		Assert.IsFalse(list.Contains((int)TestFlag.F));
-		Assert.IsFalse(list.Contains((int)TestFlag.G));
-		Assert.IsFalse(list.Contains((int)TestFlag.H));
-		Assert.IsFalse(list.Contains((int)TestFlag.I));
-		Assert.IsFalse(list.Contains((int)TestFlag.J));
-		Assert.IsFalse(list.Contains((int)TestFlag.K));
-		Assert.IsFalse(list.Contains((int)TestFlag.L));
-		Assert.IsTrue(list.Contains((int)TestFlag.M));
-		Assert.IsTrue(list.Contains((int)TestFlag.N));
+		await Assert.That(list.Count).IsEqualTo(3);
+		await Assert.That(list.Contains((int)TestFlag.None)).IsFalse();
+		await Assert.That(list.Contains((int)TestFlag.A)).IsFalse();
+		await Assert.That(list.Contains((int)TestFlag.B)).IsFalse();
+		await Assert.That(list.Contains((int)TestFlag.C)).IsFalse();
+		await Assert.That(list.Contains((int)TestFlag.D)).IsTrue();
+		await Assert.That(list.Contains((int)TestFlag.E)).IsFalse();
+		await Assert.That(list.Contains((int)TestFlag.F)).IsFalse();
+		await Assert.That(list.Contains((int)TestFlag.G)).IsFalse();
+		await Assert.That(list.Contains((int)TestFlag.H)).IsFalse();
+		await Assert.That(list.Contains((int)TestFlag.I)).IsFalse();
+		await Assert.That(list.Contains((int)TestFlag.J)).IsFalse();
+		await Assert.That(list.Contains((int)TestFlag.K)).IsFalse();
+		await Assert.That(list.Contains((int)TestFlag.L)).IsFalse();
+		await Assert.That(list.Contains((int)TestFlag.M)).IsTrue();
+		await Assert.That(list.Contains((int)TestFlag.N)).IsTrue();
 	}
 
-	[TestMethod]
-	public void TestListToFlagEnum()
+	[Test]
+	public async Task TestListToFlagEnum()
 	{
 		List<int> list = [1, 2, 4, 8];
-		Assert.AreEqual(TestFlag.A | TestFlag.B | TestFlag.C | TestFlag.D, list.ToFlagEnum<TestFlag>());
+		await Assert.That(list.ToFlagEnum<TestFlag>()).IsEqualTo(TestFlag.A | TestFlag.B | TestFlag.C | TestFlag.D);
 	}
 }

@@ -3,33 +3,32 @@ using DevilDaggersInfo.Core.Mod.Builders;
 
 namespace DevilDaggersInfo.Core.Mod.Test;
 
-[TestClass]
-public class ExtractionTests
+internal sealed class ExtractionTests
 {
-	[DataTestMethod]
-	[DataRow(ModBinaryType.Dd, "dd-texture", "pedeblackbody", "pedeblackbody.png")]
-	[DataRow(ModBinaryType.Dd, "dd-iconmaskhoming", "iconmaskhoming", "iconmaskhoming.png")]
-	public void ExtractTextureAndCompareToSourcePng(ModBinaryType expectedBinaryType, string modFileName, string assetName, string sourcePngFileName)
+	[Test]
+	[Arguments(ModBinaryType.Dd, "dd-texture", "pedeblackbody", "pedeblackbody.png")]
+	[Arguments(ModBinaryType.Dd, "dd-iconmaskhoming", "iconmaskhoming", "iconmaskhoming.png")]
+	public async Task ExtractTextureAndCompareToSourcePng(ModBinaryType expectedBinaryType, string modFileName, string assetName, string sourcePngFileName)
 	{
 		string filePath = Path.Combine("Resources", modFileName);
-		ModBinary modBinary = new(File.ReadAllBytes(filePath), ModBinaryReadFilter.AllAssets);
-		Assert.AreEqual(expectedBinaryType, modBinary.Toc.Type);
-		Assert.AreEqual(expectedBinaryType, BinaryFileNameUtils.GetBinaryTypeBasedOnFileName(modFileName));
+		ModBinary modBinary = new(await File.ReadAllBytesAsync(filePath), ModBinaryReadFilter.AllAssets);
+		await Assert.That(modBinary.Toc.Type).IsEqualTo(expectedBinaryType);
+		await Assert.That(BinaryFileNameUtils.GetBinaryTypeBasedOnFileName(modFileName)).IsEqualTo(expectedBinaryType);
 
 		KeyValuePair<AssetKey, AssetData> asset = modBinary.AssetMap.First(kvp => kvp.Key.AssetName == assetName);
 
-		byte[] sourcePngContents = File.ReadAllBytes(Path.Combine("Resources", "Texture", sourcePngFileName));
+		byte[] sourcePngContents = await File.ReadAllBytesAsync(Path.Combine("Resources", "Texture", sourcePngFileName));
 
 		AssetExtractionResult extractedPngContents = modBinary.ExtractAsset(asset.Key);
-		Assert.AreEqual(1, extractedPngContents.ExtractedAssetFiles.Count);
+		await Assert.That(extractedPngContents.ExtractedAssetFiles.Count).IsEqualTo(1);
 		if (extractedPngContents.ExtractedAssetFiles.TryGetValue($"{assetName}.png", out byte[]? pngContents))
-			CollectionAssert.AreEqual(pngContents, sourcePngContents);
+			await Assert.That(sourcePngContents).IsEquivalentTo(pngContents, CollectionOrdering.Matching);
 		else
 			Assert.Fail($"Asset name '{assetName}' not found in extracted asset files.");
 	}
 
-	[TestMethod]
-	public void ExtractAudioTypes()
+	[Test]
+	public async Task ExtractAudioTypes()
 	{
 		AudioModBinaryBuilder audioBuilder = new();
 		audioBuilder.AddAudio("sample", "RIFF"u8.ToArray(), null);
@@ -38,18 +37,18 @@ public class ExtractionTests
 		ModBinary audioModBinary = new(audioBuilder.Compile(), ModBinaryReadFilter.AllAssets);
 
 		AssetExtractionResult sample = audioModBinary.ExtractAsset("sample", AssetType.Audio);
-		Assert.AreEqual(1, sample.ExtractedAssetFiles.Count);
-		CollectionAssert.AreEqual("RIFF"u8.ToArray(), sample.ExtractedAssetFiles["sample.wav"]);
+		await Assert.That(sample.ExtractedAssetFiles.Count).IsEqualTo(1);
+		await Assert.That(sample.ExtractedAssetFiles["sample.wav"]).IsEquivalentTo("RIFF"u8.ToArray(), CollectionOrdering.Matching);
 
 		AssetExtractionResult loudness = audioModBinary.ExtractAsset("loudness", AssetType.Audio);
-		Assert.AreEqual(1, loudness.ExtractedAssetFiles.Count);
-		CollectionAssert.AreEqual("sample = 10.0"u8.ToArray(), loudness.ExtractedAssetFiles["loudness.ini"]);
+		await Assert.That(loudness.ExtractedAssetFiles.Count).IsEqualTo(1);
+		await Assert.That(loudness.ExtractedAssetFiles["loudness.ini"]).IsEquivalentTo("sample = 10.0"u8.ToArray(), CollectionOrdering.Matching);
 	}
 
-	[TestMethod]
-	public void ExtractDdTypes()
+	[Test]
+	public async Task ExtractDdTypes()
 	{
-		byte[] pngContents = File.ReadAllBytes(Path.Combine("Resources", "Texture", "pedeblackbody.png"));
+		byte[] pngContents = await File.ReadAllBytesAsync(Path.Combine("Resources", "Texture", "pedeblackbody.png"));
 
 		DdModBinaryBuilder ddBuilder = new();
 		ddBuilder.AddMesh("mesh", "v 0 0 0"u8.ToArray());
@@ -60,24 +59,24 @@ public class ExtractionTests
 		ModBinary ddModBinary = new(ddBuilder.Compile(), ModBinaryReadFilter.AllAssets);
 
 		AssetExtractionResult mesh = ddModBinary.ExtractAsset("mesh", AssetType.Mesh);
-		Assert.AreEqual(1, mesh.ExtractedAssetFiles.Count);
-		Assert.IsTrue(mesh.ExtractedAssetFiles.ContainsKey("mesh.obj"));
+		await Assert.That(mesh.ExtractedAssetFiles.Count).IsEqualTo(1);
+		await Assert.That(mesh.ExtractedAssetFiles.ContainsKey("mesh.obj")).IsTrue();
 
 		AssetExtractionResult objectBinding = ddModBinary.ExtractAsset("object_binding", AssetType.ObjectBinding);
-		Assert.AreEqual(1, objectBinding.ExtractedAssetFiles.Count);
-		Assert.IsTrue(objectBinding.ExtractedAssetFiles.ContainsKey("object_binding.txt"));
-		CollectionAssert.AreEqual("mesh = diffuse"u8.ToArray(), objectBinding.ExtractedAssetFiles["object_binding.txt"]);
+		await Assert.That(objectBinding.ExtractedAssetFiles.Count).IsEqualTo(1);
+		await Assert.That(objectBinding.ExtractedAssetFiles.ContainsKey("object_binding.txt")).IsTrue();
+		await Assert.That(objectBinding.ExtractedAssetFiles["object_binding.txt"]).IsEquivalentTo("mesh = diffuse"u8.ToArray(), CollectionOrdering.Matching);
 
 		AssetExtractionResult shader = ddModBinary.ExtractAsset("shader", AssetType.Shader);
-		Assert.AreEqual(2, shader.ExtractedAssetFiles.Count);
-		Assert.IsTrue(shader.ExtractedAssetFiles.ContainsKey("shader.vert"));
-		Assert.IsTrue(shader.ExtractedAssetFiles.ContainsKey("shader.frag"));
-		CollectionAssert.AreEqual("vertex"u8.ToArray(), shader.ExtractedAssetFiles["shader.vert"]);
-		CollectionAssert.AreEqual("fragment"u8.ToArray(), shader.ExtractedAssetFiles["shader.frag"]);
+		await Assert.That(shader.ExtractedAssetFiles.Count).IsEqualTo(2);
+		await Assert.That(shader.ExtractedAssetFiles.ContainsKey("shader.vert")).IsTrue();
+		await Assert.That(shader.ExtractedAssetFiles.ContainsKey("shader.frag")).IsTrue();
+		await Assert.That(shader.ExtractedAssetFiles["shader.vert"]).IsEquivalentTo("vertex"u8.ToArray(), CollectionOrdering.Matching);
+		await Assert.That(shader.ExtractedAssetFiles["shader.frag"]).IsEquivalentTo("fragment"u8.ToArray(), CollectionOrdering.Matching);
 
 		AssetExtractionResult texture = ddModBinary.ExtractAsset("texture", AssetType.Texture);
-		Assert.AreEqual(1, texture.ExtractedAssetFiles.Count);
-		Assert.IsTrue(texture.ExtractedAssetFiles.ContainsKey("texture.png"));
-		CollectionAssert.AreEqual(pngContents, texture.ExtractedAssetFiles["texture.png"]);
+		await Assert.That(texture.ExtractedAssetFiles.Count).IsEqualTo(1);
+		await Assert.That(texture.ExtractedAssetFiles.ContainsKey("texture.png")).IsTrue();
+		await Assert.That(texture.ExtractedAssetFiles["texture.png"]).IsEquivalentTo(pngContents, CollectionOrdering.Matching);
 	}
 }

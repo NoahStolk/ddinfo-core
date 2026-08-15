@@ -5,20 +5,19 @@ using System.Diagnostics;
 
 namespace DevilDaggersInfo.Core.Mod.Test;
 
-[TestClass]
-public class ModBinaryTests
+internal sealed class ModBinaryTests
 {
-	[DataTestMethod]
-	[DataRow(ModBinaryType.Audio, "audio-empty")]
-	[DataRow(ModBinaryType.Dd, "dd-mesh")]
-	[DataRow(ModBinaryType.Dd, "dd-mesh-shader-texture")]
-	[DataRow(ModBinaryType.Dd, "dd-shader")]
-	[DataRow(ModBinaryType.Dd, "dd-skull-1-2-same-texture-copied", true)] // Cannot compare exact texture bytes, because the resizing algorithm is different. TODO: Compile using the same code instead of legacy DDAE.
-	[DataRow(ModBinaryType.Dd, "dd-texture")] // This works because the textures are 1x1.
-	public void CompareBinaryOutput(ModBinaryType type, string fileName, bool ignoreExactAssetData = false)
+	[Test]
+	[Arguments(ModBinaryType.Audio, "audio-empty")]
+	[Arguments(ModBinaryType.Dd, "dd-mesh")]
+	[Arguments(ModBinaryType.Dd, "dd-mesh-shader-texture")]
+	[Arguments(ModBinaryType.Dd, "dd-shader")]
+	[Arguments(ModBinaryType.Dd, "dd-skull-1-2-same-texture-copied", true)] // Cannot compare exact texture bytes, because the resizing algorithm is different. TODO: Compile using the same code instead of legacy DDAE.
+	[Arguments(ModBinaryType.Dd, "dd-texture")] // This works because the textures are 1x1.
+	public async Task CompareBinaryOutput(ModBinaryType type, string fileName, bool ignoreExactAssetData = false)
 	{
 		string filePath = Path.Combine("Resources", fileName);
-		byte[] originalBytes = File.ReadAllBytes(filePath);
+		byte[] originalBytes = await File.ReadAllBytesAsync(filePath);
 
 		ModBinary modBinary = new(originalBytes, ModBinaryReadFilter.AllAssets);
 		AudioModBinaryBuilder audioBuilder = new();
@@ -45,66 +44,66 @@ public class ModBinaryTests
 			_ => throw new UnreachableException(),
 		};
 
-		CollectionAssert.AreEqual(modBinary.Toc.Entries.ToList(), builder.TocEntries.ToList());
+		await Assert.That(builder.TocEntries.ToList()).IsEquivalentTo(modBinary.Toc.Entries.ToList(), CollectionOrdering.Matching);
 
-		Assert.AreEqual(modBinary.AssetMap.Count, builder.AssetMap.Count);
+		await Assert.That(builder.AssetMap.Count).IsEqualTo(modBinary.AssetMap.Count);
 
 		if (ignoreExactAssetData)
 			return;
 
 		foreach (KeyValuePair<AssetKey, AssetData> asset in modBinary.AssetMap)
-			CollectionAssert.AreEqual(asset.Value.Buffer, builder.AssetMap[asset.Key].Buffer);
+			await Assert.That(builder.AssetMap[asset.Key].Buffer).IsEquivalentTo(asset.Value.Buffer, CollectionOrdering.Matching);
 	}
 
-	[TestMethod]
-	public void ValidateTocSingleAsset()
+	[Test]
+	public async Task ValidateTocSingleAsset()
 	{
 		const string fileName = "dd-single-asset";
 		string filePath = Path.Combine("Resources", fileName);
-		byte[] originalBytes = File.ReadAllBytes(filePath);
+		byte[] originalBytes = await File.ReadAllBytesAsync(filePath);
 		ModBinary modBinary = new(originalBytes, ModBinaryReadFilter.NoAssets);
 
-		Assert.AreEqual(1, modBinary.Toc.Entries.Count);
+		await Assert.That(modBinary.Toc.Entries.Count).IsEqualTo(1);
 		ModBinaryTocEntry tocEntry = modBinary.Toc.Entries[0];
-		Assert.AreEqual("dagger6", tocEntry.Name);
-		Assert.AreEqual(AssetType.Texture, tocEntry.AssetType);
-		Assert.AreEqual(21855, tocEntry.Size);
+		await Assert.That(tocEntry.Name).IsEqualTo("dagger6");
+		await Assert.That(tocEntry.AssetType).IsEqualTo(AssetType.Texture);
+		await Assert.That(tocEntry.Size).IsEqualTo(21855);
 	}
 
-	[TestMethod]
-	public void ValidateTocMultipleAssets()
+	[Test]
+	public async Task ValidateTocMultipleAssets()
 	{
 		const string fileName = "dd-nohand";
 		string filePath = Path.Combine("Resources", fileName);
-		byte[] originalBytes = File.ReadAllBytes(filePath);
+		byte[] originalBytes = await File.ReadAllBytesAsync(filePath);
 		ModBinary modBinary = new(originalBytes, ModBinaryReadFilter.NoAssets);
 
-		Assert.AreEqual(8, modBinary.Toc.Entries.Count);
+		await Assert.That(modBinary.Toc.Entries.Count).IsEqualTo(8);
 
 		string[] names = ["hand", "hand2", "hand2left", "hand3", "hand3left", "hand4", "hand4left", "handleft"];
 		int[] sizes = [166, 166, 198, 166, 198, 262, 390, 198];
 		for (int i = 0; i < 8; i++)
 		{
 			ModBinaryTocEntry tocEntry = modBinary.Toc.Entries[i];
-			Assert.AreEqual(names[i], tocEntry.Name);
-			Assert.AreEqual(AssetType.Mesh, tocEntry.AssetType);
-			Assert.AreEqual(sizes[i], tocEntry.Size);
+			await Assert.That(tocEntry.Name).IsEqualTo(names[i]);
+			await Assert.That(tocEntry.AssetType).IsEqualTo(AssetType.Mesh);
+			await Assert.That(tocEntry.Size).IsEqualTo(sizes[i]);
 		}
 	}
 
-	[TestMethod]
-	public void ValidateAssetTypes()
+	[Test]
+	public async Task ValidateAssetTypes()
 	{
-		Assert.IsTrue(ModBinaryType.Audio.IsAssetTypeValid(AssetType.Audio));
-		Assert.IsFalse(ModBinaryType.Audio.IsAssetTypeValid(AssetType.Mesh));
-		Assert.IsFalse(ModBinaryType.Audio.IsAssetTypeValid(AssetType.ObjectBinding));
-		Assert.IsFalse(ModBinaryType.Audio.IsAssetTypeValid(AssetType.Shader));
-		Assert.IsFalse(ModBinaryType.Audio.IsAssetTypeValid(AssetType.Texture));
+		await Assert.That(ModBinaryType.Audio.IsAssetTypeValid(AssetType.Audio)).IsTrue();
+		await Assert.That(ModBinaryType.Audio.IsAssetTypeValid(AssetType.Mesh)).IsFalse();
+		await Assert.That(ModBinaryType.Audio.IsAssetTypeValid(AssetType.ObjectBinding)).IsFalse();
+		await Assert.That(ModBinaryType.Audio.IsAssetTypeValid(AssetType.Shader)).IsFalse();
+		await Assert.That(ModBinaryType.Audio.IsAssetTypeValid(AssetType.Texture)).IsFalse();
 
-		Assert.IsFalse(ModBinaryType.Dd.IsAssetTypeValid(AssetType.Audio));
-		Assert.IsTrue(ModBinaryType.Dd.IsAssetTypeValid(AssetType.Mesh));
-		Assert.IsTrue(ModBinaryType.Dd.IsAssetTypeValid(AssetType.ObjectBinding));
-		Assert.IsTrue(ModBinaryType.Dd.IsAssetTypeValid(AssetType.Shader));
-		Assert.IsTrue(ModBinaryType.Dd.IsAssetTypeValid(AssetType.Texture));
+		await Assert.That(ModBinaryType.Dd.IsAssetTypeValid(AssetType.Audio)).IsFalse();
+		await Assert.That(ModBinaryType.Dd.IsAssetTypeValid(AssetType.Mesh)).IsTrue();
+		await Assert.That(ModBinaryType.Dd.IsAssetTypeValid(AssetType.ObjectBinding)).IsTrue();
+		await Assert.That(ModBinaryType.Dd.IsAssetTypeValid(AssetType.Shader)).IsTrue();
+		await Assert.That(ModBinaryType.Dd.IsAssetTypeValid(AssetType.Texture)).IsTrue();
 	}
 }

@@ -1,33 +1,32 @@
 namespace DevilDaggersInfo.Core.Spawnset.Test;
 
-[TestClass]
-public class SpawnsetBinaryTests
+internal sealed class SpawnsetBinaryTests
 {
-	[DataTestMethod]
-	[DataRow("V0")]
-	[DataRow("V1")]
-	[DataRow("V2")]
-	[DataRow("V3")]
-	[DataRow("V3_229")]
-	[DataRow("V3_451")]
-	[DataRow("Empty")]
-	[DataRow("EmptySpawn")]
-	[DataRow("NoEndLoop")]
-	[DataRow("TimeAttack")]
-	[DataRow("Scanner")]
-	public void CompareBinaryOutput(string fileName)
+	[Test]
+	[Arguments("V0")]
+	[Arguments("V1")]
+	[Arguments("V2")]
+	[Arguments("V3")]
+	[Arguments("V3_229")]
+	[Arguments("V3_451")]
+	[Arguments("Empty")]
+	[Arguments("EmptySpawn")]
+	[Arguments("NoEndLoop")]
+	[Arguments("TimeAttack")]
+	[Arguments("Scanner")]
+	public async Task CompareBinaryOutput(string fileName)
 	{
-		byte[] originalBytes = File.ReadAllBytes(Path.Combine("Resources", fileName));
+		byte[] originalBytes = await File.ReadAllBytesAsync(Path.Combine("Resources", fileName));
 		SpawnsetBinary spawnset = SpawnsetBinary.Parse(originalBytes);
 		byte[] bytes = spawnset.ToBytes();
 
-		CollectionAssert.AreEqual(originalBytes, bytes);
+		await Assert.That(bytes).IsEquivalentTo(originalBytes, CollectionOrdering.Matching);
 	}
 
-	[TestMethod]
-	public void TestEffectivePlayerSettings()
+	[Test]
+	public async Task TestEffectivePlayerSettings()
 	{
-		byte[] originalBytes = File.ReadAllBytes(Path.Combine("Resources", "V3"));
+		byte[] originalBytes = await File.ReadAllBytesAsync(Path.Combine("Resources", "V3"));
 		SpawnsetBinary spawnset = SpawnsetBinary.Parse(originalBytes) with
 		{
 			HandLevel = HandLevel.Level2,
@@ -36,24 +35,24 @@ public class SpawnsetBinaryTests
 
 		// The effective player setting should be default when using the default spawnset (or any spawnset with spawn version 4).
 		EffectivePlayerSettings settings = spawnset.GetEffectivePlayerSettings();
-		Assert.AreEqual(HandLevel.Level1, settings.HandLevel);
-		Assert.AreEqual(0, settings.GemsOrHoming);
-		Assert.AreEqual(HandLevel.Level1, settings.HandMesh);
+		await Assert.That(settings.HandLevel).IsEqualTo(HandLevel.Level1);
+		await Assert.That(settings.GemsOrHoming).IsEqualTo(0);
+		await Assert.That(settings.HandMesh).IsEqualTo(HandLevel.Level1);
 
 		spawnset = spawnset with
 		{
 			SpawnVersion = 5, // Specified player settings should be effective from version 5.
 		};
 		settings = spawnset.GetEffectivePlayerSettings();
-		Assert.AreEqual(HandLevel.Level2, settings.HandLevel);
-		Assert.AreEqual(50, settings.GemsOrHoming);
-		Assert.AreEqual(HandLevel.Level2, settings.HandMesh);
+		await Assert.That(settings.HandLevel).IsEqualTo(HandLevel.Level2);
+		await Assert.That(settings.GemsOrHoming).IsEqualTo(50);
+		await Assert.That(settings.HandMesh).IsEqualTo(HandLevel.Level2);
 	}
 
-	[TestMethod]
-	public void TestEffectiveTimerStart()
+	[Test]
+	public async Task TestEffectiveTimerStart()
 	{
-		byte[] originalBytes = File.ReadAllBytes(Path.Combine("Resources", "V3"));
+		byte[] originalBytes = await File.ReadAllBytesAsync(Path.Combine("Resources", "V3"));
 		SpawnsetBinary spawnset = SpawnsetBinary.Parse(originalBytes) with
 		{
 			TimerStart = 10,
@@ -61,13 +60,13 @@ public class SpawnsetBinaryTests
 
 		// The effective timer start should be default when using the default spawnset (or any spawnset with spawn version 5 or lower).
 		float timerStart = spawnset.GetEffectiveTimerStart();
-		Assert.AreEqual(0, timerStart);
+		await Assert.That(timerStart).IsEqualTo(0);
 
 		spawnset = spawnset with
 		{
 			SpawnVersion = 6, // Specified timer start should be effective from version 6.
 		};
 		timerStart = spawnset.GetEffectiveTimerStart();
-		Assert.AreEqual(10, timerStart);
+		await Assert.That(timerStart).IsEqualTo(10);
 	}
 }

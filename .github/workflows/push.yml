@@ -16,7 +16,7 @@ jobs:
       - name: Build
         run: dotnet build src/DevilDaggersInfo.Core.slnx -c Release
       - name: Test
-        run: dotnet test src/DevilDaggersInfo.Core.slnx -c Release --no-build
+        run: dotnet test --solution src/DevilDaggersInfo.Core.slnx -c Release --no-build
       - name: Pack
         run: dotnet pack src/DevilDaggersInfo.Core -c Release -o .
       - name: Push

@@ -1,13 +1,11 @@
 using DevilDaggersInfo.Core.CriteriaExpression.Parts;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DevilDaggersInfo.Core.CriteriaExpression.Test;
 
-[TestClass]
-public class ExpressionEvaluationTests
+internal sealed class ExpressionEvaluationTests
 {
-	[TestMethod]
-	public void TestValidExpressions()
+	[Test]
+	public async Task TestValidExpressions()
 	{
 		TargetCollection tc = new()
 		{
@@ -38,17 +36,17 @@ public class ExpressionEvaluationTests
 			ThornKills = 8,
 		};
 
-		TestExpression(200, tc, [new ExpressionValue(100), new ExpressionOperator(ExpressionOperatorType.Add), new ExpressionTarget(CustomLeaderboardCriteriaType.GemsCollected)]);
-		TestExpression(55, tc, [new ExpressionTarget(CustomLeaderboardCriteriaType.GemsCollected), new ExpressionOperator(ExpressionOperatorType.Subtract), new ExpressionTarget(CustomLeaderboardCriteriaType.HomingStored), new ExpressionOperator(ExpressionOperatorType.Subtract), new ExpressionTarget(CustomLeaderboardCriteriaType.GemsEaten)]);
-		TestExpression(15, tc, [new ExpressionValue(10), new ExpressionOperator(ExpressionOperatorType.Add), new ExpressionValue(5)]);
-		TestExpression(20, tc, [new ExpressionValue(20)]);
+		await TestExpression(200, tc, [new ExpressionValue(100), new ExpressionOperator(ExpressionOperatorType.Add), new ExpressionTarget(CustomLeaderboardCriteriaType.GemsCollected)]);
+		await TestExpression(55, tc, [new ExpressionTarget(CustomLeaderboardCriteriaType.GemsCollected), new ExpressionOperator(ExpressionOperatorType.Subtract), new ExpressionTarget(CustomLeaderboardCriteriaType.HomingStored), new ExpressionOperator(ExpressionOperatorType.Subtract), new ExpressionTarget(CustomLeaderboardCriteriaType.GemsEaten)]);
+		await TestExpression(15, tc, [new ExpressionValue(10), new ExpressionOperator(ExpressionOperatorType.Add), new ExpressionValue(5)]);
+		await TestExpression(20, tc, [new ExpressionValue(20)]);
 	}
 
-	private static void TestExpression(int expectedResult, TargetCollection tc, List<IExpressionPart> parts)
+	private static async Task TestExpression(int expectedResult, TargetCollection tc, List<IExpressionPart> parts)
 	{
 		Expression expression = new(parts);
 		expression.Validate();
 
-		Assert.AreEqual(expectedResult, expression.Evaluate(tc));
+		await Assert.That(expression.Evaluate(tc)).IsEqualTo(expectedResult);
 	}
 }

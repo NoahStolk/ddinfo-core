@@ -1,26 +1,24 @@
 using DevilDaggersInfo.Core.CriteriaExpression.Parts;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DevilDaggersInfo.Core.CriteriaExpression.Test;
 
-[TestClass]
-public class ExpressionStringTests
+internal sealed class ExpressionStringTests
 {
-	[TestMethod]
-	public void TestStringConversions()
+	[Test]
+	public async Task TestStringConversions()
 	{
-		TestExpression("1 - Gems collected", [new ExpressionValue(1), new ExpressionOperator(ExpressionOperatorType.Subtract), new ExpressionTarget(CustomLeaderboardCriteriaType.GemsCollected)]);
-		TestExpression("180 + Gems collected - Daggers fired", [new ExpressionValue(180), new ExpressionOperator(ExpressionOperatorType.Add), new ExpressionTarget(CustomLeaderboardCriteriaType.GemsCollected), new ExpressionOperator(ExpressionOperatorType.Subtract), new ExpressionTarget(CustomLeaderboardCriteriaType.DaggersFired)]);
-		TestExpression("10 + 5", [new ExpressionValue(10), new ExpressionOperator(ExpressionOperatorType.Add), new ExpressionValue(5)]);
-		TestExpression("20", [new ExpressionValue(20)]);
+		await TestExpression("1 - Gems collected", [new ExpressionValue(1), new ExpressionOperator(ExpressionOperatorType.Subtract), new ExpressionTarget(CustomLeaderboardCriteriaType.GemsCollected)]);
+		await TestExpression("180 + Gems collected - Daggers fired", [new ExpressionValue(180), new ExpressionOperator(ExpressionOperatorType.Add), new ExpressionTarget(CustomLeaderboardCriteriaType.GemsCollected), new ExpressionOperator(ExpressionOperatorType.Subtract), new ExpressionTarget(CustomLeaderboardCriteriaType.DaggersFired)]);
+		await TestExpression("10 + 5", [new ExpressionValue(10), new ExpressionOperator(ExpressionOperatorType.Add), new ExpressionValue(5)]);
+		await TestExpression("20", [new ExpressionValue(20)]);
 
-		static void TestExpression(string expectedString, List<IExpressionPart> parts)
+		static async Task TestExpression(string expectedString, List<IExpressionPart> parts)
 		{
 			Expression expression = new(parts);
 			expression.Validate();
 
-			Assert.AreEqual(expectedString, expression.ToString());
-			Assert.IsTrue(ContainsSameParts(expression, Expression.Parse(expectedString)));
+			await Assert.That(expression.ToString()).IsEqualTo(expectedString);
+			await Assert.That(ContainsSameParts(expression, Expression.Parse(expectedString))).IsTrue();
 		}
 
 		static bool ContainsSameParts(Expression a, Expression b)

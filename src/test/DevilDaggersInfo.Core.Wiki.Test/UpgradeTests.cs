@@ -1,124 +1,123 @@
 namespace DevilDaggersInfo.Core.Wiki.Test;
 
-[TestClass]
-public class UpgradeTests
+internal sealed class UpgradeTests
 {
-	[TestMethod]
-	public void TestGetUpgrades()
+	[Test]
+	public async Task TestGetUpgrades()
 	{
-		Assert.AreEqual(3, Upgrades.GetUpgrades(GameVersion.V1_0).Count);
-		Assert.AreEqual(4, Upgrades.GetUpgrades(GameVersion.V2_0).Count);
-		Assert.AreEqual(4, Upgrades.GetUpgrades(GameVersion.V3_0).Count);
-		Assert.AreEqual(4, Upgrades.GetUpgrades(GameVersion.V3_1).Count);
-		Assert.AreEqual(4, Upgrades.GetUpgrades(GameVersion.V3_2).Count);
+		await Assert.That(Upgrades.GetUpgrades(GameVersion.V1_0).Count).IsEqualTo(3);
+		await Assert.That(Upgrades.GetUpgrades(GameVersion.V2_0).Count).IsEqualTo(4);
+		await Assert.That(Upgrades.GetUpgrades(GameVersion.V3_0).Count).IsEqualTo(4);
+		await Assert.That(Upgrades.GetUpgrades(GameVersion.V3_1).Count).IsEqualTo(4);
+		await Assert.That(Upgrades.GetUpgrades(GameVersion.V3_2).Count).IsEqualTo(4);
 	}
 
-	[TestMethod]
-	public void TestLevels()
+	[Test]
+	public async Task TestLevels()
 	{
-		Assert.AreEqual(1, UpgradesV1_0.Level1.Level);
-		Assert.AreEqual(2, UpgradesV1_0.Level2.Level);
-		Assert.AreEqual(3, UpgradesV1_0.Level3.Level);
+		await Assert.That(UpgradesV1_0.Level1.Level).IsEqualTo((byte)1);
+		await Assert.That(UpgradesV1_0.Level2.Level).IsEqualTo((byte)2);
+		await Assert.That(UpgradesV1_0.Level3.Level).IsEqualTo((byte)3);
 
-		Assert.AreEqual(1, UpgradesV2_0.Level1.Level);
-		Assert.AreEqual(2, UpgradesV2_0.Level2.Level);
-		Assert.AreEqual(3, UpgradesV2_0.Level3.Level);
-		Assert.AreEqual(4, UpgradesV2_0.Level4.Level);
+		await Assert.That(UpgradesV2_0.Level1.Level).IsEqualTo((byte)1);
+		await Assert.That(UpgradesV2_0.Level2.Level).IsEqualTo((byte)2);
+		await Assert.That(UpgradesV2_0.Level3.Level).IsEqualTo((byte)3);
+		await Assert.That(UpgradesV2_0.Level4.Level).IsEqualTo((byte)4);
 
-		Assert.AreEqual(1, UpgradesV3_0.Level1.Level);
-		Assert.AreEqual(2, UpgradesV3_0.Level2.Level);
-		Assert.AreEqual(3, UpgradesV3_0.Level3.Level);
-		Assert.AreEqual(4, UpgradesV3_0.Level4.Level);
+		await Assert.That(UpgradesV3_0.Level1.Level).IsEqualTo((byte)1);
+		await Assert.That(UpgradesV3_0.Level2.Level).IsEqualTo((byte)2);
+		await Assert.That(UpgradesV3_0.Level3.Level).IsEqualTo((byte)3);
+		await Assert.That(UpgradesV3_0.Level4.Level).IsEqualTo((byte)4);
 
-		Assert.AreEqual(1, UpgradesV3_1.Level1.Level);
-		Assert.AreEqual(2, UpgradesV3_1.Level2.Level);
-		Assert.AreEqual(3, UpgradesV3_1.Level3.Level);
-		Assert.AreEqual(4, UpgradesV3_1.Level4.Level);
+		await Assert.That(UpgradesV3_1.Level1.Level).IsEqualTo((byte)1);
+		await Assert.That(UpgradesV3_1.Level2.Level).IsEqualTo((byte)2);
+		await Assert.That(UpgradesV3_1.Level3.Level).IsEqualTo((byte)3);
+		await Assert.That(UpgradesV3_1.Level4.Level).IsEqualTo((byte)4);
 
-		Assert.AreEqual(1, UpgradesV3_2.Level1.Level);
-		Assert.AreEqual(2, UpgradesV3_2.Level2.Level);
-		Assert.AreEqual(3, UpgradesV3_2.Level3.Level);
-		Assert.AreEqual(4, UpgradesV3_2.Level4.Level);
+		await Assert.That(UpgradesV3_2.Level1.Level).IsEqualTo((byte)1);
+		await Assert.That(UpgradesV3_2.Level2.Level).IsEqualTo((byte)2);
+		await Assert.That(UpgradesV3_2.Level3.Level).IsEqualTo((byte)3);
+		await Assert.That(UpgradesV3_2.Level4.Level).IsEqualTo((byte)4);
 	}
 
-	[TestMethod]
-	public void TestDefaultDamage()
+	[Test]
+	public async Task TestDefaultDamage()
 	{
-		Assert.AreEqual(new(10, 20f), UpgradesV1_0.Level1.DefaultDamage);
-		Assert.AreEqual(new(10, 20f), UpgradesV2_0.Level1.DefaultDamage);
-		Assert.AreEqual(new(10, 20f), UpgradesV3_0.Level1.DefaultDamage);
-		Assert.AreEqual(new(10, 20f), UpgradesV3_1.Level1.DefaultDamage);
-		Assert.AreEqual(new(10, 20f), UpgradesV3_2.Level1.DefaultDamage);
+		await Assert.That(UpgradesV1_0.Level1.DefaultDamage).IsEqualTo(new(10, 20f));
+		await Assert.That(UpgradesV2_0.Level1.DefaultDamage).IsEqualTo(new(10, 20f));
+		await Assert.That(UpgradesV3_0.Level1.DefaultDamage).IsEqualTo(new(10, 20f));
+		await Assert.That(UpgradesV3_1.Level1.DefaultDamage).IsEqualTo(new(10, 20f));
+		await Assert.That(UpgradesV3_2.Level1.DefaultDamage).IsEqualTo(new(10, 20f));
 
-		Assert.AreEqual(new(20, 40f), UpgradesV1_0.Level2.DefaultDamage);
-		Assert.AreEqual(new(20, 40f), UpgradesV2_0.Level2.DefaultDamage);
-		Assert.AreEqual(new(20, 40f), UpgradesV3_0.Level2.DefaultDamage);
-		Assert.AreEqual(new(20, 40f), UpgradesV3_1.Level2.DefaultDamage);
-		Assert.AreEqual(new(20, 40f), UpgradesV3_2.Level2.DefaultDamage);
+		await Assert.That(UpgradesV1_0.Level2.DefaultDamage).IsEqualTo(new(20, 40f));
+		await Assert.That(UpgradesV2_0.Level2.DefaultDamage).IsEqualTo(new(20, 40f));
+		await Assert.That(UpgradesV3_0.Level2.DefaultDamage).IsEqualTo(new(20, 40f));
+		await Assert.That(UpgradesV3_1.Level2.DefaultDamage).IsEqualTo(new(20, 40f));
+		await Assert.That(UpgradesV3_2.Level2.DefaultDamage).IsEqualTo(new(20, 40f));
 
-		Assert.AreEqual(new(40, 80f), UpgradesV1_0.Level3.DefaultDamage);
-		Assert.AreEqual(new(40, 80f), UpgradesV2_0.Level3.DefaultDamage);
-		Assert.AreEqual(new(40, 80f), UpgradesV3_0.Level3.DefaultDamage);
-		Assert.AreEqual(new(40, 80f), UpgradesV3_1.Level3.DefaultDamage);
-		Assert.AreEqual(new(40, 80f), UpgradesV3_2.Level3.DefaultDamage);
+		await Assert.That(UpgradesV1_0.Level3.DefaultDamage).IsEqualTo(new(40, 80f));
+		await Assert.That(UpgradesV2_0.Level3.DefaultDamage).IsEqualTo(new(40, 80f));
+		await Assert.That(UpgradesV3_0.Level3.DefaultDamage).IsEqualTo(new(40, 80f));
+		await Assert.That(UpgradesV3_1.Level3.DefaultDamage).IsEqualTo(new(40, 80f));
+		await Assert.That(UpgradesV3_2.Level3.DefaultDamage).IsEqualTo(new(40, 80f));
 
-		Assert.AreEqual(new(60, 106.666f), UpgradesV2_0.Level4.DefaultDamage);
-		Assert.AreEqual(new(60, 106.666f), UpgradesV3_0.Level4.DefaultDamage);
-		Assert.AreEqual(new(60, 106.666f), UpgradesV3_1.Level4.DefaultDamage);
-		Assert.AreEqual(new(60, 106.666f), UpgradesV3_2.Level4.DefaultDamage);
+		await Assert.That(UpgradesV2_0.Level4.DefaultDamage).IsEqualTo(new(60, 106.666f));
+		await Assert.That(UpgradesV3_0.Level4.DefaultDamage).IsEqualTo(new(60, 106.666f));
+		await Assert.That(UpgradesV3_1.Level4.DefaultDamage).IsEqualTo(new(60, 106.666f));
+		await Assert.That(UpgradesV3_2.Level4.DefaultDamage).IsEqualTo(new(60, 106.666f));
 	}
 
-	[TestMethod]
-	public void TestHomingDamage()
+	[Test]
+	public async Task TestHomingDamage()
 	{
-		Assert.AreEqual(null, UpgradesV1_0.Level1.HomingDamage);
-		Assert.AreEqual(null, UpgradesV2_0.Level1.HomingDamage);
-		Assert.AreEqual(null, UpgradesV3_0.Level1.HomingDamage);
-		Assert.AreEqual(null, UpgradesV3_1.Level1.HomingDamage);
-		Assert.AreEqual(null, UpgradesV3_2.Level1.HomingDamage);
+		await Assert.That(UpgradesV1_0.Level1.HomingDamage).IsNull();
+		await Assert.That(UpgradesV2_0.Level1.HomingDamage).IsNull();
+		await Assert.That(UpgradesV3_0.Level1.HomingDamage).IsNull();
+		await Assert.That(UpgradesV3_1.Level1.HomingDamage).IsNull();
+		await Assert.That(UpgradesV3_2.Level1.HomingDamage).IsNull();
 
-		Assert.AreEqual(null, UpgradesV1_0.Level2.HomingDamage);
-		Assert.AreEqual(null, UpgradesV2_0.Level2.HomingDamage);
-		Assert.AreEqual(null, UpgradesV3_0.Level2.HomingDamage);
-		Assert.AreEqual(null, UpgradesV3_1.Level2.HomingDamage);
-		Assert.AreEqual(null, UpgradesV3_2.Level2.HomingDamage);
+		await Assert.That(UpgradesV1_0.Level2.HomingDamage).IsNull();
+		await Assert.That(UpgradesV2_0.Level2.HomingDamage).IsNull();
+		await Assert.That(UpgradesV3_0.Level2.HomingDamage).IsNull();
+		await Assert.That(UpgradesV3_1.Level2.HomingDamage).IsNull();
+		await Assert.That(UpgradesV3_2.Level2.HomingDamage).IsNull();
 
-		Assert.AreEqual(new(40, 40f), UpgradesV1_0.Level3.HomingDamage);
-		Assert.AreEqual(new(20, 40f), UpgradesV2_0.Level3.HomingDamage);
-		Assert.AreEqual(new(20, 40f), UpgradesV3_0.Level3.HomingDamage);
-		Assert.AreEqual(new(20, 40f), UpgradesV3_1.Level3.HomingDamage);
-		Assert.AreEqual(new(20, 40f), UpgradesV3_2.Level3.HomingDamage);
+		await Assert.That(UpgradesV1_0.Level3.HomingDamage).IsEqualTo(new(40, 40f));
+		await Assert.That(UpgradesV2_0.Level3.HomingDamage).IsEqualTo(new(20, 40f));
+		await Assert.That(UpgradesV3_0.Level3.HomingDamage).IsEqualTo(new(20, 40f));
+		await Assert.That(UpgradesV3_1.Level3.HomingDamage).IsEqualTo(new(20, 40f));
+		await Assert.That(UpgradesV3_2.Level3.HomingDamage).IsEqualTo(new(20, 40f));
 
-		Assert.AreEqual(new(30, 40f), UpgradesV2_0.Level4.HomingDamage);
-		Assert.AreEqual(new(30, 40f), UpgradesV3_0.Level4.HomingDamage);
-		Assert.AreEqual(new(30, 40f), UpgradesV3_1.Level4.HomingDamage);
-		Assert.AreEqual(new(30, 40f), UpgradesV3_2.Level4.HomingDamage);
+		await Assert.That(UpgradesV2_0.Level4.HomingDamage).IsEqualTo(new(30, 40f));
+		await Assert.That(UpgradesV3_0.Level4.HomingDamage).IsEqualTo(new(30, 40f));
+		await Assert.That(UpgradesV3_1.Level4.HomingDamage).IsEqualTo(new(30, 40f));
+		await Assert.That(UpgradesV3_2.Level4.HomingDamage).IsEqualTo(new(30, 40f));
 	}
 
-	[TestMethod]
-	public void TestUpgradeUnlock()
+	[Test]
+	public async Task TestUpgradeUnlock()
 	{
-		Assert.AreEqual(new(UpgradeUnlockType.Gems, 0), UpgradesV1_0.Level1.UpgradeUnlock);
-		Assert.AreEqual(new(UpgradeUnlockType.Gems, 0), UpgradesV2_0.Level1.UpgradeUnlock);
-		Assert.AreEqual(new(UpgradeUnlockType.Gems, 0), UpgradesV3_0.Level1.UpgradeUnlock);
-		Assert.AreEqual(new(UpgradeUnlockType.Gems, 0), UpgradesV3_1.Level1.UpgradeUnlock);
-		Assert.AreEqual(new(UpgradeUnlockType.Gems, 0), UpgradesV3_2.Level1.UpgradeUnlock);
+		await Assert.That(UpgradesV1_0.Level1.UpgradeUnlock).IsEqualTo(new(UpgradeUnlockType.Gems, 0));
+		await Assert.That(UpgradesV2_0.Level1.UpgradeUnlock).IsEqualTo(new(UpgradeUnlockType.Gems, 0));
+		await Assert.That(UpgradesV3_0.Level1.UpgradeUnlock).IsEqualTo(new(UpgradeUnlockType.Gems, 0));
+		await Assert.That(UpgradesV3_1.Level1.UpgradeUnlock).IsEqualTo(new(UpgradeUnlockType.Gems, 0));
+		await Assert.That(UpgradesV3_2.Level1.UpgradeUnlock).IsEqualTo(new(UpgradeUnlockType.Gems, 0));
 
-		Assert.AreEqual(new(UpgradeUnlockType.Gems, 10), UpgradesV1_0.Level2.UpgradeUnlock);
-		Assert.AreEqual(new(UpgradeUnlockType.Gems, 10), UpgradesV2_0.Level2.UpgradeUnlock);
-		Assert.AreEqual(new(UpgradeUnlockType.Gems, 10), UpgradesV3_0.Level2.UpgradeUnlock);
-		Assert.AreEqual(new(UpgradeUnlockType.Gems, 10), UpgradesV3_1.Level2.UpgradeUnlock);
-		Assert.AreEqual(new(UpgradeUnlockType.Gems, 10), UpgradesV3_2.Level2.UpgradeUnlock);
+		await Assert.That(UpgradesV1_0.Level2.UpgradeUnlock).IsEqualTo(new(UpgradeUnlockType.Gems, 10));
+		await Assert.That(UpgradesV2_0.Level2.UpgradeUnlock).IsEqualTo(new(UpgradeUnlockType.Gems, 10));
+		await Assert.That(UpgradesV3_0.Level2.UpgradeUnlock).IsEqualTo(new(UpgradeUnlockType.Gems, 10));
+		await Assert.That(UpgradesV3_1.Level2.UpgradeUnlock).IsEqualTo(new(UpgradeUnlockType.Gems, 10));
+		await Assert.That(UpgradesV3_2.Level2.UpgradeUnlock).IsEqualTo(new(UpgradeUnlockType.Gems, 10));
 
-		Assert.AreEqual(new(UpgradeUnlockType.Gems, 70), UpgradesV1_0.Level3.UpgradeUnlock);
-		Assert.AreEqual(new(UpgradeUnlockType.Gems, 70), UpgradesV2_0.Level3.UpgradeUnlock);
-		Assert.AreEqual(new(UpgradeUnlockType.Gems, 70), UpgradesV3_0.Level3.UpgradeUnlock);
-		Assert.AreEqual(new(UpgradeUnlockType.Gems, 70), UpgradesV3_1.Level3.UpgradeUnlock);
-		Assert.AreEqual(new(UpgradeUnlockType.Gems, 70), UpgradesV3_2.Level3.UpgradeUnlock);
+		await Assert.That(UpgradesV1_0.Level3.UpgradeUnlock).IsEqualTo(new(UpgradeUnlockType.Gems, 70));
+		await Assert.That(UpgradesV2_0.Level3.UpgradeUnlock).IsEqualTo(new(UpgradeUnlockType.Gems, 70));
+		await Assert.That(UpgradesV3_0.Level3.UpgradeUnlock).IsEqualTo(new(UpgradeUnlockType.Gems, 70));
+		await Assert.That(UpgradesV3_1.Level3.UpgradeUnlock).IsEqualTo(new(UpgradeUnlockType.Gems, 70));
+		await Assert.That(UpgradesV3_2.Level3.UpgradeUnlock).IsEqualTo(new(UpgradeUnlockType.Gems, 70));
 
-		Assert.AreEqual(new(UpgradeUnlockType.Homing, 150), UpgradesV2_0.Level4.UpgradeUnlock);
-		Assert.AreEqual(new(UpgradeUnlockType.Homing, 150), UpgradesV3_0.Level4.UpgradeUnlock);
-		Assert.AreEqual(new(UpgradeUnlockType.Homing, 150), UpgradesV3_1.Level4.UpgradeUnlock);
-		Assert.AreEqual(new(UpgradeUnlockType.Homing, 150), UpgradesV3_2.Level4.UpgradeUnlock);
+		await Assert.That(UpgradesV2_0.Level4.UpgradeUnlock).IsEqualTo(new(UpgradeUnlockType.Homing, 150));
+		await Assert.That(UpgradesV3_0.Level4.UpgradeUnlock).IsEqualTo(new(UpgradeUnlockType.Homing, 150));
+		await Assert.That(UpgradesV3_1.Level4.UpgradeUnlock).IsEqualTo(new(UpgradeUnlockType.Homing, 150));
+		await Assert.That(UpgradesV3_2.Level4.UpgradeUnlock).IsEqualTo(new(UpgradeUnlockType.Homing, 150));
 	}
 }

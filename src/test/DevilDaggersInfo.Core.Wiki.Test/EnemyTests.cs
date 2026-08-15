@@ -1,20 +1,19 @@
 namespace DevilDaggersInfo.Core.Wiki.Test;
 
-[TestClass]
-public class EnemyTests
+internal sealed class EnemyTests
 {
-	[TestMethod]
-	public void TestGetEnemies()
+	[Test]
+	public async Task TestGetEnemies()
 	{
-		Assert.AreEqual(14, Enemies.GetEnemies(GameVersion.V1_0).Count);
-		Assert.AreEqual(20, Enemies.GetEnemies(GameVersion.V2_0).Count);
-		Assert.AreEqual(22, Enemies.GetEnemies(GameVersion.V3_0).Count);
-		Assert.AreEqual(22, Enemies.GetEnemies(GameVersion.V3_1).Count);
-		Assert.AreEqual(22, Enemies.GetEnemies(GameVersion.V3_2).Count);
+		await Assert.That(Enemies.GetEnemies(GameVersion.V1_0).Count).IsEqualTo(14);
+		await Assert.That(Enemies.GetEnemies(GameVersion.V2_0).Count).IsEqualTo(20);
+		await Assert.That(Enemies.GetEnemies(GameVersion.V3_0).Count).IsEqualTo(22);
+		await Assert.That(Enemies.GetEnemies(GameVersion.V3_1).Count).IsEqualTo(22);
+		await Assert.That(Enemies.GetEnemies(GameVersion.V3_2).Count).IsEqualTo(22);
 	}
 
-	[TestMethod]
-	public void TestTransmutedSkull1HomingDamage()
+	[Test]
+	public async Task TestTransmutedSkull1HomingDamage()
 	{
 		foreach (GameVersion gameVersion in Enum.GetValues<GameVersion>())
 		{
@@ -22,15 +21,15 @@ public class EnemyTests
 				continue;
 
 			Enemy? originalTransmutedSkull1 = Enemies.GetEnemyByName(gameVersion, "Transmuted Skull I");
-			Assert.IsNotNull(originalTransmutedSkull1);
-			Assert.IsNotNull(originalTransmutedSkull1.HomingDamage.Level3HomingDaggers);
-			Assert.AreEqual(0.25f, originalTransmutedSkull1.HomingDamage.Level3HomingDaggers.Value, 0.00001f);
-			Assert.AreEqual(10, originalTransmutedSkull1.HomingDamage.Level4HomingDaggers);
+			await Assert.That(originalTransmutedSkull1).IsNotNull();
+			await Assert.That(originalTransmutedSkull1.HomingDamage.Level3HomingDaggers).IsNotNull();
+			await Assert.That(originalTransmutedSkull1.HomingDamage.Level3HomingDaggers.Value).IsEqualTo(0.25f).Within(0.00001f);
+			await Assert.That(originalTransmutedSkull1.HomingDamage.Level4HomingDaggers).IsEqualTo(10);
 		}
 
 		Enemy? fixedTransmutedSkull1 = Enemies.GetEnemyByName(GameVersion.V3_2, "Transmuted Skull I");
-		Assert.IsNotNull(fixedTransmutedSkull1);
-		Assert.AreEqual(1, fixedTransmutedSkull1.HomingDamage.Level3HomingDaggers);
-		Assert.AreEqual(1, fixedTransmutedSkull1.HomingDamage.Level4HomingDaggers);
+		await Assert.That(fixedTransmutedSkull1).IsNotNull();
+		await Assert.That(fixedTransmutedSkull1.HomingDamage.Level3HomingDaggers).IsEqualTo(1);
+		await Assert.That(fixedTransmutedSkull1.HomingDamage.Level4HomingDaggers).IsEqualTo(1);
 	}
 }

@@ -1,402 +1,401 @@
 namespace DevilDaggersInfo.Core.Wiki.Test;
 
-[TestClass]
-public class DeathTests
+internal sealed class DeathTests
 {
-	[TestMethod]
-	public void TestFallen()
+	[Test]
+	public async Task TestFallen()
 	{
-		Assert.AreEqual(DeathsV1_0.Fallen, Deaths.GetDeathByType(GameVersion.V1_0, 0));
-		Assert.AreEqual(DeathsV2_0.Fallen, Deaths.GetDeathByType(GameVersion.V2_0, 0));
-		Assert.AreEqual(DeathsV3_0.Fallen, Deaths.GetDeathByType(GameVersion.V3_0, 0));
-		Assert.AreEqual(DeathsV3_1.Fallen, Deaths.GetDeathByType(GameVersion.V3_1, 0));
-		Assert.AreEqual(DeathsV3_2.Fallen, Deaths.GetDeathByType(GameVersion.V3_2, 0));
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V1_0, 0)).IsEqualTo(DeathsV1_0.Fallen);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V2_0, 0)).IsEqualTo(DeathsV2_0.Fallen);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_0, 0)).IsEqualTo(DeathsV3_0.Fallen);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_1, 0)).IsEqualTo(DeathsV3_1.Fallen);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_2, 0)).IsEqualTo(DeathsV3_2.Fallen);
 
-		Assert.AreEqual(DeathsV1_0.Fallen.Color, EnemyColors.Void);
-		Assert.AreEqual(DeathsV2_0.Fallen.Color, EnemyColors.Void);
-		Assert.AreEqual(DeathsV3_0.Fallen.Color, EnemyColors.Void);
-		Assert.AreEqual(DeathsV3_1.Fallen.Color, EnemyColors.Void);
-		Assert.AreEqual(DeathsV3_2.Fallen.Color, EnemyColors.Void);
+		await Assert.That(EnemyColors.Void).IsEqualTo(DeathsV1_0.Fallen.Color);
+		await Assert.That(EnemyColors.Void).IsEqualTo(DeathsV2_0.Fallen.Color);
+		await Assert.That(EnemyColors.Void).IsEqualTo(DeathsV3_0.Fallen.Color);
+		await Assert.That(EnemyColors.Void).IsEqualTo(DeathsV3_1.Fallen.Color);
+		await Assert.That(EnemyColors.Void).IsEqualTo(DeathsV3_2.Fallen.Color);
 	}
 
-	[TestMethod]
-	public void TestSwarmed()
+	[Test]
+	public async Task TestSwarmed()
 	{
-		Assert.AreEqual(DeathsV1_0.Swarmed, Deaths.GetDeathByType(GameVersion.V1_0, 1));
-		Assert.AreEqual(DeathsV2_0.Swarmed, Deaths.GetDeathByType(GameVersion.V2_0, 1));
-		Assert.AreEqual(DeathsV3_0.Swarmed, Deaths.GetDeathByType(GameVersion.V3_0, 1));
-		Assert.AreEqual(DeathsV3_1.Swarmed, Deaths.GetDeathByType(GameVersion.V3_1, 1));
-		Assert.AreEqual(DeathsV3_2.Swarmed, Deaths.GetDeathByType(GameVersion.V3_2, 1));
-		Assert.AreEqual(DeathsV1_0.Swarmed, EnemiesV1_0.Skull1.Death);
-		Assert.AreEqual(DeathsV2_0.Swarmed, EnemiesV2_0.Skull1.Death);
-		Assert.AreEqual(DeathsV3_0.Swarmed, EnemiesV3_0.Skull1.Death);
-		Assert.AreEqual(DeathsV3_1.Swarmed, EnemiesV3_1.Skull1.Death);
-		Assert.AreEqual(DeathsV3_2.Swarmed, EnemiesV3_2.Skull1.Death);
-		Assert.AreEqual(DeathsV2_0.Swarmed, EnemiesV2_0.TransmutedSkull1.Death);
-		Assert.AreEqual(DeathsV3_0.Swarmed, EnemiesV3_0.TransmutedSkull1.Death);
-		Assert.AreEqual(DeathsV3_1.Swarmed, EnemiesV3_1.TransmutedSkull1.Death);
-		Assert.AreEqual(DeathsV3_2.Swarmed, EnemiesV3_2.TransmutedSkull1.Death);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V1_0, 1)).IsEqualTo(DeathsV1_0.Swarmed);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V2_0, 1)).IsEqualTo(DeathsV2_0.Swarmed);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_0, 1)).IsEqualTo(DeathsV3_0.Swarmed);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_1, 1)).IsEqualTo(DeathsV3_1.Swarmed);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_2, 1)).IsEqualTo(DeathsV3_2.Swarmed);
+		await Assert.That(EnemiesV1_0.Skull1.Death).IsEqualTo(DeathsV1_0.Swarmed);
+		await Assert.That(EnemiesV2_0.Skull1.Death).IsEqualTo(DeathsV2_0.Swarmed);
+		await Assert.That(EnemiesV3_0.Skull1.Death).IsEqualTo(DeathsV3_0.Swarmed);
+		await Assert.That(EnemiesV3_1.Skull1.Death).IsEqualTo(DeathsV3_1.Swarmed);
+		await Assert.That(EnemiesV3_2.Skull1.Death).IsEqualTo(DeathsV3_2.Swarmed);
+		await Assert.That(EnemiesV2_0.TransmutedSkull1.Death).IsEqualTo(DeathsV2_0.Swarmed);
+		await Assert.That(EnemiesV3_0.TransmutedSkull1.Death).IsEqualTo(DeathsV3_0.Swarmed);
+		await Assert.That(EnemiesV3_1.TransmutedSkull1.Death).IsEqualTo(DeathsV3_1.Swarmed);
+		await Assert.That(EnemiesV3_2.TransmutedSkull1.Death).IsEqualTo(DeathsV3_2.Swarmed);
 
-		Assert.AreEqual(DeathsV1_0.Swarmed.Color, EnemyColors.Skull1);
-		Assert.AreEqual(DeathsV2_0.Swarmed.Color, EnemyColors.Skull1);
-		Assert.AreEqual(DeathsV3_0.Swarmed.Color, EnemyColors.Skull1);
-		Assert.AreEqual(DeathsV3_1.Swarmed.Color, EnemyColors.Skull1);
-		Assert.AreEqual(DeathsV3_2.Swarmed.Color, EnemyColors.Skull1);
+		await Assert.That(EnemyColors.Skull1).IsEqualTo(DeathsV1_0.Swarmed.Color);
+		await Assert.That(EnemyColors.Skull1).IsEqualTo(DeathsV2_0.Swarmed.Color);
+		await Assert.That(EnemyColors.Skull1).IsEqualTo(DeathsV3_0.Swarmed.Color);
+		await Assert.That(EnemyColors.Skull1).IsEqualTo(DeathsV3_1.Swarmed.Color);
+		await Assert.That(EnemyColors.Skull1).IsEqualTo(DeathsV3_2.Swarmed.Color);
 	}
 
-	[TestMethod]
-	public void TestImpaled()
+	[Test]
+	public async Task TestImpaled()
 	{
-		Assert.AreEqual(DeathsV1_0.Impaled, Deaths.GetDeathByType(GameVersion.V1_0, 2));
-		Assert.AreEqual(DeathsV2_0.Impaled, Deaths.GetDeathByType(GameVersion.V2_0, 2));
-		Assert.AreEqual(DeathsV3_0.Impaled, Deaths.GetDeathByType(GameVersion.V3_0, 2));
-		Assert.AreEqual(DeathsV3_1.Impaled, Deaths.GetDeathByType(GameVersion.V3_1, 2));
-		Assert.AreEqual(DeathsV3_2.Impaled, Deaths.GetDeathByType(GameVersion.V3_2, 2));
-		Assert.AreEqual(DeathsV1_0.Impaled, EnemiesV1_0.Skull2.Death);
-		Assert.AreEqual(DeathsV2_0.Impaled, EnemiesV2_0.Skull2.Death);
-		Assert.AreEqual(DeathsV3_0.Impaled, EnemiesV3_0.Skull2.Death);
-		Assert.AreEqual(DeathsV3_1.Impaled, EnemiesV3_1.Skull2.Death);
-		Assert.AreEqual(DeathsV3_2.Impaled, EnemiesV3_2.Skull2.Death);
-		Assert.AreEqual(DeathsV1_0.Impaled, EnemiesV1_0.TransmutedSkull2.Death);
-		Assert.AreEqual(DeathsV2_0.Impaled, EnemiesV2_0.TransmutedSkull2.Death);
-		Assert.AreEqual(DeathsV3_0.Impaled, EnemiesV3_0.TransmutedSkull2.Death);
-		Assert.AreEqual(DeathsV3_1.Impaled, EnemiesV3_1.TransmutedSkull2.Death);
-		Assert.AreEqual(DeathsV3_2.Impaled, EnemiesV3_2.TransmutedSkull2.Death);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V1_0, 2)).IsEqualTo(DeathsV1_0.Impaled);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V2_0, 2)).IsEqualTo(DeathsV2_0.Impaled);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_0, 2)).IsEqualTo(DeathsV3_0.Impaled);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_1, 2)).IsEqualTo(DeathsV3_1.Impaled);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_2, 2)).IsEqualTo(DeathsV3_2.Impaled);
+		await Assert.That(EnemiesV1_0.Skull2.Death).IsEqualTo(DeathsV1_0.Impaled);
+		await Assert.That(EnemiesV2_0.Skull2.Death).IsEqualTo(DeathsV2_0.Impaled);
+		await Assert.That(EnemiesV3_0.Skull2.Death).IsEqualTo(DeathsV3_0.Impaled);
+		await Assert.That(EnemiesV3_1.Skull2.Death).IsEqualTo(DeathsV3_1.Impaled);
+		await Assert.That(EnemiesV3_2.Skull2.Death).IsEqualTo(DeathsV3_2.Impaled);
+		await Assert.That(EnemiesV1_0.TransmutedSkull2.Death).IsEqualTo(DeathsV1_0.Impaled);
+		await Assert.That(EnemiesV2_0.TransmutedSkull2.Death).IsEqualTo(DeathsV2_0.Impaled);
+		await Assert.That(EnemiesV3_0.TransmutedSkull2.Death).IsEqualTo(DeathsV3_0.Impaled);
+		await Assert.That(EnemiesV3_1.TransmutedSkull2.Death).IsEqualTo(DeathsV3_1.Impaled);
+		await Assert.That(EnemiesV3_2.TransmutedSkull2.Death).IsEqualTo(DeathsV3_2.Impaled);
 
-		Assert.AreEqual(DeathsV1_0.Impaled.Color, EnemyColors.Skull2);
-		Assert.AreEqual(DeathsV2_0.Impaled.Color, EnemyColors.Skull2);
-		Assert.AreEqual(DeathsV3_0.Impaled.Color, EnemyColors.Skull2);
-		Assert.AreEqual(DeathsV3_1.Impaled.Color, EnemyColors.Skull2);
-		Assert.AreEqual(DeathsV3_2.Impaled.Color, EnemyColors.Skull2);
+		await Assert.That(EnemyColors.Skull2).IsEqualTo(DeathsV1_0.Impaled.Color);
+		await Assert.That(EnemyColors.Skull2).IsEqualTo(DeathsV2_0.Impaled.Color);
+		await Assert.That(EnemyColors.Skull2).IsEqualTo(DeathsV3_0.Impaled.Color);
+		await Assert.That(EnemyColors.Skull2).IsEqualTo(DeathsV3_1.Impaled.Color);
+		await Assert.That(EnemyColors.Skull2).IsEqualTo(DeathsV3_2.Impaled.Color);
 	}
 
-	[TestMethod]
-	public void TestGored()
+	[Test]
+	public async Task TestGored()
 	{
-		Assert.AreEqual(DeathsV2_0.Gored, Deaths.GetDeathByType(GameVersion.V2_0, 3));
-		Assert.AreEqual(DeathsV3_0.Gored, Deaths.GetDeathByType(GameVersion.V3_0, 3));
-		Assert.AreEqual(DeathsV3_1.Gored, Deaths.GetDeathByType(GameVersion.V3_1, 3));
-		Assert.AreEqual(DeathsV3_2.Gored, Deaths.GetDeathByType(GameVersion.V3_2, 3));
-		Assert.AreEqual(DeathsV2_0.Gored, EnemiesV2_0.Skull3.Death);
-		Assert.AreEqual(DeathsV3_0.Gored, EnemiesV3_0.Skull3.Death);
-		Assert.AreEqual(DeathsV3_1.Gored, EnemiesV3_1.Skull3.Death);
-		Assert.AreEqual(DeathsV3_2.Gored, EnemiesV3_2.Skull3.Death);
-		Assert.AreEqual(DeathsV2_0.Gored, EnemiesV2_0.TransmutedSkull3.Death);
-		Assert.AreEqual(DeathsV3_0.Gored, EnemiesV3_0.TransmutedSkull3.Death);
-		Assert.AreEqual(DeathsV3_1.Gored, EnemiesV3_1.TransmutedSkull3.Death);
-		Assert.AreEqual(DeathsV3_2.Gored, EnemiesV3_2.TransmutedSkull3.Death);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V2_0, 3)).IsEqualTo(DeathsV2_0.Gored);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_0, 3)).IsEqualTo(DeathsV3_0.Gored);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_1, 3)).IsEqualTo(DeathsV3_1.Gored);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_2, 3)).IsEqualTo(DeathsV3_2.Gored);
+		await Assert.That(EnemiesV2_0.Skull3.Death).IsEqualTo(DeathsV2_0.Gored);
+		await Assert.That(EnemiesV3_0.Skull3.Death).IsEqualTo(DeathsV3_0.Gored);
+		await Assert.That(EnemiesV3_1.Skull3.Death).IsEqualTo(DeathsV3_1.Gored);
+		await Assert.That(EnemiesV3_2.Skull3.Death).IsEqualTo(DeathsV3_2.Gored);
+		await Assert.That(EnemiesV2_0.TransmutedSkull3.Death).IsEqualTo(DeathsV2_0.Gored);
+		await Assert.That(EnemiesV3_0.TransmutedSkull3.Death).IsEqualTo(DeathsV3_0.Gored);
+		await Assert.That(EnemiesV3_1.TransmutedSkull3.Death).IsEqualTo(DeathsV3_1.Gored);
+		await Assert.That(EnemiesV3_2.TransmutedSkull3.Death).IsEqualTo(DeathsV3_2.Gored);
 
-		Assert.AreEqual(DeathsV2_0.Gored.Color, EnemyColors.Skull3);
-		Assert.AreEqual(DeathsV3_0.Gored.Color, EnemyColors.Skull3);
-		Assert.AreEqual(DeathsV3_1.Gored.Color, EnemyColors.Skull3);
-		Assert.AreEqual(DeathsV3_2.Gored.Color, EnemyColors.Skull3);
+		await Assert.That(EnemyColors.Skull3).IsEqualTo(DeathsV2_0.Gored.Color);
+		await Assert.That(EnemyColors.Skull3).IsEqualTo(DeathsV3_0.Gored.Color);
+		await Assert.That(EnemyColors.Skull3).IsEqualTo(DeathsV3_1.Gored.Color);
+		await Assert.That(EnemyColors.Skull3).IsEqualTo(DeathsV3_2.Gored.Color);
 	}
 
-	[TestMethod]
-	public void TestInfested()
+	[Test]
+	public async Task TestInfested()
 	{
-		Assert.AreEqual(DeathsV1_0.Infested, Deaths.GetDeathByType(GameVersion.V1_0, 4));
-		Assert.AreEqual(DeathsV2_0.Infested, Deaths.GetDeathByType(GameVersion.V2_0, 4));
-		Assert.AreEqual(DeathsV3_0.Infested, Deaths.GetDeathByType(GameVersion.V3_0, 4));
-		Assert.AreEqual(DeathsV3_1.Infested, Deaths.GetDeathByType(GameVersion.V3_1, 4));
-		Assert.AreEqual(DeathsV3_2.Infested, Deaths.GetDeathByType(GameVersion.V3_2, 4));
-		Assert.AreEqual(DeathsV1_0.Infested, EnemiesV1_0.SpiderEgg1.Death);
-		Assert.AreEqual(DeathsV2_0.Infested, EnemiesV2_0.SpiderEgg1.Death);
-		Assert.AreEqual(DeathsV3_0.Infested, EnemiesV3_0.Spiderling.Death);
-		Assert.AreEqual(DeathsV3_1.Infested, EnemiesV3_1.Spiderling.Death);
-		Assert.AreEqual(DeathsV3_2.Infested, EnemiesV3_2.Spiderling.Death);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V1_0, 4)).IsEqualTo(DeathsV1_0.Infested);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V2_0, 4)).IsEqualTo(DeathsV2_0.Infested);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_0, 4)).IsEqualTo(DeathsV3_0.Infested);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_1, 4)).IsEqualTo(DeathsV3_1.Infested);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_2, 4)).IsEqualTo(DeathsV3_2.Infested);
+		await Assert.That(EnemiesV1_0.SpiderEgg1.Death).IsEqualTo(DeathsV1_0.Infested);
+		await Assert.That(EnemiesV2_0.SpiderEgg1.Death).IsEqualTo(DeathsV2_0.Infested);
+		await Assert.That(EnemiesV3_0.Spiderling.Death).IsEqualTo(DeathsV3_0.Infested);
+		await Assert.That(EnemiesV3_1.Spiderling.Death).IsEqualTo(DeathsV3_1.Infested);
+		await Assert.That(EnemiesV3_2.Spiderling.Death).IsEqualTo(DeathsV3_2.Infested);
 
-		Assert.AreEqual(DeathsV1_0.Infested.Color, EnemyColors.SpiderEgg1);
-		Assert.AreEqual(DeathsV2_0.Infested.Color, EnemyColors.SpiderEgg1);
-		Assert.AreEqual(DeathsV3_0.Infested.Color, EnemyColors.Spiderling);
-		Assert.AreEqual(DeathsV3_1.Infested.Color, EnemyColors.Spiderling);
-		Assert.AreEqual(DeathsV3_2.Infested.Color, EnemyColors.Spiderling);
+		await Assert.That(EnemyColors.SpiderEgg1).IsEqualTo(DeathsV1_0.Infested.Color);
+		await Assert.That(EnemyColors.SpiderEgg1).IsEqualTo(DeathsV2_0.Infested.Color);
+		await Assert.That(EnemyColors.Spiderling).IsEqualTo(DeathsV3_0.Infested.Color);
+		await Assert.That(EnemyColors.Spiderling).IsEqualTo(DeathsV3_1.Infested.Color);
+		await Assert.That(EnemyColors.Spiderling).IsEqualTo(DeathsV3_2.Infested.Color);
 	}
 
-	[TestMethod]
-	public void TestOpened()
+	[Test]
+	public async Task TestOpened()
 	{
-		Assert.AreEqual(DeathsV2_0.Opened, Deaths.GetDeathByType(GameVersion.V2_0, 5));
-		Assert.AreEqual(DeathsV3_0.Opened, Deaths.GetDeathByType(GameVersion.V3_0, 5));
-		Assert.AreEqual(DeathsV3_1.Opened, Deaths.GetDeathByType(GameVersion.V3_1, 5));
-		Assert.AreEqual(DeathsV3_2.Opened, Deaths.GetDeathByType(GameVersion.V3_2, 5));
-		Assert.AreEqual(DeathsV2_0.Opened, EnemiesV2_0.Skull4.Death);
-		Assert.AreEqual(DeathsV3_0.Opened, EnemiesV3_0.Skull4.Death);
-		Assert.AreEqual(DeathsV3_1.Opened, EnemiesV3_1.Skull4.Death);
-		Assert.AreEqual(DeathsV3_2.Opened, EnemiesV3_2.Skull4.Death);
-		Assert.AreEqual(DeathsV2_0.Opened, EnemiesV2_0.TransmutedSkull4.Death);
-		Assert.AreEqual(DeathsV3_0.Opened, EnemiesV3_0.TransmutedSkull4.Death);
-		Assert.AreEqual(DeathsV3_1.Opened, EnemiesV3_1.TransmutedSkull4.Death);
-		Assert.AreEqual(DeathsV3_2.Opened, EnemiesV3_2.TransmutedSkull4.Death);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V2_0, 5)).IsEqualTo(DeathsV2_0.Opened);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_0, 5)).IsEqualTo(DeathsV3_0.Opened);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_1, 5)).IsEqualTo(DeathsV3_1.Opened);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_2, 5)).IsEqualTo(DeathsV3_2.Opened);
+		await Assert.That(EnemiesV2_0.Skull4.Death).IsEqualTo(DeathsV2_0.Opened);
+		await Assert.That(EnemiesV3_0.Skull4.Death).IsEqualTo(DeathsV3_0.Opened);
+		await Assert.That(EnemiesV3_1.Skull4.Death).IsEqualTo(DeathsV3_1.Opened);
+		await Assert.That(EnemiesV3_2.Skull4.Death).IsEqualTo(DeathsV3_2.Opened);
+		await Assert.That(EnemiesV2_0.TransmutedSkull4.Death).IsEqualTo(DeathsV2_0.Opened);
+		await Assert.That(EnemiesV3_0.TransmutedSkull4.Death).IsEqualTo(DeathsV3_0.Opened);
+		await Assert.That(EnemiesV3_1.TransmutedSkull4.Death).IsEqualTo(DeathsV3_1.Opened);
+		await Assert.That(EnemiesV3_2.TransmutedSkull4.Death).IsEqualTo(DeathsV3_2.Opened);
 
-		Assert.AreEqual(DeathsV2_0.Opened.Color, EnemyColors.Skull4);
-		Assert.AreEqual(DeathsV3_0.Opened.Color, EnemyColors.Skull4);
-		Assert.AreEqual(DeathsV3_1.Opened.Color, EnemyColors.Skull4);
-		Assert.AreEqual(DeathsV3_2.Opened.Color, EnemyColors.Skull4);
+		await Assert.That(EnemyColors.Skull4).IsEqualTo(DeathsV2_0.Opened.Color);
+		await Assert.That(EnemyColors.Skull4).IsEqualTo(DeathsV3_0.Opened.Color);
+		await Assert.That(EnemyColors.Skull4).IsEqualTo(DeathsV3_1.Opened.Color);
+		await Assert.That(EnemyColors.Skull4).IsEqualTo(DeathsV3_2.Opened.Color);
 	}
 
-	[TestMethod]
-	public void TestPurged()
+	[Test]
+	public async Task TestPurged()
 	{
-		Assert.AreEqual(DeathsV1_0.Purged, Deaths.GetDeathByType(GameVersion.V1_0, 6));
-		Assert.AreEqual(DeathsV2_0.Purged, Deaths.GetDeathByType(GameVersion.V2_0, 6));
-		Assert.AreEqual(DeathsV3_0.Purged, Deaths.GetDeathByType(GameVersion.V3_0, 6));
-		Assert.AreEqual(DeathsV3_1.Purged, Deaths.GetDeathByType(GameVersion.V3_1, 6));
-		Assert.AreEqual(DeathsV3_2.Purged, Deaths.GetDeathByType(GameVersion.V3_2, 6));
-		Assert.AreEqual(DeathsV1_0.Purged, EnemiesV1_0.Squid1.Death);
-		Assert.AreEqual(DeathsV2_0.Purged, EnemiesV2_0.Squid1.Death);
-		Assert.AreEqual(DeathsV3_0.Purged, EnemiesV3_0.Squid1.Death);
-		Assert.AreEqual(DeathsV3_1.Purged, EnemiesV3_1.Squid1.Death);
-		Assert.AreEqual(DeathsV3_2.Purged, EnemiesV3_2.Squid1.Death);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V1_0, 6)).IsEqualTo(DeathsV1_0.Purged);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V2_0, 6)).IsEqualTo(DeathsV2_0.Purged);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_0, 6)).IsEqualTo(DeathsV3_0.Purged);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_1, 6)).IsEqualTo(DeathsV3_1.Purged);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_2, 6)).IsEqualTo(DeathsV3_2.Purged);
+		await Assert.That(EnemiesV1_0.Squid1.Death).IsEqualTo(DeathsV1_0.Purged);
+		await Assert.That(EnemiesV2_0.Squid1.Death).IsEqualTo(DeathsV2_0.Purged);
+		await Assert.That(EnemiesV3_0.Squid1.Death).IsEqualTo(DeathsV3_0.Purged);
+		await Assert.That(EnemiesV3_1.Squid1.Death).IsEqualTo(DeathsV3_1.Purged);
+		await Assert.That(EnemiesV3_2.Squid1.Death).IsEqualTo(DeathsV3_2.Purged);
 
-		Assert.AreEqual(DeathsV1_0.Purged.Color, EnemyColors.Squid1);
-		Assert.AreEqual(DeathsV2_0.Purged.Color, EnemyColors.Squid1);
-		Assert.AreEqual(DeathsV3_0.Purged.Color, EnemyColors.Squid1);
-		Assert.AreEqual(DeathsV3_1.Purged.Color, EnemyColors.Squid1);
-		Assert.AreEqual(DeathsV3_2.Purged.Color, EnemyColors.Squid1);
+		await Assert.That(EnemyColors.Squid1).IsEqualTo(DeathsV1_0.Purged.Color);
+		await Assert.That(EnemyColors.Squid1).IsEqualTo(DeathsV2_0.Purged.Color);
+		await Assert.That(EnemyColors.Squid1).IsEqualTo(DeathsV3_0.Purged.Color);
+		await Assert.That(EnemyColors.Squid1).IsEqualTo(DeathsV3_1.Purged.Color);
+		await Assert.That(EnemyColors.Squid1).IsEqualTo(DeathsV3_2.Purged.Color);
 	}
 
-	[TestMethod]
-	public void TestDesecrated()
+	[Test]
+	public async Task TestDesecrated()
 	{
-		Assert.AreEqual(DeathsV2_0.Desecrated, Deaths.GetDeathByType(GameVersion.V2_0, 7));
-		Assert.AreEqual(DeathsV3_0.Desecrated, Deaths.GetDeathByType(GameVersion.V3_0, 7));
-		Assert.AreEqual(DeathsV3_1.Desecrated, Deaths.GetDeathByType(GameVersion.V3_1, 7));
-		Assert.AreEqual(DeathsV3_2.Desecrated, Deaths.GetDeathByType(GameVersion.V3_2, 7));
-		Assert.AreEqual(DeathsV2_0.Desecrated, EnemiesV2_0.Squid2.Death);
-		Assert.AreEqual(DeathsV3_0.Desecrated, EnemiesV3_0.Squid2.Death);
-		Assert.AreEqual(DeathsV3_1.Desecrated, EnemiesV3_1.Squid2.Death);
-		Assert.AreEqual(DeathsV3_2.Desecrated, EnemiesV3_2.Squid2.Death);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V2_0, 7)).IsEqualTo(DeathsV2_0.Desecrated);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_0, 7)).IsEqualTo(DeathsV3_0.Desecrated);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_1, 7)).IsEqualTo(DeathsV3_1.Desecrated);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_2, 7)).IsEqualTo(DeathsV3_2.Desecrated);
+		await Assert.That(EnemiesV2_0.Squid2.Death).IsEqualTo(DeathsV2_0.Desecrated);
+		await Assert.That(EnemiesV3_0.Squid2.Death).IsEqualTo(DeathsV3_0.Desecrated);
+		await Assert.That(EnemiesV3_1.Squid2.Death).IsEqualTo(DeathsV3_1.Desecrated);
+		await Assert.That(EnemiesV3_2.Squid2.Death).IsEqualTo(DeathsV3_2.Desecrated);
 
-		Assert.AreEqual(DeathsV2_0.Desecrated.Color, EnemyColors.Squid2);
-		Assert.AreEqual(DeathsV3_0.Desecrated.Color, EnemyColors.Squid2);
-		Assert.AreEqual(DeathsV3_1.Desecrated.Color, EnemyColors.Squid2);
-		Assert.AreEqual(DeathsV3_2.Desecrated.Color, EnemyColors.Squid2);
+		await Assert.That(EnemyColors.Squid2).IsEqualTo(DeathsV2_0.Desecrated.Color);
+		await Assert.That(EnemyColors.Squid2).IsEqualTo(DeathsV3_0.Desecrated.Color);
+		await Assert.That(EnemyColors.Squid2).IsEqualTo(DeathsV3_1.Desecrated.Color);
+		await Assert.That(EnemyColors.Squid2).IsEqualTo(DeathsV3_2.Desecrated.Color);
 	}
 
-	[TestMethod]
-	public void TestSacrificed()
+	[Test]
+	public async Task TestSacrificed()
 	{
-		Assert.AreEqual(DeathsV1_0.Sacrificed, Deaths.GetDeathByType(GameVersion.V1_0, 8));
-		Assert.AreEqual(DeathsV2_0.Sacrificed, Deaths.GetDeathByType(GameVersion.V2_0, 8));
-		Assert.AreEqual(DeathsV3_0.Sacrificed, Deaths.GetDeathByType(GameVersion.V3_0, 8));
-		Assert.AreEqual(DeathsV3_1.Sacrificed, Deaths.GetDeathByType(GameVersion.V3_1, 8));
-		Assert.AreEqual(DeathsV3_2.Sacrificed, Deaths.GetDeathByType(GameVersion.V3_2, 8));
-		Assert.AreEqual(DeathsV1_0.Sacrificed, EnemiesV1_0.Squid2.Death);
-		Assert.AreEqual(DeathsV2_0.Sacrificed, EnemiesV2_0.Squid3.Death);
-		Assert.AreEqual(DeathsV3_0.Sacrificed, EnemiesV3_0.Squid3.Death);
-		Assert.AreEqual(DeathsV3_1.Sacrificed, EnemiesV3_1.Squid3.Death);
-		Assert.AreEqual(DeathsV3_2.Sacrificed, EnemiesV3_2.Squid3.Death);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V1_0, 8)).IsEqualTo(DeathsV1_0.Sacrificed);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V2_0, 8)).IsEqualTo(DeathsV2_0.Sacrificed);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_0, 8)).IsEqualTo(DeathsV3_0.Sacrificed);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_1, 8)).IsEqualTo(DeathsV3_1.Sacrificed);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_2, 8)).IsEqualTo(DeathsV3_2.Sacrificed);
+		await Assert.That(EnemiesV1_0.Squid2.Death).IsEqualTo(DeathsV1_0.Sacrificed);
+		await Assert.That(EnemiesV2_0.Squid3.Death).IsEqualTo(DeathsV2_0.Sacrificed);
+		await Assert.That(EnemiesV3_0.Squid3.Death).IsEqualTo(DeathsV3_0.Sacrificed);
+		await Assert.That(EnemiesV3_1.Squid3.Death).IsEqualTo(DeathsV3_1.Sacrificed);
+		await Assert.That(EnemiesV3_2.Squid3.Death).IsEqualTo(DeathsV3_2.Sacrificed);
 
-		Assert.AreEqual(DeathsV1_0.Sacrificed.Color, EnemyColors.Squid2);
-		Assert.AreEqual(DeathsV2_0.Sacrificed.Color, EnemyColors.Squid3);
-		Assert.AreEqual(DeathsV3_0.Sacrificed.Color, EnemyColors.Squid3);
-		Assert.AreEqual(DeathsV3_1.Sacrificed.Color, EnemyColors.Squid3);
-		Assert.AreEqual(DeathsV3_2.Sacrificed.Color, EnemyColors.Squid3);
+		await Assert.That(EnemyColors.Squid2).IsEqualTo(DeathsV1_0.Sacrificed.Color);
+		await Assert.That(EnemyColors.Squid3).IsEqualTo(DeathsV2_0.Sacrificed.Color);
+		await Assert.That(EnemyColors.Squid3).IsEqualTo(DeathsV3_0.Sacrificed.Color);
+		await Assert.That(EnemyColors.Squid3).IsEqualTo(DeathsV3_1.Sacrificed.Color);
+		await Assert.That(EnemyColors.Squid3).IsEqualTo(DeathsV3_2.Sacrificed.Color);
 	}
 
-	[TestMethod]
-	public void TestEviscerated()
+	[Test]
+	public async Task TestEviscerated()
 	{
-		Assert.AreEqual(DeathsV1_0.Eviscerated, Deaths.GetDeathByType(GameVersion.V1_0, 9));
-		Assert.AreEqual(DeathsV2_0.Eviscerated, Deaths.GetDeathByType(GameVersion.V2_0, 9));
-		Assert.AreEqual(DeathsV3_0.Eviscerated, Deaths.GetDeathByType(GameVersion.V3_0, 9));
-		Assert.AreEqual(DeathsV3_1.Eviscerated, Deaths.GetDeathByType(GameVersion.V3_1, 9));
-		Assert.AreEqual(DeathsV3_2.Eviscerated, Deaths.GetDeathByType(GameVersion.V3_2, 9));
-		Assert.AreEqual(DeathsV1_0.Eviscerated, EnemiesV1_0.Gigapede.Death);
-		Assert.AreEqual(DeathsV1_0.Eviscerated, EnemiesV1_0.Centipede.Death);
-		Assert.AreEqual(DeathsV2_0.Eviscerated, EnemiesV2_0.Centipede.Death);
-		Assert.AreEqual(DeathsV3_0.Eviscerated, EnemiesV3_0.Centipede.Death);
-		Assert.AreEqual(DeathsV3_1.Eviscerated, EnemiesV3_1.Centipede.Death);
-		Assert.AreEqual(DeathsV3_2.Eviscerated, EnemiesV3_2.Centipede.Death);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V1_0, 9)).IsEqualTo(DeathsV1_0.Eviscerated);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V2_0, 9)).IsEqualTo(DeathsV2_0.Eviscerated);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_0, 9)).IsEqualTo(DeathsV3_0.Eviscerated);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_1, 9)).IsEqualTo(DeathsV3_1.Eviscerated);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_2, 9)).IsEqualTo(DeathsV3_2.Eviscerated);
+		await Assert.That(EnemiesV1_0.Gigapede.Death).IsEqualTo(DeathsV1_0.Eviscerated);
+		await Assert.That(EnemiesV1_0.Centipede.Death).IsEqualTo(DeathsV1_0.Eviscerated);
+		await Assert.That(EnemiesV2_0.Centipede.Death).IsEqualTo(DeathsV2_0.Eviscerated);
+		await Assert.That(EnemiesV3_0.Centipede.Death).IsEqualTo(DeathsV3_0.Eviscerated);
+		await Assert.That(EnemiesV3_1.Centipede.Death).IsEqualTo(DeathsV3_1.Eviscerated);
+		await Assert.That(EnemiesV3_2.Centipede.Death).IsEqualTo(DeathsV3_2.Eviscerated);
 
-		Assert.AreEqual(DeathsV1_0.Eviscerated.Color, EnemyColors.Centipede);
-		Assert.AreEqual(DeathsV2_0.Eviscerated.Color, EnemyColors.Centipede);
-		Assert.AreEqual(DeathsV3_0.Eviscerated.Color, EnemyColors.Centipede);
-		Assert.AreEqual(DeathsV3_1.Eviscerated.Color, EnemyColors.Centipede);
-		Assert.AreEqual(DeathsV3_2.Eviscerated.Color, EnemyColors.Centipede);
+		await Assert.That(EnemyColors.Centipede).IsEqualTo(DeathsV1_0.Eviscerated.Color);
+		await Assert.That(EnemyColors.Centipede).IsEqualTo(DeathsV2_0.Eviscerated.Color);
+		await Assert.That(EnemyColors.Centipede).IsEqualTo(DeathsV3_0.Eviscerated.Color);
+		await Assert.That(EnemyColors.Centipede).IsEqualTo(DeathsV3_1.Eviscerated.Color);
+		await Assert.That(EnemyColors.Centipede).IsEqualTo(DeathsV3_2.Eviscerated.Color);
 	}
 
-	[TestMethod]
-	public void TestAnnihilated()
+	[Test]
+	public async Task TestAnnihilated()
 	{
-		Assert.AreEqual(DeathsV1_0.Annihilated, Deaths.GetDeathByType(GameVersion.V1_0, 10));
-		Assert.AreEqual(DeathsV2_0.Annihilated, Deaths.GetDeathByType(GameVersion.V2_0, 10));
-		Assert.AreEqual(DeathsV3_0.Annihilated, Deaths.GetDeathByType(GameVersion.V3_0, 10));
-		Assert.AreEqual(DeathsV3_1.Annihilated, Deaths.GetDeathByType(GameVersion.V3_1, 10));
-		Assert.AreEqual(DeathsV3_2.Annihilated, Deaths.GetDeathByType(GameVersion.V3_2, 10));
-		Assert.AreEqual(DeathsV1_0.Annihilated, EnemiesV1_0.TransmutedSkull4.Death);
-		Assert.AreEqual(DeathsV2_0.Annihilated, EnemiesV2_0.Gigapede.Death);
-		Assert.AreEqual(DeathsV3_0.Annihilated, EnemiesV3_0.Gigapede.Death);
-		Assert.AreEqual(DeathsV3_1.Annihilated, EnemiesV3_1.Gigapede.Death);
-		Assert.AreEqual(DeathsV3_2.Annihilated, EnemiesV3_2.Gigapede.Death);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V1_0, 10)).IsEqualTo(DeathsV1_0.Annihilated);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V2_0, 10)).IsEqualTo(DeathsV2_0.Annihilated);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_0, 10)).IsEqualTo(DeathsV3_0.Annihilated);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_1, 10)).IsEqualTo(DeathsV3_1.Annihilated);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_2, 10)).IsEqualTo(DeathsV3_2.Annihilated);
+		await Assert.That(EnemiesV1_0.TransmutedSkull4.Death).IsEqualTo(DeathsV1_0.Annihilated);
+		await Assert.That(EnemiesV2_0.Gigapede.Death).IsEqualTo(DeathsV2_0.Annihilated);
+		await Assert.That(EnemiesV3_0.Gigapede.Death).IsEqualTo(DeathsV3_0.Annihilated);
+		await Assert.That(EnemiesV3_1.Gigapede.Death).IsEqualTo(DeathsV3_1.Annihilated);
+		await Assert.That(EnemiesV3_2.Gigapede.Death).IsEqualTo(DeathsV3_2.Annihilated);
 
-		Assert.AreEqual(DeathsV1_0.Annihilated.Color, EnemyColors.TransmutedSkull4);
-		Assert.AreEqual(DeathsV2_0.Annihilated.Color, EnemyColors.GigapedeRed);
-		Assert.AreEqual(DeathsV3_0.Annihilated.Color, EnemyColors.Gigapede);
-		Assert.AreEqual(DeathsV3_1.Annihilated.Color, EnemyColors.Gigapede);
-		Assert.AreEqual(DeathsV3_2.Annihilated.Color, EnemyColors.Gigapede);
+		await Assert.That(EnemyColors.TransmutedSkull4).IsEqualTo(DeathsV1_0.Annihilated.Color);
+		await Assert.That(EnemyColors.GigapedeRed).IsEqualTo(DeathsV2_0.Annihilated.Color);
+		await Assert.That(EnemyColors.Gigapede).IsEqualTo(DeathsV3_0.Annihilated.Color);
+		await Assert.That(EnemyColors.Gigapede).IsEqualTo(DeathsV3_1.Annihilated.Color);
+		await Assert.That(EnemyColors.Gigapede).IsEqualTo(DeathsV3_2.Annihilated.Color);
 	}
 
-	[TestMethod]
-	public void TestIntoxicated()
+	[Test]
+	public async Task TestIntoxicated()
 	{
-		Assert.AreEqual(DeathsV3_0.Intoxicated, Deaths.GetDeathByType(GameVersion.V3_0, 11));
-		Assert.AreEqual(DeathsV3_1.Intoxicated, Deaths.GetDeathByType(GameVersion.V3_1, 11));
-		Assert.AreEqual(DeathsV3_2.Intoxicated, Deaths.GetDeathByType(GameVersion.V3_2, 11));
-		Assert.AreEqual(DeathsV3_0.Intoxicated, EnemiesV3_0.SpiderEgg1.Death);
-		Assert.AreEqual(DeathsV3_0.Intoxicated, EnemiesV3_0.Spider1.Death);
-		Assert.AreEqual(DeathsV3_0.Intoxicated, EnemiesV3_0.Ghostpede.Death);
-		Assert.AreEqual(DeathsV3_1.Intoxicated, EnemiesV3_1.SpiderEgg1.Death);
-		Assert.AreEqual(DeathsV3_1.Intoxicated, EnemiesV3_1.Spider1.Death);
-		Assert.AreEqual(DeathsV3_2.Intoxicated, EnemiesV3_2.SpiderEgg1.Death);
-		Assert.AreEqual(DeathsV3_2.Intoxicated, EnemiesV3_2.Spider1.Death);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_0, 11)).IsEqualTo(DeathsV3_0.Intoxicated);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_1, 11)).IsEqualTo(DeathsV3_1.Intoxicated);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_2, 11)).IsEqualTo(DeathsV3_2.Intoxicated);
+		await Assert.That(EnemiesV3_0.SpiderEgg1.Death).IsEqualTo(DeathsV3_0.Intoxicated);
+		await Assert.That(EnemiesV3_0.Spider1.Death).IsEqualTo(DeathsV3_0.Intoxicated);
+		await Assert.That(EnemiesV3_0.Ghostpede.Death).IsEqualTo(DeathsV3_0.Intoxicated);
+		await Assert.That(EnemiesV3_1.SpiderEgg1.Death).IsEqualTo(DeathsV3_1.Intoxicated);
+		await Assert.That(EnemiesV3_1.Spider1.Death).IsEqualTo(DeathsV3_1.Intoxicated);
+		await Assert.That(EnemiesV3_2.SpiderEgg1.Death).IsEqualTo(DeathsV3_2.Intoxicated);
+		await Assert.That(EnemiesV3_2.Spider1.Death).IsEqualTo(DeathsV3_2.Intoxicated);
 
-		Assert.AreEqual(DeathsV3_0.Intoxicated.Color, EnemyColors.SpiderEgg1);
-		Assert.AreEqual(DeathsV3_1.Intoxicated.Color, EnemyColors.SpiderEgg1);
-		Assert.AreEqual(DeathsV3_2.Intoxicated.Color, EnemyColors.SpiderEgg1);
+		await Assert.That(EnemyColors.SpiderEgg1).IsEqualTo(DeathsV3_0.Intoxicated.Color);
+		await Assert.That(EnemyColors.SpiderEgg1).IsEqualTo(DeathsV3_1.Intoxicated.Color);
+		await Assert.That(EnemyColors.SpiderEgg1).IsEqualTo(DeathsV3_2.Intoxicated.Color);
 	}
 
-	[TestMethod]
-	public void TestEnvenomated()
+	[Test]
+	public async Task TestEnvenomated()
 	{
-		Assert.AreEqual(DeathsV2_0.Envenomated, Deaths.GetDeathByType(GameVersion.V2_0, 12));
-		Assert.AreEqual(DeathsV3_0.Envenomated, Deaths.GetDeathByType(GameVersion.V3_0, 12));
-		Assert.AreEqual(DeathsV3_1.Envenomated, Deaths.GetDeathByType(GameVersion.V3_1, 12));
-		Assert.AreEqual(DeathsV3_2.Envenomated, Deaths.GetDeathByType(GameVersion.V3_2, 12));
-		Assert.AreEqual(DeathsV2_0.Envenomated, EnemiesV2_0.SpiderEgg2.Death);
-		Assert.AreEqual(DeathsV2_0.Envenomated, EnemiesV2_0.Spider2.Death);
-		Assert.AreEqual(DeathsV3_0.Envenomated, EnemiesV3_0.SpiderEgg2.Death);
-		Assert.AreEqual(DeathsV3_0.Envenomated, EnemiesV3_0.Spider2.Death);
-		Assert.AreEqual(DeathsV3_1.Envenomated, EnemiesV3_1.SpiderEgg2.Death);
-		Assert.AreEqual(DeathsV3_1.Envenomated, EnemiesV3_1.Spider2.Death);
-		Assert.AreEqual(DeathsV3_2.Envenomated, EnemiesV3_2.SpiderEgg2.Death);
-		Assert.AreEqual(DeathsV3_2.Envenomated, EnemiesV3_2.Spider2.Death);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V2_0, 12)).IsEqualTo(DeathsV2_0.Envenomated);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_0, 12)).IsEqualTo(DeathsV3_0.Envenomated);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_1, 12)).IsEqualTo(DeathsV3_1.Envenomated);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_2, 12)).IsEqualTo(DeathsV3_2.Envenomated);
+		await Assert.That(EnemiesV2_0.SpiderEgg2.Death).IsEqualTo(DeathsV2_0.Envenomated);
+		await Assert.That(EnemiesV2_0.Spider2.Death).IsEqualTo(DeathsV2_0.Envenomated);
+		await Assert.That(EnemiesV3_0.SpiderEgg2.Death).IsEqualTo(DeathsV3_0.Envenomated);
+		await Assert.That(EnemiesV3_0.Spider2.Death).IsEqualTo(DeathsV3_0.Envenomated);
+		await Assert.That(EnemiesV3_1.SpiderEgg2.Death).IsEqualTo(DeathsV3_1.Envenomated);
+		await Assert.That(EnemiesV3_1.Spider2.Death).IsEqualTo(DeathsV3_1.Envenomated);
+		await Assert.That(EnemiesV3_2.SpiderEgg2.Death).IsEqualTo(DeathsV3_2.Envenomated);
+		await Assert.That(EnemiesV3_2.Spider2.Death).IsEqualTo(DeathsV3_2.Envenomated);
 
-		Assert.AreEqual(DeathsV2_0.Envenomated.Color, EnemyColors.SpiderEgg2);
-		Assert.AreEqual(DeathsV3_0.Envenomated.Color, EnemyColors.SpiderEgg2);
-		Assert.AreEqual(DeathsV3_1.Envenomated.Color, EnemyColors.SpiderEgg2);
-		Assert.AreEqual(DeathsV3_2.Envenomated.Color, EnemyColors.SpiderEgg2);
+		await Assert.That(EnemyColors.SpiderEgg2).IsEqualTo(DeathsV2_0.Envenomated.Color);
+		await Assert.That(EnemyColors.SpiderEgg2).IsEqualTo(DeathsV3_0.Envenomated.Color);
+		await Assert.That(EnemyColors.SpiderEgg2).IsEqualTo(DeathsV3_1.Envenomated.Color);
+		await Assert.That(EnemyColors.SpiderEgg2).IsEqualTo(DeathsV3_2.Envenomated.Color);
 	}
 
-	[TestMethod]
-	public void TestIncarnated()
+	[Test]
+	public async Task TestIncarnated()
 	{
-		Assert.AreEqual(DeathsV3_0.Incarnated, Deaths.GetDeathByType(GameVersion.V3_0, 13));
-		Assert.AreEqual(DeathsV3_1.Incarnated, Deaths.GetDeathByType(GameVersion.V3_1, 13));
-		Assert.AreEqual(DeathsV3_2.Incarnated, Deaths.GetDeathByType(GameVersion.V3_2, 13));
-		Assert.AreEqual(DeathsV3_0.Incarnated, EnemiesV3_0.Leviathan.Death);
-		Assert.AreEqual(DeathsV3_1.Incarnated, EnemiesV3_1.Leviathan.Death);
-		Assert.AreEqual(DeathsV3_2.Incarnated, EnemiesV3_2.Leviathan.Death);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_0, 13)).IsEqualTo(DeathsV3_0.Incarnated);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_1, 13)).IsEqualTo(DeathsV3_1.Incarnated);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_2, 13)).IsEqualTo(DeathsV3_2.Incarnated);
+		await Assert.That(EnemiesV3_0.Leviathan.Death).IsEqualTo(DeathsV3_0.Incarnated);
+		await Assert.That(EnemiesV3_1.Leviathan.Death).IsEqualTo(DeathsV3_1.Incarnated);
+		await Assert.That(EnemiesV3_2.Leviathan.Death).IsEqualTo(DeathsV3_2.Incarnated);
 
-		Assert.AreEqual(DeathsV3_0.Incarnated.Color, EnemyColors.Leviathan);
-		Assert.AreEqual(DeathsV3_1.Incarnated.Color, EnemyColors.Leviathan);
-		Assert.AreEqual(DeathsV3_2.Incarnated.Color, EnemyColors.Leviathan);
+		await Assert.That(EnemyColors.Leviathan).IsEqualTo(DeathsV3_0.Incarnated.Color);
+		await Assert.That(EnemyColors.Leviathan).IsEqualTo(DeathsV3_1.Incarnated.Color);
+		await Assert.That(EnemyColors.Leviathan).IsEqualTo(DeathsV3_2.Incarnated.Color);
 	}
 
-	[TestMethod]
-	public void TestDiscarnated()
+	[Test]
+	public async Task TestDiscarnated()
 	{
-		Assert.AreEqual(DeathsV3_0.Discarnated, Deaths.GetDeathByType(GameVersion.V3_0, 14));
-		Assert.AreEqual(DeathsV3_1.Discarnated, Deaths.GetDeathByType(GameVersion.V3_1, 14));
-		Assert.AreEqual(DeathsV3_2.Discarnated, Deaths.GetDeathByType(GameVersion.V3_2, 14));
-		Assert.AreEqual(DeathsV3_0.Discarnated, EnemiesV3_0.TheOrb.Death);
-		Assert.AreEqual(DeathsV3_1.Discarnated, EnemiesV3_1.TheOrb.Death);
-		Assert.AreEqual(DeathsV3_2.Discarnated, EnemiesV3_2.TheOrb.Death);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_0, 14)).IsEqualTo(DeathsV3_0.Discarnated);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_1, 14)).IsEqualTo(DeathsV3_1.Discarnated);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_2, 14)).IsEqualTo(DeathsV3_2.Discarnated);
+		await Assert.That(EnemiesV3_0.TheOrb.Death).IsEqualTo(DeathsV3_0.Discarnated);
+		await Assert.That(EnemiesV3_1.TheOrb.Death).IsEqualTo(DeathsV3_1.Discarnated);
+		await Assert.That(EnemiesV3_2.TheOrb.Death).IsEqualTo(DeathsV3_2.Discarnated);
 
-		Assert.AreEqual(DeathsV3_0.Discarnated.Color, EnemyColors.TheOrb);
-		Assert.AreEqual(DeathsV3_1.Discarnated.Color, EnemyColors.TheOrb);
-		Assert.AreEqual(DeathsV3_2.Discarnated.Color, EnemyColors.TheOrb);
+		await Assert.That(EnemyColors.TheOrb).IsEqualTo(DeathsV3_0.Discarnated.Color);
+		await Assert.That(EnemyColors.TheOrb).IsEqualTo(DeathsV3_1.Discarnated.Color);
+		await Assert.That(EnemyColors.TheOrb).IsEqualTo(DeathsV3_2.Discarnated.Color);
 	}
 
-	[TestMethod]
-	public void TestBarbed()
+	[Test]
+	public async Task TestBarbed()
 	{
-		Assert.AreEqual(DeathsV3_0.Barbed, Deaths.GetDeathByType(GameVersion.V3_0, 15));
-		Assert.AreEqual(DeathsV3_0.Barbed, EnemiesV3_0.Thorn.Death);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_0, 15)).IsEqualTo(DeathsV3_0.Barbed);
+		await Assert.That(EnemiesV3_0.Thorn.Death).IsEqualTo(DeathsV3_0.Barbed);
 
-		Assert.AreEqual(DeathsV3_0.Barbed.Color, EnemyColors.Thorn);
+		await Assert.That(EnemyColors.Thorn).IsEqualTo(DeathsV3_0.Barbed.Color);
 	}
 
-	[TestMethod]
-	public void TestEntangled()
+	[Test]
+	public async Task TestEntangled()
 	{
-		Assert.AreEqual(DeathsV3_1.Entangled, Deaths.GetDeathByType(GameVersion.V3_1, 15));
-		Assert.AreEqual(DeathsV3_2.Entangled, Deaths.GetDeathByType(GameVersion.V3_2, 15));
-		Assert.AreEqual(DeathsV3_1.Entangled, EnemiesV3_1.Thorn.Death);
-		Assert.AreEqual(DeathsV3_2.Entangled, EnemiesV3_2.Thorn.Death);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_1, 15)).IsEqualTo(DeathsV3_1.Entangled);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_2, 15)).IsEqualTo(DeathsV3_2.Entangled);
+		await Assert.That(EnemiesV3_1.Thorn.Death).IsEqualTo(DeathsV3_1.Entangled);
+		await Assert.That(EnemiesV3_2.Thorn.Death).IsEqualTo(DeathsV3_2.Entangled);
 
-		Assert.AreEqual(DeathsV3_1.Entangled.Color, EnemyColors.Thorn);
-		Assert.AreEqual(DeathsV3_2.Entangled.Color, EnemyColors.Thorn);
+		await Assert.That(EnemyColors.Thorn).IsEqualTo(DeathsV3_1.Entangled.Color);
+		await Assert.That(EnemyColors.Thorn).IsEqualTo(DeathsV3_2.Entangled.Color);
 	}
 
-	[TestMethod]
-	public void TestHaunted()
+	[Test]
+	public async Task TestHaunted()
 	{
-		Assert.AreEqual(DeathsV3_1.Haunted, Deaths.GetDeathByType(GameVersion.V3_1, 16));
-		Assert.AreEqual(DeathsV3_2.Haunted, Deaths.GetDeathByType(GameVersion.V3_2, 16));
-		Assert.AreEqual(DeathsV3_1.Haunted, EnemiesV3_1.Ghostpede.Death);
-		Assert.AreEqual(DeathsV3_2.Haunted, EnemiesV3_2.Ghostpede.Death);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_1, 16)).IsEqualTo(DeathsV3_1.Haunted);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_2, 16)).IsEqualTo(DeathsV3_2.Haunted);
+		await Assert.That(EnemiesV3_1.Ghostpede.Death).IsEqualTo(DeathsV3_1.Haunted);
+		await Assert.That(EnemiesV3_2.Ghostpede.Death).IsEqualTo(DeathsV3_2.Haunted);
 
-		Assert.AreEqual(DeathsV3_1.Haunted.Color, EnemyColors.Ghostpede);
-		Assert.AreEqual(DeathsV3_2.Haunted.Color, EnemyColors.Ghostpede);
+		await Assert.That(EnemyColors.Ghostpede).IsEqualTo(DeathsV3_1.Haunted.Color);
+		await Assert.That(EnemyColors.Ghostpede).IsEqualTo(DeathsV3_2.Haunted.Color);
 	}
 
-	[TestMethod]
-	public void TestStricken()
+	[Test]
+	public async Task TestStricken()
 	{
-		Assert.AreEqual(DeathsV1_0.Stricken, Deaths.GetDeathByType(GameVersion.V1_0, 16));
-		Assert.AreEqual(DeathsV2_0.Stricken, Deaths.GetDeathByType(GameVersion.V2_0, 16));
-		Assert.AreEqual(DeathsV1_0.Stricken, EnemiesV1_0.Spiderling.Death);
-		Assert.AreEqual(DeathsV2_0.Stricken, EnemiesV2_0.Spiderling.Death);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V1_0, 16)).IsEqualTo(DeathsV1_0.Stricken);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V2_0, 16)).IsEqualTo(DeathsV2_0.Stricken);
+		await Assert.That(EnemiesV1_0.Spiderling.Death).IsEqualTo(DeathsV1_0.Stricken);
+		await Assert.That(EnemiesV2_0.Spiderling.Death).IsEqualTo(DeathsV2_0.Stricken);
 
-		Assert.AreEqual(DeathsV1_0.Stricken.Color, EnemyColors.Spiderling);
-		Assert.AreEqual(DeathsV2_0.Stricken.Color, EnemyColors.Spiderling);
+		await Assert.That(EnemyColors.Spiderling).IsEqualTo(DeathsV1_0.Stricken.Color);
+		await Assert.That(EnemyColors.Spiderling).IsEqualTo(DeathsV2_0.Stricken.Color);
 	}
 
-	[TestMethod]
-	public void TestDevastated()
+	[Test]
+	public async Task TestDevastated()
 	{
-		Assert.AreEqual(DeathsV1_0.Devastated, Deaths.GetDeathByType(GameVersion.V1_0, 17));
-		Assert.AreEqual(DeathsV2_0.Devastated, Deaths.GetDeathByType(GameVersion.V2_0, 17));
-		Assert.AreEqual(DeathsV1_0.Devastated, EnemiesV1_0.Leviathan.Death);
-		Assert.AreEqual(DeathsV2_0.Devastated, EnemiesV2_0.Leviathan.Death);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V1_0, 17)).IsEqualTo(DeathsV1_0.Devastated);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V2_0, 17)).IsEqualTo(DeathsV2_0.Devastated);
+		await Assert.That(EnemiesV1_0.Leviathan.Death).IsEqualTo(DeathsV1_0.Devastated);
+		await Assert.That(EnemiesV2_0.Leviathan.Death).IsEqualTo(DeathsV2_0.Devastated);
 
-		Assert.AreEqual(DeathsV1_0.Devastated.Color, EnemyColors.Leviathan);
-		Assert.AreEqual(DeathsV2_0.Devastated.Color, EnemyColors.Leviathan);
+		await Assert.That(EnemyColors.Leviathan).IsEqualTo(DeathsV1_0.Devastated.Color);
+		await Assert.That(EnemyColors.Leviathan).IsEqualTo(DeathsV2_0.Devastated.Color);
 	}
 
-	[TestMethod]
-	public void TestDismembered()
+	[Test]
+	public async Task TestDismembered()
 	{
-		Assert.AreEqual(DeathsV1_0.Dismembered, Deaths.GetDeathByType(GameVersion.V1_0, 18));
-		Assert.AreEqual(DeathsV1_0.Dismembered, EnemiesV1_0.Skull3.Death);
-		Assert.AreEqual(DeathsV1_0.Dismembered, EnemiesV1_0.TransmutedSkull3.Death);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V1_0, 18)).IsEqualTo(DeathsV1_0.Dismembered);
+		await Assert.That(EnemiesV1_0.Skull3.Death).IsEqualTo(DeathsV1_0.Dismembered);
+		await Assert.That(EnemiesV1_0.TransmutedSkull3.Death).IsEqualTo(DeathsV1_0.Dismembered);
 
-		Assert.AreEqual(DeathsV1_0.Dismembered.Color, EnemyColors.Skull3);
+		await Assert.That(EnemyColors.Skull3).IsEqualTo(DeathsV1_0.Dismembered.Color);
 	}
 
-	[TestMethod]
-	public void TestUnknown()
+	[Test]
+	public async Task TestUnknown()
 	{
-		Assert.AreEqual(DeathsV1_0.Unknown, Deaths.GetDeathByType(GameVersion.V1_0, 255));
-		Assert.AreEqual(DeathsV2_0.Unknown, Deaths.GetDeathByType(GameVersion.V2_0, 255));
-		Assert.AreEqual(DeathsV3_0.Unknown, Deaths.GetDeathByType(GameVersion.V3_0, 255));
-		Assert.AreEqual(DeathsV3_1.Unknown, Deaths.GetDeathByType(GameVersion.V3_1, 255));
-		Assert.AreEqual(DeathsV3_2.Unknown, Deaths.GetDeathByType(GameVersion.V3_2, 255));
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V1_0, 255)).IsEqualTo(DeathsV1_0.Unknown);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V2_0, 255)).IsEqualTo(DeathsV2_0.Unknown);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_0, 255)).IsEqualTo(DeathsV3_0.Unknown);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_1, 255)).IsEqualTo(DeathsV3_1.Unknown);
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V3_2, 255)).IsEqualTo(DeathsV3_2.Unknown);
 
-		Assert.AreEqual(DeathsV1_0.Unknown.Color, EnemyColors.Unknown);
-		Assert.AreEqual(DeathsV2_0.Unknown.Color, EnemyColors.Unknown);
-		Assert.AreEqual(DeathsV3_0.Unknown.Color, EnemyColors.Unknown);
-		Assert.AreEqual(DeathsV3_1.Unknown.Color, EnemyColors.Unknown);
-		Assert.AreEqual(DeathsV3_2.Unknown.Color, EnemyColors.Unknown);
+		await Assert.That(EnemyColors.Unknown).IsEqualTo(DeathsV1_0.Unknown.Color);
+		await Assert.That(EnemyColors.Unknown).IsEqualTo(DeathsV2_0.Unknown.Color);
+		await Assert.That(EnemyColors.Unknown).IsEqualTo(DeathsV3_0.Unknown.Color);
+		await Assert.That(EnemyColors.Unknown).IsEqualTo(DeathsV3_1.Unknown.Color);
+		await Assert.That(EnemyColors.Unknown).IsEqualTo(DeathsV3_2.Unknown.Color);
 	}
 
-	[TestMethod]
-	public void TestNone()
+	[Test]
+	public async Task TestNone()
 	{
-		Assert.AreEqual(DeathsV2_0.None, Deaths.GetDeathByType(GameVersion.V2_0, 200));
+		await Assert.That(Deaths.GetDeathByType(GameVersion.V2_0, 200)).IsEqualTo(DeathsV2_0.None);
 
-		Assert.AreEqual(DeathsV2_0.None.Color, EnemyColors.Andras);
+		await Assert.That(EnemyColors.Andras).IsEqualTo(DeathsV2_0.None.Color);
 	}
 }

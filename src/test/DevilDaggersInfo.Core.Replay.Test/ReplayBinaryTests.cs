@@ -4,27 +4,26 @@ using System.Text;
 
 namespace DevilDaggersInfo.Core.Replay.Test;
 
-[TestClass]
-public class ReplayBinaryTests
+internal sealed class ReplayBinaryTests
 {
-	[DataTestMethod]
-	[DataRow("Forked-psy.ddreplay")]
-	[DataRow("Forked-xvlv.ddreplay")]
-	public void GetSpawnsetBuffer(string replayFileName)
+	[Test]
+	[Arguments("Forked-psy.ddreplay")]
+	[Arguments("Forked-xvlv.ddreplay")]
+	public async Task GetSpawnsetBuffer(string replayFileName)
 	{
 		string replayFilePath = Path.Combine("Resources", replayFileName);
 		string spawnsetFilePath = Path.Combine("Resources", "Forked");
 
-		byte[] replayBuffer = File.ReadAllBytes(replayFilePath);
+		byte[] replayBuffer = await File.ReadAllBytesAsync(replayFilePath);
 		ReplayBinary<LocalReplayBinaryHeader> replayBinary = new(replayBuffer);
 
-		CollectionAssert.AreEqual(replayBinary.Header.SpawnsetMd5, MD5.HashData(replayBinary.Header.SpawnsetBuffer));
-		CollectionAssert.AreEqual(File.ReadAllBytes(spawnsetFilePath), replayBinary.Header.SpawnsetBuffer);
+		await Assert.That(MD5.HashData(replayBinary.Header.SpawnsetBuffer)).IsEquivalentTo(replayBinary.Header.SpawnsetMd5, CollectionOrdering.Matching);
+		await Assert.That(replayBinary.Header.SpawnsetBuffer).IsEquivalentTo(await File.ReadAllBytesAsync(spawnsetFilePath), CollectionOrdering.Matching);
 	}
 
 	// TODO: Move to ddinfo-tools.
-	// [TestMethod]
-	// public void ParseAndCompileEvents()
+	// [Test]
+	// public async Task ParseAndCompileEvents()
 	// {
 	// 	ReplayBinary<LocalReplayBinaryHeader> replayBinary = new(LocalReplayBinaryHeader.CreateDefault(), Array.Empty<ReplayEvent>());
 	// 	replayBinary.Events.AddEvent(new InitialInputsEventData(true, false, false, false, JumpType.None, ShootType.Hold, ShootType.None, 0, 0, 0.2f));
@@ -42,16 +41,16 @@ public class ReplayBinaryTests
 	//
 	// 	ReplayBinary<LocalReplayBinaryHeader> replayBinaryFromBuffer = new(replayBuffer);
 	//
-	// 	Assert.AreEqual(replayBinary.Events.Events.Count, replayBinaryFromBuffer.Events.Events.Count);
+	// 	await Assert.That(replayBinaryFromBuffer.Events.Events.Count).IsEqualTo(replayBinary.Events.Events.Count);
 	// 	for (int i = 0; i < replayBinary.Events.Events.Count; i++)
-	// 		Assert.AreEqual(replayBinary.Events.Events[i], replayBinaryFromBuffer.Events.Events[i]);
+	// 		await Assert.That(replayBinaryFromBuffer.Events.Events[i]).IsEqualTo(replayBinary.Events.Events[i]);
 	// }
 
-	[TestMethod]
-	public void EditEventData()
+	[Test]
+	public async Task EditEventData()
 	{
 		string replayFilePath = Path.Combine("Resources", "SkullTest.ddreplay");
-		byte[] replayBuffer = File.ReadAllBytes(replayFilePath);
+		byte[] replayBuffer = await File.ReadAllBytesAsync(replayFilePath);
 		ReplayBinary<LocalReplayBinaryHeader> replayBinary = new(replayBuffer);
 
 		int skullsAccessed = 0;
@@ -60,73 +59,73 @@ public class ReplayBinaryTests
 			if (e.Data is not BoidSpawnEventData boid)
 				continue;
 
-			Assert.AreEqual(new(20, 20, 20), boid.Position);
+			await Assert.That(boid.Position).IsEqualTo(new(20, 20, 20));
 			boid.Position = new(10, 10, 10);
 			skullsAccessed++;
 		}
 
-		Assert.AreEqual(4, skullsAccessed);
+		await Assert.That(skullsAccessed).IsEqualTo(4);
 
 		foreach (ReplayEvent e in replayBinary.Events)
 		{
 			if (e.Data is not BoidSpawnEventData boid)
 				continue;
 
-			Assert.AreEqual(new(10, 10, 10), boid.Position);
+			await Assert.That(boid.Position).IsEqualTo(new(10, 10, 10));
 			skullsAccessed++;
 		}
 
-		Assert.AreEqual(8, skullsAccessed);
+		await Assert.That(skullsAccessed).IsEqualTo(8);
 
 		byte[] compiledReplayBuffer = replayBinary.Compile();
 
 		ReplayBinary<LocalReplayBinaryHeader> replayBinaryFromBuffer = new(compiledReplayBuffer);
 
-		Assert.AreEqual(replayBinary.Events.Count, replayBinaryFromBuffer.Events.Count);
+		await Assert.That(replayBinaryFromBuffer.Events.Count).IsEqualTo(replayBinary.Events.Count);
 		for (int i = 0; i < replayBinary.Events.Count; i++)
-			Assert.AreEqual(replayBinary.Events[i], replayBinaryFromBuffer.Events[i]);
+			await Assert.That(replayBinaryFromBuffer.Events[i]).IsEqualTo(replayBinary.Events[i]);
 
 		foreach (ReplayEvent e in replayBinary.Events)
 		{
 			if (e.Data is not BoidSpawnEventData boid)
 				continue;
 
-			Assert.AreEqual(new(10, 10, 10), boid.Position);
+			await Assert.That(boid.Position).IsEqualTo(new(10, 10, 10));
 			skullsAccessed++;
 		}
 
-		Assert.AreEqual(12, skullsAccessed);
+		await Assert.That(skullsAccessed).IsEqualTo(12);
 	}
 
-	[DataTestMethod]
-	[DataRow("ddrpl.", true)]
-	[DataRow("ddrpl..", true)]
-	[DataRow("ddrpl..abc", true)]
-	[DataRow("ddRpl.", false)]
-	[DataRow("ddrpl", false)]
-	[DataRow("dd", false)]
-	[DataRow("DF_RPL2", false)]
-	[DataRow("", false)]
-	[DataRow("dr1pl.", false)]
-	public void TestValidateLocalReplayHeaderIdentifier(string identifier, bool isValid)
+	[Test]
+	[Arguments("ddrpl.", true)]
+	[Arguments("ddrpl..", true)]
+	[Arguments("ddrpl..abc", true)]
+	[Arguments("ddRpl.", false)]
+	[Arguments("ddrpl", false)]
+	[Arguments("dd", false)]
+	[Arguments("DF_RPL2", false)]
+	[Arguments("", false)]
+	[Arguments("dr1pl.", false)]
+	public async Task TestValidateLocalReplayHeaderIdentifier(string identifier, bool isValid)
 	{
 		byte[] identifierBytes = Encoding.UTF8.GetBytes(identifier);
-		Assert.AreEqual(isValid, LocalReplayBinaryHeader.IdentifierIsValid(identifierBytes, out _));
+		await Assert.That(LocalReplayBinaryHeader.IdentifierIsValid(identifierBytes, out _)).IsEqualTo(isValid);
 	}
 
-	[DataTestMethod]
-	[DataRow("DF_RPL2", true)]
-	[DataRow("DF_RPL22", true)]
-	[DataRow("DF_RPL22abc", true)]
-	[DataRow("Df_RPL2", false)]
-	[DataRow("DF_RPL", false)]
-	[DataRow("DF", false)]
-	[DataRow("ddrpl.", false)]
-	[DataRow("", false)]
-	[DataRow("D_F1PL2", false)]
-	public void TestValidateLeaderboardReplayHeaderIdentifier(string identifier, bool isValid)
+	[Test]
+	[Arguments("DF_RPL2", true)]
+	[Arguments("DF_RPL22", true)]
+	[Arguments("DF_RPL22abc", true)]
+	[Arguments("Df_RPL2", false)]
+	[Arguments("DF_RPL", false)]
+	[Arguments("DF", false)]
+	[Arguments("ddrpl.", false)]
+	[Arguments("", false)]
+	[Arguments("D_F1PL2", false)]
+	public async Task TestValidateLeaderboardReplayHeaderIdentifier(string identifier, bool isValid)
 	{
 		byte[] identifierBytes = Encoding.UTF8.GetBytes(identifier);
-		Assert.AreEqual(isValid, LeaderboardReplayBinaryHeader.IdentifierIsValid(identifierBytes, out _));
+		await Assert.That(LeaderboardReplayBinaryHeader.IdentifierIsValid(identifierBytes, out _)).IsEqualTo(isValid);
 	}
 }

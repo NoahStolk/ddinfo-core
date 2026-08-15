@@ -2,19 +2,18 @@ using DevilDaggersInfo.Core.Mod.Extensions;
 
 namespace DevilDaggersInfo.Core.Mod.Test;
 
-[TestClass]
-public class NullTerminatorTests
+internal sealed class NullTerminatorTests
 {
-	[TestMethod]
-	public void TestNullTerminatedStrings()
+	[Test]
+	public async Task TestNullTerminatedStrings()
 	{
 		byte[] buffer = [0x68, 0x61, 0x6E, 0x64, 0, 0x64, 0x64, 0];
 
 		using MemoryStream ms = new(buffer);
 		using BinaryReader br = new(ms);
 		string hand = br.ReadNullTerminatedString();
-		Assert.AreEqual("hand", hand);
+		await Assert.That(hand).IsEqualTo("hand");
 		string dd = br.ReadNullTerminatedString();
-		Assert.AreEqual("dd", dd);
+		await Assert.That(dd).IsEqualTo("dd");
 	}
 }

@@ -1,78 +1,77 @@
 namespace DevilDaggersInfo.Core.Spawnset.Test;
 
-[TestClass]
-public class SpawnsetUtilityTests
+internal sealed class SpawnsetUtilityTests
 {
-	[DataTestMethod]
-	[DataRow("V0", true)]
-	[DataRow("V1", true)]
-	[DataRow("V2", true)]
-	[DataRow("V3", true)]
-	[DataRow("V3_229", true)]
-	[DataRow("V3_451", true)]
-	[DataRow("Empty", false)]
-	[DataRow("EmptySpawn", false)]
-	[DataRow("NoEndLoop", false)]
-	[DataRow("TimeAttack", false)]
-	[DataRow("Scanner", true)]
-	public void TestHasEndLoop(string fileName, bool hasEndLoop)
+	[Test]
+	[Arguments("V0", true)]
+	[Arguments("V1", true)]
+	[Arguments("V2", true)]
+	[Arguments("V3", true)]
+	[Arguments("V3_229", true)]
+	[Arguments("V3_451", true)]
+	[Arguments("Empty", false)]
+	[Arguments("EmptySpawn", false)]
+	[Arguments("NoEndLoop", false)]
+	[Arguments("TimeAttack", false)]
+	[Arguments("Scanner", true)]
+	public async Task TestHasEndLoop(string fileName, bool hasEndLoop)
 	{
-		SpawnsetBinary spawnset = SpawnsetBinary.Parse(File.ReadAllBytes(Path.Combine("Resources", fileName)));
-		Assert.AreEqual(hasEndLoop, spawnset.HasEndLoop());
+		SpawnsetBinary spawnset = SpawnsetBinary.Parse(await File.ReadAllBytesAsync(Path.Combine("Resources", fileName)));
+		await Assert.That(spawnset.HasEndLoop()).IsEqualTo(hasEndLoop);
 	}
 
-	[DataTestMethod]
-	[DataRow("V0", true)]
-	[DataRow("V1", true)]
-	[DataRow("V2", true)]
-	[DataRow("V3", true)]
-	[DataRow("V3_229", true)]
-	[DataRow("V3_451", true)]
-	[DataRow("Empty", false)]
-	[DataRow("EmptySpawn", false)]
-	[DataRow("NoEndLoop", true)]
-	[DataRow("TimeAttack", true)]
-	[DataRow("Scanner", true)]
-	public void TestHasSpawns(string fileName, bool hasSpawns)
+	[Test]
+	[Arguments("V0", true)]
+	[Arguments("V1", true)]
+	[Arguments("V2", true)]
+	[Arguments("V3", true)]
+	[Arguments("V3_229", true)]
+	[Arguments("V3_451", true)]
+	[Arguments("Empty", false)]
+	[Arguments("EmptySpawn", false)]
+	[Arguments("NoEndLoop", true)]
+	[Arguments("TimeAttack", true)]
+	[Arguments("Scanner", true)]
+	public async Task TestHasSpawns(string fileName, bool hasSpawns)
 	{
-		SpawnsetBinary spawnset = SpawnsetBinary.Parse(File.ReadAllBytes(Path.Combine("Resources", fileName)));
-		Assert.AreEqual(hasSpawns, spawnset.HasSpawns());
+		SpawnsetBinary spawnset = SpawnsetBinary.Parse(await File.ReadAllBytesAsync(Path.Combine("Resources", fileName)));
+		await Assert.That(spawnset.HasSpawns()).IsEqualTo(hasSpawns);
 	}
 
-	[DataTestMethod]
-	[DataRow("V0", 63)]
-	[DataRow("V1", 108)]
-	[DataRow("V2", 79)]
-	[DataRow("V3", 100)]
-	[DataRow("V3_229", 57)]
-	[DataRow("V3_451", 0)]
-	[DataRow("Empty", 0)]
-	[DataRow("EmptySpawn", 0)]
-	[DataRow("NoEndLoop", 2)]
-	[DataRow("TimeAttack", -1)]
-	[DataRow("Scanner", 62)]
-	public void TestLoopStartIndex(string fileName, int loopStartIndex)
+	[Test]
+	[Arguments("V0", 63)]
+	[Arguments("V1", 108)]
+	[Arguments("V2", 79)]
+	[Arguments("V3", 100)]
+	[Arguments("V3_229", 57)]
+	[Arguments("V3_451", 0)]
+	[Arguments("Empty", 0)]
+	[Arguments("EmptySpawn", 0)]
+	[Arguments("NoEndLoop", 2)]
+	[Arguments("TimeAttack", -1)]
+	[Arguments("Scanner", 62)]
+	public async Task TestLoopStartIndex(string fileName, int loopStartIndex)
 	{
-		SpawnsetBinary spawnset = SpawnsetBinary.Parse(File.ReadAllBytes(Path.Combine("Resources", fileName)));
+		SpawnsetBinary spawnset = SpawnsetBinary.Parse(await File.ReadAllBytesAsync(Path.Combine("Resources", fileName)));
 		if (loopStartIndex == -1)
-			Assert.ThrowsException<InvalidOperationException>(() => spawnset.GetLoopStartIndex());
+			Assert.ThrowsExactly<InvalidOperationException>(() => spawnset.GetLoopStartIndex());
 		else
-			Assert.AreEqual(loopStartIndex, spawnset.GetLoopStartIndex());
+			await Assert.That(spawnset.GetLoopStartIndex()).IsEqualTo(loopStartIndex);
 	}
 
-	[DataTestMethod]
-	[DataRow(50f, 20f, 0.025f, 1200f)]
-	[DataRow(30f, 20f, 1f, 10f)]
-	[DataRow(30f, 5f, 1f, 25f)]
-	[DataRow(30f, 0f, 1f, 30f)]
-	[DataRow(30f, -1f, 1f, 30f)]
-	[DataRow(26f, 15f, 0.025f, 440f)]
-	[DataRow(50f, 20f, 0f, 0f)]
-	[DataRow(50f, 20f, -1f, 0f)]
-	[DataRow(30f, 40f, 1f, 0f)]
-	[DataRow(6105.9f, 27f, 11.5f, 528.6f)]
-	[DataRow(0f, 29f, 3f, 0f)]
-	public void TestShrinkEndTime(float start, float end, float rate, float expectedFinalShrinkSecond)
+	[Test]
+	[Arguments(50f, 20f, 0.025f, 1200f)]
+	[Arguments(30f, 20f, 1f, 10f)]
+	[Arguments(30f, 5f, 1f, 25f)]
+	[Arguments(30f, 0f, 1f, 30f)]
+	[Arguments(30f, -1f, 1f, 30f)]
+	[Arguments(26f, 15f, 0.025f, 440f)]
+	[Arguments(50f, 20f, 0f, 0f)]
+	[Arguments(50f, 20f, -1f, 0f)]
+	[Arguments(30f, 40f, 1f, 0f)]
+	[Arguments(6105.9f, 27f, 11.5f, 528.6f)]
+	[Arguments(0f, 29f, 3f, 0f)]
+	public async Task TestShrinkEndTime(float start, float end, float rate, float expectedFinalShrinkSecond)
 	{
 		SpawnsetBinary spawnset = SpawnsetBinary.CreateDefault() with
 		{
@@ -81,56 +80,56 @@ public class SpawnsetUtilityTests
 			ShrinkRate = rate,
 		};
 
-		Assert.AreEqual(expectedFinalShrinkSecond, spawnset.GetShrinkEndTime(), 0.0001);
+		await Assert.That(spawnset.GetShrinkEndTime()).IsEqualTo(expectedFinalShrinkSecond).Within(0.0001f);
 	}
 
-	[DataTestMethod]
-	[DataRow(30f, 0f, 1f, 25, 17, 0f)]
-	[DataRow(30f, 0f, 1f, 25, 18, 2f)]
-	[DataRow(30f, 0f, 1f, 25, 19, 6f)]
-	[DataRow(30f, 0f, 1f, 25, 20, 10f)]
-	[DataRow(30f, 0f, 1f, 25, 21, 14f)]
-	[DataRow(30f, 0f, 1f, 25, 22, 18f)]
-	[DataRow(30f, 0f, 1f, 25, 23, 22f)]
-	[DataRow(30f, 0f, 1f, 25, 24, 26f)]
-	[DataRow(30f, 0f, 1f, 25, 25, float.MaxValue)]
+	[Test]
+	[Arguments(30f, 0f, 1f, 25, 17, 0f)]
+	[Arguments(30f, 0f, 1f, 25, 18, 2f)]
+	[Arguments(30f, 0f, 1f, 25, 19, 6f)]
+	[Arguments(30f, 0f, 1f, 25, 20, 10f)]
+	[Arguments(30f, 0f, 1f, 25, 21, 14f)]
+	[Arguments(30f, 0f, 1f, 25, 22, 18f)]
+	[Arguments(30f, 0f, 1f, 25, 23, 22f)]
+	[Arguments(30f, 0f, 1f, 25, 24, 26f)]
+	[Arguments(30f, 0f, 1f, 25, 25, float.MaxValue)]
 
-	[DataRow(30f, 0f, 2f, 25, 17, 0f)]
-	[DataRow(30f, 0f, 2f, 25, 18, 1f)]
-	[DataRow(30f, 0f, 2f, 25, 19, 3f)]
-	[DataRow(30f, 0f, 2f, 25, 20, 5f)]
-	[DataRow(30f, 0f, 2f, 25, 21, 7f)]
-	[DataRow(30f, 0f, 2f, 25, 22, 9f)]
-	[DataRow(30f, 0f, 2f, 25, 23, 11f)]
-	[DataRow(30f, 0f, 2f, 25, 24, 13f)]
-	[DataRow(30f, 0f, 2f, 25, 25, float.MaxValue)]
+	[Arguments(30f, 0f, 2f, 25, 17, 0f)]
+	[Arguments(30f, 0f, 2f, 25, 18, 1f)]
+	[Arguments(30f, 0f, 2f, 25, 19, 3f)]
+	[Arguments(30f, 0f, 2f, 25, 20, 5f)]
+	[Arguments(30f, 0f, 2f, 25, 21, 7f)]
+	[Arguments(30f, 0f, 2f, 25, 22, 9f)]
+	[Arguments(30f, 0f, 2f, 25, 23, 11f)]
+	[Arguments(30f, 0f, 2f, 25, 24, 13f)]
+	[Arguments(30f, 0f, 2f, 25, 25, float.MaxValue)]
 
-	[DataRow(30f, 10f, 2f, 25, 17, 0f)]
-	[DataRow(30f, 10f, 2f, 25, 18, 1f)]
-	[DataRow(30f, 10f, 2f, 25, 19, 3f)]
-	[DataRow(30f, 10f, 2f, 25, 20, 5f)]
-	[DataRow(30f, 10f, 2f, 25, 21, 7f)]
-	[DataRow(30f, 10f, 2f, 25, 22, 9f)]
-	[DataRow(30f, 10f, 2f, 25, 23, float.MaxValue)]
-	[DataRow(30f, 10f, 2f, 25, 24, float.MaxValue)]
-	[DataRow(30f, 10f, 2f, 25, 25, float.MaxValue)]
+	[Arguments(30f, 10f, 2f, 25, 17, 0f)]
+	[Arguments(30f, 10f, 2f, 25, 18, 1f)]
+	[Arguments(30f, 10f, 2f, 25, 19, 3f)]
+	[Arguments(30f, 10f, 2f, 25, 20, 5f)]
+	[Arguments(30f, 10f, 2f, 25, 21, 7f)]
+	[Arguments(30f, 10f, 2f, 25, 22, 9f)]
+	[Arguments(30f, 10f, 2f, 25, 23, float.MaxValue)]
+	[Arguments(30f, 10f, 2f, 25, 24, float.MaxValue)]
+	[Arguments(30f, 10f, 2f, 25, 25, float.MaxValue)]
 
-	[DataRow(30f, 40f, 1f, 25, 25, float.MaxValue)]
-	[DataRow(30f, 40f, 1f, 25, 5, 0f)]
+	[Arguments(30f, 40f, 1f, 25, 25, float.MaxValue)]
+	[Arguments(30f, 40f, 1f, 25, 5, 0f)]
 
-	[DataRow(30f, 30f, 1f, 25, 25, float.MaxValue)]
-	[DataRow(30f, 30f, 1f, 25, 5, 0f)]
+	[Arguments(30f, 30f, 1f, 25, 25, float.MaxValue)]
+	[Arguments(30f, 30f, 1f, 25, 5, 0f)]
 
-	[DataRow(30f, 10f, 0f, 25, 25, float.MaxValue)]
-	[DataRow(30f, 10f, 0f, 25, 5, 0f)]
+	[Arguments(30f, 10f, 0f, 25, 25, float.MaxValue)]
+	[Arguments(30f, 10f, 0f, 25, 5, 0f)]
 
-	[DataRow(30f, 10f, -1f, 25, 25, float.MaxValue)]
-	[DataRow(30f, 10f, -1f, 25, 5, 0f)]
+	[Arguments(30f, 10f, -1f, 25, 25, float.MaxValue)]
+	[Arguments(30f, 10f, -1f, 25, 5, 0f)]
 
-	[DataRow(0f, 29f, 3f, 25, 25, float.MaxValue)]
-	[DataRow(0f, 29f, 3f, 27, 21, float.MaxValue)]
-	[DataRow(0f, 29f, 3f, 25, 15, 0f)]
-	public void TestShrinkTimeForTile(float start, float end, float rate, int x, int y, float expectedTime)
+	[Arguments(0f, 29f, 3f, 25, 25, float.MaxValue)]
+	[Arguments(0f, 29f, 3f, 27, 21, float.MaxValue)]
+	[Arguments(0f, 29f, 3f, 25, 15, 0f)]
+	public async Task TestShrinkTimeForTile(float start, float end, float rate, int x, int y, float expectedTime)
 	{
 		SpawnsetBinary spawnset = SpawnsetBinary.CreateDefault() with
 		{
@@ -139,24 +138,24 @@ public class SpawnsetUtilityTests
 			ShrinkRate = rate,
 		};
 
-		Assert.AreEqual(expectedTime, spawnset.GetShrinkTimeForTile(x, y), 0.0001);
+		await Assert.That(spawnset.GetShrinkTimeForTile(x, y)).IsEqualTo(expectedTime).Within(0.0001f);
 	}
 
-	[DataTestMethod]
-	[DataRow(48, 0, 37, 25)]
-	[DataRow(-48, 0, 13, 25)]
-	[DataRow(0, 48, 25, 37)]
-	[DataRow(0, -48, 25, 13)]
+	[Test]
+	[Arguments(48, 0, 37, 25)]
+	[Arguments(-48, 0, 13, 25)]
+	[Arguments(0, 48, 25, 37)]
+	[Arguments(0, -48, 25, 13)]
 
-	[DataRow(47, 0, 37, 25)]
-	[DataRow(46, 0, 37, 25)]
-	[DataRow(45, 0, 36, 25)]
-	public void TestRaceDaggerGridPosition(float raceDaggerX, float raceDaggerZ, int expectedTileX, int expectedTileZ)
+	[Arguments(47, 0, 37, 25)]
+	[Arguments(46, 0, 37, 25)]
+	[Arguments(45, 0, 36, 25)]
+	public async Task TestRaceDaggerGridPosition(float raceDaggerX, float raceDaggerZ, int expectedTileX, int expectedTileZ)
 	{
 		SpawnsetBinary defaultSpawnset = SpawnsetBinary.CreateDefault();
 		int x = defaultSpawnset.WorldToTileCoordinate(raceDaggerX);
 		int z = defaultSpawnset.WorldToTileCoordinate(raceDaggerZ);
-		Assert.AreEqual(expectedTileX, x);
-		Assert.AreEqual(expectedTileZ, z);
+		await Assert.That(x).IsEqualTo(expectedTileX);
+		await Assert.That(z).IsEqualTo(expectedTileZ);
 	}
 }
