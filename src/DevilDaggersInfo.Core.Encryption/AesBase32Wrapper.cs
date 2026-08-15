@@ -58,8 +58,7 @@ public class AesBase32Wrapper
 		symmetricAlgorithm.Padding = PaddingMode.PKCS7;
 		symmetricAlgorithm.IV = Encoding.UTF8.GetBytes(_initializationVector);
 
-		using Rfc2898DeriveBytes spec = new(Encoding.UTF8.GetBytes(_password), Encoding.UTF8.GetBytes(_salt), 65536, HashAlgorithmName.SHA1);
-		symmetricAlgorithm.Key = spec.GetBytes(16);
+		symmetricAlgorithm.Key = Rfc2898DeriveBytes.Pbkdf2(Encoding.UTF8.GetBytes(_password), Encoding.UTF8.GetBytes(_salt), 65536, HashAlgorithmName.SHA1, 16);
 
 		return transformType switch
 		{

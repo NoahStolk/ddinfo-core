@@ -4,7 +4,7 @@ namespace DevilDaggersInfo.Core.Wiki;
 
 public static class GameVersions
 {
-	private static readonly GameVersion[] _gameVersions = (GameVersion[])Enum.GetValues(typeof(GameVersion));
+	private static readonly GameVersion[] _gameVersions = Enum.GetValues<GameVersion>();
 
 	public static GameVersion? GetGameVersionFromDate(DateTime dateTime)
 	{

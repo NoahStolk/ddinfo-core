@@ -24,7 +24,7 @@ dotnet test src/test/DevilDaggersInfo.Core.Spawnset.Test --filter "FullyQualifie
 dotnet pack src/DevilDaggersInfo.Core -c Release -o .
 ```
 
-Toolchain is pinned by `global.json` to SDK 10.0.100 (`rollForward: latestMajor`), but the target framework is still `net8.0` with `LangVersion` 12.0. **If no .NET 8 runtime is installed locally, `dotnet test` aborts with "You must install or update .NET to run this application" — prefix with `DOTNET_ROLL_FORWARD=Major` to run the test host on a newer runtime.** Building is unaffected.
+Toolchain is pinned by `global.json` to SDK 10.0.100 (`rollForward: latestMajor`); the target framework is `net10.0` with `LangVersion` 14.0, both set once in `src/Directory.Build.props` for every project.
 
 Build output goes to `src/artifacts/` and `src/test/artifacts/` (`UseArtifactsOutput`; the test tree gets its own because `src/test/Directory.Build.props` is the nearest props file there). Test results go to `test-results/` (see `src/test/.runsettings`).
 
@@ -67,4 +67,4 @@ Each library uses a `_Imports.cs` file for `global using` declarations; add name
 - NuGet versions are managed centrally in `src/Directory.Packages.props` (`ManagePackageVersionsCentrally`); `PackageReference` elements carry no `Version` attribute.
 - Parsing APIs consistently offer both a throwing `Parse`/constructor and a `TryParse` returning `bool` with a `[NotNullWhen(true)]` out parameter. Follow that pair when adding new parsers.
 - Hot paths deliberately avoid LINQ and allocations (see the loop-based lookups in `AssetContainer` and `IGameData`); keep that style in data-lookup code.
-- The package version lives in `src/DevilDaggersInfo.Core/DevilDaggersInfo.Core.csproj`. `CHANGELOG.md` follows semantic versioning and documents every release, including small changes like sealing a class or a dependency bump — update it alongside any user-visible API change and bump the version.
+- The package version lives in `src/DevilDaggersInfo.Core/DevilDaggersInfo.Core.csproj`. `CHANGELOG.md` follows semantic versioning and documents every release, including small changes like sealing a class or a dependency bump — record any user-visible change there under the `[unreleased]` heading. Bumping the version is a separate, deliberate release step: CI packs and pushes to nuget.org on every push to `main`, but with `--skip-duplicate`, so an unchanged version is simply a no-op. Land changes under `[unreleased]`, then rename that heading and bump the version when you actually want to publish.
