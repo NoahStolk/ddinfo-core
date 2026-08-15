@@ -4,7 +4,8 @@ using System.Runtime.InteropServices;
 namespace DevilDaggersInfo.Core.Replay.Numerics;
 
 [StructLayout(LayoutKind.Sequential)]
-public record struct Int16Vec3(short X, short Y, short Z) : ISpanFormattable
+public record struct Int16Vec3(short X, short Y, short Z)
+	: ISpanFormattable, IUtf8SpanFormattable
 {
 	public short X = X;
 	public short Y = Y;
@@ -40,5 +41,17 @@ public record struct Int16Vec3(short X, short Y, short Z) : ISpanFormattable
 			SpanWrite.TryWrite(destination, ref charsWritten, Y, format, provider) &&
 			SpanWrite.TryWriteString(destination, ref charsWritten, ", ") &&
 			SpanWrite.TryWrite(destination, ref charsWritten, Z, format, provider);
+	}
+
+	public bool TryFormat(Span<byte> utf8Destination, out int bytesWritten, ReadOnlySpan<char> format, IFormatProvider? provider)
+	{
+		bytesWritten = 0;
+
+		return
+			SpanWrite.TryWrite(utf8Destination, ref bytesWritten, X, format, provider) &&
+			SpanWrite.TryWriteBytes(utf8Destination, ref bytesWritten, ", "u8) &&
+			SpanWrite.TryWrite(utf8Destination, ref bytesWritten, Y, format, provider) &&
+			SpanWrite.TryWriteBytes(utf8Destination, ref bytesWritten, ", "u8) &&
+			SpanWrite.TryWrite(utf8Destination, ref bytesWritten, Z, format, provider);
 	}
 }

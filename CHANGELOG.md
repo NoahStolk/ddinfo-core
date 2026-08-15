@@ -4,10 +4,19 @@ This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [unreleased]
 
+### Added
+
+- `Int16Vec3`, `Int16Mat3x3`, and `Matrix3x3` now implement `IUtf8SpanFormattable` in addition to `ISpanFormattable`.
+- Added UTF-8 overloads to `SpanWrite`: `TryWriteByte`, `TryWriteBytes`, and `TryWrite<T>` for `IUtf8SpanFormattable` values.
+
 ### Changed
 
 - Upgraded to .NET 10.0.
 - `AesBase32Wrapper` is now sealed.
+
+### Fixed
+
+- `SpanWrite.TryWriteChar` and `SpanWrite.TryWriteString` no longer fail when the value exactly fills the destination span. This also affects the `TryFormat` implementations of `Int16Vec3`, `Int16Mat3x3`, and `Matrix3x3`, which previously required a destination span one character longer than the formatted output.
 
 ## 0.14.2
 

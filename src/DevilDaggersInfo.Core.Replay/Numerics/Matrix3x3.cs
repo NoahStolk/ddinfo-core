@@ -5,7 +5,8 @@ namespace DevilDaggersInfo.Core.Replay.Numerics;
 
 // ReSharper disable once InconsistentNaming
 [StructLayout(LayoutKind.Sequential)]
-public record struct Matrix3x3(float M11, float M12, float M13, float M21, float M22, float M23, float M31, float M32, float M33) : ISpanFormattable
+public record struct Matrix3x3(float M11, float M12, float M13, float M21, float M22, float M23, float M31, float M32, float M33)
+	: ISpanFormattable, IUtf8SpanFormattable
 {
 	public float M11 = M11;
 	public float M12 = M12;
@@ -53,5 +54,31 @@ public record struct Matrix3x3(float M11, float M12, float M13, float M21, float
 			SpanWrite.TryWriteString(destination, ref charsWritten, ", ") &&
 			SpanWrite.TryWrite(destination, ref charsWritten, M33, format, provider) &&
 			SpanWrite.TryWriteChar(destination, ref charsWritten, '>');
+	}
+
+	public bool TryFormat(Span<byte> utf8Destination, out int bytesWritten, ReadOnlySpan<char> format, IFormatProvider? provider)
+	{
+		bytesWritten = 0;
+
+		return
+			SpanWrite.TryWriteByte(utf8Destination, ref bytesWritten, (byte)'<') &&
+			SpanWrite.TryWrite(utf8Destination, ref bytesWritten, M11, format, provider) &&
+			SpanWrite.TryWriteBytes(utf8Destination, ref bytesWritten, ", "u8) &&
+			SpanWrite.TryWrite(utf8Destination, ref bytesWritten, M12, format, provider) &&
+			SpanWrite.TryWriteBytes(utf8Destination, ref bytesWritten, ", "u8) &&
+			SpanWrite.TryWrite(utf8Destination, ref bytesWritten, M13, format, provider) &&
+			SpanWrite.TryWriteBytes(utf8Destination, ref bytesWritten, "> <"u8) &&
+			SpanWrite.TryWrite(utf8Destination, ref bytesWritten, M21, format, provider) &&
+			SpanWrite.TryWriteBytes(utf8Destination, ref bytesWritten, ", "u8) &&
+			SpanWrite.TryWrite(utf8Destination, ref bytesWritten, M22, format, provider) &&
+			SpanWrite.TryWriteBytes(utf8Destination, ref bytesWritten, ", "u8) &&
+			SpanWrite.TryWrite(utf8Destination, ref bytesWritten, M23, format, provider) &&
+			SpanWrite.TryWriteBytes(utf8Destination, ref bytesWritten, "> <"u8) &&
+			SpanWrite.TryWrite(utf8Destination, ref bytesWritten, M31, format, provider) &&
+			SpanWrite.TryWriteBytes(utf8Destination, ref bytesWritten, ", "u8) &&
+			SpanWrite.TryWrite(utf8Destination, ref bytesWritten, M32, format, provider) &&
+			SpanWrite.TryWriteBytes(utf8Destination, ref bytesWritten, ", "u8) &&
+			SpanWrite.TryWrite(utf8Destination, ref bytesWritten, M33, format, provider) &&
+			SpanWrite.TryWriteByte(utf8Destination, ref bytesWritten, (byte)'>');
 	}
 }
