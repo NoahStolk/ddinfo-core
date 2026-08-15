@@ -4,7 +4,7 @@ namespace DevilDaggersInfo.Core.Asset;
 
 public static class AssetContainer
 {
-	// TODO: Check if there is still a valid reason to use this. Make obsolete if not.
+	[Obsolete("Unused by both ddinfo-tools and ddinfo-web.")]
 	public static List<AssetInfo> GetAll(AssetType assetType)
 	{
 		return assetType switch
