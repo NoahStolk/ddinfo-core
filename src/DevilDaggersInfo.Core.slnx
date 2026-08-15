@@ -2,6 +2,7 @@
   <Folder Name="/test/">
     <Project Path="test/DevilDaggersInfo.Core.Common.Test/DevilDaggersInfo.Core.Common.Test.csproj" />
     <Project Path="test/DevilDaggersInfo.Core.CriteriaExpression.Test/DevilDaggersInfo.Core.CriteriaExpression.Test.csproj" />
+    <Project Path="test/DevilDaggersInfo.Core.Encryption.Test/DevilDaggersInfo.Core.Encryption.Test.csproj" />
     <Project Path="test/DevilDaggersInfo.Core.Mod.Test/DevilDaggersInfo.Core.Mod.Test.csproj" />
     <Project Path="test/DevilDaggersInfo.Core.Replay.Test/DevilDaggersInfo.Core.Replay.Test.csproj" />
     <Project Path="test/DevilDaggersInfo.Core.Spawnset.Test/DevilDaggersInfo.Core.Spawnset.Test.csproj" />
