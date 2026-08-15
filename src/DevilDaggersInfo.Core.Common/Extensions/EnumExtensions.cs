@@ -7,7 +7,7 @@ public static class EnumExtensions
 		where TEnum : struct, Enum
 	{
 		int count = Enum.GetValues<TEnum>().Length;
-		int max = 1 << count - 1;
+		int max = 1 << (count - 1);
 
 		for (int i = 1; i < max; i <<= 1)
 		{

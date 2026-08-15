@@ -23,16 +23,16 @@ public static class Base32Encoding
 			int mask;
 			if (bitsRemaining > 5)
 			{
-				mask = cValue << bitsRemaining - 5;
+				mask = cValue << (bitsRemaining - 5);
 				curByte = (byte)(curByte | mask);
 				bitsRemaining -= 5;
 			}
 			else
 			{
-				mask = cValue >> 5 - bitsRemaining;
+				mask = cValue >> (5 - bitsRemaining);
 				curByte = (byte)(curByte | mask);
 				returnArray[arrayIndex++] = curByte;
-				curByte = (byte)(cValue << 3 + bitsRemaining);
+				curByte = (byte)(cValue << (3 + bitsRemaining));
 				bitsRemaining += 3;
 			}
 		}
@@ -57,18 +57,18 @@ public static class Base32Encoding
 
 		foreach (byte b in input)
 		{
-			nextChar = (byte)(nextChar | b >> 8 - bitsRemaining);
+			nextChar = (byte)(nextChar | (b >> (8 - bitsRemaining)));
 			returnArray[arrayIndex++] = ValueToChar(nextChar);
 
 			if (bitsRemaining < 4)
 			{
-				nextChar = (byte)(b >> 3 - bitsRemaining & 31);
+				nextChar = (byte)((b >> (3 - bitsRemaining)) & 31);
 				returnArray[arrayIndex++] = ValueToChar(nextChar);
 				bitsRemaining += 5;
 			}
 
 			bitsRemaining -= 3;
-			nextChar = (byte)(b << bitsRemaining & 31);
+			nextChar = (byte)((b << bitsRemaining) & 31);
 		}
 
 		// If we didn't end with a full char.
@@ -87,15 +87,15 @@ public static class Base32Encoding
 		int value = c;
 
 		// 65-90 == upper-case letters
-		if (value < 91 && value > 64)
+		if (value is < 91 and > 64)
 			return value - 65;
 
 		// 50-55 == numbers 2-7
-		if (value < 56 && value > 49)
+		if (value is < 56 and > 49)
 			return value - 24;
 
 		// 97-122 == lower-case letters
-		if (value < 123 && value > 96)
+		if (value is < 123 and > 96)
 			return value - 97;
 
 		throw new ArgumentException("Character is not a Base32 character.", nameof(c));

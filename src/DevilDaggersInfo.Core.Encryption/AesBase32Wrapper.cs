@@ -7,19 +7,8 @@ namespace DevilDaggersInfo.Core.Encryption;
 /// <summary>
 /// Taken from <see href="http://mjremijan.blogspot.com/2014/08/aes-encryption-between-java-and-c.html"/>.
 /// </summary>
-public class AesBase32Wrapper
+public sealed class AesBase32Wrapper(string initializationVector, string password, string salt)
 {
-	private readonly string _initializationVector;
-	private readonly string _password;
-	private readonly string _salt;
-
-	public AesBase32Wrapper(string initializationVector, string password, string salt)
-	{
-		_initializationVector = initializationVector;
-		_password = password;
-		_salt = salt;
-	}
-
 	private enum TransformType
 	{
 		Encrypt,
@@ -56,9 +45,9 @@ public class AesBase32Wrapper
 	{
 		symmetricAlgorithm.Mode = CipherMode.CBC;
 		symmetricAlgorithm.Padding = PaddingMode.PKCS7;
-		symmetricAlgorithm.IV = Encoding.UTF8.GetBytes(_initializationVector);
+		symmetricAlgorithm.IV = Encoding.UTF8.GetBytes(initializationVector);
 
-		symmetricAlgorithm.Key = Rfc2898DeriveBytes.Pbkdf2(Encoding.UTF8.GetBytes(_password), Encoding.UTF8.GetBytes(_salt), 65536, HashAlgorithmName.SHA1, 16);
+		symmetricAlgorithm.Key = Rfc2898DeriveBytes.Pbkdf2(Encoding.UTF8.GetBytes(password), Encoding.UTF8.GetBytes(salt), 65536, HashAlgorithmName.SHA1, 16);
 
 		return transformType switch
 		{

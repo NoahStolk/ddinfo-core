@@ -7,6 +7,7 @@ This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ### Changed
 
 - Upgraded to .NET 10.0.
+- `AesBase32Wrapper` is now sealed.
 
 ## 0.14.2
 
