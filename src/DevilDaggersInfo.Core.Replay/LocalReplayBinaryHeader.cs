@@ -109,7 +109,7 @@ public class LocalReplayBinaryHeader : IReplayBinaryHeader<LocalReplayBinaryHead
 		if (!spawnsetMd5.SequenceEqual(MD5.HashData(spawnsetBuffer)))
 			throw new InvalidReplayBinaryException("Hashed spawnset data does not match the spawnset buffer.");
 
-		return new(
+		return new LocalReplayBinaryHeader(
 			version: version,
 			timestampSinceGameRelease: timestampSinceGameRelease,
 			time: time,
@@ -146,7 +146,7 @@ public class LocalReplayBinaryHeader : IReplayBinaryHeader<LocalReplayBinaryHead
 	{
 		SpawnsetBinary spawnset = SpawnsetBinary.CreateDefault();
 		byte[] spawnsetBuffer = spawnset.ToBytes();
-		return new(
+		return new LocalReplayBinaryHeader(
 			version: 1,
 			timestampSinceGameRelease: GetTimestampSinceGameReleaseFromDateTimeOffset(DateTimeOffset.UtcNow),
 			time: 0,

@@ -23,7 +23,7 @@ public record struct Int16Mat3x3(short M11, short M12, short M13, short M21, sho
 	// TODO: Untested.
 	public static Int16Mat3x3 FromMatrix4x4(Matrix4x4 matrix4x4)
 	{
-		return new(
+		return new Int16Mat3x3(
 			(short)(matrix4x4.M11 * short.MaxValue),
 			(short)(matrix4x4.M12 * short.MaxValue),
 			(short)(matrix4x4.M13 * short.MaxValue),

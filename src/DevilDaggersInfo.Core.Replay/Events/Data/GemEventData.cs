@@ -9,6 +9,6 @@ public record GemEventData : IEventData
 
 	public static GemEventData CreateDefault()
 	{
-		return new();
+		return new GemEventData();
 	}
 }

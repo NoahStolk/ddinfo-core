@@ -16,6 +16,6 @@ public record EntityTargetEventData(int EntityId, Int16Vec3 TargetPosition) : IE
 
 	public static EntityTargetEventData CreateDefault()
 	{
-		return new(IEventData.DefaultEntityId, Int16Vec3.Zero);
+		return new EntityTargetEventData(IEventData.DefaultEntityId, Int16Vec3.Zero);
 	}
 }

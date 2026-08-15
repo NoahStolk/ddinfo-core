@@ -28,7 +28,7 @@ public static class ReplaySimulationBuilder
 				case EntityPositionEventData { EntityId: 0 } entityPositionEvent:
 				{
 					const float divisor = 16f;
-					playerContext.Position = new()
+					playerContext.Position = new Vector3
 					{
 						X = entityPositionEvent.Position.X / divisor,
 						Y = entityPositionEvent.Position.Y / divisor,
@@ -41,8 +41,8 @@ public static class ReplaySimulationBuilder
 				{
 					PlayerInputSnapshot inputSnapshot = e.Data switch
 					{
-						InputsEventData ie => new(ie.Left, ie.Right, ie.Forward, ie.Backward, ie.Jump, ie.Shoot, ie.ShootHoming, ie.MouseX, ie.MouseY),
-						InitialInputsEventData iie => new(iie.Left, iie.Right, iie.Forward, iie.Backward, iie.Jump, iie.Shoot, iie.ShootHoming, iie.MouseX, iie.MouseY),
+						InputsEventData ie => new PlayerInputSnapshot(ie.Left, ie.Right, ie.Forward, ie.Backward, ie.Jump, ie.Shoot, ie.ShootHoming, ie.MouseX, ie.MouseY),
+						InitialInputsEventData iie => new PlayerInputSnapshot(iie.Left, iie.Right, iie.Forward, iie.Backward, iie.Jump, iie.Shoot, iie.ShootHoming, iie.MouseX, iie.MouseY),
 						_ => throw new UnreachableException(),
 					};
 					ProcessInputs(spawnset, lookSpeed, inputSnapshot, playerContext, ticks);
@@ -54,10 +54,10 @@ public static class ReplaySimulationBuilder
 				default: continue;
 			}
 
-			playerMovementSnapshots.Add(new(playerContext.Rotation, playerContext.Position, playerContext.IsOnGround));
+			playerMovementSnapshots.Add(new PlayerMovementSnapshot(playerContext.Rotation, playerContext.Position, playerContext.IsOnGround));
 		}
 
-		return new(playerMovementSnapshots, playerInputSnapshots, soundSnapshots);
+		return new ReplaySimulation(playerMovementSnapshots, playerInputSnapshots, soundSnapshots);
 	}
 
 	private static void ProcessInputs(SpawnsetBinary spawnset, float lookSpeed, PlayerInputSnapshot inputSnapshot, PlayerContext playerContext, int ticks)
@@ -160,7 +160,7 @@ public static class ReplaySimulationBuilder
 	{
 		public PlayerContext(float spawnHeight)
 		{
-			Position = new(0, spawnHeight, 0);
+			Position = new Vector3(0, spawnHeight, 0);
 			Rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, MathF.PI);
 			IsOnGround = false;
 			VelocityY = 0;

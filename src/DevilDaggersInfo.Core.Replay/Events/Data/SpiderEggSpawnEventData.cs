@@ -24,6 +24,6 @@ public record SpiderEggSpawnEventData(int SpawnerEntityId, Vector3 Position, Vec
 
 	public static SpiderEggSpawnEventData CreateDefault()
 	{
-		return new(IEventData.DefaultEntityId, Vector3.Zero, Vector3.Zero);
+		return new SpiderEggSpawnEventData(IEventData.DefaultEntityId, Vector3.Zero, Vector3.Zero);
 	}
 }

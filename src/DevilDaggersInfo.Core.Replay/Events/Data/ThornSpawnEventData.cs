@@ -24,6 +24,6 @@ public record ThornSpawnEventData(int A, Vector3 Position, float RotationInRadia
 
 	public static ThornSpawnEventData CreateDefault()
 	{
-		return new(-1, Vector3.Zero, 0f);
+		return new ThornSpawnEventData(-1, Vector3.Zero, 0f);
 	}
 }

@@ -40,6 +40,6 @@ public record PedeSpawnEventData(PedeType PedeType, int A, Vector3 Position, Vec
 
 	public static PedeSpawnEventData CreateDefault()
 	{
-		return new(PedeType.Centipede, -1, Vector3.Zero, Vector3.Zero, Matrix3x3.Identity);
+		return new PedeSpawnEventData(PedeType.Centipede, -1, Vector3.Zero, Vector3.Zero, Matrix3x3.Identity);
 	}
 }

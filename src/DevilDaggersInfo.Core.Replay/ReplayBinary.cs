@@ -34,7 +34,7 @@ public class ReplayBinary<TReplayBinaryHeader>
 	{
 		try
 		{
-			replayBinary = new(fileContents);
+			replayBinary = new ReplayBinary<TReplayBinaryHeader>(fileContents);
 			return true;
 		}
 		catch (Exception ex)

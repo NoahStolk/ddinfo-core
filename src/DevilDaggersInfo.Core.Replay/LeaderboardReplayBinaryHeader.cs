@@ -42,7 +42,7 @@ public class LeaderboardReplayBinaryHeader : IReplayBinaryHeader<LeaderboardRepl
 		short unknownLength = br.ReadInt16();
 		byte[] unknownBuffer = br.ReadBytes(unknownLength);
 
-		return new(
+		return new LeaderboardReplayBinaryHeader(
 			username: username,
 			unknownBuffer: unknownBuffer);
 	}
@@ -66,7 +66,7 @@ public class LeaderboardReplayBinaryHeader : IReplayBinaryHeader<LeaderboardRepl
 
 	public static LeaderboardReplayBinaryHeader CreateDefault()
 	{
-		return new(string.Empty, Array.Empty<byte>());
+		return new LeaderboardReplayBinaryHeader(string.Empty, Array.Empty<byte>());
 	}
 
 	public byte[] ToBytes()

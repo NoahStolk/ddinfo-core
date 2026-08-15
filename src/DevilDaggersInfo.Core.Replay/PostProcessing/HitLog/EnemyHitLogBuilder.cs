@@ -28,7 +28,7 @@ public static class EnemyHitLogBuilder
 				if (currentEntityId != enemyEntityId)
 					continue;
 
-				buildContext = new(spawn.EntityType, currentTick);
+				buildContext = new EnemyHitLogBuildContext(spawn.EntityType, currentTick);
 			}
 			else if (e is HitEventData hit && hit.EntityIdA == enemyEntityId)
 			{
@@ -46,7 +46,7 @@ public static class EnemyHitLogBuilder
 				// For example, level 4 homing deals 10 damage, but when hitting a Gigapede segment with only 3 HP left, this should not count as 10 damage.
 				int damage = buildContext.EntityType.GetDamage(daggerEntityType.Value, hit.UserData);
 				buildContext.CurrentHp -= damage;
-				buildContext.Events.Add(new(currentTick, buildContext.CurrentHp, damage, daggerEntityType.Value.GetDaggerType(), hit.UserData));
+				buildContext.Events.Add(new EnemyHitLogEvent(currentTick, buildContext.CurrentHp, damage, daggerEntityType.Value.GetDaggerType(), hit.UserData));
 			}
 			else if (e is TransmuteEventData transmute && transmute.EntityId == enemyEntityId)
 			{
@@ -73,7 +73,7 @@ public static class EnemyHitLogBuilder
 			UserData = e.UserData,
 		});
 
-		return new(enemyEntityId, buildContext.EntityType, buildContext.SpawnTick, hitLogEvents);
+		return new EnemyHitLog(enemyEntityId, buildContext.EntityType, buildContext.SpawnTick, hitLogEvents);
 	}
 
 	private sealed class EnemyHitLogBuildContext

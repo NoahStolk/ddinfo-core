@@ -14,7 +14,7 @@ public record struct Int16Vec3(short X, short Y, short Z) : ISpanFormattable
 
 	public static Int16Vec3 operator +(Int16Vec3 a, Int16Vec3 b)
 	{
-		return new(
+		return new Int16Vec3(
 			(short)(a.X + b.X),
 			(short)(a.Y + b.Y),
 			(short)(a.Z + b.Z));

@@ -28,7 +28,7 @@ public class EnemyTimelineBuilder
 			}
 			else if (e is ISpawnEventData spawn)
 			{
-				_builds.Add(new(currentEntityId, spawn.EntityType, currentTick));
+				_builds.Add(new EnemyTimelineBuildContext(currentEntityId, spawn.EntityType, currentTick));
 			}
 			else if (e is HitEventData hit)
 			{

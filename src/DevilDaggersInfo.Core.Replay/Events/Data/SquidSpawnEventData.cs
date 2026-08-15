@@ -40,6 +40,6 @@ public record SquidSpawnEventData(SquidType SquidType, int A, Vector3 Position, 
 
 	public static SquidSpawnEventData CreateDefault()
 	{
-		return new(SquidType.Squid1, -1, Vector3.Zero, Vector3.Zero, 0f);
+		return new SquidSpawnEventData(SquidType.Squid1, -1, Vector3.Zero, Vector3.Zero, 0f);
 	}
 }

@@ -23,6 +23,6 @@ public record TransmuteEventData(int EntityId, Int16Vec3 A, Int16Vec3 B, Int16Ve
 
 	public static TransmuteEventData CreateDefault()
 	{
-		return new(IEventData.DefaultEntityId, Int16Vec3.Zero, Int16Vec3.Zero, Int16Vec3.Zero, Int16Vec3.Zero);
+		return new TransmuteEventData(IEventData.DefaultEntityId, Int16Vec3.Zero, Int16Vec3.Zero, Int16Vec3.Zero, Int16Vec3.Zero);
 	}
 }

@@ -20,6 +20,6 @@ public record LeviathanSpawnEventData(int A) : ISpawnEventData
 
 	public static LeviathanSpawnEventData CreateDefault()
 	{
-		return new(-1);
+		return new LeviathanSpawnEventData(-1);
 	}
 }

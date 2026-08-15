@@ -39,6 +39,6 @@ public record DaggerSpawnEventData(int A, Int16Vec3 Position, Int16Mat3x3 Orient
 
 	public static DaggerSpawnEventData CreateDefault()
 	{
-		return new(-1, Int16Vec3.Zero, Int16Mat3x3.Identity, false, DaggerType.Level1);
+		return new DaggerSpawnEventData(-1, Int16Vec3.Zero, Int16Mat3x3.Identity, false, DaggerType.Level1);
 	}
 }

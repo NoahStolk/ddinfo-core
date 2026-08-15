@@ -33,6 +33,6 @@ public record InputsEventData(bool Left, bool Right, bool Forward, bool Backward
 
 	public static InputsEventData CreateDefault()
 	{
-		return new(false, false, false, false, JumpType.None, ShootType.None, ShootType.None, 0, 0);
+		return new InputsEventData(false, false, false, false, JumpType.None, ShootType.None, ShootType.None, 0, 0);
 	}
 }

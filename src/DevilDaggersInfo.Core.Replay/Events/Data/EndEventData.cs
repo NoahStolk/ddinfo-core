@@ -9,6 +9,6 @@ public record EndEventData : IEventData
 
 	public static EndEventData CreateDefault()
 	{
-		return new();
+		return new EndEventData();
 	}
 }

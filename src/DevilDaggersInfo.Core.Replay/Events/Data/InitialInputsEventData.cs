@@ -35,6 +35,6 @@ public record InitialInputsEventData(bool Left, bool Right, bool Forward, bool B
 
 	public static InitialInputsEventData CreateDefault()
 	{
-		return new(false, false, false, false, JumpType.None, ShootType.None, ShootType.None, 0, 0, 2);
+		return new InitialInputsEventData(false, false, false, false, JumpType.None, ShootType.None, ShootType.None, 0, 0, 2);
 	}
 }

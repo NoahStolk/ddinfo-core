@@ -16,6 +16,6 @@ public record EntityOrientationEventData(int EntityId, Int16Mat3x3 Orientation) 
 
 	public static EntityOrientationEventData CreateDefault()
 	{
-		return new(IEventData.DefaultEntityId, Int16Mat3x3.Identity);
+		return new EntityOrientationEventData(IEventData.DefaultEntityId, Int16Mat3x3.Identity);
 	}
 }

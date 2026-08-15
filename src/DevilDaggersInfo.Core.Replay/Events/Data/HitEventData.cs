@@ -18,6 +18,6 @@ public record HitEventData(int EntityIdA, int EntityIdB, int UserData) : IEventD
 
 	public static HitEventData CreateDefault()
 	{
-		return new(IEventData.DefaultEntityId, IEventData.DefaultEntityId, 0);
+		return new HitEventData(IEventData.DefaultEntityId, IEventData.DefaultEntityId, 0);
 	}
 }

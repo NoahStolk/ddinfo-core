@@ -34,6 +34,6 @@ public record SpiderSpawnEventData(SpiderType SpiderType, int A, Vector3 Positio
 
 	public static SpiderSpawnEventData CreateDefault()
 	{
-		return new(SpiderType.Spider1, -1, Vector3.Zero);
+		return new SpiderSpawnEventData(SpiderType.Spider1, -1, Vector3.Zero);
 	}
 }
