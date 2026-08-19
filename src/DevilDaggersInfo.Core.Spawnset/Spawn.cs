@@ -1,17 +1,7 @@
 namespace DevilDaggersInfo.Core.Spawnset;
 
-public readonly struct Spawn
+public readonly record struct Spawn(EnemyType EnemyType, float Delay)
 {
-	public Spawn(EnemyType enemyType, float delay)
-	{
-		EnemyType = enemyType;
-		Delay = delay;
-	}
-
-	public EnemyType EnemyType { get; }
-
-	public float Delay { get; }
-
 	public override string ToString()
 	{
 		return $"{Delay:0.0000}: {EnemyType}";

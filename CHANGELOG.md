@@ -4,6 +4,10 @@ This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [unreleased]
 
+### Changed
+
+- `Spawn` is now a record struct.
+
 ### Removed
 
 - Removed `AssetContainer.GetAll` method.
