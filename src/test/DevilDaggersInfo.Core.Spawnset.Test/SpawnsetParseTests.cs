@@ -8,7 +8,26 @@ internal sealed class SpawnsetParseTests
 	[Test]
 	public async Task Parse_V0()
 	{
-		SpawnsetBinary spawnset = await Parse("V0", 4, 8, 50, 20, 0.025f, 60, GameMode.Survival, default, 400, 250, 120, 60, 82, HandLevel.Level1, 0, 0, new SpawnSectionInfo(57, 275), new SpawnSectionInfo(18, 30));
+		SpawnsetBinary spawnset = await Parse(
+			fileName: "V0",
+			expectedSpawnVersion: 4,
+			expectedWorldVersion: 8,
+			expectedShrinkStart: 50,
+			expectedShrinkEnd: 20,
+			expectedShrinkRate: 0.025f,
+			expectedBrightness: 60,
+			expectedGameMode: GameMode.Survival,
+			expectedRaceDaggerPosition: default,
+			expectedUnusedDevilTime: 400,
+			expectedUnusedGoldenTime: 250,
+			expectedUnusedSilverTime: 120,
+			expectedUnusedBronzeTime: 60,
+			expectedSpawnCount: 82,
+			expectedHandLevel: HandLevel.Level1,
+			expectedAdditionalGems: 0,
+			expectedTimerStart: 0,
+			expectedPreLoopSection: new SpawnSectionInfo(57, 275),
+			expectedLoopSection: new SpawnSectionInfo(18, 30));
 		await Assert.That(spawnset.Spawns[0]).IsEqualTo(new Spawn(EnemyType.Squid1, 3));
 		await Assert.That(spawnset.Spawns[1]).IsEqualTo(new Spawn(EnemyType.Empty, 6));
 	}
@@ -16,7 +35,26 @@ internal sealed class SpawnsetParseTests
 	[Test]
 	public async Task Parse_V1()
 	{
-		SpawnsetBinary spawnset = await Parse("V1", 4, 8, 50, 20, 0.025f, 60, GameMode.Survival, default, 400, 250, 120, 60, 130, HandLevel.Level1, 0, 0, new SpawnSectionInfo(99, 421), new SpawnSectionInfo(21, 54));
+		SpawnsetBinary spawnset = await Parse(
+			fileName: "V1",
+			expectedSpawnVersion: 4,
+			expectedWorldVersion: 8,
+			expectedShrinkStart: 50,
+			expectedShrinkEnd: 20,
+			expectedShrinkRate: 0.025f,
+			expectedBrightness: 60,
+			expectedGameMode: GameMode.Survival,
+			expectedRaceDaggerPosition: default,
+			expectedUnusedDevilTime: 400,
+			expectedUnusedGoldenTime: 250,
+			expectedUnusedSilverTime: 120,
+			expectedUnusedBronzeTime: 60,
+			expectedSpawnCount: 130,
+			expectedHandLevel: HandLevel.Level1,
+			expectedAdditionalGems: 0,
+			expectedTimerStart: 0,
+			expectedPreLoopSection: new SpawnSectionInfo(99, 421),
+			expectedLoopSection: new SpawnSectionInfo(21, 54));
 		await Assert.That(spawnset.Spawns[0]).IsEqualTo(new Spawn(EnemyType.Squid1, 3));
 		await Assert.That(spawnset.Spawns[1]).IsEqualTo(new Spawn(EnemyType.Empty, 6));
 	}
@@ -24,7 +62,26 @@ internal sealed class SpawnsetParseTests
 	[Test]
 	public async Task Parse_V2()
 	{
-		SpawnsetBinary spawnset = await Parse("V2", 4, 9, 50, 20, 0.025f, 60, GameMode.Survival, default, 500, 250, 120, 60, 87, HandLevel.Level1, 0, 0, new SpawnSectionInfo(71, 375), new SpawnSectionInfo(7, 58));
+		SpawnsetBinary spawnset = await Parse(
+			fileName: "V2",
+			expectedSpawnVersion: 4,
+			expectedWorldVersion: 9,
+			expectedShrinkStart: 50,
+			expectedShrinkEnd: 20,
+			expectedShrinkRate: 0.025f,
+			expectedBrightness: 60,
+			expectedGameMode: GameMode.Survival,
+			expectedRaceDaggerPosition: default,
+			expectedUnusedDevilTime: 500,
+			expectedUnusedGoldenTime: 250,
+			expectedUnusedSilverTime: 120,
+			expectedUnusedBronzeTime: 60,
+			expectedSpawnCount: 87,
+			expectedHandLevel: HandLevel.Level1,
+			expectedAdditionalGems: 0,
+			expectedTimerStart: 0,
+			expectedPreLoopSection: new SpawnSectionInfo(71, 375),
+			expectedLoopSection: new SpawnSectionInfo(7, 58));
 		await Assert.That(spawnset.Spawns[0]).IsEqualTo(new Spawn(EnemyType.Squid1, 3));
 		await Assert.That(spawnset.Spawns[1]).IsEqualTo(new Spawn(EnemyType.Empty, 6));
 	}
@@ -32,7 +89,26 @@ internal sealed class SpawnsetParseTests
 	[Test]
 	public async Task Parse_V3()
 	{
-		SpawnsetBinary spawnset = await Parse("V3", 4, 9, 50, 20, 0.025f, 60, GameMode.Survival, default, 500, 250, 120, 60, 118, HandLevel.Level1, 0, 0, new SpawnSectionInfo(90, 451), new SpawnSectionInfo(17, 56));
+		SpawnsetBinary spawnset = await Parse(
+			fileName: "V3",
+			expectedSpawnVersion: 4,
+			expectedWorldVersion: 9,
+			expectedShrinkStart: 50,
+			expectedShrinkEnd: 20,
+			expectedShrinkRate: 0.025f,
+			expectedBrightness: 60,
+			expectedGameMode: GameMode.Survival,
+			expectedRaceDaggerPosition: default,
+			expectedUnusedDevilTime: 500,
+			expectedUnusedGoldenTime: 250,
+			expectedUnusedSilverTime: 120,
+			expectedUnusedBronzeTime: 60,
+			expectedSpawnCount: 118,
+			expectedHandLevel: HandLevel.Level1,
+			expectedAdditionalGems: 0,
+			expectedTimerStart: 0,
+			expectedPreLoopSection: new SpawnSectionInfo(90, 451),
+			expectedLoopSection: new SpawnSectionInfo(17, 56));
 		await Assert.That(spawnset.Spawns[0]).IsEqualTo(new Spawn(EnemyType.Squid1, 3));
 		await Assert.That(spawnset.Spawns[1]).IsEqualTo(new Spawn(EnemyType.Empty, 6));
 	}
@@ -40,7 +116,26 @@ internal sealed class SpawnsetParseTests
 	[Test]
 	public async Task Parse_V3_229()
 	{
-		SpawnsetBinary spawnset = await Parse("V3_229", 6, 9, 44.275f, 20, 0.025f, 60, GameMode.Survival, default, 500, 250, 120, 60, 75, HandLevel.Level3, 57, 229, new SpawnSectionInfo(52, 222), new SpawnSectionInfo(17, 56));
+		SpawnsetBinary spawnset = await Parse(
+			fileName: "V3_229",
+			expectedSpawnVersion: 6,
+			expectedWorldVersion: 9,
+			expectedShrinkStart: 44.275f,
+			expectedShrinkEnd: 20,
+			expectedShrinkRate: 0.025f,
+			expectedBrightness: 60,
+			expectedGameMode: GameMode.Survival,
+			expectedRaceDaggerPosition: default,
+			expectedUnusedDevilTime: 500,
+			expectedUnusedGoldenTime: 250,
+			expectedUnusedSilverTime: 120,
+			expectedUnusedBronzeTime: 60,
+			expectedSpawnCount: 75,
+			expectedHandLevel: HandLevel.Level3,
+			expectedAdditionalGems: 57,
+			expectedTimerStart: 229,
+			expectedPreLoopSection: new SpawnSectionInfo(52, 222),
+			expectedLoopSection: new SpawnSectionInfo(17, 56));
 		await Assert.That(spawnset.Spawns[0]).IsEqualTo(new Spawn(EnemyType.Squid1, 0));
 		await Assert.That(spawnset.Spawns[6]).IsEqualTo(new Spawn(EnemyType.Squid2, 10));
 	}
@@ -48,20 +143,77 @@ internal sealed class SpawnsetParseTests
 	[Test]
 	public async Task Parse_V3_451()
 	{
-		SpawnsetBinary spawnset = await Parse("V3_451", 6, 9, 38.725f, 20, 0.025f, 60, GameMode.Survival, default, 500, 250, 120, 60, 18, HandLevel.Level4, 0, 451, new SpawnSectionInfo(0, null), new SpawnSectionInfo(17, 56));
+		SpawnsetBinary spawnset = await Parse(
+			fileName: "V3_451",
+			expectedSpawnVersion: 6,
+			expectedWorldVersion: 9,
+			expectedShrinkStart: 38.725f,
+			expectedShrinkEnd: 20,
+			expectedShrinkRate: 0.025f,
+			expectedBrightness: 60,
+			expectedGameMode: GameMode.Survival,
+			expectedRaceDaggerPosition: default,
+			expectedUnusedDevilTime: 500,
+			expectedUnusedGoldenTime: 250,
+			expectedUnusedSilverTime: 120,
+			expectedUnusedBronzeTime: 60,
+			expectedSpawnCount: 18,
+			expectedHandLevel: HandLevel.Level4,
+			expectedAdditionalGems: 0,
+			expectedTimerStart: 451,
+			expectedPreLoopSection: new SpawnSectionInfo(0, null),
+			expectedLoopSection: new SpawnSectionInfo(17, 56));
 		await Assert.That(spawnset.Spawns[0]).IsEqualTo(new Spawn(EnemyType.Empty, 5));
 	}
 
 	[Test]
 	public async Task Parse_Empty()
 	{
-		await Parse("Empty", 6, 9, 50, 20, 0.025f, 60, GameMode.Survival, default, 500, 250, 120, 60, 0, HandLevel.Level1, 0, 0, new SpawnSectionInfo(0, null), new SpawnSectionInfo(0, null));
+		await Parse(
+			fileName: "Empty",
+			expectedSpawnVersion: 6,
+			expectedWorldVersion: 9,
+			expectedShrinkStart: 50,
+			expectedShrinkEnd: 20,
+			expectedShrinkRate: 0.025f,
+			expectedBrightness: 60,
+			expectedGameMode: GameMode.Survival,
+			expectedRaceDaggerPosition: default,
+			expectedUnusedDevilTime: 500,
+			expectedUnusedGoldenTime: 250,
+			expectedUnusedSilverTime: 120,
+			expectedUnusedBronzeTime: 60,
+			expectedSpawnCount: 0,
+			expectedHandLevel: HandLevel.Level1,
+			expectedAdditionalGems: 0,
+			expectedTimerStart: 0,
+			expectedPreLoopSection: new SpawnSectionInfo(0, null),
+			expectedLoopSection: new SpawnSectionInfo(0, null));
 	}
 
 	[Test]
 	public async Task Parse_Scanner()
 	{
-		SpawnsetBinary spawnset = await Parse("Scanner", 6, 9, 26, 15, 0.025f, 60, GameMode.Survival, default, 500, 250, 120, 60, 125, HandLevel.Level4, 30, 0, new SpawnSectionInfo(62, 16), new SpawnSectionInfo(62, 21));
+		SpawnsetBinary spawnset = await Parse(
+			fileName: "Scanner",
+			expectedSpawnVersion: 6,
+			expectedWorldVersion: 9,
+			expectedShrinkStart: 26,
+			expectedShrinkEnd: 15,
+			expectedShrinkRate: 0.025f,
+			expectedBrightness: 60,
+			expectedGameMode: GameMode.Survival,
+			expectedRaceDaggerPosition: default,
+			expectedUnusedDevilTime: 500,
+			expectedUnusedGoldenTime: 250,
+			expectedUnusedSilverTime: 120,
+			expectedUnusedBronzeTime: 60,
+			expectedSpawnCount: 125,
+			expectedHandLevel: HandLevel.Level4,
+			expectedAdditionalGems: 30,
+			expectedTimerStart: 0,
+			expectedPreLoopSection: new SpawnSectionInfo(62, 16),
+			expectedLoopSection: new SpawnSectionInfo(62, 21));
 		await Assert.That(spawnset.Spawns[0]).IsEqualTo(new Spawn(EnemyType.Squid2, 0));
 		await Assert.That(spawnset.Spawns[30]).IsEqualTo(new Spawn(EnemyType.Spider1, 5));
 	}
@@ -69,25 +221,101 @@ internal sealed class SpawnsetParseTests
 	[Test]
 	public async Task Parse_EmptySpawn()
 	{
-		await Parse("EmptySpawn", 6, 9, 50, 20, 0.025f, 60, GameMode.Survival, default, 500, 250, 120, 60, 1, HandLevel.Level1, 0, 0, new SpawnSectionInfo(0, null), new SpawnSectionInfo(0, null));
+		await Parse(
+			fileName: "EmptySpawn",
+			expectedSpawnVersion: 6,
+			expectedWorldVersion: 9,
+			expectedShrinkStart: 50,
+			expectedShrinkEnd: 20,
+			expectedShrinkRate: 0.025f,
+			expectedBrightness: 60,
+			expectedGameMode: GameMode.Survival,
+			expectedRaceDaggerPosition: default,
+			expectedUnusedDevilTime: 500,
+			expectedUnusedGoldenTime: 250,
+			expectedUnusedSilverTime: 120,
+			expectedUnusedBronzeTime: 60,
+			expectedSpawnCount: 1,
+			expectedHandLevel: HandLevel.Level1,
+			expectedAdditionalGems: 0,
+			expectedTimerStart: 0,
+			expectedPreLoopSection: new SpawnSectionInfo(0, null),
+			expectedLoopSection: new SpawnSectionInfo(0, null));
 	}
 
 	[Test]
 	public async Task Parse_NoEndLoop()
 	{
-		await Parse("NoEndLoop", 6, 9, 50, 20, 0.025f, 60, GameMode.Survival, default, 500, 250, 120, 60, 3, HandLevel.Level1, 0, 0, new SpawnSectionInfo(2, 2), new SpawnSectionInfo(0, null));
+		await Parse(
+			fileName: "NoEndLoop",
+			expectedSpawnVersion: 6,
+			expectedWorldVersion: 9,
+			expectedShrinkStart: 50,
+			expectedShrinkEnd: 20,
+			expectedShrinkRate: 0.025f,
+			expectedBrightness: 60,
+			expectedGameMode: GameMode.Survival,
+			expectedRaceDaggerPosition: default,
+			expectedUnusedDevilTime: 500,
+			expectedUnusedGoldenTime: 250,
+			expectedUnusedSilverTime: 120,
+			expectedUnusedBronzeTime: 60,
+			expectedSpawnCount: 3,
+			expectedHandLevel: HandLevel.Level1,
+			expectedAdditionalGems: 0,
+			expectedTimerStart: 0,
+			expectedPreLoopSection: new SpawnSectionInfo(2, 2),
+			expectedLoopSection: new SpawnSectionInfo(0, null));
 	}
 
 	[Test]
 	public async Task Parse_TimeAttack()
 	{
-		await Parse("TimeAttack", 6, 9, 50, 20, 0.025f, 60, GameMode.TimeAttack, default, 500, 250, 120, 60, 1, HandLevel.Level1, 0, 0, new SpawnSectionInfo(1, 1), new SpawnSectionInfo(0, null));
+		await Parse(
+			fileName: "TimeAttack",
+			expectedSpawnVersion: 6,
+			expectedWorldVersion: 9,
+			expectedShrinkStart: 50,
+			expectedShrinkEnd: 20,
+			expectedShrinkRate: 0.025f,
+			expectedBrightness: 60,
+			expectedGameMode: GameMode.TimeAttack,
+			expectedRaceDaggerPosition: default,
+			expectedUnusedDevilTime: 500,
+			expectedUnusedGoldenTime: 250,
+			expectedUnusedSilverTime: 120,
+			expectedUnusedBronzeTime: 60,
+			expectedSpawnCount: 1,
+			expectedHandLevel: HandLevel.Level1,
+			expectedAdditionalGems: 0,
+			expectedTimerStart: 0,
+			expectedPreLoopSection: new SpawnSectionInfo(1, 1),
+			expectedLoopSection: new SpawnSectionInfo(0, null));
 	}
 
 	[Test]
 	public async Task Parse_Metathrone()
 	{
-		await Parse("Metathrone", 5, 9, 6105.9f, 27, 11.5f, 180, GameMode.Survival, default, 500, 250, 120, 60, 164, HandLevel.Level1, 0, 0, new SpawnSectionInfo(134, 691.6f), new SpawnSectionInfo(9, 42.4f));
+		await Parse(
+			fileName: "Metathrone",
+			expectedSpawnVersion: 5,
+			expectedWorldVersion: 9,
+			expectedShrinkStart: 6105.9f,
+			expectedShrinkEnd: 27,
+			expectedShrinkRate: 11.5f,
+			expectedBrightness: 180,
+			expectedGameMode: GameMode.Survival,
+			expectedRaceDaggerPosition: default,
+			expectedUnusedDevilTime: 500,
+			expectedUnusedGoldenTime: 250,
+			expectedUnusedSilverTime: 120,
+			expectedUnusedBronzeTime: 60,
+			expectedSpawnCount: 164,
+			expectedHandLevel: HandLevel.Level1,
+			expectedAdditionalGems: 0,
+			expectedTimerStart: 0,
+			expectedPreLoopSection: new SpawnSectionInfo(134, 691.6f),
+			expectedLoopSection: new SpawnSectionInfo(9, 42.4f));
 	}
 
 	[AssertionMethod]
