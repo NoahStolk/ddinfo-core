@@ -30,7 +30,9 @@ public record Enemy
 	public int GemHp => Hp / Gems;
 
 	public string GetGemHpString()
-		=> $"({GemHp} x {Gems})";
+	{
+		return $"({GemHp} x {Gems})";
+	}
 
 	public string GetImageName()
 	{

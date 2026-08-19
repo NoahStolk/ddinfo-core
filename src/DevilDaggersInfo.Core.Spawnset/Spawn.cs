@@ -13,5 +13,7 @@ public readonly struct Spawn
 	public float Delay { get; }
 
 	public override string ToString()
-		=> $"{Delay:0.0000}: {EnemyType}";
+	{
+		return $"{Delay:0.0000}: {EnemyType}";
+	}
 }

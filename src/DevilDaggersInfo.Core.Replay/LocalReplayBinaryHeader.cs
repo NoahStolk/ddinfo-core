@@ -163,10 +163,14 @@ public class LocalReplayBinaryHeader : IReplayBinaryHeader<LocalReplayBinaryHead
 	}
 
 	public static DateTimeOffset GetDateTimeOffsetFromTimestampSinceGameRelease(long timestampSinceGameRelease)
-		=> GameVersions.GetReleaseDate(GameVersion.V1_0) + TimeSpan.FromSeconds(timestampSinceGameRelease);
+	{
+		return GameVersions.GetReleaseDate(GameVersion.V1_0) + TimeSpan.FromSeconds(timestampSinceGameRelease);
+	}
 
 	public static long GetTimestampSinceGameReleaseFromDateTimeOffset(DateTimeOffset dateTimeOffset)
-		=> (long)(dateTimeOffset - GameVersions.GetReleaseDate(GameVersion.V1_0)).TotalSeconds;
+	{
+		return (long)(dateTimeOffset - GameVersions.GetReleaseDate(GameVersion.V1_0)).TotalSeconds;
+	}
 
 	public byte[] ToBytes()
 	{

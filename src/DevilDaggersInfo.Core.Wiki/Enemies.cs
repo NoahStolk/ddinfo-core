@@ -13,21 +13,28 @@ public static class Enemies
 		_all.AddRange(EnemiesV3_2.All);
 	}
 
-	public static IReadOnlyList<Enemy> GetEnemies(GameVersion gameVersion) => gameVersion switch
+	public static IReadOnlyList<Enemy> GetEnemies(GameVersion gameVersion)
 	{
-		GameVersion.V1_0 => EnemiesV1_0.All,
-		GameVersion.V2_0 => EnemiesV2_0.All,
-		GameVersion.V3_0 => EnemiesV3_0.All,
-		GameVersion.V3_1 => EnemiesV3_1.All,
-		GameVersion.V3_2 => EnemiesV3_2.All,
-		_ => throw new ArgumentOutOfRangeException(nameof(gameVersion)),
-	};
+		return gameVersion switch
+		{
+			GameVersion.V1_0 => EnemiesV1_0.All,
+			GameVersion.V2_0 => EnemiesV2_0.All,
+			GameVersion.V3_0 => EnemiesV3_0.All,
+			GameVersion.V3_1 => EnemiesV3_1.All,
+			GameVersion.V3_2 => EnemiesV3_2.All,
+			_ => throw new ArgumentOutOfRangeException(nameof(gameVersion)),
+		};
+	}
 
 	public static Enemy? GetEnemyByName(GameVersion gameVersion, string name)
-		=> GetEnemies(gameVersion).FirstOrDefault(e => e.Name == name);
+	{
+		return GetEnemies(gameVersion).FirstOrDefault(e => e.Name == name);
+	}
 
 	public static GameVersion? GetFirstAppearance(string enemyName)
-		=> _all.Where(e => e.Name == enemyName).MinBy(e => e.GameVersion)?.GameVersion;
+	{
+		return _all.Where(e => e.Name == enemyName).MinBy(e => e.GameVersion)?.GameVersion;
+	}
 
 	public static IEnumerable<GameVersion> GetAppearances(string enemyName)
 	{
