@@ -40,7 +40,7 @@ public sealed class AudioModBinaryBuilder : ModBinaryBuilder
 
 		StringBuilder loudness = new();
 		foreach (KeyValuePair<string, float> kvp in _loudnessValues)
-			loudness.Append(kvp.Key).Append(" = ").AppendFormat("{0:0.0}", kvp.Value).AppendLine();
+			loudness.Append(kvp.Key).Append(" = ").Append($"{kvp.Value:0.0}").AppendLine();
 
 		AssetKey key = new(AssetType.Audio, "loudness");
 		ValidateAsset(key);
