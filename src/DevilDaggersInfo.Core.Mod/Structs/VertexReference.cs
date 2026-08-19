@@ -1,22 +1,11 @@
 namespace DevilDaggersInfo.Core.Mod.Structs;
 
-public readonly struct VertexReference
+public readonly record struct VertexReference(int PositionReference, int TexCoordReference, int NormalReference)
 {
-	public VertexReference(int positionReference, int texCoordReference, int normalReference)
-	{
-		PositionReference = positionReference;
-		TexCoordReference = texCoordReference;
-		NormalReference = normalReference;
-	}
-
 	public VertexReference(int unifiedReference)
 		: this(unifiedReference, unifiedReference, unifiedReference)
 	{
 	}
-
-	public int PositionReference { get; }
-	public int TexCoordReference { get; }
-	public int NormalReference { get; }
 
 	public override string ToString()
 	{
