@@ -4,20 +4,6 @@ namespace DevilDaggersInfo.Core.Asset;
 
 public static class AssetContainer
 {
-	[Obsolete("Unused by both ddinfo-tools and ddinfo-web.")]
-	public static List<AssetInfo> GetAll(AssetType assetType)
-	{
-		return assetType switch
-		{
-			AssetType.Audio => AudioAudio.All.Cast<AssetInfo>().ToList(),
-			AssetType.ObjectBinding => DdObjectBindings.All.Cast<AssetInfo>().ToList(),
-			AssetType.Mesh => DdMeshes.All.Cast<AssetInfo>().ToList(),
-			AssetType.Shader => DdShaders.All.Cast<AssetInfo>().ToList(),
-			AssetType.Texture => DdTextures.All.Cast<AssetInfo>().ToList(),
-			_ => throw new UnreachableException(),
-		};
-	}
-
 	public static bool IsProhibited(AssetType assetType, string assetName)
 	{
 		return assetType switch

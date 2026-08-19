@@ -2,6 +2,15 @@
 
 This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [unreleased]
+
+### Removed
+
+- Removed `AssetContainer.GetAll` method.
+- Removed `ByteArrayExtensions.ByteArrayToHexString` extension method. Use `Convert.ToHexString` instead.
+- Removed `EnumerableExtensions.OrderBy` extension method.
+- Removed `EnumExtensions.AsEnumerable` and `EnumExtensions.ToFlagEnum` extension methods.
+
 ## 0.15.0
 
 ### Added
