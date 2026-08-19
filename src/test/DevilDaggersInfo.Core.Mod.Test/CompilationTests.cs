@@ -1,7 +1,6 @@
 using DevilDaggersInfo.Core.Asset;
 using DevilDaggersInfo.Core.Mod.Builders;
 using DevilDaggersInfo.Core.Mod.Exceptions;
-using DevilDaggersInfo.Core.Mod.FileHandling;
 using DevilDaggersInfo.Core.Mod.Parsers;
 using System.Text;
 
@@ -55,9 +54,9 @@ internal sealed class CompilationTests
 	public void TestDuplicateAsset()
 	{
 		DdModBinaryBuilder builder = new();
-		builder.AddObjectBinding("test", Array.Empty<byte>());
-		builder.AddMesh("test", Array.Empty<byte>());
-		Assert.ThrowsExactly<InvalidModCompilationException>(() => builder.AddObjectBinding("test", Array.Empty<byte>()));
+		builder.AddObjectBinding("test", []);
+		builder.AddMesh("test", []);
+		Assert.ThrowsExactly<InvalidModCompilationException>(() => builder.AddObjectBinding("test", []));
 	}
 
 	[Test]

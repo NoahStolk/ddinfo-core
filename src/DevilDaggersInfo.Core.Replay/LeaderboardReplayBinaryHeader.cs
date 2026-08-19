@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace DevilDaggersInfo.Core.Replay;
@@ -47,14 +46,14 @@ public class LeaderboardReplayBinaryHeader : IReplayBinaryHeader<LeaderboardRepl
 			unknownBuffer: unknownBuffer);
 	}
 
-	public static bool IdentifierIsValid(byte[] contents, [MaybeNullWhen(false)] out byte[]? identifier)
+	public static bool IdentifierIsValid(byte[] contents, out byte[]? identifier)
 	{
 		using MemoryStream ms = new(contents);
 		using BinaryReader br = new(ms);
 		return IdentifierIsValid(br, out identifier);
 	}
 
-	public static bool IdentifierIsValid(BinaryReader br, [MaybeNullWhen(false)] out byte[]? identifier)
+	public static bool IdentifierIsValid(BinaryReader br, out byte[]? identifier)
 	{
 		identifier = null;
 		if (br.BaseStream.Position > br.BaseStream.Length - Identifier.Length)

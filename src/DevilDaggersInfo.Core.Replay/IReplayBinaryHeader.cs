@@ -1,5 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
-
 namespace DevilDaggersInfo.Core.Replay;
 
 public interface IReplayBinaryHeader<out TSelf>
@@ -12,7 +10,7 @@ public interface IReplayBinaryHeader<out TSelf>
 
 	static abstract TSelf CreateFromBinaryReader(BinaryReader br);
 
-	static abstract bool IdentifierIsValid(BinaryReader br, [MaybeNullWhen(false)] out byte[]? identifier);
+	static abstract bool IdentifierIsValid(BinaryReader br, out byte[]? identifier);
 
 	static abstract TSelf CreateDefault();
 

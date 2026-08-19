@@ -77,7 +77,7 @@ public record SpawnsetBinary
 	public int AdditionalGems { get; init; }
 	public float TimerStart { get; init; }
 
-	public static ReadOnlySpan<byte> V3Hash => new byte[] { 0x56, 0x9f, 0xea, 0xd8, 0x7a, 0xbf, 0x4d, 0x30, 0xfd, 0xee, 0x42, 0x31, 0xa6, 0x39, 0x80, 0x51 };
+	public static ReadOnlySpan<byte> V3Hash => [0x56, 0x9f, 0xea, 0xd8, 0x7a, 0xbf, 0x4d, 0x30, 0xfd, 0xee, 0x42, 0x31, 0xa6, 0x39, 0x80, 0x51];
 
 	#region Parsing
 
@@ -183,7 +183,7 @@ public record SpawnsetBinary
 			unusedGoldenTime,
 			unusedSilverTime,
 			unusedBronzeTime,
-			spawns.ToImmutableArray(),
+			[.. spawns],
 			handLevel,
 			additionalGems,
 			timerStart);
@@ -309,7 +309,7 @@ public record SpawnsetBinary
 			UnusedGoldenTime,
 			UnusedSilverTime,
 			UnusedBronzeTime,
-			spawns.ToImmutableArray(),
+			[.. spawns],
 			HandLevel,
 			AdditionalGems,
 			TimerStart);
@@ -547,7 +547,7 @@ public record SpawnsetBinary
 		if (startSeconds < 0)
 			throw new ArgumentOutOfRangeException(nameof(startSeconds), "Start seconds must be at least 0.");
 
-		List<Spawn> newSpawns = Spawns.ToList();
+		List<Spawn> newSpawns = [.. Spawns];
 
 		// Remove spawns until the start time is reached.
 		float currentTime = 0;
@@ -570,7 +570,7 @@ public record SpawnsetBinary
 
 		return this with
 		{
-			Spawns = newSpawns.ToImmutableArray(),
+			Spawns = [.. newSpawns],
 			TimerStart = startSeconds,
 			SpawnVersion = SpawnVersion < 6 ? 6 : SpawnVersion,
 		};
@@ -613,7 +613,7 @@ public record SpawnsetBinary
 		float enemyTimer = 0;
 		float delay = 0;
 
-		List<Spawn> originalEndLoop = Spawns.Skip(GetLoopStartIndex()).ToList();
+		List<Spawn> originalEndLoop = [.. Spawns.Skip(GetLoopStartIndex())];
 
 		// Start at index 1 because the first wave is already added.
 		for (int waveIndex = 1; waveIndex < amountOfGeneratedWaves; waveIndex++)
@@ -641,7 +641,7 @@ public record SpawnsetBinary
 
 		return this with
 		{
-			Spawns = newSpawns.ToImmutableArray(),
+			Spawns = [.. newSpawns],
 		};
 	}
 

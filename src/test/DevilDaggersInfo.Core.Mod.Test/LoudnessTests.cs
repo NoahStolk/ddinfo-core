@@ -10,8 +10,8 @@ internal sealed class LoudnessTests
 	public async Task CreateModWithLoudness()
 	{
 		AudioModBinaryBuilder builder = new();
-		builder.AddAudio("death", "RIFF"u8.ToArray(), 10f); // Default is 99.0.
-		builder.AddAudio("fall", "RIFF"u8.ToArray(), 20f); // Default is 100.0.
+		builder.AddAudio("death", [.. "RIFF"u8], 10f); // Default is 99.0.
+		builder.AddAudio("fall", [.. "RIFF"u8], 20f); // Default is 100.0.
 
 		byte[] binary = builder.Compile();
 

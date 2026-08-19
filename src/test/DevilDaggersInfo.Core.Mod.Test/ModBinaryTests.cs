@@ -44,7 +44,7 @@ internal sealed class ModBinaryTests
 			_ => throw new UnreachableException(),
 		};
 
-		await Assert.That(builder.TocEntries.ToList()).IsEquivalentTo(modBinary.Toc.Entries.ToList(), CollectionOrdering.Matching);
+		await Assert.That(builder.TocEntries.ToList()).IsEquivalentTo([.. modBinary.Toc.Entries], CollectionOrdering.Matching);
 
 		await Assert.That(builder.AssetMap.Count).IsEqualTo(modBinary.AssetMap.Count);
 

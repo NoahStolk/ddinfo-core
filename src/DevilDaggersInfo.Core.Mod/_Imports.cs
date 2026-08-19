@@ -5,5 +5,4 @@ global using DevilDaggersInfo.Core.Mod.FileHandling;
 global using DevilDaggersInfo.Core.Mod.Structs;
 global using DevilDaggersInfo.Core.Mod.Utils;
 global using System.Numerics;
-global using System.Runtime.Serialization;
 global using System.Text;
