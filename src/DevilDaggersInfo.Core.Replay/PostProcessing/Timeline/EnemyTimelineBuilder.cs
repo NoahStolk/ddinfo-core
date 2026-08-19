@@ -3,7 +3,7 @@ using DevilDaggersInfo.Core.Replay.Events.Enums;
 
 namespace DevilDaggersInfo.Core.Replay.PostProcessing.Timeline;
 
-public class EnemyTimelineBuilder
+public sealed class EnemyTimelineBuilder
 {
 	private readonly List<EnemyTimelineBuildContext> _builds = [];
 	private readonly Dictionary<int, EntityType> _daggers = new();

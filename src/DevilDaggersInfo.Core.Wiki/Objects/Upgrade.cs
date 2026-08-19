@@ -1,6 +1,6 @@
 namespace DevilDaggersInfo.Core.Wiki.Objects;
 
-public record Upgrade
+public sealed record Upgrade
 {
 	internal Upgrade(GameVersion gameVersion, string name, Color color, byte level, Damage defaultDamage, Damage? homingDamage, UpgradeUnlock upgradeUnlock)
 	{

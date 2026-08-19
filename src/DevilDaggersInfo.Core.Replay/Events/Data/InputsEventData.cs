@@ -2,7 +2,7 @@ using DevilDaggersInfo.Core.Replay.Events.Enums;
 
 namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
-public record InputsEventData(bool Left, bool Right, bool Forward, bool Backward, JumpType Jump, ShootType Shoot, ShootType ShootHoming, short MouseX, short MouseY) : IEventData
+public sealed record InputsEventData(bool Left, bool Right, bool Forward, bool Backward, JumpType Jump, ShootType Shoot, ShootType ShootHoming, short MouseX, short MouseY) : IEventData
 {
 #pragma warning disable CA1051 // Visible instance fields.
 	public bool Left = Left;

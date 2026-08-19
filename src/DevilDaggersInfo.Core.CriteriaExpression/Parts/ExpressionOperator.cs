@@ -1,6 +1,6 @@
 namespace DevilDaggersInfo.Core.CriteriaExpression.Parts;
 
-public record ExpressionOperator(ExpressionOperatorType Operator) : IExpressionPart
+public sealed record ExpressionOperator(ExpressionOperatorType Operator) : IExpressionPart
 {
 	public override string ToString()
 	{

@@ -2,7 +2,7 @@ using System.Globalization;
 
 namespace DevilDaggersInfo.Core.Mod.Parsers;
 
-internal class ObjParsingContext
+internal sealed class ObjParsingContext
 {
 	private readonly List<Vector3> _positions = [];
 	private readonly List<Vector2> _texCoords = [];

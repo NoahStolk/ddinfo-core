@@ -1,6 +1,6 @@
 namespace DevilDaggersInfo.Core.Replay.PostProcessing.ReplaySimulation;
 
-public record ReplaySimulation
+public sealed record ReplaySimulation
 {
 	public ReplaySimulation(IReadOnlyList<PlayerMovementSnapshot> movementSnapshots, IReadOnlyList<PlayerInputSnapshot> inputSnapshots, IReadOnlyList<SoundSnapshot> soundSnapshots)
 	{

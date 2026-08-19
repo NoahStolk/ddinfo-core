@@ -2,7 +2,7 @@ using DevilDaggersInfo.Core.Asset;
 
 namespace DevilDaggersInfo.Core.Mod;
 
-public record ModBinaryTocEntry
+public sealed record ModBinaryTocEntry
 {
 	public ModBinaryTocEntry(string name, int offset, int size, AssetType assetType)
 	{

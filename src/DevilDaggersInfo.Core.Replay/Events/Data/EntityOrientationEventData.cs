@@ -1,6 +1,6 @@
 namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
-public record EntityOrientationEventData(int EntityId, Int16Mat3x3 Orientation) : IEventData
+public sealed record EntityOrientationEventData(int EntityId, Int16Mat3x3 Orientation) : IEventData
 {
 #pragma warning disable CA1051 // Visible instance fields.
 	public int EntityId = EntityId;

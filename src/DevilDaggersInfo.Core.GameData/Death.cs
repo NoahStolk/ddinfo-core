@@ -1,6 +1,6 @@
 namespace DevilDaggersInfo.Core.GameData;
 
-public class Death
+public sealed class Death
 {
 	internal Death(int value, string name, Rgb color)
 	{

@@ -1,6 +1,6 @@
 namespace DevilDaggersInfo.Core.Replay.PostProcessing.Timeline;
 
-public record EnemyTimeline(int EntityId, IReadOnlyList<EnemyTimelineEvent> Events)
+public sealed record EnemyTimeline(int EntityId, IReadOnlyList<EnemyTimelineEvent> Events)
 {
 	public int? GetHp(int tick)
 	{

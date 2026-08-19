@@ -8,6 +8,7 @@ This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - `Spawn`, `Vertex`, and `VertexReference` are now record structs.
 - `SpanWrite` is now internal. This type wasn't supposed to be public.
+- Various types are now sealed.
 
 ### Removed
 

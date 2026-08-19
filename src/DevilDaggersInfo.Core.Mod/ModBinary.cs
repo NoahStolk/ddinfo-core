@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace DevilDaggersInfo.Core.Mod;
 
-public class ModBinary
+public sealed class ModBinary
 {
 	private readonly ModBinaryReadFilter _readFilter;
 

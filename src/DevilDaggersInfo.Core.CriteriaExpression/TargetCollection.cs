@@ -1,7 +1,7 @@
 // ReSharper disable InconsistentNaming
 namespace DevilDaggersInfo.Core.CriteriaExpression;
 
-public record TargetCollection
+public sealed record TargetCollection
 {
 	public int GemsCollected { get; init; }
 

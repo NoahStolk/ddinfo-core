@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
-public record PedeSpawnEventData(PedeType PedeType, int A, Vector3 Position, Vector3 B, Matrix3x3 Orientation) : ISpawnEventData
+public sealed record PedeSpawnEventData(PedeType PedeType, int A, Vector3 Position, Vector3 B, Matrix3x3 Orientation) : ISpawnEventData
 {
 #pragma warning disable CA1051 // Visible instance fields.
 	public PedeType PedeType = PedeType;

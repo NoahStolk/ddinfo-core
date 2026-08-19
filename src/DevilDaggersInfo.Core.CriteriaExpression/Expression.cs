@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace DevilDaggersInfo.Core.CriteriaExpression;
 
-public class Expression
+public sealed class Expression
 {
 	public const int MaxByteLength = 64;
 

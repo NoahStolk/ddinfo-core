@@ -1,6 +1,6 @@
 namespace DevilDaggersInfo.Core.GameData;
 
-public class Damage
+public sealed class Damage
 {
 	internal Damage(Dagger dagger, Enemy enemy, float daggerDepletionPercentage, int enemyDamage)
 	{

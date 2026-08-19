@@ -1,6 +1,6 @@
 namespace DevilDaggersInfo.Core.GameData;
 
-public class Upgrade
+public sealed class Upgrade
 {
 	internal Upgrade(string name, Rgb color, UpgradeUnlockType unlockType, int gemsOrHomingRequired, UpgradeAttack normalAttack, UpgradeAttack? homingAttack)
 	{

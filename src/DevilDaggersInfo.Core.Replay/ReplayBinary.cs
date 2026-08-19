@@ -2,7 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace DevilDaggersInfo.Core.Replay;
 
-public class ReplayBinary<TReplayBinaryHeader>
+public sealed class ReplayBinary<TReplayBinaryHeader>
 	where TReplayBinaryHeader : IReplayBinaryHeader<TReplayBinaryHeader>
 {
 	public ReplayBinary(byte[] contents)

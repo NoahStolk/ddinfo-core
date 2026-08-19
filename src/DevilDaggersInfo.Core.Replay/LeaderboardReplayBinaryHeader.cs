@@ -2,7 +2,7 @@ using System.Text;
 
 namespace DevilDaggersInfo.Core.Replay;
 
-public class LeaderboardReplayBinaryHeader : IReplayBinaryHeader<LeaderboardReplayBinaryHeader>
+public sealed class LeaderboardReplayBinaryHeader : IReplayBinaryHeader<LeaderboardReplayBinaryHeader>
 {
 	public LeaderboardReplayBinaryHeader(string username, byte[] unknownBuffer)
 	{

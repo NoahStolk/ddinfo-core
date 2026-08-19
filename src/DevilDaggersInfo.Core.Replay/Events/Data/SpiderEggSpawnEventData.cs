@@ -2,7 +2,7 @@ using DevilDaggersInfo.Core.Replay.Events.Enums;
 
 namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
-public record SpiderEggSpawnEventData(int SpawnerEntityId, Vector3 Position, Vector3 TargetPosition) : ISpawnEventData
+public sealed record SpiderEggSpawnEventData(int SpawnerEntityId, Vector3 Position, Vector3 TargetPosition) : ISpawnEventData
 {
 #pragma warning disable CA1051 // Visible instance fields.
 	public int SpawnerEntityId = SpawnerEntityId;

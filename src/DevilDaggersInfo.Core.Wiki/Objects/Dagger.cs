@@ -1,6 +1,6 @@
 namespace DevilDaggersInfo.Core.Wiki.Objects;
 
-public record Dagger
+public sealed record Dagger
 {
 	internal Dagger(GameVersion gameVersion, string name, Color color, int unlockSecond)
 	{

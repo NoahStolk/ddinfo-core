@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
-public record SquidSpawnEventData(SquidType SquidType, int A, Vector3 Position, Vector3 Direction, float RotationInRadians) : ISpawnEventData
+public sealed record SquidSpawnEventData(SquidType SquidType, int A, Vector3 Position, Vector3 Direction, float RotationInRadians) : ISpawnEventData
 {
 #pragma warning disable CA1051 // Visible instance fields.
 	public SquidType SquidType = SquidType;

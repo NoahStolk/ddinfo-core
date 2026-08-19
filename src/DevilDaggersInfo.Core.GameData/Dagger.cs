@@ -1,6 +1,6 @@
 namespace DevilDaggersInfo.Core.GameData;
 
-public class Dagger
+public sealed class Dagger
 {
 	internal Dagger(string name, Rgb color)
 	{

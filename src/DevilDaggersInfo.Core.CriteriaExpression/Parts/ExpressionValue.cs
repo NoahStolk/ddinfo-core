@@ -3,7 +3,7 @@ using DevilDaggersInfo.Core.Wiki;
 
 namespace DevilDaggersInfo.Core.CriteriaExpression.Parts;
 
-public record ExpressionValue(int Value) : IExpressionPart
+public sealed record ExpressionValue(int Value) : IExpressionPart
 {
 	public override string ToString()
 	{

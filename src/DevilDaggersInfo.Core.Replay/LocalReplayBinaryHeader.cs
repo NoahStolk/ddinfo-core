@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DevilDaggersInfo.Core.Replay;
 
-public class LocalReplayBinaryHeader : IReplayBinaryHeader<LocalReplayBinaryHeader>
+public sealed class LocalReplayBinaryHeader : IReplayBinaryHeader<LocalReplayBinaryHeader>
 {
 	private const int _unknownLength = 10;
 

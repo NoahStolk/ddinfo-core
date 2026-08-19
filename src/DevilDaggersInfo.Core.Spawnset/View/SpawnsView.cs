@@ -2,7 +2,7 @@ using System.Collections.Immutable;
 
 namespace DevilDaggersInfo.Core.Spawnset.View;
 
-public class SpawnsView
+public sealed class SpawnsView
 {
 	public SpawnsView(SpawnsetBinary spawnsetBinary, GameVersion gameVersion, int waveCount = 40)
 	{

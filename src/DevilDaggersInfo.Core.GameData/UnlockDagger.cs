@@ -2,7 +2,7 @@ using DevilDaggersInfo.Core.Common;
 
 namespace DevilDaggersInfo.Core.GameData;
 
-public class UnlockDagger
+public sealed class UnlockDagger
 {
 	internal UnlockDagger(string name, Rgb color, GameTime unlocksAt)
 	{

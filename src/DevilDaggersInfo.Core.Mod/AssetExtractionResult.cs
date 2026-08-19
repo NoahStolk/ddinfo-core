@@ -1,6 +1,6 @@
 namespace DevilDaggersInfo.Core.Mod;
 
-public record AssetExtractionResult(IReadOnlyDictionary<string, byte[]> ExtractedAssetFiles)
+public sealed record AssetExtractionResult(IReadOnlyDictionary<string, byte[]> ExtractedAssetFiles)
 {
 	internal static AssetExtractionResult Single(string assetName, string fileExtension, byte[] assetFileContents)
 	{

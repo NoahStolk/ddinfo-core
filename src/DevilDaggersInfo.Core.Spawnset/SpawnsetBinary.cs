@@ -5,7 +5,7 @@ using System.Numerics;
 
 namespace DevilDaggersInfo.Core.Spawnset;
 
-public record SpawnsetBinary
+public sealed record SpawnsetBinary
 {
 	/// <summary>
 	/// The game supports different arena dimensions, however anything other than the default causes the spawnset to glitch out.

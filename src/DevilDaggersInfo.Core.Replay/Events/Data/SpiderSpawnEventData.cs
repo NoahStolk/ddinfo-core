@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
-public record SpiderSpawnEventData(SpiderType SpiderType, int A, Vector3 Position) : ISpawnEventData
+public sealed record SpiderSpawnEventData(SpiderType SpiderType, int A, Vector3 Position) : ISpawnEventData
 {
 #pragma warning disable CA1051 // Visible instance fields.
 	public SpiderType SpiderType = SpiderType;

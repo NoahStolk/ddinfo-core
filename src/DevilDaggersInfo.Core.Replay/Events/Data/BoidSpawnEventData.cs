@@ -3,7 +3,7 @@ using System.Diagnostics;
 
 namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
-public record BoidSpawnEventData(int SpawnerEntityId, BoidType BoidType, Int16Vec3 Position, Int16Mat3x3 Orientation, Vector3 Velocity, float Speed) : ISpawnEventData
+public sealed record BoidSpawnEventData(int SpawnerEntityId, BoidType BoidType, Int16Vec3 Position, Int16Mat3x3 Orientation, Vector3 Velocity, float Speed) : ISpawnEventData
 {
 #pragma warning disable CA1051 // Visible instance fields.
 	public int SpawnerEntityId = SpawnerEntityId;

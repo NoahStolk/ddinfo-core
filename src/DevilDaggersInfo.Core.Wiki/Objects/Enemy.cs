@@ -1,6 +1,6 @@
 namespace DevilDaggersInfo.Core.Wiki.Objects;
 
-public record Enemy
+public sealed record Enemy
 {
 	internal Enemy(GameVersion gameVersion, string name, Color color, int hp, int gems, int noFarmGems, Death death, HomingDamage homingDamage, int? firstSpawnSecond, params Enemy[] spawnedBy)
 	{

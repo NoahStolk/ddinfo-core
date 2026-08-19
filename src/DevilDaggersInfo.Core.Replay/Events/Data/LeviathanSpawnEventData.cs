@@ -2,7 +2,7 @@ using DevilDaggersInfo.Core.Replay.Events.Enums;
 
 namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
-public record LeviathanSpawnEventData(int A) : ISpawnEventData
+public sealed record LeviathanSpawnEventData(int A) : ISpawnEventData
 {
 #pragma warning disable CA1051 // Visible instance fields.
 	public int A = A;

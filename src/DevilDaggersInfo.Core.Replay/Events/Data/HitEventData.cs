@@ -1,6 +1,6 @@
 namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
-public record HitEventData(int EntityIdA, int EntityIdB, int UserData) : IEventData
+public sealed record HitEventData(int EntityIdA, int EntityIdB, int UserData) : IEventData
 {
 #pragma warning disable CA1051 // Visible instance fields.
 	public int EntityIdA = EntityIdA;

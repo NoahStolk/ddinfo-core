@@ -1,6 +1,6 @@
 namespace DevilDaggersInfo.Core.Wiki.Objects;
 
-public record Death
+public sealed record Death
 {
 	internal Death(GameVersion gameVersion, string name, Color color, byte leaderboardDeathType)
 	{

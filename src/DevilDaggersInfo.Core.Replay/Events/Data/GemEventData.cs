@@ -1,6 +1,6 @@
 namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
-public record GemEventData : IEventData
+public sealed record GemEventData : IEventData
 {
 	public void Write(BinaryWriter bw)
 	{

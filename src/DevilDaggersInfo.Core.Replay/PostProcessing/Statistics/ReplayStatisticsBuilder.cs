@@ -3,7 +3,7 @@ using DevilDaggersInfo.Core.Replay.Events.Enums;
 
 namespace DevilDaggersInfo.Core.Replay.PostProcessing.Statistics;
 
-public class ReplayStatisticsBuilder
+public sealed class ReplayStatisticsBuilder
 {
 	#region Fields
 

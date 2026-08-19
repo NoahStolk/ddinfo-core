@@ -3,7 +3,7 @@ using System.Collections.Frozen;
 
 namespace DevilDaggersInfo.Core.GameData;
 
-public class Enemy
+public sealed class Enemy
 {
 	internal Enemy(string name, int gems, int weakPointRepeatCount, int weakPointHealth, bool isTargetedByHomingDaggers, GameTime? firstSpawn, Rgb color, Death death)
 	{

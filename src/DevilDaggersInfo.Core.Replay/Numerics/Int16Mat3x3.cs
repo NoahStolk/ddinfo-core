@@ -1,9 +1,9 @@
-// ReSharper disable InconsistentNaming
 using DevilDaggersInfo.Core.Replay.Utils;
 using System.Runtime.InteropServices;
 
 namespace DevilDaggersInfo.Core.Replay.Numerics;
 
+// ReSharper disable InconsistentNaming
 [StructLayout(LayoutKind.Sequential)]
 public record struct Int16Mat3x3(short M11, short M12, short M13, short M21, short M22, short M23, short M31, short M32, short M33)
 	: ISpanFormattable, IUtf8SpanFormattable

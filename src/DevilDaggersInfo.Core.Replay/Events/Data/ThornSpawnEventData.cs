@@ -2,7 +2,7 @@ using DevilDaggersInfo.Core.Replay.Events.Enums;
 
 namespace DevilDaggersInfo.Core.Replay.Events.Data;
 
-public record ThornSpawnEventData(int A, Vector3 Position, float RotationInRadians) : ISpawnEventData
+public sealed record ThornSpawnEventData(int A, Vector3 Position, float RotationInRadians) : ISpawnEventData
 {
 #pragma warning disable CA1051 // Visible instance fields.
 	public int A = A;

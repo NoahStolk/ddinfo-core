@@ -1,6 +1,6 @@
 namespace DevilDaggersInfo.Core.GameData;
 
-public class UpgradeAttack
+public sealed class UpgradeAttack
 {
 	internal UpgradeAttack(int daggersPerShot, float rapidDaggersPerSecond)
 	{
