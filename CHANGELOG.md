@@ -7,6 +7,7 @@ This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ### Changed
 
 - `Spawn` is now a record struct.
+- `SpanWrite` is now internal. This type wasn't supposed to be public.
 
 ### Removed
 

@@ -1,6 +1,6 @@
 namespace DevilDaggersInfo.Core.Replay.Utils;
 
-public static class SpanWrite
+internal static class SpanWrite
 {
 	public static bool TryWriteChar(Span<char> destination, ref int charsWritten, char value)
 	{
