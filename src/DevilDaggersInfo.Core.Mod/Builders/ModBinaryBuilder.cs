@@ -33,7 +33,7 @@ public abstract class ModBinaryBuilder
 		foreach (KeyValuePair<AssetKey, AssetData> kvp in _assetMap)
 		{
 			int size = kvp.Value.Buffer.Length;
-			_tocEntries.Add(new(kvp.Key.AssetName, offset, size, kvp.Key.AssetType));
+			_tocEntries.Add(new ModBinaryTocEntry(kvp.Key.AssetName, offset, size, kvp.Key.AssetType));
 
 			offset += size;
 		}

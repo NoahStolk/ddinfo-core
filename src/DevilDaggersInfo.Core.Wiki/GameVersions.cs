@@ -21,11 +21,11 @@ public static class GameVersions
 	{
 		return gameVersion switch
 		{
-			GameVersion.V1_0 => new(2016, 2, 18, 0, 0, 0, DateTimeKind.Utc),
-			GameVersion.V2_0 => new(2016, 7, 5, 0, 0, 0, DateTimeKind.Utc),
-			GameVersion.V3_0 => new(2016, 9, 19, 0, 0, 0, DateTimeKind.Utc),
-			GameVersion.V3_1 => new(2021, 2, 19, 0, 0, 0, DateTimeKind.Utc),
-			GameVersion.V3_2 => new(2021, 10, 27, 0, 0, 0, DateTimeKind.Utc),
+			GameVersion.V1_0 => new DateTime(2016, 2, 18, 0, 0, 0, DateTimeKind.Utc),
+			GameVersion.V2_0 => new DateTime(2016, 7, 5, 0, 0, 0, DateTimeKind.Utc),
+			GameVersion.V3_0 => new DateTime(2016, 9, 19, 0, 0, 0, DateTimeKind.Utc),
+			GameVersion.V3_1 => new DateTime(2021, 2, 19, 0, 0, 0, DateTimeKind.Utc),
+			GameVersion.V3_2 => new DateTime(2021, 10, 27, 0, 0, 0, DateTimeKind.Utc),
 			_ => throw new UnreachableException(),
 		};
 	}

@@ -1,4 +1,5 @@
 using DevilDaggersInfo.Core.Replay.Events.Data;
+using DevilDaggersInfo.Core.Replay.Numerics;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -59,8 +60,8 @@ internal sealed class ReplayBinaryTests
 			if (e.Data is not BoidSpawnEventData boid)
 				continue;
 
-			await Assert.That(boid.Position).IsEqualTo(new(20, 20, 20));
-			boid.Position = new(10, 10, 10);
+			await Assert.That(boid.Position).IsEqualTo(new Int16Vec3(20, 20, 20));
+			boid.Position = new Int16Vec3(10, 10, 10);
 			skullsAccessed++;
 		}
 
@@ -71,7 +72,7 @@ internal sealed class ReplayBinaryTests
 			if (e.Data is not BoidSpawnEventData boid)
 				continue;
 
-			await Assert.That(boid.Position).IsEqualTo(new(10, 10, 10));
+			await Assert.That(boid.Position).IsEqualTo(new Int16Vec3(10, 10, 10));
 			skullsAccessed++;
 		}
 
@@ -90,7 +91,7 @@ internal sealed class ReplayBinaryTests
 			if (e.Data is not BoidSpawnEventData boid)
 				continue;
 
-			await Assert.That(boid.Position).IsEqualTo(new(10, 10, 10));
+			await Assert.That(boid.Position).IsEqualTo(new Int16Vec3(10, 10, 10));
 			skullsAccessed++;
 		}
 

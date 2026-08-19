@@ -41,7 +41,7 @@ public record SpawnsetBinary
 		Brightness = brightness;
 		GameMode = gameMode;
 		ArenaDimension = arenaDimension;
-		ArenaTiles = new(arenaDimension, arenaTiles);
+		ArenaTiles = new ImmutableArena(arenaDimension, arenaTiles);
 
 		RaceDaggerPosition = raceDaggerPosition;
 		UnusedDevilTime = unusedDevilTime;
@@ -150,7 +150,7 @@ public record SpawnsetBinary
 		{
 			EnemyType enemyType = br.ReadInt32().ToEnemyType();
 			float delay = br.ReadSingle();
-			spawns[i] = new(enemyType, delay);
+			spawns[i] = new Spawn(enemyType, delay);
 
 			br.Seek(20);
 		}
@@ -168,7 +168,7 @@ public record SpawnsetBinary
 				timerStart = br.ReadSingle();
 		}
 
-		return new(
+		return new SpawnsetBinary(
 			spawnVersion,
 			worldVersion,
 			shrinkStart,
@@ -178,7 +178,7 @@ public record SpawnsetBinary
 			gameMode,
 			arenaDimension,
 			arenaTiles,
-			new(raceDaggerX, raceDaggerZ),
+			new Vector2(raceDaggerX, raceDaggerZ),
 			unusedDevilTime,
 			unusedGoldenTime,
 			unusedSilverTime,
@@ -280,12 +280,12 @@ public record SpawnsetBinary
 				const int halfTile = tileSize / 2;
 				const float radius = (shrinkStart - halfTile) / tileSize;
 				const float radiusSquared = radius * radius;
-				bool inside = Vector2.DistanceSquared(centerPoint, new(i, j)) < radiusSquared;
+				bool inside = Vector2.DistanceSquared(centerPoint, new Vector2(i, j)) < radiusSquared;
 				arena[i, j] = inside ? 0 : -1000;
 			}
 		}
 
-		return new(6, 9, shrinkStart, 20, 0.025f, 60, GameMode.Survival, ArenaDimensionMax, arena, default, 500, 250, 120, 60, ImmutableArray<Spawn>.Empty, HandLevel.Level1, 0, 0);
+		return new SpawnsetBinary(6, 9, shrinkStart, 20, 0.025f, 60, GameMode.Survival, ArenaDimensionMax, arena, default, 500, 250, 120, 60, ImmutableArray<Spawn>.Empty, HandLevel.Level1, 0, 0);
 	}
 
 	public SpawnsetBinary DeepCopy()
@@ -294,7 +294,7 @@ public record SpawnsetBinary
 		for (int i = 0; i < Spawns.Length; i++)
 			spawns[i] = Spawns[i];
 
-		return new(
+		return new SpawnsetBinary(
 			SpawnVersion,
 			WorldVersion,
 			ShrinkStart,
@@ -356,19 +356,19 @@ public record SpawnsetBinary
 	public static EffectivePlayerSettings GetEffectivePlayerSettings(int spawnVersion, HandLevel handLevel, int additionalGems)
 	{
 		if (spawnVersion < 5)
-			return new(HandLevel.Level1, 0, HandLevel.Level1);
+			return new EffectivePlayerSettings(HandLevel.Level1, 0, HandLevel.Level1);
 
 		return handLevel switch
 		{
-			HandLevel.Level1 when additionalGems < 10 => new(HandLevel.Level1, additionalGems, HandLevel.Level1),
-			HandLevel.Level1 when additionalGems < 70 => new(HandLevel.Level2, additionalGems, HandLevel.Level2),
-			HandLevel.Level1 when additionalGems == 70 => new(HandLevel.Level3, 0, HandLevel.Level3),
-			HandLevel.Level1 when additionalGems == 71 => new(HandLevel.Level4, 0, HandLevel.Level4),
-			HandLevel.Level1 => new(HandLevel.Level4, 0, HandLevel.Level3),
-			HandLevel.Level2 when additionalGems < 0 => new(HandLevel.Level1, additionalGems + 10, HandLevel.Level1),
-			HandLevel.Level2 => new(HandLevel.Level2, Math.Min(59, additionalGems) + 10, HandLevel.Level2),
-			HandLevel.Level3 => new(HandLevel.Level3, Math.Min(149, additionalGems), HandLevel.Level3),
-			_ => new(HandLevel.Level4, additionalGems, HandLevel.Level4),
+			HandLevel.Level1 when additionalGems < 10 => new EffectivePlayerSettings(HandLevel.Level1, additionalGems, HandLevel.Level1),
+			HandLevel.Level1 when additionalGems < 70 => new EffectivePlayerSettings(HandLevel.Level2, additionalGems, HandLevel.Level2),
+			HandLevel.Level1 when additionalGems == 70 => new EffectivePlayerSettings(HandLevel.Level3, 0, HandLevel.Level3),
+			HandLevel.Level1 when additionalGems == 71 => new EffectivePlayerSettings(HandLevel.Level4, 0, HandLevel.Level4),
+			HandLevel.Level1 => new EffectivePlayerSettings(HandLevel.Level4, 0, HandLevel.Level3),
+			HandLevel.Level2 when additionalGems < 0 => new EffectivePlayerSettings(HandLevel.Level1, additionalGems + 10, HandLevel.Level1),
+			HandLevel.Level2 => new EffectivePlayerSettings(HandLevel.Level2, Math.Min(59, additionalGems) + 10, HandLevel.Level2),
+			HandLevel.Level3 => new EffectivePlayerSettings(HandLevel.Level3, Math.Min(149, additionalGems), HandLevel.Level3),
+			_ => new EffectivePlayerSettings(HandLevel.Level4, additionalGems, HandLevel.Level4),
 		};
 	}
 
@@ -430,7 +430,7 @@ public record SpawnsetBinary
 
 		int arenaMiddle = ArenaDimension / 2;
 		Vector2 middle = new(arenaMiddle, arenaMiddle);
-		float distance = Vector2.Distance(new(x, y), middle);
+		float distance = Vector2.Distance(new Vector2(x, y), middle);
 		if (distance > Math.Max(shrinkStartInTiles, shrinkEndInTiles))
 			return 0;
 
@@ -505,7 +505,7 @@ public record SpawnsetBinary
 					spawnCount++;
 			}
 
-			return (new(spawnCount, spawnCount == 0 ? null : seconds), default);
+			return (new SpawnSectionInfo(spawnCount, spawnCount == 0 ? null : seconds), default);
 		}
 
 		(SpawnSectionInfo PreLoopSection, SpawnSectionInfo LoopSection) CalculateSectionsForDefaultGameMode()
@@ -534,7 +534,7 @@ public record SpawnsetBinary
 				}
 			}
 
-			return (new(preLoopSpawnCount, preLoopSpawnCount == 0 ? null : preLoopSeconds), new(loopSpawnCount, loopSpawnCount == 0 ? null : loopSeconds));
+			return (new SpawnSectionInfo(preLoopSpawnCount, preLoopSpawnCount == 0 ? null : preLoopSeconds), new SpawnSectionInfo(loopSpawnCount, loopSpawnCount == 0 ? null : loopSeconds));
 		}
 	}
 
@@ -606,7 +606,7 @@ public record SpawnsetBinary
 				}
 			}
 
-			newSpawns.Insert(0, new(Spawns[i].EnemyType, Spawns[i].Delay + extraDelayFromPreviousEmptySpawns));
+			newSpawns.Insert(0, new Spawn(Spawns[i].EnemyType, Spawns[i].Delay + extraDelayFromPreviousEmptySpawns));
 		}
 
 		// Add the end loop, including the original last empty spawn.
@@ -632,12 +632,12 @@ public record SpawnsetBinary
 				if (waveIndex % 3 == 2 && finalEnemy == EnemyType.Gigapede)
 					finalEnemy = EnemyType.Ghostpede;
 
-				newSpawns.Add(new(finalEnemy, spawnDelay));
+				newSpawns.Add(new Spawn(finalEnemy, spawnDelay));
 			}
 		}
 
 		// We don't want an actual loop to happen after these hardcoded waves, so we add an empty spawn.
-		newSpawns.Add(new(EnemyType.Empty, 0));
+		newSpawns.Add(new Spawn(EnemyType.Empty, 0));
 
 		return this with
 		{

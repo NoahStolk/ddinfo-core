@@ -23,6 +23,6 @@ public readonly record struct GemState(HandLevel HandLevel, int Value, int Total
 			newValue -= 150;
 		}
 
-		return new(newHandLevel, newValue, newTotalGemsCollected);
+		return new GemState(newHandLevel, newValue, newTotalGemsCollected);
 	}
 }

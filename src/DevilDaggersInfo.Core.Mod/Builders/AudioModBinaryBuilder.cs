@@ -12,7 +12,7 @@ public sealed class AudioModBinaryBuilder : ModBinaryBuilder
 	{
 		AssetKey key = new(AssetType.Audio, assetName);
 		ValidateAsset(key);
-		_assetMap.Add(key, new(wavFileContents));
+		_assetMap.Add(key, new AssetData(wavFileContents));
 		RebuildToc();
 
 		if (loudnessValue.HasValue)
@@ -44,7 +44,7 @@ public sealed class AudioModBinaryBuilder : ModBinaryBuilder
 
 		AssetKey key = new(AssetType.Audio, "loudness");
 		ValidateAsset(key);
-		_assetMap.Add(key, new(Encoding.ASCII.GetBytes(loudness.ToString())));
+		_assetMap.Add(key, new AssetData(Encoding.ASCII.GetBytes(loudness.ToString())));
 		RebuildToc();
 	}
 }

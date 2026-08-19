@@ -29,6 +29,6 @@ public static class BinaryReaderExtensions
 		Vector2 texCoord = new(
 			x: br.ReadSingle(),
 			y: br.ReadSingle());
-		return new(position, normal, texCoord);
+		return new Vertex(position, normal, texCoord);
 	}
 }

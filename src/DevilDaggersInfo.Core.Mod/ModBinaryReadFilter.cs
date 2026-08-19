@@ -16,7 +16,7 @@ public sealed class ModBinaryReadFilter
 
 	public static ModBinaryReadFilter Assets(params AssetKey[] keys)
 	{
-		return new(false, keys);
+		return new ModBinaryReadFilter(false, keys);
 	}
 
 	public bool ShouldRead(AssetKey key)

@@ -25,6 +25,6 @@ public readonly record struct BinaryName(ModBinaryType BinaryType, string Name)
 			_ => throw new ArgumentException($"The string {fullName} contains an invalid binary type prefix.", nameof(modName)),
 		};
 
-		return new(modBinaryType, parsedValues[1]);
+		return new BinaryName(modBinaryType, parsedValues[1]);
 	}
 }

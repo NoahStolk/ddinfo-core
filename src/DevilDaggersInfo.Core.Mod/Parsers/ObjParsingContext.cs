@@ -50,7 +50,7 @@ internal class ObjParsingContext
 		if (coords.Length < 3)
 			throw new InvalidObjException($"Invalid position (v) on line {lineNumber}. Must contain at least 3 coordinates. (Additional coordinates are ignored.)");
 
-		_positions.Add(new(ParseVertexValue(coords[0]), ParseVertexValue(coords[1]), ParseVertexValue(coords[2])));
+		_positions.Add(new Vector3(ParseVertexValue(coords[0]), ParseVertexValue(coords[1]), ParseVertexValue(coords[2])));
 	}
 
 	private void ParseTexCoordinate(int lineNumber, string[] coords)
@@ -58,7 +58,7 @@ internal class ObjParsingContext
 		if (coords.Length < 2)
 			throw new InvalidObjException($"Invalid texture coordinate (vt) on line {lineNumber}. Must contain at least 2 coordinates. (Additional coordinates are ignored.)");
 
-		_texCoords.Add(new(ParseVertexValue(coords[0]), ParseVertexValue(coords[1])));
+		_texCoords.Add(new Vector2(ParseVertexValue(coords[0]), ParseVertexValue(coords[1])));
 	}
 
 	private void ParseNormal(int lineNumber, string[] coords)
@@ -66,7 +66,7 @@ internal class ObjParsingContext
 		if (coords.Length < 3)
 			throw new InvalidObjException($"Invalid normal (vn) on line {lineNumber}. Must contain at least 3 coordinates. (Additional coordinates are ignored.)");
 
-		_normals.Add(new(ParseVertexValue(coords[0]), ParseVertexValue(coords[1]), ParseVertexValue(coords[2])));
+		_normals.Add(new Vector3(ParseVertexValue(coords[0]), ParseVertexValue(coords[1]), ParseVertexValue(coords[2])));
 	}
 
 	/// <summary>
@@ -115,7 +115,7 @@ internal class ObjParsingContext
 				if (!int.TryParse(references[2], out int normalReference) || normalReference < 1)
 					throw new InvalidObjException($"{baseErrorMessage} Normal value '{references[2]}' could not be parsed to a positive integral value.");
 
-				_vertices.Add(new(positionReference, texCoordinateReference, normalReference));
+				_vertices.Add(new VertexReference(positionReference, texCoordinateReference, normalReference));
 			}
 			else
 			{
@@ -125,7 +125,7 @@ internal class ObjParsingContext
 				if (!int.TryParse(value, out int unifiedValue) || unifiedValue < 1)
 					throw new InvalidObjException($"{baseErrorMessage} Value '{value}' could not be parsed to a positive integral value.");
 
-				_vertices.Add(new(unifiedValue));
+				_vertices.Add(new VertexReference(unifiedValue));
 			}
 		}
 	}
@@ -173,9 +173,9 @@ internal class ObjParsingContext
 			parsed.Normals.Add(_normals[b.NormalReference - 1]);
 			parsed.Normals.Add(_normals[c.NormalReference - 1]);
 
-			parsed.Vertices.Add(new(i + 1));
-			parsed.Vertices.Add(new(i + 2));
-			parsed.Vertices.Add(new(i + 3));
+			parsed.Vertices.Add(new VertexReference(i + 1));
+			parsed.Vertices.Add(new VertexReference(i + 2));
+			parsed.Vertices.Add(new VertexReference(i + 3));
 		}
 
 		return parsed;

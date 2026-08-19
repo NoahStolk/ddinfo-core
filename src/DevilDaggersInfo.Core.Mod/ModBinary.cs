@@ -12,7 +12,7 @@ public class ModBinary
 		_readFilter = readFilter;
 
 		Toc = ModBinaryToc.FromBytes(fileContents);
-		AssetMap = new();
+		AssetMap = new Dictionary<AssetKey, AssetData>();
 
 		using MemoryStream ms = new(fileContents);
 		using BinaryReader br = new(ms);
@@ -25,7 +25,7 @@ public class ModBinary
 
 		using BinaryReader br = new(stream);
 		Toc = ModBinaryToc.FromReader(br);
-		AssetMap = new();
+		AssetMap = new Dictionary<AssetKey, AssetData>();
 
 		BuildAssetMap(br);
 	}
@@ -38,13 +38,13 @@ public class ModBinary
 		// If entries point to the same asset position; the asset is re-used (TODO: test if this even works in DD -- if not, remove DistinctBy).
 		foreach (ModBinaryTocEntry entry in Toc.Entries.DistinctBy(c => c.Offset))
 		{
-			if (!_readFilter.ShouldRead(new(entry.AssetType, entry.Name)))
+			if (!_readFilter.ShouldRead(new AssetKey(entry.AssetType, entry.Name)))
 				continue;
 
 			br.BaseStream.Seek(entry.Offset, SeekOrigin.Begin);
 			byte[] buffer = br.ReadBytes(entry.Size);
 
-			AssetMap[new(entry.AssetType, entry.Name)] = new(buffer);
+			AssetMap[new AssetKey(entry.AssetType, entry.Name)] = new AssetData(buffer);
 		}
 	}
 
@@ -55,7 +55,7 @@ public class ModBinary
 
 	public AssetExtractionResult ExtractAsset(string assetName, AssetType assetType)
 	{
-		if (!_readFilter.ShouldRead(new(assetType, assetName)))
+		if (!_readFilter.ShouldRead(new AssetKey(assetType, assetName)))
 			throw new InvalidOperationException("This asset has not been read. It was not included in the filter, so it cannot be extracted.");
 
 		AssetKey key = new(assetType, assetName);

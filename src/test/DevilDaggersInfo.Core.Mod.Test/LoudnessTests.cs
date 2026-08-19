@@ -21,9 +21,9 @@ internal sealed class LoudnessTests
 		await Assert.That(modBinary.Toc.Entries.Any(e => e.Name == "fall")).IsTrue();
 		await Assert.That(modBinary.Toc.Entries.Any(e => e.Name == "loudness")).IsTrue();
 		await Assert.That(modBinary.AssetMap.Count).IsEqualTo(3);
-		await Assert.That(modBinary.AssetMap.ContainsKey(new(AssetType.Audio, "death"))).IsTrue();
-		await Assert.That(modBinary.AssetMap.ContainsKey(new(AssetType.Audio, "fall"))).IsTrue();
-		await Assert.That(modBinary.AssetMap.ContainsKey(new(AssetType.Audio, "loudness"))).IsTrue();
+		await Assert.That(modBinary.AssetMap.ContainsKey(new AssetKey(AssetType.Audio, "death"))).IsTrue();
+		await Assert.That(modBinary.AssetMap.ContainsKey(new AssetKey(AssetType.Audio, "fall"))).IsTrue();
+		await Assert.That(modBinary.AssetMap.ContainsKey(new AssetKey(AssetType.Audio, "loudness"))).IsTrue();
 
 		AssetExtractionResult loudness = modBinary.ExtractAsset("loudness", AssetType.Audio);
 		await Assert.That(loudness.ExtractedAssetFiles.Count).IsEqualTo(1);

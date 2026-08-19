@@ -10,7 +10,7 @@ public sealed class DdModBinaryBuilder : ModBinaryBuilder
 	{
 		AssetKey key = new(AssetType.Mesh, assetName);
 		ValidateAsset(key);
-		_assetMap.Add(key, new(ObjFileHandler.Compile(objFileContents)));
+		_assetMap.Add(key, new AssetData(ObjFileHandler.Compile(objFileContents)));
 		RebuildToc();
 	}
 
@@ -18,7 +18,7 @@ public sealed class DdModBinaryBuilder : ModBinaryBuilder
 	{
 		AssetKey key = new(AssetType.ObjectBinding, assetName);
 		ValidateAsset(key);
-		_assetMap.Add(key, new(txtFileContents));
+		_assetMap.Add(key, new AssetData(txtFileContents));
 		RebuildToc();
 	}
 
@@ -26,7 +26,7 @@ public sealed class DdModBinaryBuilder : ModBinaryBuilder
 	{
 		AssetKey key = new(AssetType.Shader, assetName);
 		ValidateAsset(key);
-		_assetMap.Add(key, new(GlslFileHandler.Compile(assetName, vertexShaderFileContents, fragmentShaderFileContents)));
+		_assetMap.Add(key, new AssetData(GlslFileHandler.Compile(assetName, vertexShaderFileContents, fragmentShaderFileContents)));
 		RebuildToc();
 	}
 
@@ -34,7 +34,7 @@ public sealed class DdModBinaryBuilder : ModBinaryBuilder
 	{
 		AssetKey key = new(AssetType.Texture, assetName);
 		ValidateAsset(key);
-		_assetMap.Add(key, new(PngFileHandler.Compile(pngFileContents)));
+		_assetMap.Add(key, new AssetData(PngFileHandler.Compile(pngFileContents)));
 		RebuildToc();
 	}
 }

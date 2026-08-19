@@ -54,7 +54,7 @@ public sealed class ModBinaryToc
 		if (!modBinaryType.HasValue)
 			throw new InvalidModBinaryException("Mod binary type could not be determined, probably because there are no assets.");
 
-		return new(modBinaryType.Value, entries);
+		return new ModBinaryToc(modBinaryType.Value, entries);
 	}
 
 	public static ModBinaryType DetermineType(byte[] contents)
@@ -131,7 +131,7 @@ public sealed class ModBinaryToc
 		foreach (ModBinaryTocEntry entry in original.Entries)
 			entries.Add(toggleFunc(entry));
 
-		return new(original.Type, entries);
+		return new ModBinaryToc(original.Type, entries);
 	}
 
 	private static uint GetSize(long totalStreamLength, BinaryReader br)
@@ -171,6 +171,6 @@ public sealed class ModBinaryToc
 		if (string.IsNullOrWhiteSpace(name))
 			return null;
 
-		return new(name, offset, size, assetType.Value);
+		return new ModBinaryTocEntry(name, offset, size, assetType.Value);
 	}
 }

@@ -21,7 +21,7 @@ internal sealed class GemStateTests
 		gemState = gemState.Add(200);
 		await AssertGemState(gemState, HandLevel.Level4, 55);
 
-		gemState = new(HandLevel.Level1, 0, 0);
+		gemState = new GemState(HandLevel.Level1, 0, 0);
 		gemState = gemState.Add(75);
 		await AssertGemState(gemState, HandLevel.Level3, 5);
 	}

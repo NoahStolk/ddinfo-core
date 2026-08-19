@@ -31,6 +31,6 @@ internal static class GlslFileHandler
 		byte[] vertexBuffer = br.ReadBytes(vertexBufferLength);
 		byte[] fragmentBuffer = br.ReadBytes(fragmentBufferLength);
 
-		return new(shaderName, vertexBuffer, fragmentBuffer);
+		return new ShaderData(shaderName, vertexBuffer, fragmentBuffer);
 	}
 }

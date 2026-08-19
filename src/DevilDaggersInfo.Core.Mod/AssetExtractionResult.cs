@@ -4,7 +4,7 @@ public record AssetExtractionResult(IReadOnlyDictionary<string, byte[]> Extracte
 {
 	internal static AssetExtractionResult Single(string assetName, string fileExtension, byte[] assetFileContents)
 	{
-		return new(new Dictionary<string, byte[]>
+		return new AssetExtractionResult(new Dictionary<string, byte[]>
 		{
 			[$"{assetName}.{fileExtension}"] = assetFileContents,
 		});
@@ -12,7 +12,7 @@ public record AssetExtractionResult(IReadOnlyDictionary<string, byte[]> Extracte
 
 	internal static AssetExtractionResult Shader(string assetName, ShaderData shaderData)
 	{
-		return new(new Dictionary<string, byte[]>
+		return new AssetExtractionResult(new Dictionary<string, byte[]>
 		{
 			[$"{assetName}.vert"] = shaderData.VertexShaderFileContents,
 			[$"{assetName}.frag"] = shaderData.FragmentShaderFileContents,

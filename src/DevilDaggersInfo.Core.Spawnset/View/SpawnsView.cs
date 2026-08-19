@@ -53,7 +53,7 @@ public class SpawnsView
 			int noFarmGems = spawn.EnemyType.GetNoFarmGems();
 			gemState = gemState.Add(noFarmGems);
 			if (spawn.EnemyType != EnemyType.Empty)
-				PreLoop.Add(new(spawn.EnemyType, totalSeconds, noFarmGems, gemState));
+				PreLoop.Add(new SpawnView(spawn.EnemyType, totalSeconds, noFarmGems, gemState));
 		}
 	}
 
@@ -86,7 +86,7 @@ public class SpawnsView
 				int noFarmGems = finalEnemy.GetNoFarmGems();
 				gemState = gemState.Add(noFarmGems);
 
-				Waves[i].Add(new(finalEnemy, totalSeconds, noFarmGems, gemState));
+				Waves[i].Add(new SpawnView(finalEnemy, totalSeconds, noFarmGems, gemState));
 			}
 		}
 	}
