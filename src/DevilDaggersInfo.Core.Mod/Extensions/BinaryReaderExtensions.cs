@@ -2,33 +2,36 @@ namespace DevilDaggersInfo.Core.Mod.Extensions;
 
 public static class BinaryReaderExtensions
 {
-	public static string ReadNullTerminatedString(this BinaryReader binaryReader)
+	extension(BinaryReader binaryReader)
 	{
-		StringBuilder sb = new();
-		while (true)
+		public string ReadNullTerminatedString()
 		{
-			byte b = binaryReader.ReadByte();
-			if (b == 0x00)
-				break;
-			sb.Append((char)b);
+			StringBuilder sb = new();
+			while (true)
+			{
+				byte b = binaryReader.ReadByte();
+				if (b == 0x00)
+					break;
+				sb.Append((char)b);
+			}
+
+			return sb.ToString();
 		}
 
-		return sb.ToString();
-	}
-
-	public static Vertex ReadVertex(this BinaryReader br)
-	{
-		Vector3 position = new(
-			x: br.ReadSingle(),
-			y: br.ReadSingle(),
-			z: br.ReadSingle());
-		Vector3 normal = new(
-			x: br.ReadSingle(),
-			y: br.ReadSingle(),
-			z: br.ReadSingle());
-		Vector2 texCoord = new(
-			x: br.ReadSingle(),
-			y: br.ReadSingle());
-		return new Vertex(position, normal, texCoord);
+		public Vertex ReadVertex()
+		{
+			Vector3 position = new(
+				x: binaryReader.ReadSingle(),
+				y: binaryReader.ReadSingle(),
+				z: binaryReader.ReadSingle());
+			Vector3 normal = new(
+				x: binaryReader.ReadSingle(),
+				y: binaryReader.ReadSingle(),
+				z: binaryReader.ReadSingle());
+			Vector2 texCoord = new(
+				x: binaryReader.ReadSingle(),
+				y: binaryReader.ReadSingle());
+			return new Vertex(position, normal, texCoord);
+		}
 	}
 }

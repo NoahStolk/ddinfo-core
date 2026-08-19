@@ -13,31 +13,34 @@ public static class EnumConversionExtensions
 		};
 	}
 
-	public static EnemyType ToEnemyType(this int value)
+	extension(int value)
 	{
-		return value switch
+		public EnemyType ToEnemyType()
 		{
-			0 => EnemyType.Squid1,
-			1 => EnemyType.Squid2,
-			2 => EnemyType.Centipede,
-			3 => EnemyType.Spider1,
-			4 => EnemyType.Leviathan,
-			5 => EnemyType.Gigapede,
-			6 => EnemyType.Squid3,
-			7 => EnemyType.Thorn,
-			8 => EnemyType.Spider2,
-			9 => EnemyType.Ghostpede,
-			_ => EnemyType.Empty,
-		};
-	}
+			return value switch
+			{
+				0 => EnemyType.Squid1,
+				1 => EnemyType.Squid2,
+				2 => EnemyType.Centipede,
+				3 => EnemyType.Spider1,
+				4 => EnemyType.Leviathan,
+				5 => EnemyType.Gigapede,
+				6 => EnemyType.Squid3,
+				7 => EnemyType.Thorn,
+				8 => EnemyType.Spider2,
+				9 => EnemyType.Ghostpede,
+				_ => EnemyType.Empty,
+			};
+		}
 
-	public static GameMode ToGameMode(this int value)
-	{
-		return value switch
+		public GameMode ToGameMode()
 		{
-			1 => GameMode.TimeAttack,
-			2 => GameMode.Race,
-			_ => GameMode.Survival,
-		};
+			return value switch
+			{
+				1 => GameMode.TimeAttack,
+				2 => GameMode.Race,
+				_ => GameMode.Survival,
+			};
+		}
 	}
 }
