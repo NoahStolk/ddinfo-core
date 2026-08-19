@@ -9,13 +9,13 @@
 	</ItemGroup>
 
 	<ItemGroup Label="Test dependencies">
-		<PackageVersion Include="JetBrains.Annotations" Version="2024.3.0"/>
-		<PackageVersion Include="TUnit" Version="1.63.25"/>
+		<PackageVersion Include="JetBrains.Annotations" Version="2026.2.0"/>
+		<PackageVersion Include="TUnit" Version="1.65.38"/>
 	</ItemGroup>
 
 	<ItemGroup Label="Static code analysis">
 		<GlobalPackageReference Include="Nullable.Extended.Analyzer" Version="1.15.6581"/>
-		<GlobalPackageReference Include="Roslynator.Analyzers" Version="4.16.0"/>
+		<GlobalPackageReference Include="Roslynator.Analyzers" Version="4.16.1"/>
 		<GlobalPackageReference Include="SonarAnalyzer.CSharp" Version="10.32.0.713"/>
 		<GlobalPackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.556"/>
 	</ItemGroup>
