@@ -2,6 +2,12 @@
 
 This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [unreleased]
+
+### Changed
+
+- Renamed some `CriteriaExpression` enum names.
+
 ## 0.16.0
 
 ### Changed
