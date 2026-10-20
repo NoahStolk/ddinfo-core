@@ -242,12 +242,21 @@ dotnet_diagnostic.RZ10012.severity                                            = 
 # Add a way to break out of this method/property's recursion.
 dotnet_diagnostic.S2190.severity                                              = error
 
-# Severity: suggestion
+########################
+# Diagnostics: Warning #
+########################
 
-# Member is obsolete.
-dotnet_diagnostic.CS0618.severity                                             = suggestion
+# Members attributed with RequiresUnreferencedCode may break when trimming.
+dotnet_diagnostic.IL2026.severity                                             = warning
 
-# Complete the task associated to this 'TODO' comment.
+# Lines should not be too long. (Default maximumLineLength is 200.)
+dotnet_diagnostic.S103.severity                                               = warning
+
+###########################
+# Diagnostics: Suggestion #
+###########################
+
+# Complete the task associated to this to-do comment.
 dotnet_diagnostic.S1135.severity                                              = suggestion
 
 #####################
