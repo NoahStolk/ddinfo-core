@@ -156,27 +156,15 @@ public static class ReplaySimulationBuilder
 		return degrees * (MathF.PI / 180f);
 	}
 
-	private sealed class PlayerContext
+	private sealed class PlayerContext(float spawnHeight)
 	{
-		public PlayerContext(float spawnHeight)
-		{
-			Position = new Vector3(0, spawnHeight, 0);
-			Rotation = Quaternion.CreateFromAxisAngle(Vector3.UnitY, MathF.PI);
-			IsOnGround = false;
-			VelocityY = 0;
-			Velocity = default;
-			Gravity = 0;
-			SpeedBoost = 1;
-			JumpCooldown = 0;
-		}
-
-		public Quaternion Rotation { get; set; }
-		public Vector3 Position { get; set; }
+		public Quaternion Rotation { get; set; } = Quaternion.CreateFromAxisAngle(Vector3.UnitY, MathF.PI);
+		public Vector3 Position { get; set; } = new(0, spawnHeight, 0);
 		public bool IsOnGround { get; set; }
 		public float VelocityY { get; set; }
 		public Vector2 Velocity { get; set; }
 		public float Gravity { get; set; }
-		public float SpeedBoost { get; set; }
+		public float SpeedBoost { get; set; } = 1;
 		public int JumpCooldown { get; set; }
 	}
 }

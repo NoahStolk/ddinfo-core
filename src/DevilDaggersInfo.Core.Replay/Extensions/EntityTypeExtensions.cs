@@ -13,7 +13,14 @@ public static class EntityTypeExtensions
 
 		public bool IsDagger()
 		{
-			return entityType is EntityType.Level1Dagger or EntityType.Level2Dagger or EntityType.Level3Dagger or EntityType.Level3HomingDagger or EntityType.Level4Dagger or EntityType.Level4HomingDagger or EntityType.Level4HomingSplash;
+			return entityType is
+				EntityType.Level1Dagger or
+				EntityType.Level2Dagger or
+				EntityType.Level3Dagger or
+				EntityType.Level3HomingDagger or
+				EntityType.Level4Dagger or
+				EntityType.Level4HomingDagger or
+				EntityType.Level4HomingSplash;
 		}
 
 		public DaggerType GetDaggerType()
