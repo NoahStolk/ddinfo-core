@@ -284,26 +284,65 @@ dotnet_diagnostic.S1135.severity                                              = 
 # Diagnostics: None #
 #####################
 
-# Do not expose generic lists.
+# Do not declare static members on generic types.
+dotnet_diagnostic.CA1000.severity                                             = none
+
+# Change 'List<T>' into 'Collection<T>', 'ReadOnlyCollection<T>' or 'KeyedCollection<K,V>'.
 dotnet_diagnostic.CA1002.severity                                             = none
 
 # Enum storage should be Int32.
 dotnet_diagnostic.CA1028.severity                                             = none
 
+# Do not declare visible instance fields.
+dotnet_diagnostic.CA1051.severity                                             = none
+
+# URI parameters should not be strings.
+dotnet_diagnostic.CA1054.severity                                             = none
+
+# URI-like properties should not be strings.
+dotnet_diagnostic.CA1056.severity                                             = none
+
 # Validate arguments of public methods.
 dotnet_diagnostic.CA1062.severity                                             = none
+
+# Normalize strings to uppercase.
+dotnet_diagnostic.CA1308.severity                                             = none
+
+# Do not raise exceptions in unexpected locations.
+dotnet_diagnostic.CA1065.severity                                             = none
+
+# Identifiers should not match keywords.
+dotnet_diagnostic.CA1716.severity                                             = none
 
 # Prefer jagged arrays over multidimensional.
 dotnet_diagnostic.CA1814.severity                                             = none
 
+# Do not directly await a Task.
+dotnet_diagnostic.CA2007.severity                                             = none
+
+# Do not raise reserved exception types.
+dotnet_diagnostic.CA2201.severity                                             = none
+
+# Non-constant fields should not be visible
+dotnet_diagnostic.CA2211.severity                                             = none
+
 # Operator overloads have named alternates.
 dotnet_diagnostic.CA2225.severity                                             = none
+
+# Pass System.Uri objects instead of strings.
+dotnet_diagnostic.CA2234.severity                                             = none
 
 # Do not use broken cryptographic algorithms.
 dotnet_diagnostic.CA5351.severity                                             = none
 
+# Random is an insecure random number generator. Use cryptographically secure random number generators when randomness is required for security.
+dotnet_diagnostic.CA5394.severity                                             = none
+
 # Missing XML comment for publicly visible type or member.
 dotnet_diagnostic.CS1591.severity                                             = none
+
+# The switch expression does not handle some values of its input type (it is not exhaustive) involving an unnamed enum value.
+dotnet_diagnostic.CS8524.severity                                             = none
 
 # Call 'ConfigureAwait(false)'.
 dotnet_diagnostic.RCS1090.severity                                            = none
@@ -374,6 +413,9 @@ dotnet_diagnostic.SA1008.severity                                             = 
 # Closing parenthesis should be followed by a space.
 dotnet_diagnostic.SA1009.severity                                             = none
 
+# Opening square brackets should not be followed/preceded by a space.
+dotnet_diagnostic.SA1010.severity                                             = none
+
 # Closing square bracket should be followed by a space.
 dotnet_diagnostic.SA1011.severity                                             = none
 
@@ -418,6 +460,9 @@ dotnet_diagnostic.SA1311.severity                                             = 
 
 # Field should be private.
 dotnet_diagnostic.SA1401.severity                                             = none
+
+# Debug.Assert should provide message text.
+dotnet_diagnostic.SA1405.severity                                             = none
 
 # Arithmetic expressions should declare precedence.
 dotnet_diagnostic.SA1407.severity                                             = none
