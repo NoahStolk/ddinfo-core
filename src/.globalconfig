@@ -281,7 +281,55 @@ dotnet_diagnostic.RCS1090.severity                                            = 
 # Add parentheses when necessary.
 dotnet_diagnostic.RCS1123.severity                                            = none
 
-# XML comment analysis is disabled due to project configuration.
+# Rename class to match pascal case naming rules.
+dotnet_diagnostic.S101.severity                                               = none
+
+# 'System.Exception' should not be thrown by user code.
+dotnet_diagnostic.S112.severity                                               = none
+
+# Make this field 'private' and encapsulate it in a 'public' property.
+dotnet_diagnostic.S1104.severity                                              = none
+
+# Extract the assignment from this expression. (C# 9)
+dotnet_diagnostic.S1121.severity                                              = none
+
+# Unused private types or members should be removed. (C# 9)
+dotnet_diagnostic.S1144.severity                                              = none
+
+# Change the visibility of 'TargetHeight' or make it 'const' or 'readonly'.
+dotnet_diagnostic.S2223.severity                                              = none
+
+# Make this method private or simplify its parameters to not use multidimensional arrays.
+dotnet_diagnostic.S2368.severity                                              = none
+
+# Replace the control character at position x by its escape sequence y.
+dotnet_diagnostic.S2479.severity                                              = none
+
+# Boolean expressions should not be gratuitous. (Broken analyzer)
+dotnet_diagnostic.S2589.severity                                              = none
+
+# Static fields should not be used in generic types.
+dotnet_diagnostic.S2743.severity                                              = none
+
+# Loops should be simplified with "LINQ" expressions.
+dotnet_diagnostic.S3267.severity                                              = none
+
+# Extract this nested ternary operation into an independent statement.
+dotnet_diagnostic.S3358.severity                                              = none
+
+# This class can't be instantiated; make its constructor 'public'. (C# 9)
+dotnet_diagnostic.S3453.severity                                              = none
+
+# Move class into a named namespace. (C# 10)
+dotnet_diagnostic.S3903.severity                                              = none
+
+# Cipher algorithms should be robust. (This analyzer is taking 20s to complete according to MSBuild Structured Log Viewer.)
+dotnet_diagnostic.S5547.severity                                              = none
+
+# Allowing unsafe code is security-sensitive.
+dotnet_diagnostic.S6640.severity                                              = none
+
+# Enable XML documentation output.
 dotnet_diagnostic.SA0001.severity                                             = none
 
 # The keyword 'new' should be followed by a space. (C# 9)
@@ -376,39 +424,3 @@ dotnet_diagnostic.SA1633.severity                                             = 
 
 # Constructor summary documentation should begin with standard text.
 dotnet_diagnostic.SA1642.severity                                             = none
-
-# Rename class to match pascal case naming rules.
-dotnet_diagnostic.S101.severity                                               = none
-
-# 'System.Exception' should not be thrown by user code.
-dotnet_diagnostic.S112.severity                                               = none
-
-# Make this field 'private' and encapsulate it in a 'public' property.
-dotnet_diagnostic.S1104.severity                                              = none
-
-# Extract the assignment from this expression. (C# 9)
-dotnet_diagnostic.S1121.severity                                              = none
-
-# Unused private types or members should be removed. (C# 9)
-dotnet_diagnostic.S1144.severity                                              = none
-
-# Make this method private or simplify its parameters to not use multidimensional arrays.
-dotnet_diagnostic.S2368.severity                                              = none
-
-# Conditionally executed code should be reachable. (False positive)
-dotnet_diagnostic.S2583.severity                                              = none
-
-# Static fields should not be used in generic types (C# 11 static abstract members).
-dotnet_diagnostic.S2743.severity                                              = none
-
-# Extract this nested ternary operation into an independent statement.
-dotnet_diagnostic.S3358.severity                                              = none
-
-# This class can't be instantiated; make its constructor 'public'. (C# 9)
-dotnet_diagnostic.S3453.severity                                              = none
-
-# Move class into a named namespace. (C# 10)
-dotnet_diagnostic.S3903.severity                                              = none
-
-# Use 'Guid.NewGuid()' or 'Guid.Empty' or add arguments to this GUID instantiation.
-dotnet_diagnostic.S4581.severity                                              = none
