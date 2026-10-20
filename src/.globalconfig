@@ -227,14 +227,35 @@ csharp_preserve_single_line_statements                                        = 
 # Diagnostics: Error #
 ######################
 
+# A member was declared with the same name as a member in a base class. However, the new modifier was not used.
+dotnet_diagnostic.CS0108.severity                                             = error
+
+# A declaration in a class conflicts with a declaration in a base class such that the base class member will be hidden.
+dotnet_diagnostic.CS0114.severity                                             = error
+
 # Because this call is not awaited, execution of the current method continues before the call is completed. Consider applying the 'await' operator to the result of the call.
 dotnet_diagnostic.CS4014.severity                                             = error
+
+# The switch expression does not handle all possible values of its input type (it is not exhaustive).
+dotnet_diagnostic.CS8509.severity                                             = error
+
+# Positional parameter is never used.
+dotnet_diagnostic.CS8907.severity                                             = error
 
 # Null-forgiving operator without justification
 dotnet_diagnostic.NX0001.severity                                             = error
 
 # Null-forgiving operator without justification
+dotnet_diagnostic.NX0002.severity                                             = error
+
+# Null-forgiving operator without justification
 dotnet_diagnostic.NX0003.severity                                             = error
+
+# Do not pass non-read-only struct by read-only reference.
+dotnet_diagnostic.RCS1242.severity                                            = error
+
+# The symbol is banned in this project.
+dotnet_diagnostic.RS0030.severity                                             = error
 
 # Found markup element with unexpected name. If this is intended to be a component, add a @using directive for its namespace.
 dotnet_diagnostic.RZ10012.severity                                            = error
