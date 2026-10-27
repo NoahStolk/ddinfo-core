@@ -2,11 +2,15 @@
 
 This library uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [unreleased]
+## 0.17.0
 
 ### Changed
 
 - Renamed some `CriteriaExpression` enum names.
+
+### Removed
+
+- Removed `Color` type from Wiki library. Everything uses `Vector3` now.
 
 ## 0.16.0
 

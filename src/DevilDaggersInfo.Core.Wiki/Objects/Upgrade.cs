@@ -1,8 +1,10 @@
+using System.Numerics;
+
 namespace DevilDaggersInfo.Core.Wiki.Objects;
 
 public sealed record Upgrade
 {
-	internal Upgrade(GameVersion gameVersion, string name, Color color, byte level, Damage defaultDamage, Damage? homingDamage, UpgradeUnlock upgradeUnlock)
+	internal Upgrade(GameVersion gameVersion, string name, Vector3 color, byte level, Damage defaultDamage, Damage? homingDamage, UpgradeUnlock upgradeUnlock)
 	{
 		GameVersion = gameVersion;
 		Name = name;
@@ -15,7 +17,7 @@ public sealed record Upgrade
 
 	public GameVersion GameVersion { get; }
 	public string Name { get; }
-	public Color Color { get; }
+	public Vector3 Color { get; }
 	public byte Level { get; }
 	public Damage DefaultDamage { get; }
 	public Damage? HomingDamage { get; }

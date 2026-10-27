@@ -1,3 +1,5 @@
+using DevilDaggersInfo.Core.Wiki.Structs;
+
 namespace DevilDaggersInfo.Core.Wiki.Test;
 
 internal sealed class UpgradeTests

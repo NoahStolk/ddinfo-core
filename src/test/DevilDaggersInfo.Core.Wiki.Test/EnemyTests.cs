@@ -1,3 +1,5 @@
+using DevilDaggersInfo.Core.Wiki.Objects;
+
 namespace DevilDaggersInfo.Core.Wiki.Test;
 
 internal sealed class EnemyTests

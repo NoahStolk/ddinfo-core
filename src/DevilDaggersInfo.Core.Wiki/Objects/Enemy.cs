@@ -1,8 +1,10 @@
+using System.Numerics;
+
 namespace DevilDaggersInfo.Core.Wiki.Objects;
 
 public sealed record Enemy
 {
-	internal Enemy(GameVersion gameVersion, string name, Color color, int hp, int gems, int noFarmGems, Death death, HomingDamage homingDamage, int? firstSpawnSecond, params Enemy[] spawnedBy)
+	internal Enemy(GameVersion gameVersion, string name, Vector3 color, int hp, int gems, int noFarmGems, Death death, HomingDamage homingDamage, int? firstSpawnSecond, params Enemy[] spawnedBy)
 	{
 		GameVersion = gameVersion;
 		Name = name;
@@ -18,7 +20,7 @@ public sealed record Enemy
 
 	public GameVersion GameVersion { get; }
 	public string Name { get; }
-	public Color Color { get; }
+	public Vector3 Color { get; }
 	public int Hp { get; }
 	public int Gems { get; }
 	public int NoFarmGems { get; }

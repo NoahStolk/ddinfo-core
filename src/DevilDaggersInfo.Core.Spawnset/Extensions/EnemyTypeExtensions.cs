@@ -1,3 +1,5 @@
+using System.Numerics;
+
 namespace DevilDaggersInfo.Core.Spawnset.Extensions;
 
 public static class EnemyTypeExtensions
@@ -23,7 +25,7 @@ public static class EnemyTypeExtensions
 			};
 		}
 
-		public Color GetColor(GameVersion gameVersion)
+		public Vector3 GetColor(GameVersion gameVersion)
 		{
 			return enemyType switch
 			{
