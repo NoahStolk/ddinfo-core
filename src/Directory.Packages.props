@@ -10,7 +10,7 @@
 
 	<ItemGroup Label="Test dependencies">
 		<PackageVersion Include="JetBrains.Annotations" Version="2026.2.0"/>
-		<PackageVersion Include="TUnit" Version="1.86.0"/>
+		<PackageVersion Include="TUnit" Version="1.87.12"/>
 	</ItemGroup>
 
 	<ItemGroup Label="Static code analysis">
